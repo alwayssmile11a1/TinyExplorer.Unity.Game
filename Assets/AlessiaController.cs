@@ -14,8 +14,12 @@ public class AlessiaController : MonoBehaviour {
     public float jumpForce = 400f;
 
     public GameObject spitter;
-    public Transform petSpawnPosition;
+    
+    
 
+
+    public KeyCode jumpButton;
+    public KeyCode shootButton;
 
     private Vector2 m_Velocity = new Vector2();
     private Rigidbody2D m_Rigidbody2D;
@@ -28,7 +32,6 @@ public class AlessiaController : MonoBehaviour {
     private Vector2[] m_RaycastStartPositions = new Vector2[3];
     private RaycastHit2D[] m_HitBuffer = new RaycastHit2D[5];
     private SpriteRenderer m_SpriteRenderer;
-    private SpitterController m_SpitterController;
 
     // Use this for initialization
     void Awake () {
@@ -36,7 +39,6 @@ public class AlessiaController : MonoBehaviour {
         m_CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Animator = GetComponent<Animator>();
-        m_SpitterController = spitter.GetComponent<SpitterController>();
         m_ContactFilter.layerMask = groundedLayerMask;
         m_ContactFilter.useLayerMask = true;
         m_ContactFilter.useTriggers = false;
@@ -51,7 +53,7 @@ public class AlessiaController : MonoBehaviour {
         m_HorizontalMovement = Input.GetAxis("Horizontal");
 
         //jump only if grounded
-        if (Input.GetKeyDown(KeyCode.Z) && isGrounded)
+        if (Input.GetKeyDown(jumpButton) && isGrounded)
         {
 
             m_VerticalForce = jumpForce;
@@ -60,7 +62,7 @@ public class AlessiaController : MonoBehaviour {
 
 
         //shoot
-        if(Input.GetKeyDown(KeyCode.X))
+        if(Input.GetKeyDown(shootButton))
         {
             Shoot();
         }
@@ -113,7 +115,7 @@ public class AlessiaController : MonoBehaviour {
 
     private void Shoot()
     {
-        m_SpitterController.Trigger(petSpawnPosition.position);
+        
     }
 
 
