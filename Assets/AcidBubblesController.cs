@@ -9,6 +9,7 @@ public class AcidBubblesController : MonoBehaviour {
     private Rigidbody2D m_Rigidbody2D;
 
 
+
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -16,6 +17,8 @@ public class AcidBubblesController : MonoBehaviour {
 
 
     void FixedUpdate () {
-        m_Rigidbody2D.velocity = new Vector2(bulletSpeed, 0);
+        m_Rigidbody2D.velocity = new Vector2(transform.right.x * bulletSpeed, 0);
+      
 	}
+
 }

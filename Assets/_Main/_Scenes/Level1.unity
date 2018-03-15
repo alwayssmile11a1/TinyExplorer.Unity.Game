@@ -235,7 +235,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 169944632}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.465041, y: -0.6199509, z: -10.206299}
+  m_LocalPosition: {x: -3.8580413, y: -0.6399509, z: -10.206299}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1751013246}
@@ -267,7 +267,7 @@ GameObject:
   m_Component:
   - component: {fileID: 322537191}
   m_Layer: 8
-  m_Name: PetSpawnPosition
+  m_Name: FireFlyPositionWhenShooting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,7 +280,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 322537190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.732, y: 0.028, z: 0}
+  m_LocalPosition: {x: 0.568, y: 0.476, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 888934936}
@@ -1733,11 +1733,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4520396350849616, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4.72
+      value: -4.113
       objectReference: {fileID: 0}
     - target: {fileID: 4520396350849616, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.15
+      value: -0.17
       objectReference: {fileID: 0}
     - target: {fileID: 4520396350849616, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1787,8 +1787,18 @@ Prefab:
     - target: {fileID: 114724740266516926, guid: 7d60c822c3f1b408ea7a00ecdb5e047a,
         type: 2}
       propertyPath: shootButton
-      value: 107
+      value: 120
       objectReference: {fileID: 0}
+    - target: {fileID: 114724740266516926, guid: 7d60c822c3f1b408ea7a00ecdb5e047a,
+        type: 2}
+      propertyPath: fireFlyController
+      value: 
+      objectReference: {fileID: 541077077}
+    - target: {fileID: 114724740266516926, guid: 7d60c822c3f1b408ea7a00ecdb5e047a,
+        type: 2}
+      propertyPath: fireflyPositionWhenShooting
+      value: 
+      objectReference: {fileID: 322537191}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 2}
   m_IsPrefabParent: 0
@@ -1797,7 +1807,13 @@ GameObject:
   m_PrefabParentObject: {fileID: 1462644869830984, guid: 761a421d21f9d124a83ee89ef6c048cb,
     type: 2}
   m_PrefabInternal: {fileID: 1610231731}
---- !u!114 &541077077
+--- !u!114 &541077077 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114703624734816504, guid: 761a421d21f9d124a83ee89ef6c048cb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1610231731}
+  m_Script: {fileID: 11500000, guid: 6f9e56a1f57cdce4db123a565c8c0aad, type: 3}
+--- !u!114 &541077078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1805,9 +1821,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 541077076}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f9e56a1f57cdce4db123a565c8c0aad, type: 3}
+  m_Script: {fileID: 11500000, guid: 035131d9cb8975148b5b623a17d417b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 888934936}
+  speed: 2
+  offsets:
+  - {x: 0.22, y: 1.37, z: 0}
+  - {x: 0.74, y: 0.51, z: 0}
+  usedOffset: 0
+  offsetBasedOnTargetSpriteFacing: 1
+--- !u!4 &541077080 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4705275438610702, guid: 761a421d21f9d124a83ee89ef6c048cb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1610231731}
 --- !u!1 &588711350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,7 +2014,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 679012108}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.465041, y: -0.6199509, z: -10.206299}
+  m_LocalPosition: {x: -3.8580413, y: -0.6399509, z: -10.206299}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 870006505}
@@ -3070,11 +3098,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4705275438610702, guid: 761a421d21f9d124a83ee89ef6c048cb, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4.04
+      value: -3.586
       objectReference: {fileID: 0}
     - target: {fileID: 4705275438610702, guid: 761a421d21f9d124a83ee89ef6c048cb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.72
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4705275438610702, guid: 761a421d21f9d124a83ee89ef6c048cb, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3104,12 +3132,43 @@ Prefab:
         type: 2}
       propertyPath: target
       value: 
-      objectReference: {fileID: 888934936}
+      objectReference: {fileID: 0}
     - target: {fileID: 1462644869830984, guid: 761a421d21f9d124a83ee89ef6c048cb, type: 2}
       propertyPath: m_Name
       value: Firefly
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114081012786700386, guid: 761a421d21f9d124a83ee89ef6c048cb,
+        type: 2}
+      propertyPath: offset
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114081012786700386, guid: 761a421d21f9d124a83ee89ef6c048cb,
+        type: 2}
+      propertyPath: offset.x
+      value: 1.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 114081012786700386, guid: 761a421d21f9d124a83ee89ef6c048cb,
+        type: 2}
+      propertyPath: offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114081012786700386, guid: 761a421d21f9d124a83ee89ef6c048cb,
+        type: 2}
+      propertyPath: offset.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114081012786700386, guid: 761a421d21f9d124a83ee89ef6c048cb,
+        type: 2}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114703624734816504, guid: 761a421d21f9d124a83ee89ef6c048cb,
+        type: 2}
+      propertyPath: startShootPosition
+      value: 
+      objectReference: {fileID: 541077080}
+    m_RemovedComponents:
+    - {fileID: 114081012786700386, guid: 761a421d21f9d124a83ee89ef6c048cb, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 761a421d21f9d124a83ee89ef6c048cb, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1655871015

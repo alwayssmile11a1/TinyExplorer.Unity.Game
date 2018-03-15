@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4705275438610702}
   - component: {fileID: 212939117038318444}
   - component: {fileID: 114081012786700386}
+  - component: {fileID: 114703624734816504}
   m_Layer: 0
   m_Name: Fireflies
   m_TagString: Untagged
@@ -54,8 +55,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 2
-  offset: {x: 0.68, y: 1.11, z: 0}
+  offset: {x: -0.35, y: 1.26, z: 0}
   offsetBasedOnTargetSpriteFacing: 1
+--- !u!114 &114703624734816504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1462644869830984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f9e56a1f57cdce4db123a565c8c0aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 1604139314583592, guid: a6acd2382f7f42046af3e8b752f6070e, type: 2}
+  startShootPosition: {fileID: 4705275438610702}
+  fireRate: 5
 --- !u!212 &212939117038318444
 SpriteRenderer:
   m_ObjectHideFlags: 1

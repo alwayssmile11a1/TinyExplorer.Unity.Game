@@ -13,8 +13,8 @@ public class AlessiaController : MonoBehaviour {
     public float speed = 5f;
     public float jumpForce = 400f;
 
-    public GameObject spitter;
-    
+    public FireFlyController fireFlyController;
+
     
 
 
@@ -115,7 +115,10 @@ public class AlessiaController : MonoBehaviour {
 
     private void Shoot()
     {
-        
+        if(fireFlyController!=null)
+        {
+           fireFlyController.Trigger();
+        }
     }
 
 
