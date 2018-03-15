@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4705275438610702}
   - component: {fileID: 212939117038318444}
-  - component: {fileID: 114081012786700386}
   - component: {fileID: 114703624734816504}
+  - component: {fileID: 114889721897633120}
   m_Layer: 0
   m_Name: Fireflies
   m_TagString: Untagged
@@ -36,27 +36,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1462644869830984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.04, y: 0.72, z: 0}
+  m_LocalPosition: {x: -3.586, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114081012786700386
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1462644869830984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 035131d9cb8975148b5b623a17d417b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  speed: 2
-  offset: {x: -0.35, y: 1.26, z: 0}
-  offsetBasedOnTargetSpriteFacing: 1
 --- !u!114 &114703624734816504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,6 +56,25 @@ MonoBehaviour:
   bullet: {fileID: 1604139314583592, guid: a6acd2382f7f42046af3e8b752f6070e, type: 2}
   startShootPosition: {fileID: 4705275438610702}
   fireRate: 5
+  timeToReturnOriginalPosition: 2
+--- !u!114 &114889721897633120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1462644869830984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 035131d9cb8975148b5b623a17d417b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 2
+  offsets:
+  - {x: 0.22, y: 1.37, z: 0}
+  - {x: 0.74, y: 0.51, z: 0}
+  usedOffset: 0
+  offsetBasedOnTargetSpriteFacing: 1
 --- !u!212 &212939117038318444
 SpriteRenderer:
   m_ObjectHideFlags: 1
