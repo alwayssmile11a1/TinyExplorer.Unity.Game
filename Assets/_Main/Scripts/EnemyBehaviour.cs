@@ -14,7 +14,11 @@ public class EnemyBehaviour : MonoBehaviour
     static Collider2D[] s_ColliderCache = new Collider2D[16];
 
     public Vector3 moveVector { get { return m_MoveVector; } }
-    public Transform Target { get { return m_Target; } }
+
+    //the current target. Null if can not find the target inside the view distance.
+    public Transform CurrentTarget { get { return m_Target; } }
+
+    public GameObject targetToTrack;
 
     [Tooltip("If the sprite face left on the spritesheet, enable this. Otherwise, leave disabled")]
     public bool spriteFaceLeft = false;
@@ -139,6 +143,8 @@ public class EnemyBehaviour : MonoBehaviour
             m_LocalBounds.Encapsulate(transform.InverseTransformBounds(s_ColliderCache[i].bounds));
         }
 
+        
+
         m_Filter = new ContactFilter2D();
         m_Filter.layerMask = m_CharacterController2D.groundedLayerMask;
         m_Filter.useLayerMask = true;
@@ -231,13 +237,15 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    public void ScanForPlayer()
+    public void ScanForTarget()
     {
-        //If the player don't have control, they can't react, so do not pursue them
-        if (!PlayerInput.Instance.HaveControl)
-            return;
+        ////If the player don't have control, they can't react, so do not pursue them
+        //if (!PlayerInput.Instance.HaveControl)
+        //    return;
 
-        Vector3 dir = PlayerCharacter.PlayerInstance.transform.position - transform.position;
+        if (targetToTrack == null) return;
+
+        Vector3 dir = targetToTrack.transform.position - transform.position;
 
         if (dir.sqrMagnitude > viewDistance * viewDistance)
         {
@@ -255,7 +263,7 @@ public class EnemyBehaviour : MonoBehaviour
             return;
         }
 
-        m_Target = PlayerCharacter.PlayerInstance.transform;
+        m_Target = targetToTrack.transform;
         m_TimeSinceLastTargetView = timeBeforeTargetLost;
 
         m_Animator.SetTrigger(m_HashSpottedPara);
@@ -548,7 +556,6 @@ public class EnemyBehaviour : MonoBehaviour
         if (GetComponent<SpriteRenderer>().flipX) forward.x = -forward.x;
 
         //Vector3 endpoint = transform.position + (Quaternion.Euler(0, 0, viewFov * 0.5f) * forward);
-        Debug.Log(Quaternion.Euler(0, 0, viewFov * 0.5f) * forward);
         Handles.color = new Color(0, 1.0f, 0, 0.2f);
         Handles.DrawSolidArc(transform.position, -Vector3.forward, (Quaternion.Euler(0, 0, viewFov * 0.5f) * forward).normalized, viewFov, viewDistance);
 

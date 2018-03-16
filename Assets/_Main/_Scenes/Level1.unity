@@ -6278,15 +6278,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4573904317074984, guid: 9beba4fdf96cf1147942762d7dc70ea0, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4573904317074984, guid: 9beba4fdf96cf1147942762d7dc70ea0, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4573904317074984, guid: 9beba4fdf96cf1147942762d7dc70ea0, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4573904317074984, guid: 9beba4fdf96cf1147942762d7dc70ea0, type: 2}
       propertyPath: m_LocalRotation.w
@@ -6295,6 +6295,10 @@ Prefab:
     - target: {fileID: 4573904317074984, guid: 9beba4fdf96cf1147942762d7dc70ea0, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573904317074984, guid: 9beba4fdf96cf1147942762d7dc70ea0, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9beba4fdf96cf1147942762d7dc70ea0, type: 2}
@@ -7553,12 +7557,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f688f5538230f9408f531dfcd77a58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetToTrack: {fileID: 545223637}
   spriteFaceLeft: 0
   speed: 0
   gravity: 10
   projectilePrefab: {fileID: 0}
   viewDirection: 0
-  viewFov: 0
+  viewFov: 118
   viewDistance: 5
   timeBeforeTargetLost: 3
   meleeRange: 0
@@ -7590,6 +7595,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   groundedRaycastDistance: 0.1
+--- !u!114 &1844673161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1844673157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a52612155c8f8cf4a949d6cb0544a895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &1844673163
 Rigidbody2D:
   serializedVersion: 4

@@ -23,6 +23,9 @@ public class AlessiaController : MonoBehaviour {
     private SpriteRenderer m_SpriteRenderer;
 
 
+    private int m_HashGroundedPara = Animator.StringToHash("Grounded");
+    private int m_HashRunPara = Animator.StringToHash("Run");
+
     void Awake () {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -86,8 +89,8 @@ public class AlessiaController : MonoBehaviour {
 
     private void Animate()
     {
-        m_Animator.SetBool("grounded", m_CharacterController2D.IsGrounded);
-        m_Animator.SetFloat("velocityX", Mathf.Abs(m_HorizontalMovement));
+        m_Animator.SetBool(m_HashGroundedPara, m_CharacterController2D.IsGrounded);
+        m_Animator.SetFloat(m_HashRunPara, Mathf.Abs(m_HorizontalMovement));
     }
 
     private void Shoot()

@@ -15,7 +15,7 @@ public class CharacterController2D : MonoBehaviour
     CapsuleCollider2D m_CapsuleCollider2D;
     ContactFilter2D m_ContactFilter;
     RaycastHit2D[] m_HitBuffer = new RaycastHit2D[5];
-    Collider2D[] m_GroundCollider;
+    Collider2D[] m_GroundCollider = new Collider2D[3];
     Vector2[] m_RaycastStartPositions = new Vector2[3];
     Vector2 m_NextMovement;
 
@@ -87,25 +87,33 @@ public class CharacterController2D : MonoBehaviour
         m_RaycastStartPositions[1] = raycastStartBottomCentre;
         m_RaycastStartPositions[2] = raycastStartBottomCentre + Vector2.right * m_CapsuleCollider2D.size.x * 0.5f;
 
-        int count = 0;
+        int totalCount = 0;
 
         for (int i = 0; i < m_RaycastStartPositions.Length; i++)
         {
             //Shoot ray
-            count += Physics2D.Raycast(m_RaycastStartPositions[i], raycastDirection, m_ContactFilter, m_HitBuffer, raycastDistance);
+            int count = Physics2D.Raycast(m_RaycastStartPositions[i], raycastDirection, m_ContactFilter, m_HitBuffer, raycastDistance);
             Debug.DrawRay(m_RaycastStartPositions[i], raycastDirection);
 
-            if (count > 0)
-            {
-                IsGrounded = true;
-                return;
-            }
+            //get ground collider
+            m_GroundCollider[i] = count > 0 ? m_HitBuffer[0].collider : null;
 
+            totalCount += count;
         }
 
-        if (count == 0)
+        if (totalCount == 0)
         {
             IsGrounded = false;
+        }
+        else
+        {
+            IsGrounded = true;
+        }
+        
+        //reset buffer
+        for (int i = 0; i < m_HitBuffer.Length; i++)
+        {
+            m_HitBuffer[i] = new RaycastHit2D();
         }
 
     }
