@@ -8,32 +8,51 @@ public class BulletShootTriggerable : MonoBehaviour {
     [HideInInspector] public float bulletSpeed;
     [HideInInspector] public float bulletLiveTime;
     [HideInInspector] public GameObject bulletPrefab;
+    [HideInInspector] public float fireRate;
 
     public Transform startingShootPosition;
-    
 
+    private float m_Timer;
+    private bool canShoot = true;
 
-    public void Fire()
+    private void Update()
     {
+        if (!canShoot)
+        {
+            if (m_Timer > 0)
+            {
+                m_Timer -= Time.deltaTime;
+            }
+            else
+            {
+                canShoot = true;
+            }
+        }
 
+
+    }
+
+
+    public void Trigger()
+    {
+        if (!canShoot) return;
     
         GameObject bullet = Instantiate(bulletPrefab, startingShootPosition.position, startingShootPosition.rotation);
-        //Add a little bit of random
-        bullet.transform.Rotate(Vector3.up, Random.Range(-5f, 5f), Space.Self);
-        //bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward);
-
+ 
         StartCoroutine(TranslateBullet(bullet));
 
         Destroy(bullet, bulletLiveTime);
 
-
+        //reset timer
+        m_Timer = 1 / fireRate;
+        canShoot = false;
     }
 
     IEnumerator TranslateBullet(GameObject bullet)
     {
         while (bullet!=null)
         {
-            bullet.transform.Translate(bullet.transform.forward * bulletSpeed * Time.deltaTime, Space.World);
+            bullet.transform.Translate(bullet.transform.right * bulletSpeed * Time.deltaTime, Space.World);
             yield return null;
         }
     }

@@ -6,7 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Ability/BulletShootAbility", order = 2)]
 public class BulletShootAbility : AbilitySO {
 
-    public float bulletSpeed;
+    public float fireRate = 5f;
+    public float bulletSpeed = 5f;
     public GameObject bulletPrefab;
 
     private BulletShootTriggerable blShooter;
@@ -20,14 +21,14 @@ public class BulletShootAbility : AbilitySO {
         blShooter.bulletLiveTime = range/bulletSpeed;
         blShooter.bulletSpeed = bulletSpeed;
         blShooter.bulletPrefab = bulletPrefab;
+        blShooter.fireRate = fireRate;
 
     }
 	
-	// Update is called once per frame
-	public override void Fire () {
+	public override void Trigger () {
 		if(blShooter!=null)
         {
-            blShooter.Fire();
+            blShooter.Trigger();
         }
 	}
 }

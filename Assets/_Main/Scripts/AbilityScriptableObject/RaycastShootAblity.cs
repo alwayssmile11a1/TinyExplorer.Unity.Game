@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu (menuName = "Ability/RaycastShootAbility", order = 1)]
-public class RaycastShootSO : AbilitySO {
+public class RaycastShootAbility : AbilitySO {
 
+    
+    public float fireRate = 5f;
     public Gradient laserColor;
+
+
     private RaycastShootTriggerable rcShooter;
 
 
@@ -17,16 +21,16 @@ public class RaycastShootSO : AbilitySO {
 
         rcShooter.range = range;
         rcShooter.laserColor = laserColor;
-
+        rcShooter.fireRate = fireRate;
 
         rcShooter.Initialize();
 
     }
-    public override void Fire()
+    public override void Trigger()
     {
         if (rcShooter != null)
         {
-            rcShooter.Fire();
+            rcShooter.Trigger();
         }
     }
 
