@@ -58,6 +58,9 @@ public class FollowTarget : MonoBehaviour {
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
+
+        if (target == null) return;
+
         for (int i = 0; i < offsets.Length; i++)
         {
             Handles.color = new Color(1.0f, 0, 0, 0.1f);

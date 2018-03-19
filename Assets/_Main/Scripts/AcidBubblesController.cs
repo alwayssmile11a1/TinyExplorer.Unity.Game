@@ -17,8 +17,12 @@ public class AcidBubblesController : MonoBehaviour {
 
 
     void FixedUpdate () {
-        m_Rigidbody2D.velocity = new Vector2(transform.right.x * bulletSpeed, 0);
-      
+
+        transform.Translate(Vector3.right * bulletSpeed * Time.deltaTime);
+
+        //m_Rigidbody2D.velocity = new Vector2(transform.x * bulletSpeed, 0);
+        
+        
 	}
 
 }
