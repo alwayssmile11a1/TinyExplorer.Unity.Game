@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 95348726937576806}
   - component: {fileID: 58145571808028020}
   - component: {fileID: 50277925184976852}
-  - component: {fileID: 114657755168335912}
   m_Layer: 0
   m_Name: AcidBubbles
   m_TagString: Untagged
@@ -96,18 +95,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114657755168335912
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1604139314583592}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b234a31942f9dd49a3cc7646c890bb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSpeed: 5
 --- !u!212 &212062700990366574
 SpriteRenderer:
   m_ObjectHideFlags: 1

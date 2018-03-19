@@ -84,7 +84,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 1604139314583592, guid: a6acd2382f7f42046af3e8b752f6070e, type: 2}
   startShootPosition: {fileID: 4430720402998466}
-  fireRate: 5
+  currentAbility: {fileID: 11400000, guid: 07e6d43be87cd9e438707e8062448b32, type: 2}
+  abilityTriggerableHolder: {fileID: 0}
 --- !u!114 &114889721897633120
 MonoBehaviour:
   m_ObjectHideFlags: 1

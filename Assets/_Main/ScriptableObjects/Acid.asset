@@ -13,9 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Acid
   sprite: {fileID: 0}
-  fireRate: 5
   range: 10
-  damage: 10
-  bulletSpeed: 5
+  fireRate: 10
+  bulletSpeed: 1
   bulletPrefab: {fileID: 1604139314583592, guid: a6acd2382f7f42046af3e8b752f6070e,
     type: 2}

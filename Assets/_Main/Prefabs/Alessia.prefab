@@ -160,13 +160,13 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
   mouseInputs:
   - name: Shoot
-    inputType: 0
+    inputType: 1
     button: 0
     inputEvent:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 0}
-          m_MethodName: Shoot
+          m_MethodName: TriggerAbility
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
