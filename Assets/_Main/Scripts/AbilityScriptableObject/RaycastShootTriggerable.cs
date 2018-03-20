@@ -14,79 +14,92 @@ public class RaycastShootTriggerable : MonoBehaviour {
     public LayerMask shootableLayers;
     
 
-    private RaycastHit hit;
-    private Ray shootRay = new Ray();
-    private int shootableMask;
-    private LineRenderer laserRenderer;
-    private WaitForSeconds laserDisplayTime = new WaitForSeconds(0.02f);
-
+    private RaycastHit2D m_RaycastHit2D;
+    private int m_ShootableMask;
+    private LineRenderer m_LaserRenderer;
+    private WaitForSeconds m_LaserDisplayTime = new WaitForSeconds(0.02f);
+    private bool m_DisplayEffectUntilShootEnd = false;
     private float m_Timer;
-    private bool canShoot = true;
+    private bool m_CanShoot = true;
 
     private void Awake()
     {
-        laserRenderer = GetComponent<LineRenderer>();
+        m_LaserRenderer = GetComponent<LineRenderer>();
     }
 
     private void Update()
     {
-        if (!canShoot)
+
+        if (m_Timer > 0)
         {
-            if (m_Timer > 0)
-            {
-                m_Timer -= Time.deltaTime;
-            }
-            else
-            {
-                canShoot = true;
-            }
+            m_Timer -= Time.deltaTime;
         }
+
     }
 
 
     // Use this for initialization
     public void Initialize () {
-        shootableMask = shootableLayers.value;
-        laserRenderer.colorGradient = laserColor;
+        m_ShootableMask = shootableLayers.value;
+        m_LaserRenderer.colorGradient = laserColor;
         //laserRenderer.useWorldSpace = true;
 	}
 
 
     public void Trigger()
     {
+        if (!m_CanShoot) return;
 
-        if (!canShoot) return;
+        if (fireRate <= 0)
+        {
+            m_DisplayEffectUntilShootEnd = true;
+            m_Timer = Time.deltaTime + 0.02f;
+        }
+        else
+        {
+            m_DisplayEffectUntilShootEnd = false;
+            if (m_Timer > 0) return;
+        }
 
         InternalTrigger();
 
+        if (!m_DisplayEffectUntilShootEnd)
+        {
+            ResetTimer();
+        }
+    }
+
+    private void ResetTimer()
+    {
         //reset timer
         m_Timer = 1 / fireRate;
-        canShoot = false;
-
+        //canShoot = false;
     }
 
 
     private void InternalTrigger()
     {
-        //setup laser line
-        laserRenderer.SetPosition(0, startingShootPosition.position);
 
-        //ray
-        shootRay.origin = startingShootPosition.position;
-        shootRay.direction = startingShootPosition.right;
+        //setup laser line
+        m_LaserRenderer.SetPosition(0, startingShootPosition.position);
+
+
 
         //start displaying shoot effect
         StartCoroutine(DisplayShotEffect());
 
 
         //if the laser hit something
-        if (Physics.Raycast(shootRay, out hit, range, shootableMask))
-        {
+        m_RaycastHit2D = Physics2D.Raycast(startingShootPosition.position, startingShootPosition.right, range, m_ShootableMask);
 
+        if (m_RaycastHit2D)
+        {
+            
+            m_LaserRenderer.SetPosition(1, m_RaycastHit2D.point);
         }
         else
         {
-            laserRenderer.SetPosition(1, shootRay.origin + shootRay.direction * range);
+            m_LaserRenderer.SetPosition(1, startingShootPosition.position + startingShootPosition.right * range);
 
         }
     }
@@ -97,12 +110,24 @@ public class RaycastShootTriggerable : MonoBehaviour {
     private IEnumerator DisplayShotEffect()
     {
         //setup laser line
-        laserRenderer.enabled = true;
+        m_LaserRenderer.enabled = true;
 
-        yield return laserDisplayTime;
+        if (!m_DisplayEffectUntilShootEnd)
+        {
+            yield return m_LaserDisplayTime;
+        }
+        else
+        {
+            yield return new WaitUntil(() => m_Timer < 0);
+        }
 
-        laserRenderer.enabled = false;
+        m_LaserRenderer.enabled = false;
 
+    }
+
+    public void SetCanShoot(bool canShoot)
+    {
+        this.m_CanShoot = canShoot;
     }
 
 }

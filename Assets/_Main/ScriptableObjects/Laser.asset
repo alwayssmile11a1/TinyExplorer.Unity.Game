@@ -13,12 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RaycastShootAbility
   abilityName: Laser
   sprite: {fileID: 0}
-  range: 100
-  fireRate: 5
+  range: 50
+  fireRate: 0
   laserColor:
     serializedVersion: 2
-    key0: {r: 0.18083906, g: 0.8308824, b: 0.018328305, a: 1}
-    key1: {r: 0.1586206, g: 1, b: 0, a: 1}
+    key0: {r: 0.07586217, g: 1, b: 0, a: 1}
+    key1: {r: 0, g: 1, b: 0.91724133, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}

@@ -13,29 +13,21 @@ public class BulletShootTriggerable : MonoBehaviour {
     public Transform startingShootPosition;
 
     private float m_Timer;
-    private bool canShoot = true;
+    private bool m_CanShoot = true;
 
     private void Update()
     {
-        if (!canShoot)
+
+        if (m_Timer > 0)
         {
-            if (m_Timer > 0)
-            {
-                m_Timer -= Time.deltaTime;
-            }
-            else
-            {
-                canShoot = true;
-            }
+            m_Timer -= Time.deltaTime;
         }
-
-
     }
 
 
     public void Trigger()
     {
-        if (!canShoot) return;
+        if (!m_CanShoot) return;
     
         GameObject bullet = Instantiate(bulletPrefab, startingShootPosition.position, startingShootPosition.rotation);
  
@@ -45,7 +37,7 @@ public class BulletShootTriggerable : MonoBehaviour {
 
         //reset timer
         m_Timer = 1 / fireRate;
-        canShoot = false;
+        m_CanShoot = false;
     }
 
     IEnumerator TranslateBullet(GameObject bullet)
@@ -57,7 +49,10 @@ public class BulletShootTriggerable : MonoBehaviour {
         }
     }
 
-
+    public void SetCanShoot(bool canShoot)
+    {
+        m_CanShoot = canShoot;
+    }
 
 
 }

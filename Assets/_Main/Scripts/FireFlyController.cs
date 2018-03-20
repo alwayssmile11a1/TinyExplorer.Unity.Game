@@ -7,7 +7,7 @@ public class FireFlyController : MonoBehaviour {
     public GameObject bullet;
     public Transform startShootPosition;
     public AbilitySO currentAbility;
-    public GameObject abilityTriggerableHolder;
+    public GameObject abilityHolder;
 
     private FollowTarget m_FollowTarget;
     private SpriteRenderer m_AllessiaSpriteRenderer;
@@ -40,8 +40,8 @@ public class FireFlyController : MonoBehaviour {
     //new offset from player of the firefly
     public void TriggerAbility()
     {
-
-        currentAbility.Initialize(abilityTriggerableHolder);
+        if (currentAbility == null) return;
+        currentAbility.Initialize(abilityHolder);
         currentAbility.Trigger();
 
     }
