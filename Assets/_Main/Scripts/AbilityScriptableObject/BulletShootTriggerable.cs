@@ -28,7 +28,9 @@ public class BulletShootTriggerable : MonoBehaviour {
     public void Trigger()
     {
         if (!m_CanShoot) return;
-    
+
+        if (m_Timer > 0) return;
+
         GameObject bullet = Instantiate(bulletPrefab, startingShootPosition.position, startingShootPosition.rotation);
  
         StartCoroutine(TranslateBullet(bullet));
@@ -37,7 +39,6 @@ public class BulletShootTriggerable : MonoBehaviour {
 
         //reset timer
         m_Timer = 1 / fireRate;
-        m_CanShoot = false;
     }
 
     IEnumerator TranslateBullet(GameObject bullet)

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114703624734816504}
   - component: {fileID: 114889721897633120}
   m_Layer: 0
-  m_Name: Fireflies
+  m_Name: Firefly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1462644869830984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.586, y: 1, z: 0}
+  m_LocalPosition: {x: 108.14, y: 3.68, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4430720402998466}
@@ -118,7 +118,7 @@ MonoBehaviour:
   bulletLiveTime: 0
   bulletPrefab: {fileID: 0}
   fireRate: 0
-  startingShootPosition: {fileID: 0}
+  startingShootPosition: {fileID: 4430720402998466}
 --- !u!114 &114703624734816504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 1604139314583592, guid: a6acd2382f7f42046af3e8b752f6070e, type: 2}
   startShootPosition: {fileID: 4430720402998466}
-  currentAbility: {fileID: 11400000, guid: a42a61486813e72408ad5a98f5e33eb9, type: 2}
+  currentAbility: {fileID: 11400000, guid: 2b9d92d7cfc4a414bbcaf687aa902f78, type: 2}
   abilityHolder: {fileID: 1803787450394500}
 --- !u!114 &114889721897633120
 MonoBehaviour:
@@ -193,7 +193,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   fireRate: 0
-  startingShootPosition: {fileID: 0}
+  startingShootPosition: {fileID: 4430720402998466}
   shootableLayers:
     serializedVersion: 2
     m_Bits: 512

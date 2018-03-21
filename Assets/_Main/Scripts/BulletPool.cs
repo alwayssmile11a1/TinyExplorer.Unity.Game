@@ -14,6 +14,7 @@ namespace Gamekit2D
                 s_PoolInstances.Add(prefab, this);
         }
 
+
         private void OnDestroy()
         {
             s_PoolInstances.Remove(prefab);

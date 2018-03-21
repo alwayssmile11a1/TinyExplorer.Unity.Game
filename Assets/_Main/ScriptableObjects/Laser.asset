@@ -8,17 +8,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f9fce65da87b0b842b7b49a24ddd03ce, type: 3}
   m_Name: Laser
-  m_EditorClassIdentifier: Assembly-CSharp::RaycastShootAbility
+  m_EditorClassIdentifier: 
   abilityName: Laser
   sprite: {fileID: 0}
-  range: 50
+  range: 100
   fireRate: 0
   laserColor:
     serializedVersion: 2
-    key0: {r: 0.07586217, g: 1, b: 0, a: 1}
-    key1: {r: 0, g: 1, b: 0.91724133, a: 1}
+    key0: {r: 0, g: 0.99264705, b: 0.23698676, a: 1}
+    key1: {r: 0, g: 1, b: 0.13103461, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}

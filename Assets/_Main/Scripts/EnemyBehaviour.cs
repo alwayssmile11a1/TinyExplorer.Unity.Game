@@ -337,7 +337,9 @@ public class EnemyBehaviour : MonoBehaviour
         if ((m_Target.transform.position - transform.position).sqrMagnitude < (meleeRange * meleeRange))
         {
             m_Animator.SetTrigger(m_HashMeleeAttackPara);
-            meleeAttackAudio.PlayRandomSound();
+
+            if (meleeAttackAudio != null)
+                meleeAttackAudio.PlayRandomSound();
         }
     }
 
@@ -379,7 +381,9 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
         m_Animator.SetTrigger(m_HashShootingPara);
-        shootingAudio.PlayRandomSound();
+
+        if (shootingAudio != null)
+            shootingAudio.PlayRandomSound();
 
         m_FireTimer = fireRate;
     }
@@ -398,7 +402,8 @@ public class EnemyBehaviour : MonoBehaviour
 
         BulletObject obj = m_BulletPool.Pop(shootingOrigin.TransformPoint(shootPosition));
 
-        shootingAudio.PlayRandomSound();
+        if (shootingAudio != null)
+            shootingAudio.PlayRandomSound();
 
         obj.rigidbody2D.velocity = GetProjectilVelocity(m_TargetShootPosition, shootingOrigin.transform.position);
     }
@@ -473,7 +478,8 @@ public class EnemyBehaviour : MonoBehaviour
 
         m_Animator.SetTrigger(m_HashDeathPara);
 
-        dieAudio.PlayRandomSound();
+        if (dieAudio != null)
+            dieAudio.PlayRandomSound();
 
         m_Dead = true;
         m_Collider.enabled = false;
@@ -543,7 +549,8 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void PlayFootStep()
     {
-        footStepAudio.PlayRandomSound();
+        if (footStepAudio != null)
+            footStepAudio.PlayRandomSound();
     }
 
 #if UNITY_EDITOR
