@@ -368,7 +368,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4705275438610702, guid: 761a421d21f9d124a83ee89ef6c048cb, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 114703624734816504, guid: 761a421d21f9d124a83ee89ef6c048cb,
         type: 2}
@@ -390,6 +390,12 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 545223645}
+    - target: {fileID: 114703624734816504, guid: 761a421d21f9d124a83ee89ef6c048cb,
+        type: 2}
+      propertyPath: currentAbility
+      value: 
+      objectReference: {fileID: 11400000, guid: 2b9d92d7cfc4a414bbcaf687aa902f78,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 761a421d21f9d124a83ee89ef6c048cb, type: 2}
   m_IsPrefabParent: 0
@@ -430,7 +436,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
@@ -8683,6 +8689,11 @@ Prefab:
         type: 2}
       propertyPath: mouseInputs.Array.data[0].inputEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2133556260}
+    - target: {fileID: 114239653887554706, guid: 7d60c822c3f1b408ea7a00ecdb5e047a,
+        type: 2}
+      propertyPath: mouseInputs.Array.data[0].inputEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 2}
@@ -8760,3 +8771,8 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &2133556260 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1462644869830984, guid: 761a421d21f9d124a83ee89ef6c048cb,
+    type: 2}
+  m_PrefabInternal: {fileID: 214089177}
