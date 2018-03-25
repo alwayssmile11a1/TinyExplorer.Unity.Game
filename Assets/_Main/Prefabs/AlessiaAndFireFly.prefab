@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 114471711954427722}
   - component: {fileID: 114855186862754034}
   - component: {fileID: 114886699165516832}
+  - component: {fileID: 114907937855742030}
   m_Layer: 8
   m_Name: Alessia
   m_TagString: Player
@@ -156,7 +157,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1613462232744116}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8500004, y: 1.6300001, z: -10}
+  m_LocalPosition: {x: 90.229996, y: 1.6300001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4318023797728842}
@@ -238,7 +239,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1539096513172812}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 89.38, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4202923279061800}
@@ -350,8 +351,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 1604139314583592, guid: a6acd2382f7f42046af3e8b752f6070e, type: 2}
   startShootPosition: {fileID: 4025073652882816}
-  currentAbility: {fileID: 11400000, guid: 2b9d92d7cfc4a414bbcaf687aa902f78, type: 2}
   abilityHolder: {fileID: 1489525570282058}
+  abilities:
+  - {fileID: 11400000, guid: 2b9d92d7cfc4a414bbcaf687aa902f78, type: 2}
+  - {fileID: 11400000, guid: 71a018eb213cf3047a373c0d2c384ec9, type: 2}
+  currentAbilityIndex: 0
 --- !u!114 &114219653090635584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -430,6 +434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   jumpForce: 320
+  timeBetweenFlickering: 0
 --- !u!114 &114499122664792362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -579,6 +584,67 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   groundedRaycastDistance: 0.1
+--- !u!114 &114907937855742030
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1539096513172812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 960138f0450083543ad1d17e1352019d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 5
+  invulnerableAfterDamage: 1
+  invulnerabilityDuration: 3
+  disableOnDeath: 0
+  centreOffset: {x: 0, y: 1}
+  OnHealthSet:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Gamekit2D.Damageable+HealthEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnTakeDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114471711954427722}
+        m_MethodName: GotHit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114907937855742030}
+        m_MethodName: EnableInvulnerability
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Gamekit2D.Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Gamekit2D.Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnGainHealth:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Gamekit2D.Damageable+HealEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  dataSettings:
+    dataTag: c92ed4f0-529b-4238-b2fe-2359f10e34f3
+    persistenceType: 3
 --- !u!120 &120465012126259334
 LineRenderer:
   m_ObjectHideFlags: 1

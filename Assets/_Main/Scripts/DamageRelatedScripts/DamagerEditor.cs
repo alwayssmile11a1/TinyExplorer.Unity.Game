@@ -16,6 +16,7 @@ namespace Gamekit2D
         SerializedProperty m_OffsetBasedOnSpriteFacingProp;
         SerializedProperty m_SpriteRendererProp;
         SerializedProperty m_CanHitTriggersProp;
+        SerializedProperty m_DisableDamageAfterHit;
         SerializedProperty m_ForceRespawnProp;
         SerializedProperty m_IgnoreInvincibilityProp;
         SerializedProperty m_HittableLayersProp;
@@ -30,6 +31,7 @@ namespace Gamekit2D
             m_OffsetBasedOnSpriteFacingProp = serializedObject.FindProperty("offsetBasedOnSpriteFacing");
             m_SpriteRendererProp = serializedObject.FindProperty("spriteRenderer");
             m_CanHitTriggersProp = serializedObject.FindProperty("canHitTriggers");
+            m_DisableDamageAfterHit = serializedObject.FindProperty("disableDamageAfterHit");
             m_ForceRespawnProp = serializedObject.FindProperty("forceRespawn");
             m_IgnoreInvincibilityProp = serializedObject.FindProperty("ignoreInvincibility");
             m_HittableLayersProp = serializedObject.FindProperty("hittableLayers");
@@ -48,6 +50,7 @@ namespace Gamekit2D
             if(m_OffsetBasedOnSpriteFacingProp.boolValue)
                 EditorGUILayout.PropertyField(m_SpriteRendererProp);
             EditorGUILayout.PropertyField(m_CanHitTriggersProp);
+            EditorGUILayout.PropertyField(m_DisableDamageAfterHit);
             EditorGUILayout.PropertyField(m_ForceRespawnProp);
             EditorGUILayout.PropertyField(m_IgnoreInvincibilityProp);
             EditorGUILayout.PropertyField(m_HittableLayersProp);

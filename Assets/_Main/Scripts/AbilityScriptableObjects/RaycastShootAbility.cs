@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu (menuName = "Ability/RaycastShootAbility", order = 1)]
-public class RaycastShootAbility : AbilitySO {
+public class RaycastShootAbility : AbilityScriptableObject {
 
     //[Tooltip("set to 0 or a negative number if ")]
     public float fireRate = 5f;

@@ -6,9 +6,17 @@ using UnityEngine.Tilemaps;
 
 namespace Gamekit2D
 {
+
+    //It is common to create a class to contain all of your
+    //extension methods. This class must be static.
     public static class Vector2Extension
     {
 
+        //Even though they are used like normal methods, extension
+        //methods must be declared static. Notice that the first
+        //parameter has the 'this' keyword followed by a Transform
+        //variable. This variable denotes which class the extension
+        //method becomes a part of.
         public static Vector2 Rotate(this Vector2 v, float degrees)
         {
             float sin = Mathf.Sin(degrees * Mathf.Deg2Rad);
