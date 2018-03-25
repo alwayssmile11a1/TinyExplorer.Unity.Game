@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198090125663210488}
   - component: {fileID: 199307399464106440}
   m_Layer: 0
-  m_Name: HitEnemyParticle
+  m_Name: HitEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
