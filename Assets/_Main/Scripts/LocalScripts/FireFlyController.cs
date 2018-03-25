@@ -6,13 +6,15 @@ public class FireFlyController : MonoBehaviour {
 
     public GameObject bullet;
     public Transform startShootPosition;
-    public AbilitySO currentAbility;
     public GameObject abilityHolder;
+
+    public AbilityScriptableObject[] abilities;
+    public int currentAbilityIndex = 0;
 
     private FollowTarget m_FollowTarget;
     private SpriteRenderer m_AllessiaSpriteRenderer;
     private float m_Timer;
-    //private AbilitySO m_CurrentAbility = null;
+    private AbilityScriptableObject m_CurrentAbility = null;
 
     // Use this for initialization
     private void Awake()
@@ -40,9 +42,19 @@ public class FireFlyController : MonoBehaviour {
     //new offset from player of the firefly
     public void TriggerAbility()
     {
-        if (currentAbility == null) return;
-        currentAbility.Initialize(abilityHolder);
-        currentAbility.Trigger();
+        if (abilities.Length ==0 || currentAbilityIndex > abilities.Length-1) return;
+
+        if (m_CurrentAbility != abilities[currentAbilityIndex])
+        {
+            m_CurrentAbility = abilities[currentAbilityIndex];
+
+            //m_CurrentAbility.Initialize(abilityHolder);
+        }
+
+
+        //re initialize every time we trigger ability isn't effective (change later) 
+        m_CurrentAbility.Initialize(abilityHolder);
+        m_CurrentAbility.Trigger();
 
     }
     

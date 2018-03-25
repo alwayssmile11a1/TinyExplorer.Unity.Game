@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class AbilitySO : ScriptableObject {
+public abstract class AbilityScriptableObject : ScriptableObject {
 
     public string abilityName = "New Ability";
 

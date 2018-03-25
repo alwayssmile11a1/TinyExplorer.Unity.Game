@@ -100,10 +100,14 @@ namespace Gamekit2D
                 
                 if (damageable)
                 {
+
                     OnDamageableHit.Invoke(this, damageable);
                     damageable.TakeDamage(this, ignoreInvincibility);
                     if (disableDamageAfterHit)
+                    {
+                        
                         DisableDamage();
+                    }
                 }
                 else
                 {

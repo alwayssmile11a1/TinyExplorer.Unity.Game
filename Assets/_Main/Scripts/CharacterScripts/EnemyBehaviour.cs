@@ -103,6 +103,8 @@ public class EnemyBehaviour : MonoBehaviour
     protected readonly int m_HashDeathPara = Animator.StringToHash("Death");
     protected readonly int m_HashGroundedPara = Animator.StringToHash("Grounded");
 
+
+
     private void Awake()
     {
         m_CharacterController2D = GetComponent<CharacterController2D>();
@@ -152,6 +154,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (meleeDamager)
             m_LocalDamagerPosition = meleeDamager.transform.localPosition;
+
     }
 
     void FixedUpdate()
@@ -507,6 +510,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
         m_FlickeringCoroutine = StartCoroutine(Flicker(damageable));
+
         CameraShaker.Shake(0.15f, 0.3f);
     }
 

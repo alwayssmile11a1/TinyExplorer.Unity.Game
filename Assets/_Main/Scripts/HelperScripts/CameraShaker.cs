@@ -8,7 +8,6 @@ namespace Gamekit2D
     {
         static protected CameraShaker s_Instance = null;
 
-
         protected Vector3 m_LastVector;
         protected float m_SinceShakeTime = 0.0f;
         protected float m_ShakeIntensity = 0.2f;

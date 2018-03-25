@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(menuName = "Ability/BulletShootAbility", order = 2)]
-public class BulletShootAbility : AbilitySO {
+public class BulletShootAbility : AbilityScriptableObject {
 
     public float fireRate = 5f;
     public float bulletSpeed = 5f;

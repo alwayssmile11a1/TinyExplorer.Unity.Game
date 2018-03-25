@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Gamekit2D;
 
 [RequireComponent(typeof(CharacterInput))]
 [RequireComponent(typeof(CharacterController2D))]
@@ -8,6 +9,7 @@ public class AlessiaController : MonoBehaviour {
 
     public float speed = 5f;
     public float jumpForce = 400f;
+    public float timeBetweenFlickering = 0;
 
     private CharacterController2D m_CharacterController2D;
     private Vector2 m_Velocity = new Vector2();
@@ -16,9 +18,13 @@ public class AlessiaController : MonoBehaviour {
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
     private CharacterInput m_CharacterInput;
+    private Coroutine m_FlickeringCoroutine;
+    private Color m_OriginalColor;
+    private Flicker flicker;
 
     private int m_HashGroundedPara = Animator.StringToHash("Grounded");
     private int m_HashRunPara = Animator.StringToHash("Run");
+
 
     void Awake () {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -26,6 +32,15 @@ public class AlessiaController : MonoBehaviour {
         m_Animator = GetComponent<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_CharacterInput = GetComponent<CharacterInput>();
+        m_OriginalColor = m_SpriteRenderer.color;
+        flicker = gameObject.AddComponent<Flicker>();
+
+    }
+
+    private void Start()
+    {
+        //flicker = new Flicker();
+        
     }
 
     // Update is called once per frame
@@ -42,6 +57,23 @@ public class AlessiaController : MonoBehaviour {
             m_VerticalForce = jumpForce;
         }
     }
+
+    public void GotHit(Damager damager, Damageable damageable)
+    {
+        if (m_FlickeringCoroutine != null)
+        {
+            //StopCoroutine(m_FlickeringCoroutine);
+            flicker.StopFlickering();
+            m_SpriteRenderer.color = m_OriginalColor;
+        }
+
+        m_FlickeringCoroutine = flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
+        CameraShaker.Shake(0.1f, 0.1f);
+
+    }
+
+
+
 
     private void FixedUpdate()
     {
