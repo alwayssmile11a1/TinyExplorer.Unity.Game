@@ -68,6 +68,7 @@ public class AlessiaController : MonoBehaviour {
         }
 
         m_FlickeringCoroutine = flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
+
         CameraShaker.Shake(0.1f, 0.1f);
 
     }
