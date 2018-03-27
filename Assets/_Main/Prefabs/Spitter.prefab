@@ -171,7 +171,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 114436968245114748, guid: e296f193e6a24c84faaf939bab6adf08,
     type: 2}
   viewDirection: 0
-  viewFov: 118
+  viewFov: 124
   viewDistance: 5
   timeBeforeTargetLost: 3
   meleeRange: 0

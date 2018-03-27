@@ -4,16 +4,29 @@ using UnityEngine;
 
 public class Summoner : MonoBehaviour {
 
-    public GameObject enemyToSpawn;
+    public Transform targetToTrack;
 
-    public Transform[] spawnEnemyPositions;
+    public GameObject rangeEnemyToSpawn;
+    public GameObject meleeEnemyToSpawn;
+    public GameObject fireBall;
+
+
+    public List<Transform> spawnRangeEnemyPositions;
+    public List<Transform> spawnMeleeEnemyPositions;
+
     public Transform[] teleportPositions;
 
     private Animator m_Animator;
+    
+    //store spawned enemies and their spawned positions (in order to not spawn another enemy on top of an already spawned one)
+    private List<KeyValuePair<Transform,GameObject>> m_SpawnedRangeEnemies = new List<KeyValuePair<Transform, GameObject>>();
+    private List<KeyValuePair<Transform, GameObject>> m_SpawnedMeleeEnemies = new List<KeyValuePair<Transform, GameObject>>();
+
 
     private void Awake()
     {
         m_Animator = GetComponent<Animator>();
+        
     }
 
   
@@ -35,24 +48,102 @@ public class Summoner : MonoBehaviour {
 
         yield return new WaitForSeconds(2f);
 
-        if (enemyToSpawn != null || spawnEnemyPositions.Length == 0)
+
+
+        //random the number of enemies to spawn
+        int numberOfEnemies = Random.Range(1, 3);
+
+
+        for (int i = 0; i < numberOfEnemies; i++)
         {
+            //random type of enemies to spawn (1 is range, 2 is melee)
+            int type = Random.Range(1, 3);
 
-            int randomIndex = Random.Range(0, spawnEnemyPositions.Length - 1);
+            switch (type)
+            {
+                case 1:
+                    {
+                        if (!SpawnEnemy(rangeEnemyToSpawn, spawnRangeEnemyPositions, m_SpawnedRangeEnemies))
+                        {
+                            SpawnEnemy(meleeEnemyToSpawn, spawnMeleeEnemyPositions, m_SpawnedMeleeEnemies);
+                        }
 
-            GameObject cloneEnemy = Instantiate(enemyToSpawn, spawnEnemyPositions[randomIndex].position, Quaternion.identity, transform);
+                        break;
+                    }
 
-            Destroy(cloneEnemy, 5f);
-
-
-
+                case 2:
+                    {
+                        if (!SpawnEnemy(meleeEnemyToSpawn, spawnMeleeEnemyPositions, m_SpawnedMeleeEnemies))
+                        {
+                            SpawnEnemy(rangeEnemyToSpawn, spawnRangeEnemyPositions, m_SpawnedRangeEnemies);
+                        }
+                        break;
+                    }
+            }
         }
 
     }
 
+    private bool SpawnEnemy(GameObject enemyToSpawn,List<Transform> positions, List<KeyValuePair<Transform, GameObject>> spawnedEnemies)
+    {
+
+        if (enemyToSpawn == null) return false;
+
+        //find and remove null value from m_SpawnedRangeEnemies
+        for (int i = 0; i < spawnedEnemies.Count; i++)
+        {
+            if (spawnedEnemies[i].Value == null)
+            {
+                positions.Add(spawnedEnemies[i].Key);
+                spawnedEnemies.RemoveAt(i);
+            }
+        }
+
+        if (positions.Count == 0) return false;
+
+        //get random position to spawn an enemy
+        int randomIndex = Random.Range(0, positions.Count);
+        Transform spawnPosition = positions[randomIndex];
+        positions.RemoveAt(randomIndex);
+
+        //spawn enemy
+        GameObject cloneEnemy = Instantiate(enemyToSpawn, spawnPosition.position, Quaternion.identity, transform);
+
+        //add to list of spawned enemies
+        spawnedEnemies.Add(new KeyValuePair<Transform, GameObject>(spawnPosition, cloneEnemy));
+
+
+        return true;
+
+    }
+
+   
 
     public void SpawnFireballs()
     {
+        StartCoroutine(InternalSpawnFireballs());
+
+
+    }
+
+    private IEnumerator InternalSpawnFireballs()
+    {
+        int count = 10;
+
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 spawnPosition = new Vector3(targetToTrack.position.x, targetToTrack.position.y + 10, targetToTrack.position.z);
+
+            GameObject cloneFireBall = Instantiate(fireBall, spawnPosition, Quaternion.identity, transform);
+
+            cloneFireBall.GetComponentInChildren<ParticleSystem>().Play();
+
+            Destroy(cloneFireBall, 20f);
+
+            yield return new WaitForSeconds(2f);
+
+        }
+        
 
     }
 

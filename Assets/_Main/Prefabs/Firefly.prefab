@@ -132,8 +132,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 1604139314583592, guid: a6acd2382f7f42046af3e8b752f6070e, type: 2}
   startShootPosition: {fileID: 4430720402998466}
-  currentAbility: {fileID: 11400000, guid: 2b9d92d7cfc4a414bbcaf687aa902f78, type: 2}
   abilityHolder: {fileID: 1803787450394500}
+  abilities: []
+  currentAbilityIndex: 0
 --- !u!114 &114889721897633120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -318,7 +319,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0.52205884, g: 1, b: 0.9406694, a: 1}
   m_FlipX: 0
