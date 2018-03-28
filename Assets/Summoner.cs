@@ -9,15 +9,21 @@ public class Summoner : MonoBehaviour {
     public GameObject rangeEnemyToSpawn;
     public GameObject meleeEnemyToSpawn;
     public GameObject fireBall;
-
+    
 
     public List<Transform> spawnRangeEnemyPositions;
     public List<Transform> spawnMeleeEnemyPositions;
+
+    public Transform fireBallSpawnPosition1;
+    public Transform fireBallSpawnPosition2;
 
     public Transform[] teleportPositions;
 
     private Animator m_Animator;
     
+
+
+
     //store spawned enemies and their spawned positions (in order to not spawn another enemy on top of an already spawned one)
     private List<KeyValuePair<Transform,GameObject>> m_SpawnedRangeEnemies = new List<KeyValuePair<Transform, GameObject>>();
     private List<KeyValuePair<Transform, GameObject>> m_SpawnedMeleeEnemies = new List<KeyValuePair<Transform, GameObject>>();
@@ -26,7 +32,11 @@ public class Summoner : MonoBehaviour {
     private void Awake()
     {
         m_Animator = GetComponent<Animator>();
-        
+
+        //use as a way to determine where to spawn fireBall 
+        EdgeCollider2D m_EdgeCollider2D = GetComponent<EdgeCollider2D>();
+
+        Debug.Log(fireBallSpawnPosition1);
     }
 
   
@@ -119,24 +129,32 @@ public class Summoner : MonoBehaviour {
 
    
 
-    public void SpawnFireballs()
+    public void SpawnFireballs(int n)
     {
-        StartCoroutine(InternalSpawnFireballs());
+        StartCoroutine(InternalSpawnFireballs(n));
 
 
     }
 
-    private IEnumerator InternalSpawnFireballs()
+    private IEnumerator InternalSpawnFireballs(int n)
     {
-        int count = 10;
-
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < n; i++)
         {
-            Vector3 spawnPosition = new Vector3(targetToTrack.position.x, targetToTrack.position.y + 10, targetToTrack.position.z);
 
+            //position to spawn
+            Vector3 spawnPosition = new Vector3(Random.Range(fireBallSpawnPosition1.position.x, fireBallSpawnPosition2.position.x), fireBallSpawnPosition1.position.y, 0);
             GameObject cloneFireBall = Instantiate(fireBall, spawnPosition, Quaternion.identity, transform);
 
-            cloneFireBall.GetComponentInChildren<ParticleSystem>().Play();
+            //direction from player to the fireball
+            Vector3 direction = (targetToTrack.position - cloneFireBall.transform.position).normalized;
+
+            Rigidbody2D rb2d = cloneFireBall.GetComponent<Rigidbody2D>();
+
+            rb2d.velocity = direction * 5f;
+
+            float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            cloneFireBall.transform.rotation = Quaternion.Euler(0, 0, rotationZ);
 
             Destroy(cloneFireBall, 20f);
 

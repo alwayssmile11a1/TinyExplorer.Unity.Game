@@ -186,99 +186,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1001 &36365382
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 114707268753574814, guid: bb6a31aa97f442e42afe719430f9c367,
-        type: 2}
-      propertyPath: inputButtons.Array.data[0].inputEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 117.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 3.19
-      objectReference: {fileID: 0}
-    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114568958552978696, guid: bb6a31aa97f442e42afe719430f9c367,
-        type: 2}
-      propertyPath: targetToTrack
-      value: 
-      objectReference: {fileID: 597184113}
-    - target: {fileID: 114568958552978696, guid: bb6a31aa97f442e42afe719430f9c367,
-        type: 2}
-      propertyPath: rangeEnemyToSpawn
-      value: 
-      objectReference: {fileID: 777006464}
-    - target: {fileID: 114568958552978696, guid: bb6a31aa97f442e42afe719430f9c367,
-        type: 2}
-      propertyPath: meleeEnemyToSpawn
-      value: 
-      objectReference: {fileID: 777006464}
-    - target: {fileID: 114568958552978696, guid: bb6a31aa97f442e42afe719430f9c367,
-        type: 2}
-      propertyPath: fireBall
-      value: 
-      objectReference: {fileID: 1024522825700946, guid: eb04644a0e8fc7a49890b78efa16ed9a,
-        type: 2}
-    - target: {fileID: 114707268753574814, guid: bb6a31aa97f442e42afe719430f9c367,
-        type: 2}
-      propertyPath: inputButtons.Array.data[0].inputEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114707268753574814, guid: bb6a31aa97f442e42afe719430f9c367,
-        type: 2}
-      propertyPath: inputButtons.Array.data[0].inputEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114707268753574814, guid: bb6a31aa97f442e42afe719430f9c367,
-        type: 2}
-      propertyPath: inputButtons.Array.data[0].inputEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 261955806}
-    - target: {fileID: 114707268753574814, guid: bb6a31aa97f442e42afe719430f9c367,
-        type: 2}
-      propertyPath: inputButtons.Array.data[0].inputEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SpawnFireballs
-      objectReference: {fileID: 0}
-    - target: {fileID: 114707268753574814, guid: bb6a31aa97f442e42afe719430f9c367,
-        type: 2}
-      propertyPath: inputButtons.Array.data[0].inputEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &66365165
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,12 +259,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!114 &261955806 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114568958552978696, guid: bb6a31aa97f442e42afe719430f9c367,
-    type: 2}
-  m_PrefabInternal: {fileID: 36365382}
-  m_Script: {fileID: 11500000, guid: f7de6e399942bb24c82c67d7e5726590, type: 3}
 --- !u!1 &324302311
 GameObject:
   m_ObjectHideFlags: 0
@@ -6903,7 +6804,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 679012108}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 106.85, y: 2.18, z: -9.52}
+  m_LocalPosition: {x: 106.85, y: 2.6899998, z: -9.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 870006505}
@@ -7244,6 +7145,63 @@ Tilemap:
     m_DirtyIndex: 0
   - serializedVersion: 1
     m_DirtyIndex: 0
+--- !u!1001 &736879135
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 117.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 3.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652034378131056, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114568958552978696, guid: bb6a31aa97f442e42afe719430f9c367,
+        type: 2}
+      propertyPath: targetToTrack
+      value: 
+      objectReference: {fileID: 597184113}
+    - target: {fileID: 114568958552978696, guid: bb6a31aa97f442e42afe719430f9c367,
+        type: 2}
+      propertyPath: rangeEnemyToSpawn
+      value: 
+      objectReference: {fileID: 777006464}
+    - target: {fileID: 114568958552978696, guid: bb6a31aa97f442e42afe719430f9c367,
+        type: 2}
+      propertyPath: meleeEnemyToSpawn
+      value: 
+      objectReference: {fileID: 777006464}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: bb6a31aa97f442e42afe719430f9c367, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &777006464 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1447804200621332, guid: 9beba4fdf96cf1147942762d7dc70ea0,
@@ -7352,14 +7310,6 @@ Prefab:
       propertyPath: targetToTrack
       value: 
       objectReference: {fileID: 597184112}
-    - target: {fileID: 1638026535861240, guid: 9beba4fdf96cf1147942762d7dc70ea0, type: 2}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1447804200621332, guid: 9beba4fdf96cf1147942762d7dc70ea0, type: 2}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9beba4fdf96cf1147942762d7dc70ea0, type: 2}
   m_IsPrefabParent: 0

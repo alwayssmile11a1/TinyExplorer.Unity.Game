@@ -71,6 +71,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1700732771961750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4582643710059584}
+  m_Layer: 10
+  m_Name: FireBallSpawnPosition (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: -6488666005112524639, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1758613739265716
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,6 +106,21 @@ GameObject:
   m_Name: Summoner
   m_TagString: Summoner
   m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1857476840868516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4342072080717630}
+  m_Layer: 10
+  m_Name: FireBallSpawnPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: -6488666005112524639, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -135,6 +165,19 @@ Transform:
   m_Father: {fileID: 4652034378131056}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4342072080717630
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1857476840868516}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -20.88, y: 8.09, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4652034378131056}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4529449990748278
 Transform:
   m_ObjectHideFlags: 1
@@ -160,6 +203,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4652034378131056}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4582643710059584
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1700732771961750}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.48, y: 8.09, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4652034378131056}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4640489596478060
 Transform:
@@ -189,6 +245,8 @@ Transform:
   - {fileID: 4198174416858122}
   - {fileID: 4094101169395722}
   - {fileID: 4550864993209100}
+  - {fileID: 4342072080717630}
+  - {fileID: 4582643710059584}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -258,6 +316,7 @@ MonoBehaviour:
   targetToTrack: {fileID: 0}
   rangeEnemyToSpawn: {fileID: 0}
   meleeEnemyToSpawn: {fileID: 0}
+  fireBall: {fileID: 1153904941152902, guid: cda2eb2906c11f3438488d163bccbf1a, type: 2}
   spawnRangeEnemyPositions:
   - {fileID: 4198174416858122}
   - {fileID: 4094101169395722}
@@ -265,6 +324,8 @@ MonoBehaviour:
   spawnMeleeEnemyPositions:
   - {fileID: 4640489596478060}
   - {fileID: 4529449990748278}
+  fireBallSpawnPosition1: {fileID: 4342072080717630}
+  fireBallSpawnPosition2: {fileID: 4582643710059584}
   teleportPositions: []
 --- !u!114 &114636979705051030
 MonoBehaviour:
@@ -330,6 +391,17 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 114568958552978696}
+          m_MethodName: SpawnFireballs
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 10
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0

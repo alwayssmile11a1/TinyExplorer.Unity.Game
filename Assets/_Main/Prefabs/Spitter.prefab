@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114400847232115938}
   - component: {fileID: 114375883491547376}
   - component: {fileID: 114236781554603750}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4565636422142462}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShootingOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
