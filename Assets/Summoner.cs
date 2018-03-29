@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Gamekit2D;
 
 public class Summoner : MonoBehaviour {
 
@@ -8,8 +9,9 @@ public class Summoner : MonoBehaviour {
 
     public GameObject rangeEnemyToSpawn;
     public GameObject meleeEnemyToSpawn;
+
     public GameObject fireBall;
-    
+    public GameObject concentratingAttack;
 
     public List<Transform> spawnRangeEnemyPositions;
     public List<Transform> spawnMeleeEnemyPositions;
@@ -20,9 +22,9 @@ public class Summoner : MonoBehaviour {
     public Transform[] teleportPositions;
 
     private Animator m_Animator;
-    
 
-
+    private BulletPool m_FireBallPool;
+    private BulletPool m_ConcentratingAttackPool;
 
     //store spawned enemies and their spawned positions (in order to not spawn another enemy on top of an already spawned one)
     private List<KeyValuePair<Transform,GameObject>> m_SpawnedRangeEnemies = new List<KeyValuePair<Transform, GameObject>>();
@@ -33,8 +35,8 @@ public class Summoner : MonoBehaviour {
     {
         m_Animator = GetComponent<Animator>();
 
-        //use as a way to determine where to spawn fireBall 
-        EdgeCollider2D m_EdgeCollider2D = GetComponent<EdgeCollider2D>();
+        m_FireBallPool = BulletPool.GetObjectPool(fireBall, 10);
+        m_ConcentratingAttackPool = BulletPool.GetObjectPool(concentratingAttack, 5);
 
     }
 
@@ -142,20 +144,17 @@ public class Summoner : MonoBehaviour {
 
             //position to spawn
             Vector3 spawnPosition = new Vector3(Random.Range(fireBallSpawnPosition1.position.x, fireBallSpawnPosition2.position.x), fireBallSpawnPosition1.position.y, 0);
-            GameObject cloneFireBall = Instantiate(fireBall, spawnPosition, Quaternion.identity, transform);
+
+            BulletObject fireBall = m_FireBallPool.Pop(spawnPosition);
 
             //direction from player to the fireball
-            Vector3 direction = (targetToTrack.position - cloneFireBall.transform.position).normalized;
+            Vector3 direction = (targetToTrack.position - fireBall.transform.position).normalized;
 
-            Rigidbody2D rb2d = cloneFireBall.GetComponent<Rigidbody2D>();
+            fireBall.rigidbody2D.velocity = direction * 5f;
 
-            rb2d.velocity = direction * 5f;
-
+            //rotate to player
             float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-            cloneFireBall.transform.rotation = Quaternion.Euler(0, 0, rotationZ);
-
-            Destroy(cloneFireBall, 20f);
+            fireBall.transform.rotation = Quaternion.Euler(0, 0, rotationZ);
 
             yield return new WaitForSeconds(2f);
 
@@ -165,8 +164,33 @@ public class Summoner : MonoBehaviour {
     }
 
 
-    public void SpawnConcentratingAttack()
+    public void SpawnConcentratingAttack(int n)
     {
+
+        StartCoroutine(InternalSpawnConcentraingAttack(n));
+    }
+
+    private IEnumerator InternalSpawnConcentraingAttack(int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+
+            Vector3 spawnPosition = new Vector3(targetToTrack.transform.position.x,targetToTrack.transform.position.y+0.5f,0);
+
+            BulletObject concentratingAttack = m_ConcentratingAttackPool.Pop(spawnPosition);
+
+            Damager damager = concentratingAttack.bullet.GetComponent<Damager>();
+
+            damager.DisableDamage();
+            
+            yield return new WaitForSeconds(0.8f);
+
+            damager.EnableDamage();
+
+            yield return new WaitForSeconds(0.5f);
+
+
+        }
 
     }
 
@@ -176,11 +200,6 @@ public class Summoner : MonoBehaviour {
         
     }
 
-
-    public void SelfCopy()
-    {
-
-    }
 
 
 }
