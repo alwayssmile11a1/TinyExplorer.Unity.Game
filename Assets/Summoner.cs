@@ -36,7 +36,6 @@ public class Summoner : MonoBehaviour {
         //use as a way to determine where to spawn fireBall 
         EdgeCollider2D m_EdgeCollider2D = GetComponent<EdgeCollider2D>();
 
-        Debug.Log(fireBallSpawnPosition1);
     }
 
   

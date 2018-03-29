@@ -242,6 +242,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void ScanForTarget()
     {
+        
         ////If the player don't have control, they can't react, so do not pursue them
         //if (!PlayerInput.Instance.HaveControl)
         //    return;
@@ -250,8 +251,10 @@ public class EnemyBehaviour : MonoBehaviour
 
         Vector3 dir = targetToTrack.transform.position - transform.position;
 
+
         if (dir.sqrMagnitude > viewDistance * viewDistance)
         {
+
             return;
         }
 
@@ -263,8 +266,10 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (angle > viewFov * 0.5f)
         {
+
             return;
         }
+
 
         m_Target = targetToTrack.transform;
         m_TimeSinceLastTargetView = timeBeforeTargetLost;
@@ -274,6 +279,9 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void OrientToTarget()
     {
+
+        Debug.Log("Hello");
+
         if (m_Target == null)
             return;
 
