@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 50628598307325592}
   - component: {fileID: 70975722160078624}
   - component: {fileID: 114637860677476914}
+  - component: {fileID: 114283029680985336}
   m_Layer: 0
   m_Name: FireBallSpell
   m_TagString: Untagged
@@ -139,6 +140,21 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.5, y: 1}
   m_Direction: 0
+--- !u!114 &114283029680985336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1153904941152902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ea98018d1796f4fa92b4f42b8fad6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyWhenOutOfView: 0
+  spriteOriginallyFacesLeft: 0
+  timeBeforeAutodestruct: 10
+  mainCamera: {fileID: 0}
 --- !u!114 &114637860677476914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -161,7 +177,7 @@ MonoBehaviour:
   ignoreInvincibility: 0
   hittableLayers:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 256
   OnDamageableHit:
     m_PersistentCalls:
       m_Calls: []

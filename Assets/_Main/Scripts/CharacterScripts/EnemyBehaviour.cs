@@ -251,7 +251,6 @@ public class EnemyBehaviour : MonoBehaviour
 
         Vector3 dir = targetToTrack.transform.position - transform.position;
 
-
         if (dir.sqrMagnitude > viewDistance * viewDistance)
         {
 
@@ -279,9 +278,6 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void OrientToTarget()
     {
-
-        Debug.Log("Hello");
-
         if (m_Target == null)
             return;
 
