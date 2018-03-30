@@ -1,0 +1,656 @@
+fileFormatVersion: 2
+guid: dcbb32a0fabeb9b46bc26d4dd17c7c28
+timeCreated: 1522415592
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ShardKnight
+    21300002: PSP - Lunar Silver Star Harmony - Shard Knight_1
+    21300004: PSP - Lunar Silver Star Harmony - Shard Knight_2
+    21300006: PSP - Lunar Silver Star Harmony - Shard Knight_3
+    21300008: PSP - Lunar Silver Star Harmony - Shard Knight_4
+    21300010: PSP - Lunar Silver Star Harmony - Shard Knight_5
+    21300012: PSP - Lunar Silver Star Harmony - Shard Knight_6
+    21300014: PSP - Lunar Silver Star Harmony - Shard Knight_7
+    21300016: PSP - Lunar Silver Star Harmony - Shard Knight_8
+    21300018: PSP - Lunar Silver Star Harmony - Shard Knight_9
+    21300020: PSP - Lunar Silver Star Harmony - Shard Knight_10
+    21300022: PSP - Lunar Silver Star Harmony - Shard Knight_11
+    21300024: PSP - Lunar Silver Star Harmony - Shard Knight_12
+    21300026: PSP - Lunar Silver Star Harmony - Shard Knight_13
+    21300028: PSP - Lunar Silver Star Harmony - Shard Knight_14
+    21300030: PSP - Lunar Silver Star Harmony - Shard Knight_15
+    21300032: PSP - Lunar Silver Star Harmony - Shard Knight_16
+    21300034: PSP - Lunar Silver Star Harmony - Shard Knight_17
+    21300036: PSP - Lunar Silver Star Harmony - Shard Knight_18
+    21300038: PSP - Lunar Silver Star Harmony - Shard Knight_19
+    21300040: PSP - Lunar Silver Star Harmony - Shard Knight_20
+    21300042: PSP - Lunar Silver Star Harmony - Shard Knight_21
+    21300044: PSP - Lunar Silver Star Harmony - Shard Knight_22
+    21300046: PSP - Lunar Silver Star Harmony - Shard Knight_23
+    21300048: PSP - Lunar Silver Star Harmony - Shard Knight_24
+    21300050: PSP - Lunar Silver Star Harmony - Shard Knight_25
+    21300052: PSP - Lunar Silver Star Harmony - Shard Knight_26
+    21300054: PSP - Lunar Silver Star Harmony - Shard Knight_27
+    21300056: PSP - Lunar Silver Star Harmony - Shard Knight_28
+    21300058: PSP - Lunar Silver Star Harmony - Shard Knight_29
+    21300060: PSP - Lunar Silver Star Harmony - Shard Knight_30
+    21300062: PSP - Lunar Silver Star Harmony - Shard Knight_31
+    21300064: PSP - Lunar Silver Star Harmony - Shard Knight_32
+    21300066: PSP - Lunar Silver Star Harmony - Shard Knight_33
+    21300068: PSP - Lunar Silver Star Harmony - Shard Knight_34
+    21300070: PSP - Lunar Silver Star Harmony - Shard Knight_35
+    21300072: PSP - Lunar Silver Star Harmony - Shard Knight_36
+    21300074: PSP - Lunar Silver Star Harmony - Shard Knight_37
+    21300076: PSP - Lunar Silver Star Harmony - Shard Knight_38
+    21300078: PSP - Lunar Silver Star Harmony - Shard Knight_39
+    21300080: PSP - Lunar Silver Star Harmony - Shard Knight_40
+    21300082: PSP - Lunar Silver Star Harmony - Shard Knight_41
+    21300084: PSP - Lunar Silver Star Harmony - Shard Knight_42
+    21300086: PSP - Lunar Silver Star Harmony - Shard Knight_43
+    21300088: PSP - Lunar Silver Star Harmony - Shard Knight_44
+    21300090: PSP - Lunar Silver Star Harmony - Shard Knight_45
+    21300092: PSP - Lunar Silver Star Harmony - Shard Knight_46
+    21300094: ShardKnight_0
+    21300096: ShardKnight_1
+    21300098: ShardKnight_2
+    21300100: ShardKnight_3
+    21300102: ShardKnight_4
+    21300104: ShardKnight_5
+    21300106: ShardKnight_6
+    21300108: ShardKnight_7
+    21300110: ShardKnight_8
+    21300112: ShardKnight_9
+    21300114: ShardKnight_10
+    21300116: ShardKnight_11
+    21300118: ShardKnight_12
+    21300120: ShardKnight_13
+    21300122: ShardKnight_14
+    21300124: ShardKnight_15
+    21300126: ShardKnight_16
+    21300128: ShardKnight_17
+    21300130: ShardKnight_18
+    21300132: ShardKnight_19
+    21300134: ShardKnight_21
+    21300136: ShardKnight_22
+    21300138: ShardKnight_23
+    21300140: ShardKnight_24
+    21300142: ShardKnight_26
+    21300144: ShardKnight_27
+    21300146: ShardKnight_29
+    21300148: ShardKnight_30
+    21300150: ShardKnight_31
+    21300152: ShardKnight_32
+    21300154: ShardKnight_33
+    21300156: ShardKnight_34
+    21300158: ShardKnight_35
+    21300160: ShardKnight_36
+    21300162: ShardKnight_37
+    21300164: ShardKnight_38
+    21300166: ShardKnight_39
+    21300168: ShardKnight_40
+    21300170: ShardKnight_41
+    21300172: ShardKnight_43
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 50
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ShardKnight_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 419
+        width: 64
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_1
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 420
+        width: 64
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_2
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 422
+        width: 65
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_3
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 422
+        width: 64
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_4
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 422
+        width: 62
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_5
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 419
+        width: 64
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_6
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 348
+        width: 56
+        height: 155
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_10
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 321
+        width: 56
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_11
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 324
+        width: 56
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_12
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 323
+        width: 64
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_13
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 327
+        width: 64
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_14
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 324
+        width: 66
+        height: 83
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_15
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 324
+        width: 60
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_21
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 233
+        width: 70
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_22
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 229
+        width: 56
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_23
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 225
+        width: 64
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_24
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 219
+        width: 86
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_26
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 235
+        width: 74
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_27
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 219
+        width: 86
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_29
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 170
+        width: 56
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_30
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 171
+        width: 67
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_31
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 170
+        width: 63
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_32
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 161
+        width: 71
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_33
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 162
+        width: 56
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_34
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 161
+        width: 44
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_35
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 69
+        width: 64
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_36
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 77
+        width: 64
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_37
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 108
+        width: 64
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_38
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 81
+        width: 37
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_39
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 74
+        width: 52
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_40
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 71
+        width: 58
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_41
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 68
+        width: 54
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ShardKnight_43
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 67
+        width: 59
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

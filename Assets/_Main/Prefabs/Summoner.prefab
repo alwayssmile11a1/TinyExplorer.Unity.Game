@@ -317,6 +317,8 @@ MonoBehaviour:
   rangeEnemyToSpawn: {fileID: 0}
   meleeEnemyToSpawn: {fileID: 0}
   fireBall: {fileID: 1153904941152902, guid: cda2eb2906c11f3438488d163bccbf1a, type: 2}
+  concentratingAttack: {fileID: 1574913558279208, guid: dba4461b3bbe2a64aa5230155a4337fb,
+    type: 2}
   spawnRangeEnemyPositions:
   - {fileID: 4198174416858122}
   - {fileID: 4094101169395722}
@@ -401,7 +403,18 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 10
+            m_IntArgument: 5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 114568958552978696}
+          m_MethodName: SpawnConcentratingAttack
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0

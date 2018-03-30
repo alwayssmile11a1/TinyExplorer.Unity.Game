@@ -12,6 +12,8 @@ public class Summoner : MonoBehaviour {
 
     public GameObject fireBall;
     public GameObject concentratingAttack;
+    public GameObject dashEffect;
+    public float dashSpeed = 20f;
 
     public List<Transform> spawnRangeEnemyPositions;
     public List<Transform> spawnMeleeEnemyPositions;
@@ -23,6 +25,8 @@ public class Summoner : MonoBehaviour {
 
     private Animator m_Animator;
 
+    private Rigidbody2D m_RigidBody2D;
+
     private BulletPool m_FireBallPool;
     private BulletPool m_ConcentratingAttackPool;
 
@@ -31,9 +35,17 @@ public class Summoner : MonoBehaviour {
     private List<KeyValuePair<Transform, GameObject>> m_SpawnedMeleeEnemies = new List<KeyValuePair<Transform, GameObject>>();
 
 
+    private int m_HashFireBallAttackPara = Animator.StringToHash("FireBallAttack");
+    private int m_HashExplodingAttackPara = Animator.StringToHash("ExplodingAttack");
+    private int m_HashHurtPara = Animator.StringToHash("Hurt");
+    private int m_HashTransformPara = Animator.StringToHash("Transform");
+    private int m_HashEndAnimationPara = Animator.StringToHash("End"); 
+
     private void Awake()
     {
         m_Animator = GetComponent<Animator>();
+
+        m_RigidBody2D = GetComponentInParent<Rigidbody2D>();
 
         m_FireBallPool = BulletPool.GetObjectPool(fireBall, 10);
         m_ConcentratingAttackPool = BulletPool.GetObjectPool(concentratingAttack, 5);
@@ -55,8 +67,7 @@ public class Summoner : MonoBehaviour {
     private IEnumerator InternalSpawnEnemies()
     {
 
-        m_Animator.SetTrigger("StartSummoning");
-
+       
         yield return new WaitForSeconds(2f);
 
 
@@ -139,6 +150,8 @@ public class Summoner : MonoBehaviour {
 
     private IEnumerator InternalSpawnFireballs(int n)
     {
+        m_Animator.SetTrigger(m_HashFireBallAttackPara);
+
         for (int i = 0; i < n; i++)
         {
 
@@ -159,8 +172,8 @@ public class Summoner : MonoBehaviour {
             yield return new WaitForSeconds(2f);
 
         }
-        
 
+        m_Animator.SetTrigger(m_HashEndAnimationPara);
     }
 
 
@@ -172,6 +185,8 @@ public class Summoner : MonoBehaviour {
 
     private IEnumerator InternalSpawnConcentraingAttack(int n)
     {
+        m_Animator.SetTrigger(m_HashExplodingAttackPara);
+
         for (int i = 0; i < n; i++)
         {
 
@@ -192,13 +207,48 @@ public class Summoner : MonoBehaviour {
 
         }
 
+        m_Animator.SetTrigger(m_HashEndAnimationPara);
     }
 
 
-    public void Teleport()
+    public void ChangeForm()
     {
-        
+        m_Animator.SetTrigger(m_HashTransformPara);
     }
+
+    
+    public void Dash()
+    {
+
+        StartCoroutine(InternalDash());
+
+    }
+
+
+    private IEnumerator InternalDash()
+    {
+        dashEffect.SetActive(true);
+
+        Vector3 targetPosition = new Vector3(targetToTrack.transform.position.x, targetToTrack.transform.position.y + 0.5f, 0);
+
+        Vector3 direction = (targetPosition - transform.position).normalized;
+
+        //rotate to player
+        float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, rotationZ-90);
+
+        m_RigidBody2D.velocity = direction * dashSpeed;
+
+        yield return new WaitForSeconds(1f);
+
+        dashEffect.SetActive(false);
+
+        m_RigidBody2D.velocity = Vector3.zero;
+
+        transform.rotation = Quaternion.identity;
+
+    }
+
 
 
 
