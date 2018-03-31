@@ -242,24 +242,26 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void ScanForTarget()
     {
-        
+
         ////If the player don't have control, they can't react, so do not pursue them
         //if (!PlayerInput.Instance.HaveControl)
         //    return;
-
+        
         if (targetToTrack == null) return;
 
         Vector3 dir = targetToTrack.transform.position - transform.position;
 
         if (dir.sqrMagnitude > viewDistance * viewDistance)
         {
-
+            Debug.Log(dir.sqrMagnitude);
+            Debug.Log(targetToTrack.transform.position);
+            Debug.Log(transform.position);
             return;
         }
 
         Vector3 testForward = Quaternion.Euler(0, 0, spriteFaceLeft ? Mathf.Sign(m_SpriteForward.x) * -viewDirection : Mathf.Sign(m_SpriteForward.x) * viewDirection) * m_SpriteForward;
 
-
+  
 
         float angle = Vector3.Angle(testForward, dir);
 
