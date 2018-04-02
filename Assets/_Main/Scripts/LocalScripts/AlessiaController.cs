@@ -18,9 +18,7 @@ public class AlessiaController : MonoBehaviour {
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
     private CharacterInput m_CharacterInput;
-    private Coroutine m_FlickeringCoroutine;
-    private Color m_OriginalColor;
-    private Flicker flicker;
+    private Flicker m_Flicker;
 
     private int m_HashGroundedPara = Animator.StringToHash("Grounded");
     private int m_HashRunPara = Animator.StringToHash("Run");
@@ -32,8 +30,7 @@ public class AlessiaController : MonoBehaviour {
         m_Animator = GetComponent<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_CharacterInput = GetComponent<CharacterInput>();
-        m_OriginalColor = m_SpriteRenderer.color;
-        flicker = gameObject.AddComponent<Flicker>();
+        m_Flicker = gameObject.AddComponent<Flicker>();
 
     }
 
@@ -60,14 +57,7 @@ public class AlessiaController : MonoBehaviour {
 
     public void GotHit(Damager damager, Damageable damageable)
     {
-        if (m_FlickeringCoroutine != null)
-        {
-            //StopCoroutine(m_FlickeringCoroutine);
-            flicker.StopFlickering();
-            m_SpriteRenderer.color = m_OriginalColor;
-        }
-
-        m_FlickeringCoroutine = flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
+        m_Flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
 
         CameraShaker.Shake(0.1f, 0.1f);
 

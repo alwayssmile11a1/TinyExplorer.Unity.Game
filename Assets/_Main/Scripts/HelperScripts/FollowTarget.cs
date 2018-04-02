@@ -63,7 +63,7 @@ public class FollowTarget : MonoBehaviour {
 
         for (int i = 0; i < offsets.Length; i++)
         {
-            Handles.color = new Color(1.0f, 0, 0, 0.1f);
+            Handles.color = new Color(1.0f, 0, 0, 0.5f);
             Handles.DrawSolidDisc(target.position + offsets[i], Vector3.back, 0.1f);
         }
 

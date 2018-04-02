@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Gamekit2D;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class Flicker : MonoBehaviour {
+
+    public float duration;
+    public float timeBetweenFlickering;
 
     private SpriteRenderer m_SpriteRenderer;
     private Color m_OriginalColor;
-    private float m_Duration;
-    private float m_TimeBetweenFlickering;
     private Coroutine m_Coroutine;
+
 
     private void Awake()
     {
@@ -17,13 +20,31 @@ public class Flicker : MonoBehaviour {
         m_OriginalColor = m_SpriteRenderer.color;
     }
 
+    public void StartFlickering()
+    {
+        InternalFlickering(duration, timeBetweenFlickering);
+    }
 
+   
     public Coroutine StartFlickering(float duration, float timeBetweenFlickering)
     {
-        m_Duration = duration;
-        m_TimeBetweenFlickering = timeBetweenFlickering;
+        return InternalFlickering(duration, timeBetweenFlickering);
+    }
 
-        m_Coroutine =  StartCoroutine(Flickering());
+    private Coroutine InternalFlickering(float duration, float timeBetweenFlickering)
+    {
+        this.duration = duration;
+        this.timeBetweenFlickering = timeBetweenFlickering;
+
+        //stop previous corountine
+        if (m_Coroutine != null)
+        {
+            m_SpriteRenderer.color = m_OriginalColor;
+            StopFlickering();
+        }
+
+        //start new coroutine
+        m_Coroutine = StartCoroutine(Flickering());
 
         return m_Coroutine;
     }
@@ -45,14 +66,14 @@ public class Flicker : MonoBehaviour {
 
         m_SpriteRenderer.color = transparent;
 
-        while (timer < m_Duration)
+        while (timer < duration)
         {
             yield return null;
             timer += Time.deltaTime;
             sinceLastChange += Time.deltaTime;
-            if (sinceLastChange > m_TimeBetweenFlickering)
+            if (sinceLastChange > timeBetweenFlickering)
             {
-                sinceLastChange -= m_TimeBetweenFlickering;
+                sinceLastChange -= timeBetweenFlickering;
                 state = 1 - state;
                 m_SpriteRenderer.color = state == 1 ? transparent : m_OriginalColor;
             }

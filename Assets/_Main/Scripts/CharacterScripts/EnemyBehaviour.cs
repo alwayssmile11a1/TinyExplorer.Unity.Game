@@ -253,9 +253,6 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (dir.sqrMagnitude > viewDistance * viewDistance)
         {
-            Debug.Log(dir.sqrMagnitude);
-            Debug.Log(targetToTrack.transform.position);
-            Debug.Log(transform.position);
             return;
         }
 

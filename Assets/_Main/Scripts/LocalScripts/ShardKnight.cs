@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Gamekit2D;
 
-public class Summoner : MonoBehaviour {
+public class ShardKnight : MonoBehaviour {
 
     public Transform targetToTrack;
 
@@ -14,6 +14,8 @@ public class Summoner : MonoBehaviour {
     public GameObject concentratingAttack;
     public GameObject dashEffect;
     public float dashSpeed = 20f;
+
+    public float timeBetweenFlickering = 0.1f;
 
     public List<Transform> spawnRangeEnemyPositions;
     public List<Transform> spawnMeleeEnemyPositions;
@@ -39,17 +41,19 @@ public class Summoner : MonoBehaviour {
     private int m_HashExplodingAttackPara = Animator.StringToHash("ExplodingAttack");
     private int m_HashHurtPara = Animator.StringToHash("Hurt");
     private int m_HashTransformPara = Animator.StringToHash("Transform");
-    private int m_HashEndAnimationPara = Animator.StringToHash("End"); 
+    private int m_HashEndAnimationPara = Animator.StringToHash("End");
+    private Flicker m_Flicker;
 
     private void Awake()
     {
-        m_Animator = GetComponent<Animator>();
+        m_Animator = GetComponentInChildren<Animator>();
 
         m_RigidBody2D = GetComponentInParent<Rigidbody2D>();
 
         m_FireBallPool = BulletPool.GetObjectPool(fireBall, 10);
         m_ConcentratingAttackPool = BulletPool.GetObjectPool(concentratingAttack, 5);
 
+        m_Flicker = GetComponentInChildren<SpriteRenderer>().gameObject.AddComponent<Flicker>();
     }
 
   
@@ -171,6 +175,8 @@ public class Summoner : MonoBehaviour {
 
             yield return new WaitForSeconds(2f);
 
+            
+
         }
 
         m_Animator.SetTrigger(m_HashEndAnimationPara);
@@ -204,6 +210,7 @@ public class Summoner : MonoBehaviour {
 
             yield return new WaitForSeconds(0.5f);
 
+            
 
         }
 
@@ -250,6 +257,9 @@ public class Summoner : MonoBehaviour {
     }
 
 
-
+    public void GotHit(Damager damager, Damageable damageable)
+    {
+        m_Flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
+    }
 
 }
