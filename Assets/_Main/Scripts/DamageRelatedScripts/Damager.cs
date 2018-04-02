@@ -97,15 +97,19 @@ namespace Gamekit2D
 
                 //get damageable component if exist
                 Damageable damageable = m_LastHit.GetComponent<Damageable>();
-                
+
                 if (damageable)
                 {
-
+                    //if (!damageable.IsInvulnerable() || ignoreInvincibility)
+                    //{
                     OnDamageableHit.Invoke(this, damageable);
+                    //}
+
                     damageable.TakeDamage(this, ignoreInvincibility);
+
                     if (disableDamageAfterHit)
                     {
-                        
+
                         DisableDamage();
                     }
                 }

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212457478338085524}
   - component: {fileID: 114410710164640852}
   - component: {fileID: 114636512388757260}
+  - component: {fileID: 114870888365400226}
   m_Layer: 0
   m_Name: LightSphere
   m_TagString: Untagged
@@ -54,10 +55,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  offsetRotatingPointFromTarget: {x: 0, y: 0.36, z: 0}
-  distanceFromRotatingPoint: 1
+  rotatingPointFromTargetOffset: {x: 0, y: 0, z: 0}
   speed: 10
-  startOffsetAngle: 0
+  useModifierVariables: 0
+  distanceFromRotatingPoint: 1
+  startAngleOffset: 0
 --- !u!114 &114636512388757260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   offset: {x: 0, y: 0}
-  size: {x: 0.15, y: 0.2}
+  size: {x: 0.15, y: 0.15}
   offsetBasedOnSpriteFacing: 0
   spriteRenderer: {fileID: 0}
   canHitTriggers: 0
@@ -83,7 +85,18 @@ MonoBehaviour:
     m_Bits: 1024
   OnDamageableHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114870888365400226}
+        m_MethodName: Hit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Gamekit2D.Damager+DamagableEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnNonDamageableHit:
@@ -91,6 +104,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Gamekit2D.Damager+NonDamagableEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114870888365400226
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1277974255070722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec4a7a3d8186c846b52d4c6b0a69fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deactiveDuration: 1
 --- !u!212 &212457478338085524
 SpriteRenderer:
   m_ObjectHideFlags: 1

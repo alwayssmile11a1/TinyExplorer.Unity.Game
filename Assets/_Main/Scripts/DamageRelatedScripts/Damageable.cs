@@ -88,6 +88,11 @@ namespace Gamekit2D
             return m_DamageDirection;
         }
 
+        public bool IsInvulnerable()
+        {
+            return m_Invulnerable;
+        }
+
         public void TakeDamage(Damager damager, bool ignoreInvincible = false)
         {
             if ((m_Invulnerable && !ignoreInvincible) || m_CurrentHealth <= 0)

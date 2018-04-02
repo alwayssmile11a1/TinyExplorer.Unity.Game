@@ -11,6 +11,7 @@ namespace Gamekit2D
         protected Vector3 m_LastVector;
         protected float m_SinceShakeTime = 0.0f;
         protected float m_ShakeIntensity = 0.2f;
+        protected bool m_CanBeOverrided;
 
         private void OnEnable()
         {
@@ -24,6 +25,10 @@ namespace Gamekit2D
                 m_LastVector = Random.insideUnitCircle * m_ShakeIntensity;
                 transform.localPosition = transform.localPosition + m_LastVector;
             }
+            else
+            {
+                m_CanBeOverrided = true;
+            }
         }
 
         private void OnPostRender()
@@ -33,17 +38,26 @@ namespace Gamekit2D
                 transform.localPosition = transform.localPosition - m_LastVector;
                 m_SinceShakeTime -= Time.deltaTime;
             }
+            else
+            {
+                m_CanBeOverrided = true;
+            }
         }
 
-    
 
-        static public void Shake(float amount, float time)
+        static public void Shake(float amount, float time, bool canBeOverrided = true)
         {
             if (s_Instance == null)
                 return;
 
-            s_Instance.m_ShakeIntensity = amount;
-            s_Instance.m_SinceShakeTime = time;
+            if (s_Instance.m_CanBeOverrided)
+            {
+                s_Instance.m_ShakeIntensity = amount;
+                s_Instance.m_SinceShakeTime = time;
+            }
+
+            s_Instance.m_CanBeOverrided = canBeOverrided;
+
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Gamekit2D;
+using BTAI;
 
 public class ShardKnight : MonoBehaviour {
 
@@ -13,7 +14,7 @@ public class ShardKnight : MonoBehaviour {
     public GameObject fireBall;
     public GameObject concentratingAttack;
     public GameObject dashEffect;
-    public float dashSpeed = 20f;
+    public float dashSpeed = 30f;
 
     public float timeBetweenFlickering = 0.1f;
 
@@ -36,6 +37,7 @@ public class ShardKnight : MonoBehaviour {
     private List<KeyValuePair<Transform,GameObject>> m_SpawnedRangeEnemies = new List<KeyValuePair<Transform, GameObject>>();
     private List<KeyValuePair<Transform, GameObject>> m_SpawnedMeleeEnemies = new List<KeyValuePair<Transform, GameObject>>();
 
+    
 
     private int m_HashFireBallAttackPara = Animator.StringToHash("FireBallAttack");
     private int m_HashExplodingAttackPara = Animator.StringToHash("ExplodingAttack");
@@ -43,6 +45,12 @@ public class ShardKnight : MonoBehaviour {
     private int m_HashTransformPara = Animator.StringToHash("Transform");
     private int m_HashEndAnimationPara = Animator.StringToHash("End");
     private Flicker m_Flicker;
+    private Damageable m_Damageable;
+
+    private Root m_Ai = BT.Root();
+
+    private int m_FireBalls = 5;
+    private int m_ConcentratingAttacks = 5;
 
     private void Awake()
     {
@@ -54,13 +62,43 @@ public class ShardKnight : MonoBehaviour {
         m_ConcentratingAttackPool = BulletPool.GetObjectPool(concentratingAttack, 5);
 
         m_Flicker = GetComponentInChildren<SpriteRenderer>().gameObject.AddComponent<Flicker>();
+
+        m_Damageable = GetComponent<Damageable>();
+
+
+        m_Ai.OpenBranch(
+            BT.If(() => { return m_Damageable.CurrentHealth > m_Damageable.startingHealth / 2; }).OpenBranch(
+
+                BT.RandomSequence(new int[] { 1, 2 }).OpenBranch(
+
+                    BT.Call(SpawnFireballs),
+                    BT.Wait(1f)
+
+                    )
+
+                )
+
+            , BT.If(() => { return m_Damageable.CurrentHealth < m_Damageable.startingHealth / 2; }).OpenBranch(
+
+                BT.RandomSequence(new int[] { 1, 10 }).OpenBranch(
+                    
+                    BT.Call(SpawnFireballs),
+                    BT.Wait(2f * m_FireBalls)
+
+                    )
+              )
+
+        );
+
     }
 
-  
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Update is called once per frame
+    void Update () {
+
+
+        m_Ai.Tick();
+
+    }
 
 
     public void SpawnEnemies()
@@ -145,20 +183,21 @@ public class ShardKnight : MonoBehaviour {
 
    
 
-    public void SpawnFireballs(int n)
+    public void SpawnFireballs()
     {
-        StartCoroutine(InternalSpawnFireballs(n));
+        StartCoroutine(InternalSpawnFireballs());
 
 
     }
 
-    private IEnumerator InternalSpawnFireballs(int n)
+    private IEnumerator InternalSpawnFireballs()
     {
+        CameraShaker.Shake(0.03f, 2f* m_FireBalls, false);
+
         m_Animator.SetTrigger(m_HashFireBallAttackPara);
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < m_FireBalls; i++)
         {
-
             //position to spawn
             Vector3 spawnPosition = new Vector3(Random.Range(fireBallSpawnPosition1.position.x, fireBallSpawnPosition2.position.x), fireBallSpawnPosition1.position.y, 0);
 
@@ -167,7 +206,7 @@ public class ShardKnight : MonoBehaviour {
             //direction from player to the fireball
             Vector3 direction = (targetToTrack.position - fireBall.transform.position).normalized;
 
-            fireBall.rigidbody2D.velocity = direction * 5f;
+            fireBall.rigidbody2D.velocity = direction * 10f;
 
             //rotate to player
             float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -176,24 +215,22 @@ public class ShardKnight : MonoBehaviour {
             yield return new WaitForSeconds(2f);
 
             
-
         }
 
         m_Animator.SetTrigger(m_HashEndAnimationPara);
     }
 
 
-    public void SpawnConcentratingAttack(int n)
+    public void SpawnConcentratingAttack()
     {
-
-        StartCoroutine(InternalSpawnConcentraingAttack(n));
+        StartCoroutine(InternalSpawnConcentraingAttacks());
     }
 
-    private IEnumerator InternalSpawnConcentraingAttack(int n)
+    private IEnumerator InternalSpawnConcentraingAttacks()
     {
         m_Animator.SetTrigger(m_HashExplodingAttackPara);
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < m_ConcentratingAttacks; i++)
         {
 
             Vector3 spawnPosition = new Vector3(targetToTrack.transform.position.x,targetToTrack.transform.position.y+0.5f,0);

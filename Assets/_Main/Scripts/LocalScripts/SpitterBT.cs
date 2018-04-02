@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BTAI;
 
-public class SpitterController : MonoBehaviour {
+public class SpitterBT : MonoBehaviour {
 
     Animator m_Animator;
     Root m_Ai = BT.Root();

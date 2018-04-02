@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 4476163885317492}
   - component: {fileID: 198880172032164806}
   - component: {fileID: 199029384208783266}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DashEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 114756525903514840}
   - component: {fileID: 114110337749823356}
   - component: {fileID: 114941679689908044}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShardKnight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,8 +118,7 @@ GameObject:
   - component: {fileID: 4076791503810988}
   - component: {fileID: 212485604206217840}
   - component: {fileID: 95738265239985652}
-  - component: {fileID: 114691934044503990}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShardKnight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +163,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4849356782051448}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShardKnightDashEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,6 +409,7 @@ MonoBehaviour:
     type: 2}
   dashEffect: {fileID: 1941415158125962}
   dashSpeed: 20
+  timeBetweenFlickering: 0.1
   spawnRangeEnemyPositions:
   - {fileID: 4473252080470854}
   - {fileID: 4819825240284550}
@@ -420,19 +420,6 @@ MonoBehaviour:
   fireBallSpawnPosition1: {fileID: 4991705030900214}
   fireBallSpawnPosition2: {fileID: 4089646357789386}
   teleportPositions: []
---- !u!114 &114691934044503990
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1618226836710230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 987d197336b316a4693daa7706c07ced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 4
-  timeBetweenFlickering: 0.2
 --- !u!114 &114756525903514840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -457,9 +444,20 @@ MonoBehaviour:
   OnTakeDamage:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114691934044503990}
-        m_MethodName: StartFlickering
-        m_Mode: 1
+      - m_Target: {fileID: 114110337749823356}
+        m_MethodName: GotHit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114756525903514840}
+        m_MethodName: EnableInvulnerability
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -489,7 +487,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1488904667589260}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 998e77ca8d858e442b8dd62ef9203a24, type: 3}
   m_Name: 

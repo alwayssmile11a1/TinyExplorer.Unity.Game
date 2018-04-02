@@ -138,7 +138,7 @@ namespace BTAI
                 while (n > 1)
                 {
                     n--;
-                    var k = Mathf.FloorToInt(Random.value * (n + 1));
+                    var k = Mathf.FloorToInt(Random.value * (n)); //????????????????????????
                     var value = children[k];
                     children[k] = children[n];
                     children[n] = value;
@@ -339,11 +339,13 @@ namespace BTAI
 
         public override BTState Tick()
         {
+
             if (isTerminated) return BTState.Abort;
             while (true)
             {
                 switch (children[activeChild].Tick())
                 {
+
                     case BTState.Continue:
                         return BTState.Continue;
                     case BTState.Abort:
@@ -466,7 +468,7 @@ namespace BTAI
 
             for (int i = 0; i < m_AddedWeight.Length; ++i)
             {
-                if (choice - m_AddedWeight[i] <= 0)
+                if (choice - m_AddedWeight[i] < 0)
                 {
                     activeChild = i;
                     break;

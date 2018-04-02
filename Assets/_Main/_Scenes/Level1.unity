@@ -6604,11 +6604,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4337505248384036, guid: afb933bd6c4341044950e7372df4078e, type: 2}
       propertyPath: m_LocalPosition.x
       value: 116.57
@@ -6656,94 +6651,7 @@ Prefab:
       propertyPath: meleeEnemyToSpawn
       value: 
       objectReference: {fileID: 777006464}
-    - target: {fileID: 1488904667589260, guid: afb933bd6c4341044950e7372df4078e, type: 2}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1121778981831172, guid: afb933bd6c4341044950e7372df4078e, type: 2}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1618226836710230, guid: afb933bd6c4341044950e7372df4078e, type: 2}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1941415158125962, guid: afb933bd6c4341044950e7372df4078e, type: 2}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 2024608015}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: EnableInvulnerability
-      objectReference: {fileID: 0}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 2024608015}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: EnableInvulnerability
-      objectReference: {fileID: 0}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 114691934044503990, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: duration
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2024608014}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GotHit
-      objectReference: {fileID: 0}
-    - target: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114691934044503990, guid: afb933bd6c4341044950e7372df4078e, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: afb933bd6c4341044950e7372df4078e, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &588711350
@@ -6906,7 +6814,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 679012108}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 106.858, y: 2.78, z: -9.52}
+  m_LocalPosition: {x: 108.35, y: 2.78, z: -9.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 870006505}
@@ -8534,7 +8442,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4464406719986024, guid: b4543ced2a30b3e489c1f689222ed111, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 105.608
+      value: 107.1
       objectReference: {fileID: 0}
     - target: {fileID: 4464406719986024, guid: b4543ced2a30b3e489c1f689222ed111, type: 2}
       propertyPath: m_LocalPosition.y
@@ -8564,14 +8472,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 114517107912760720, guid: b4543ced2a30b3e489c1f689222ed111,
-        type: 2}
-      propertyPath: m_BoundingShape2D
-      value: 
-      objectReference: {fileID: 382514442}
     - target: {fileID: 1644101990743624, guid: b4543ced2a30b3e489c1f689222ed111, type: 2}
       propertyPath: m_Name
       value: AlessiaAndCameraFollow
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004121201560100, guid: b4543ced2a30b3e489c1f689222ed111, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.8499985
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4543ced2a30b3e489c1f689222ed111, type: 2}
@@ -8619,18 +8526,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2024608014 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114110337749823356, guid: afb933bd6c4341044950e7372df4078e,
-    type: 2}
-  m_PrefabInternal: {fileID: 543515489}
-  m_Script: {fileID: 11500000, guid: f7de6e399942bb24c82c67d7e5726590, type: 3}
---- !u!114 &2024608015 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114756525903514840, guid: afb933bd6c4341044950e7372df4078e,
-    type: 2}
-  m_PrefabInternal: {fileID: 543515489}
-  m_Script: {fileID: 11500000, guid: 960138f0450083543ad1d17e1352019d, type: 3}
 --- !u!1 &2112536175
 GameObject:
   m_ObjectHideFlags: 0
