@@ -328,7 +328,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1644101990743624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 105.608, y: 2.15, z: 0}
+  m_LocalPosition: {x: 107.1, y: 2.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4828233843236984}
@@ -464,7 +464,7 @@ MonoBehaviour:
   size: {x: 0.15, y: 0.15}
   offsetBasedOnSpriteFacing: 0
   spriteRenderer: {fileID: 0}
-  canHitTriggers: 0
+  canHitTriggers: 1
   disableDamageAfterHit: 1
   forceRespawn: 0
   ignoreInvincibility: 0
@@ -591,7 +591,7 @@ MonoBehaviour:
   size: {x: 0.15, y: 0.15}
   offsetBasedOnSpriteFacing: 0
   spriteRenderer: {fileID: 0}
-  canHitTriggers: 0
+  canHitTriggers: 1
   disableDamageAfterHit: 1
   forceRespawn: 0
   ignoreInvincibility: 0
@@ -676,7 +676,7 @@ MonoBehaviour:
   size: {x: 0.15, y: 0.15}
   offsetBasedOnSpriteFacing: 0
   spriteRenderer: {fileID: 0}
-  canHitTriggers: 0
+  canHitTriggers: 1
   disableDamageAfterHit: 1
   forceRespawn: 0
   ignoreInvincibility: 0
@@ -735,8 +735,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  jumpForce: 320
+  jumpForce: 5
   timeBetweenFlickering: 0
+  throwSpeed: {x: 3, y: 3}
 --- !u!114 &114499122664792362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -826,7 +827,7 @@ MonoBehaviour:
   size: {x: 0.15, y: 0.15}
   offsetBasedOnSpriteFacing: 0
   spriteRenderer: {fileID: 0}
-  canHitTriggers: 0
+  canHitTriggers: 1
   disableDamageAfterHit: 1
   forceRespawn: 0
   ignoreInvincibility: 0
@@ -928,7 +929,7 @@ MonoBehaviour:
   size: {x: 0.15, y: 0.15}
   offsetBasedOnSpriteFacing: 0
   spriteRenderer: {fileID: 0}
-  canHitTriggers: 0
+  canHitTriggers: 1
   disableDamageAfterHit: 1
   forceRespawn: 0
   ignoreInvincibility: 0
@@ -1004,7 +1005,7 @@ MonoBehaviour:
   size: {x: 0.15, y: 0.15}
   offsetBasedOnSpriteFacing: 0
   spriteRenderer: {fileID: 0}
-  canHitTriggers: 0
+  canHitTriggers: 1
   disableDamageAfterHit: 1
   forceRespawn: 0
   ignoreInvincibility: 0
@@ -1070,9 +1071,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960138f0450083543ad1d17e1352019d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 5
+  startingHealth: 20
   invulnerableAfterDamage: 1
-  invulnerabilityDuration: 3
+  invulnerabilityDuration: 2
   disableOnDeath: 0
   centreOffset: {x: 0, y: 1}
   OnHealthSet:
