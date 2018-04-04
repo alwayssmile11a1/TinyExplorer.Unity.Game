@@ -191,6 +191,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   jumpForce: 320
+  timeBetweenFlickering: 0
+  shieldPositon: {fileID: 0}
+  Shield: {fileID: 0}
+  throwSpeed: {x: 3, y: 3}
+  dashEffect: {fileID: 0}
+  dashSpeed: 5
+  dashDuration: 1
+  dashCooldDownTime: 1
 --- !u!114 &114734924190230336
 MonoBehaviour:
   m_ObjectHideFlags: 1

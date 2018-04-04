@@ -17,12 +17,18 @@ public class AlessiaController : MonoBehaviour {
     [Tooltip("Throw speed when get hit")]
     public Vector2 throwSpeed = new Vector2(3,3);
 
+    [Header("Dash")]
+    public GameObject dashEffect;
+    public float dashSpeed = 5f;
+    public float dashDuration = 1f;
+    public float dashCooldDownTime = 1f;
 
     private CharacterController2D m_CharacterController2D;
     private Vector2 m_Velocity = new Vector2();
     private Rigidbody2D m_Rigidbody2D;
-    private Vector2 m_ForceVector;
+    private Vector2 m_JumpForceVector;
     private Vector2 m_ThrowVector;
+    //private float disableMoveTimeAfterHit;
 
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
@@ -33,7 +39,12 @@ public class AlessiaController : MonoBehaviour {
     private int m_HashRunPara = Animator.StringToHash("Run");
     private int m_HashHurtPara = Animator.StringToHash("Hurt");
 
-    void Awake () {
+    private bool m_Dashing;
+    private float m_DashTimer;
+    private bool m_CanDash = true;
+    
+
+    private void Awake () {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Animator = GetComponent<Animator>();
@@ -43,24 +54,25 @@ public class AlessiaController : MonoBehaviour {
 
     }
 
-    private void Start()
+    private void Update()
     {
-        //flicker = new Flicker();
-        
-    }
+        if(m_DashTimer>0)
+        {
+            m_DashTimer -= Time.deltaTime;
 
-    // Update is called once per frame
-    void Update()
-    {
-       
+            if (m_DashTimer <= 0)
+            {
+                m_CanDash = true;
+            }
 
+        }
     }
 
     public void Jump()
     {
         if (m_CharacterController2D.IsGrounded)
         {
-            m_ForceVector.y = jumpForce;
+            m_JumpForceVector.y = jumpForce;
         }
     }
 
@@ -89,14 +101,40 @@ public class AlessiaController : MonoBehaviour {
 
     }
 
+    public void Dash()
+    {
+        if (!m_CanDash) return;
+        StartCoroutine(InternalDash());
+    }
+
+    private IEnumerator InternalDash()
+    {
+        //enable dash effect
+        float originalGravity = m_Rigidbody2D.gravityScale;
+        m_Rigidbody2D.gravityScale = 0;
+        dashEffect.SetActive(true);
+        m_Dashing = true;
+        m_CanDash = false;
+
+        //get direction
+        Vector2 direction = m_SpriteRenderer.flipX ? Vector2.left : Vector2.right;
+
+        //dash
+        m_Rigidbody2D.velocity = direction * dashSpeed;
 
 
+        yield return new WaitForSeconds(dashDuration);
+
+        //disable dash effect 
+        m_Rigidbody2D.gravityScale = originalGravity;
+        dashEffect.SetActive(false);
+        m_Dashing = false;
+        m_DashTimer = dashCooldDownTime;
+    }
 
     private void FixedUpdate()
     {
-        //set velocity 
-        m_Velocity.Set(m_CharacterInput.HorizontalAxis * speed, m_Rigidbody2D.velocity.y);
-        m_Velocity += m_ThrowVector;
+        if (m_Dashing) return;
 
         Move();
         Face();
@@ -105,12 +143,18 @@ public class AlessiaController : MonoBehaviour {
 
     private void Move()
     {
-        m_Rigidbody2D.velocity = m_Velocity;
-        m_Rigidbody2D.AddForce(m_ForceVector, ForceMode2D.Impulse);
+       
+        //set velocity 
+        m_Velocity.Set(m_CharacterInput.HorizontalAxis * speed + m_ThrowVector.x, m_ThrowVector.y > 0 ? m_ThrowVector.y : m_Rigidbody2D.velocity.y);
 
-        m_ThrowVector.x = m_ThrowVector.x != 0 ? m_ThrowVector.x - Mathf.Sign(m_ThrowVector.x)*0.1f : 0;
+        //Move rigidbody
+        m_Rigidbody2D.velocity = m_Velocity;
+        m_Rigidbody2D.AddForce(m_JumpForceVector, ForceMode2D.Impulse);
+
+        m_ThrowVector.x = Mathf.Abs(m_ThrowVector.x) > 0.2f ? (m_ThrowVector.x - Mathf.Sign(m_ThrowVector.x) * 0.1f) : 0;
+
         m_ThrowVector.y = 0;
-        m_ForceVector = Vector2.zero;
+        m_JumpForceVector = Vector2.zero;
     }
     
     private void Face()

@@ -68,7 +68,7 @@ public class ShardKnight : MonoBehaviour {
 
 
         m_Ai.OpenBranch(
-            BT.If(() => { return m_Damageable.CurrentHealth < m_Damageable.startingHealth / 2; }).OpenBranch(
+            BT.If(() => { return m_Damageable.CurrentHealth > m_Damageable.startingHealth / 2; }).OpenBranch(
 
                  BT.RandomSequence(new int[] { 1, 10 }).OpenBranch(
 
@@ -78,7 +78,7 @@ public class ShardKnight : MonoBehaviour {
 
                 )
 
-            , BT.If(() => { return m_Damageable.CurrentHealth > m_Damageable.startingHealth / 2; }).OpenBranch(
+            , BT.If(() => { return m_Damageable.CurrentHealth < m_Damageable.startingHealth / 2; }).OpenBranch(
                 
                 BT.If(()=> { return !m_FormChanged; }).OpenBranch( 
                     BT.Call(ChangeForm),
