@@ -27,8 +27,8 @@ public class ShardKnight : MonoBehaviour {
     public Transform[] teleportPositions;
 
     private Animator m_Animator;
-
     private Rigidbody2D m_RigidBody2D;
+    private SpriteRenderer m_SpriteRenderer;
 
     private BulletPool m_FireBallPool;
     private BulletPool m_ConcentratingAttackPool;
@@ -51,41 +51,62 @@ public class ShardKnight : MonoBehaviour {
 
     private int m_FireBalls = 5;
     private int m_ConcentratingAttacks = 5;
+    private bool m_FormChanged = false;
 
     private void Awake()
     {
         m_Animator = GetComponentInChildren<Animator>();
+        m_RigidBody2D = GetComponent<Rigidbody2D>();
+        m_Damageable = GetComponent<Damageable>();
+        m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-        m_RigidBody2D = GetComponentInParent<Rigidbody2D>();
+        m_Flicker = m_Animator.gameObject.AddComponent<Flicker>();
 
         m_FireBallPool = BulletPool.GetObjectPool(fireBall, 10);
         m_ConcentratingAttackPool = BulletPool.GetObjectPool(concentratingAttack, 5);
 
-        m_Flicker = GetComponentInChildren<SpriteRenderer>().gameObject.AddComponent<Flicker>();
-
-        m_Damageable = GetComponent<Damageable>();
 
 
         m_Ai.OpenBranch(
-            BT.If(() => { return m_Damageable.CurrentHealth > m_Damageable.startingHealth / 2; }).OpenBranch(
+            BT.If(() => { return m_Damageable.CurrentHealth < m_Damageable.startingHealth / 2; }).OpenBranch(
 
-                BT.RandomSequence(new int[] { 1, 2 }).OpenBranch(
+                 BT.RandomSequence(new int[] { 1, 10 }).OpenBranch(
 
                     BT.Call(SpawnFireballs),
-                    BT.Wait(1f)
-
+                    BT.Wait(2f * m_FireBalls)
                     )
 
                 )
 
-            , BT.If(() => { return m_Damageable.CurrentHealth < m_Damageable.startingHealth / 2; }).OpenBranch(
+            , BT.If(() => { return m_Damageable.CurrentHealth > m_Damageable.startingHealth / 2; }).OpenBranch(
+                
+                BT.If(()=> { return !m_FormChanged; }).OpenBranch( 
+                    BT.Call(ChangeForm),
+                    BT.WaitForAnimatorState(m_Animator,"ShardKnightAfterTransform"),
+                    BT.Wait(2f)
+                 ),
 
-                BT.RandomSequence(new int[] { 1, 10 }).OpenBranch(
-                    
-                    BT.Call(SpawnFireballs),
-                    BT.Wait(2f * m_FireBalls)
+                BT.RandomSequence(new int[] { 3, 1, 3 }).OpenBranch(
 
+                    BT.Repeat(5).OpenBranch(
+                        BT.Call(Dash),
+                        BT.Wait(0.5f),
+                        BT.Call(OrientToTarget),
+                        BT.Wait(1.5f)
+                    ),
+
+                    BT.Sequence().OpenBranch(
+                        BT.Call(SpawnFireballs),
+                        BT.Wait(1.5f * m_FireBalls)
+                    ),
+
+                    BT.Sequence().OpenBranch(
+                        BT.Call(SpawnConcentratingAttack),
+                        BT.Wait(1.5f * m_ConcentratingAttacks)
                     )
+                 ),
+
+                BT.Call(OrientToTarget)
               )
 
         );
@@ -98,8 +119,26 @@ public class ShardKnight : MonoBehaviour {
 
         m_Ai.Tick();
 
+
+
     }
 
+    private void OrientToTarget()
+    {
+        if (targetToTrack == null) return;
+
+        if(targetToTrack.position.x > transform.position.x)
+        {
+            m_SpriteRenderer.flipX = true;
+        }
+        else
+        {
+            m_SpriteRenderer.flipX = false;
+        }
+
+
+        
+    }
 
     public void SpawnEnemies()
     {
@@ -212,7 +251,7 @@ public class ShardKnight : MonoBehaviour {
             float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             fireBall.transform.rotation = Quaternion.Euler(0, 0, rotationZ);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
             
         }
@@ -243,6 +282,8 @@ public class ShardKnight : MonoBehaviour {
             
             yield return new WaitForSeconds(0.8f);
 
+            CameraShaker.Shake(0.05f, 0.1f);
+
             damager.EnableDamage();
 
             yield return new WaitForSeconds(0.5f);
@@ -258,6 +299,7 @@ public class ShardKnight : MonoBehaviour {
     public void ChangeForm()
     {
         m_Animator.SetTrigger(m_HashTransformPara);
+        m_FormChanged = true;
     }
 
     

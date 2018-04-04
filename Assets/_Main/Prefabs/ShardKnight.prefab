@@ -41,6 +41,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1087022122212492
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4683815904508802}
+  - component: {fileID: 212293419902984598}
+  - component: {fileID: 95952459609853100}
+  m_Layer: 10
+  m_Name: ShardKnight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1121778981831172
 GameObject:
   m_ObjectHideFlags: 1
@@ -96,11 +113,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4337505248384036}
-  - component: {fileID: 70074227239170526}
-  - component: {fileID: 50132310245393622}
-  - component: {fileID: 114756525903514840}
-  - component: {fileID: 114110337749823356}
-  - component: {fileID: 114941679689908044}
   m_Layer: 10
   m_Name: ShardKnight
   m_TagString: Untagged
@@ -116,10 +128,13 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4076791503810988}
-  - component: {fileID: 212485604206217840}
-  - component: {fileID: 95738265239985652}
+  - component: {fileID: 50175606143719236}
+  - component: {fileID: 70479580266568554}
+  - component: {fileID: 114344898971674440}
+  - component: {fileID: 114996871967244808}
+  - component: {fileID: 114501895582194212}
   m_Layer: 10
-  m_Name: ShardKnight
+  m_Name: ShardKnightHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -191,11 +206,11 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1618226836710230}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4849356782051448}
+  - {fileID: 4683815904508802}
   m_Father: {fileID: 4337505248384036}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -298,6 +313,20 @@ Transform:
   m_Father: {fileID: 4337505248384036}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4683815904508802
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1087022122212492}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4849356782051448}
+  m_Father: {fileID: 4076791503810988}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4819825240284550
 Transform:
   m_ObjectHideFlags: 1
@@ -322,7 +351,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4476163885317492}
-  m_Father: {fileID: 4076791503810988}
+  m_Father: {fileID: 4683815904508802}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4991705030900214
@@ -338,13 +367,13 @@ Transform:
   m_Father: {fileID: 4337505248384036}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50132310245393622
+--- !u!50 &50175606143719236
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1488904667589260}
+  m_GameObject: {fileID: 1618226836710230}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -358,28 +387,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!70 &70074227239170526
+--- !u!70 &70479580266568554
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1488904667589260}
+  m_GameObject: {fileID: 1618226836710230}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.1199265, y: 1.6928537}
   m_Direction: 0
---- !u!95 &95738265239985652
+--- !u!95 &95952459609853100
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1618226836710230}
+  m_GameObject: {fileID: 1087022122212492}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 6d7fcdfbcb69d8a479a7f50d849e3827, type: 2}
@@ -390,12 +419,12 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114110337749823356
+--- !u!114 &114344898971674440
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1488904667589260}
+  m_GameObject: {fileID: 1618226836710230}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7de6e399942bb24c82c67d7e5726590, type: 3}
@@ -420,20 +449,53 @@ MonoBehaviour:
   fireBallSpawnPosition1: {fileID: 4991705030900214}
   fireBallSpawnPosition2: {fileID: 4089646357789386}
   teleportPositions: []
---- !u!114 &114756525903514840
+--- !u!114 &114501895582194212
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1488904667589260}
+  m_GameObject: {fileID: 1618226836710230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1506f7b67235554cb42519c257da979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  offset: {x: 0, y: 0}
+  size: {x: 0.84, y: 1.5}
+  offsetBasedOnSpriteFacing: 0
+  spriteRenderer: {fileID: 0}
+  canHitTriggers: 0
+  disableDamageAfterHit: 0
+  forceRespawn: 0
+  ignoreInvincibility: 0
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  OnDamageableHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Gamekit2D.Damager+DamagableEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnNonDamageableHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Gamekit2D.Damager+NonDamagableEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114996871967244808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1618226836710230}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 960138f0450083543ad1d17e1352019d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 5
+  startingHealth: 20
   invulnerableAfterDamage: 1
-  invulnerabilityDuration: 3
+  invulnerabilityDuration: 1
   disableOnDeath: 0
   centreOffset: {x: 0, y: 1}
   OnHealthSet:
@@ -444,9 +506,9 @@ MonoBehaviour:
   OnTakeDamage:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114110337749823356}
-        m_MethodName: GotHit
-        m_Mode: 0
+      - m_Target: {fileID: 114996871967244808}
+        m_MethodName: EnableInvulnerability
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -455,9 +517,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114756525903514840}
-        m_MethodName: EnableInvulnerability
-        m_Mode: 6
+      - m_Target: {fileID: 114344898971674440}
+        m_MethodName: GotHit
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -481,76 +543,6 @@ MonoBehaviour:
   dataSettings:
     dataTag: 89844e98-ee32-419e-b720-6f3af188e3b9
     persistenceType: 3
---- !u!114 &114941679689908044
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1488904667589260}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998e77ca8d858e442b8dd62ef9203a24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputButtons:
-  - name: Q
-    inputType: 0
-    keyCode: 113
-    inputEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 114110337749823356}
-          m_MethodName: SpawnFireballs
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-  - name: E
-    inputType: 0
-    keyCode: 101
-    inputEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 114110337749823356}
-          m_MethodName: SpawnConcentratingAttack
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-  - name: r
-    inputType: 0
-    keyCode: 114
-    inputEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 114110337749823356}
-          m_MethodName: ChangeForm
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 5
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-  mouseInputs: []
 --- !u!198 &198880172032164806
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3966,12 +3958,12 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!212 &212485604206217840
+--- !u!212 &212293419902984598
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1618226836710230}
+  m_GameObject: {fileID: 1087022122212492}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

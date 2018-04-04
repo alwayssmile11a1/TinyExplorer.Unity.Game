@@ -14,10 +14,16 @@ public class AlessiaController : MonoBehaviour {
     [SerializeField]
     private Object Shield;
 
+    [Tooltip("Throw speed when get hit")]
+    public Vector2 throwSpeed = new Vector2(3,3);
+
+
     private CharacterController2D m_CharacterController2D;
     private Vector2 m_Velocity = new Vector2();
     private Rigidbody2D m_Rigidbody2D;
-    private float m_VerticalForce;
+    private Vector2 m_ForceVector;
+    private Vector2 m_ThrowVector;
+
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
     private CharacterInput m_CharacterInput;
@@ -25,7 +31,7 @@ public class AlessiaController : MonoBehaviour {
 
     private int m_HashGroundedPara = Animator.StringToHash("Grounded");
     private int m_HashRunPara = Animator.StringToHash("Run");
-
+    private int m_HashHurtPara = Animator.StringToHash("Hurt");
 
     void Awake () {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -54,7 +60,7 @@ public class AlessiaController : MonoBehaviour {
     {
         if (m_CharacterController2D.IsGrounded)
         {
-            m_VerticalForce = jumpForce;
+            m_ForceVector.y = jumpForce;
         }
     }
 
@@ -67,8 +73,18 @@ public class AlessiaController : MonoBehaviour {
 
     public void GotHit(Damager damager, Damageable damageable)
     {
+        //throw player away a little bit
+        m_ThrowVector = new Vector2(0, throwSpeed.y);
+        Vector2 damagerToThis = damager.transform.position - transform.position;
+        m_ThrowVector.x = Mathf.Sign(damagerToThis.x) * -throwSpeed.x;
+
+        //Set animation
+        m_Animator.SetTrigger(m_HashHurtPara);
+
+        //Flicker
         m_Flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
 
+        //Shake camera a little
         CameraShaker.Shake(0.1f, 0.1f);
 
     }
@@ -80,6 +96,7 @@ public class AlessiaController : MonoBehaviour {
     {
         //set velocity 
         m_Velocity.Set(m_CharacterInput.HorizontalAxis * speed, m_Rigidbody2D.velocity.y);
+        m_Velocity += m_ThrowVector;
 
         Move();
         Face();
@@ -88,10 +105,12 @@ public class AlessiaController : MonoBehaviour {
 
     private void Move()
     {
-
         m_Rigidbody2D.velocity = m_Velocity;
-        m_Rigidbody2D.AddForce(new Vector2(0, m_VerticalForce));
-        m_VerticalForce = 0;
+        m_Rigidbody2D.AddForce(m_ForceVector, ForceMode2D.Impulse);
+
+        m_ThrowVector.x = m_ThrowVector.x != 0 ? m_ThrowVector.x - Mathf.Sign(m_ThrowVector.x)*0.1f : 0;
+        m_ThrowVector.y = 0;
+        m_ForceVector = Vector2.zero;
     }
     
     private void Face()
