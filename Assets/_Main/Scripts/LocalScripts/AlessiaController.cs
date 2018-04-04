@@ -28,7 +28,6 @@ public class AlessiaController : MonoBehaviour {
     private Rigidbody2D m_Rigidbody2D;
     private Vector2 m_JumpForceVector;
     private Vector2 m_ThrowVector;
-    //private float disableMoveTimeAfterHit;
 
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
@@ -38,6 +37,7 @@ public class AlessiaController : MonoBehaviour {
     private int m_HashGroundedPara = Animator.StringToHash("Grounded");
     private int m_HashRunPara = Animator.StringToHash("Run");
     private int m_HashHurtPara = Animator.StringToHash("Hurt");
+    private int m_HashDashPara = Animator.StringToHash("Dash");
 
     private bool m_Dashing;
     private float m_DashTimer;
@@ -46,12 +46,12 @@ public class AlessiaController : MonoBehaviour {
 
     private void Awake () {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
-        m_SpriteRenderer = GetComponent<SpriteRenderer>();
-        m_Animator = GetComponent<Animator>();
+        m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        m_Animator = GetComponentInChildren<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_CharacterInput = GetComponent<CharacterInput>();
-        m_Flicker = gameObject.AddComponent<Flicker>();
-
+        m_Flicker = m_SpriteRenderer.gameObject.AddComponent<Flicker>();
+        
     }
 
     private void Update()
@@ -62,10 +62,27 @@ public class AlessiaController : MonoBehaviour {
 
             if (m_DashTimer <= 0)
             {
-                m_CanDash = true;
+                //if we haven't grounded yet, can not dash more (allow dash only 1 time in air)
+                if (!m_CharacterController2D.IsGrounded)
+                {
+                    m_DashTimer += Time.deltaTime;
+                }
+                else
+                {
+                    m_CanDash = true;
+                }
             }
-
         }
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (m_Dashing) return;
+
+        Move();
+        Face();
+        Animate();
     }
 
     public void Jump()
@@ -104,6 +121,7 @@ public class AlessiaController : MonoBehaviour {
     public void Dash()
     {
         if (!m_CanDash) return;
+
         StartCoroutine(InternalDash());
     }
 
@@ -115,9 +133,21 @@ public class AlessiaController : MonoBehaviour {
         dashEffect.SetActive(true);
         m_Dashing = true;
         m_CanDash = false;
+        m_Animator.SetBool(m_HashDashPara, true);
+        
 
         //get direction
         Vector2 direction = m_SpriteRenderer.flipX ? Vector2.left : Vector2.right;
+
+        //rotate the sprite a little bit
+        if (direction.x > 0)
+        {
+            m_SpriteRenderer.gameObject.transform.rotation = Quaternion.Euler(0, 0, -15);
+        }
+        else
+        {
+            m_SpriteRenderer.gameObject.transform.rotation = Quaternion.Euler(0, 0, 15);
+        }
 
         //dash
         m_Rigidbody2D.velocity = direction * dashSpeed;
@@ -130,15 +160,8 @@ public class AlessiaController : MonoBehaviour {
         dashEffect.SetActive(false);
         m_Dashing = false;
         m_DashTimer = dashCooldDownTime;
-    }
-
-    private void FixedUpdate()
-    {
-        if (m_Dashing) return;
-
-        Move();
-        Face();
-        Animate();
+        m_Animator.SetBool(m_HashDashPara, false);
+        m_SpriteRenderer.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void Move()
@@ -162,6 +185,7 @@ public class AlessiaController : MonoBehaviour {
         if(!m_SpriteRenderer.flipX && m_CharacterInput.HorizontalAxis < 0)
         {
             m_SpriteRenderer.flipX = true;
+
         }
 
         if (m_SpriteRenderer.flipX && m_CharacterInput.HorizontalAxis > 0)
