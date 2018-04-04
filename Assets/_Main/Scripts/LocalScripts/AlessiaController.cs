@@ -10,6 +10,9 @@ public class AlessiaController : MonoBehaviour {
     public float speed = 5f;
     public float jumpForce = 400f;
     public float timeBetweenFlickering = 0;
+    public Transform shieldPositon;
+    [SerializeField]
+    private Object Shield;
 
     private CharacterController2D m_CharacterController2D;
     private Vector2 m_Velocity = new Vector2();
@@ -53,6 +56,13 @@ public class AlessiaController : MonoBehaviour {
         {
             m_VerticalForce = jumpForce;
         }
+    }
+
+    public void SpawnShield()
+    {
+        Debug.Log("spawn shield");
+        Object shied = Instantiate(Shield, shieldPositon);
+        Destroy(shied, 0.5f);
     }
 
     public void GotHit(Damager damager, Damageable damageable)
