@@ -10,9 +10,7 @@ public class AlessiaController : MonoBehaviour {
     public float speed = 5f;
     public float jumpForce = 400f;
     public float timeBetweenFlickering = 0;
-    public Transform shieldPositon;
-    [SerializeField]
-    private Object Shield;
+    public ParticleSystem shield;
 
     [Tooltip("Throw speed when get hit")]
     public Vector2 throwSpeed = new Vector2(3,3);
@@ -79,8 +77,7 @@ public class AlessiaController : MonoBehaviour {
     public void SpawnShield()
     {
         Debug.Log("spawn shield");
-        Object shied = Instantiate(Shield, shieldPositon);
-        Destroy(shied, 0.5f);
+        shield.Play();
     }
 
     public void GotHit(Damager damager, Damageable damageable)
