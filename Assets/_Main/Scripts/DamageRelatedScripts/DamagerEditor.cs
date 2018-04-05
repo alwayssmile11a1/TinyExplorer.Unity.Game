@@ -11,6 +11,7 @@ namespace Gamekit2D
         static Color s_EnabledColor = Color.green + Color.grey;
 
         SerializedProperty m_DamageProp;
+        SerializedProperty m_UseTriggerColliderProp;
         SerializedProperty m_OffsetProp;
         SerializedProperty m_SizeProp;
         SerializedProperty m_OffsetBasedOnSpriteFacingProp;
@@ -26,6 +27,7 @@ namespace Gamekit2D
         void OnEnable ()
         {
             m_DamageProp = serializedObject.FindProperty ("damage");
+            m_UseTriggerColliderProp = serializedObject.FindProperty("useTriggerCollider");
             m_OffsetProp = serializedObject.FindProperty("offset");
             m_SizeProp = serializedObject.FindProperty("size");
             m_OffsetBasedOnSpriteFacingProp = serializedObject.FindProperty("offsetBasedOnSpriteFacing");
@@ -44,11 +46,16 @@ namespace Gamekit2D
             serializedObject.Update ();
 
             EditorGUILayout.PropertyField(m_DamageProp);
-            EditorGUILayout.PropertyField(m_OffsetProp);
-            EditorGUILayout.PropertyField(m_SizeProp);
-            EditorGUILayout.PropertyField(m_OffsetBasedOnSpriteFacingProp);
-            if(m_OffsetBasedOnSpriteFacingProp.boolValue)
-                EditorGUILayout.PropertyField(m_SpriteRendererProp);
+            EditorGUILayout.PropertyField(m_UseTriggerColliderProp);
+            if (!m_UseTriggerColliderProp.boolValue)
+            {
+                EditorGUILayout.PropertyField(m_OffsetProp);
+                EditorGUILayout.PropertyField(m_SizeProp);
+                EditorGUILayout.PropertyField(m_OffsetBasedOnSpriteFacingProp);
+
+                if (m_OffsetBasedOnSpriteFacingProp.boolValue)
+                    EditorGUILayout.PropertyField(m_SpriteRendererProp);
+            }
             EditorGUILayout.PropertyField(m_CanHitTriggersProp);
             EditorGUILayout.PropertyField(m_DisableDamageAfterHit);
             EditorGUILayout.PropertyField(m_ForceRespawnProp);
@@ -64,7 +71,7 @@ namespace Gamekit2D
         {
             Damager damager = (Damager)target;
 
-            if (!damager.enabled)
+            if (!damager.enabled || m_UseTriggerColliderProp.boolValue)
                 return;
 
             Matrix4x4 handleMatrix = damager.transform.localToWorldMatrix;

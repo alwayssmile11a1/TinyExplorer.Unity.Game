@@ -15,11 +15,11 @@ public class FollowTarget : MonoBehaviour {
     public Transform target;
     public float speed = 5f;
 
-    [Tooltip("use usedOffset variable to adjust what offset will be used")]
+    [Tooltip("use usedOffset variable to adjust which offset will be used")]
     public Vector3[] offsets;
     public int usedOffset = 0;
 
-    [Tooltip("set to true if you want the offset to relative with the target sprite facing")]
+    [Tooltip("set to true if you want the offset to be relative with the target sprite facing")]
     public bool offsetBasedOnTargetSpriteFacing = true;
 
     private SpriteRenderer m_TargetSpriteRenderer;

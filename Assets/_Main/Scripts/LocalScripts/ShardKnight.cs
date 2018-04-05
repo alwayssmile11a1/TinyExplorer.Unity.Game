@@ -8,36 +8,47 @@ public class ShardKnight : MonoBehaviour {
 
     public Transform targetToTrack;
 
-    public GameObject rangeEnemyToSpawn;
-    public GameObject meleeEnemyToSpawn;
+    [Header("Chaser Attacks")]
+    public GameObject[] chaserAttacks;    
 
+    [Header("Fireballs")]
     public GameObject fireBall;
+    public Transform fireballRandomPosition1;
+    public Transform fireballRandomPosition2;
+
+    [Header("Exploding Attacks")]
     public GameObject concentratingAttack;
+
+    [Header("Dash")]
     public GameObject dashEffect;
     public float dashSpeed = 30f;
 
+    [Header("Teleport")]
+    public List<Transform> teleportPositions;
+
+    [Header("Others")]
     public float timeBetweenFlickering = 0.1f;
 
-    public List<Transform> spawnRangeEnemyPositions;
-    public List<Transform> spawnMeleeEnemyPositions;
 
-    public Transform fireBallSpawnPosition1;
-    public Transform fireBallSpawnPosition2;
-
-    public Transform[] teleportPositions;
 
     private Animator m_Animator;
     private Rigidbody2D m_RigidBody2D;
     private SpriteRenderer m_SpriteRenderer;
 
+    private Vector3[] chaserAttacksPositions;
+
     private BulletPool m_FireBallPool;
     private BulletPool m_ConcentratingAttackPool;
 
+    #region Deprecated
+    private GameObject rangeEnemyToSpawn;
+    private GameObject meleeEnemyToSpawn;
+    private List<Transform> spawnRangeEnemyPositions;
+    private List<Transform> spawnMeleeEnemyPositions;
     //store spawned enemies and their spawned positions (in order to not spawn another enemy on top of an already spawned one)
     private List<KeyValuePair<Transform,GameObject>> m_SpawnedRangeEnemies = new List<KeyValuePair<Transform, GameObject>>();
     private List<KeyValuePair<Transform, GameObject>> m_SpawnedMeleeEnemies = new List<KeyValuePair<Transform, GameObject>>();
-
-    
+    #endregion
 
     private int m_HashFireBallAttackPara = Animator.StringToHash("FireBallAttack");
     private int m_HashExplodingAttackPara = Animator.StringToHash("ExplodingAttack");
@@ -62,27 +73,39 @@ public class ShardKnight : MonoBehaviour {
 
         m_Flicker = m_Animator.gameObject.AddComponent<Flicker>();
 
+        //Pool
         m_FireBallPool = BulletPool.GetObjectPool(fireBall, 10);
         m_ConcentratingAttackPool = BulletPool.GetObjectPool(concentratingAttack, 5);
 
+        //Setup chaserAttacks
+        chaserAttacksPositions = new Vector3[chaserAttacks.Length];
+        for (int i = 0; i < chaserAttacks.Length; i++)
+        {
+            chaserAttacksPositions[i] = chaserAttacks[i].transform.position;
+        }
 
-
+        //Behaviour tree
         m_Ai.OpenBranch(
             BT.If(() => { return m_Damageable.CurrentHealth > m_Damageable.startingHealth / 2; }).OpenBranch(
 
-                 BT.RandomSequence(new int[] { 1, 10 }).OpenBranch(
+                 BT.RandomSequence(new int[] { 1, 1 }).OpenBranch(
+                    BT.Sequence().OpenBranch(
+                            BT.Call(SpawnChaserAttacks),
+                            BT.Wait(5f)
+                        ),
 
-                    BT.Call(SpawnFireballs),
-                    BT.Wait(2f * m_FireBalls)
+                    BT.Sequence().OpenBranch(
+                            BT.Call(SpawnFireballs),
+                            BT.Wait(2f * m_FireBalls)
+                        )
                     )
+                ),
 
-                )
+            BT.If(() => { return m_Damageable.CurrentHealth < m_Damageable.startingHealth / 2; }).OpenBranch(
 
-            , BT.If(() => { return m_Damageable.CurrentHealth < m_Damageable.startingHealth / 2; }).OpenBranch(
-                
-                BT.If(()=> { return !m_FormChanged; }).OpenBranch( 
+                BT.If(() => { return !m_FormChanged; }).OpenBranch(
                     BT.Call(ChangeForm),
-                    BT.WaitForAnimatorState(m_Animator,"ShardKnightAfterTransform"),
+                    BT.WaitForAnimatorState(m_Animator, "ShardKnightAfterTransform"),
                     BT.Wait(2f)
                  ),
 
@@ -90,9 +113,7 @@ public class ShardKnight : MonoBehaviour {
 
                     BT.Repeat(5).OpenBranch(
                         BT.Call(Dash),
-                        BT.Wait(0.5f),
-                        BT.Call(OrientToTarget),
-                        BT.Wait(1.5f)
+                        BT.Wait(2f)
                     ),
 
                     BT.Sequence().OpenBranch(
@@ -119,6 +140,7 @@ public class ShardKnight : MonoBehaviour {
 
         m_Ai.Tick();
 
+        OrientToTarget();
 
 
     }
@@ -140,6 +162,7 @@ public class ShardKnight : MonoBehaviour {
         
     }
 
+    #region Deprecated
     public void SpawnEnemies()
     {
         StartCoroutine(InternalSpawnEnemies());
@@ -220,7 +243,43 @@ public class ShardKnight : MonoBehaviour {
 
     }
 
-   
+    #endregion
+
+    public void SpawnChaserAttacks()
+    {
+        StartCoroutine(InternalSpawnChaserAttacks());
+    }
+
+    private IEnumerator InternalSpawnChaserAttacks()
+    {
+        for (int i = 0; i < chaserAttacks.Length; i++)
+        {
+ 
+            chaserAttacks[i].SetActive(true);
+            chaserAttacks[i].GetComponent<ChaseTarget>().StopChasing();
+
+            //return to original position
+            chaserAttacks[i].transform.position = chaserAttacksPositions[i];
+
+            yield return new WaitForSeconds(0.75f);
+
+        }
+
+        //chaser start attacking
+        for (int i = 0; i < chaserAttacks.Length; i++)
+        {
+            chaserAttacks[i].GetComponent<ChaseTarget>().StartChasing();
+        }
+
+    }
+
+    public void OnChaserHit(Damager damager)
+    {
+        GameObject chaser = damager.gameObject;
+        chaser.SetActive(false);
+        chaser.GetComponent<ChaseTarget>().StopChasing();
+    }
+
 
     public void SpawnFireballs()
     {
@@ -238,7 +297,7 @@ public class ShardKnight : MonoBehaviour {
         for (int i = 0; i < m_FireBalls; i++)
         {
             //position to spawn
-            Vector3 spawnPosition = new Vector3(Random.Range(fireBallSpawnPosition1.position.x, fireBallSpawnPosition2.position.x), fireBallSpawnPosition1.position.y, 0);
+            Vector3 spawnPosition = new Vector3(Random.Range(fireballRandomPosition1.position.x, fireballRandomPosition2.position.x), fireballRandomPosition1.position.y, 0);
 
             BulletObject fireBall = m_FireBallPool.Pop(spawnPosition);
 
@@ -319,7 +378,7 @@ public class ShardKnight : MonoBehaviour {
 
         Vector3 direction = (targetPosition - transform.position).normalized;
 
-        //rotate to player
+        //rotate shardknight
         float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotationZ-90);
 
@@ -339,6 +398,30 @@ public class ShardKnight : MonoBehaviour {
     public void GotHit(Damager damager, Damageable damageable)
     {
         m_Flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
+
+
+        //Teleport
+        int random1 = Random.Range(0, teleportPositions.Count);
+        Transform randomTransform1 = teleportPositions[random1];
+        teleportPositions.RemoveAt(random1);
+
+        int random2 = Random.Range(0, teleportPositions.Count);
+        Transform randomTransform2 = teleportPositions[random2];
+        teleportPositions.RemoveAt(random2);
+
+
+        //position to spawn
+        Vector3 teleportPosition = new Vector3(Random.Range(randomTransform1.position.x, randomTransform2.position.x),
+                                                        Random.Range(randomTransform1.position.y, randomTransform2.position.y), 0);
+
+
+        //teleport
+        transform.position = teleportPosition;
+
+
+        //Add to teleport position again
+        teleportPositions.Add(randomTransform1);
+        teleportPositions.Add(randomTransform2);
     }
 
 }

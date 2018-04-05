@@ -20,7 +20,9 @@ namespace Gamekit2D
 
 
         public int damage = 1;
-        public Vector2 offset = new Vector2(1.5f, 1f);
+        [Tooltip("Recommending using this if the object involve rotating since damager area haven't supported rotating yet")]
+        public bool useTriggerCollider = false;
+        public Vector2 offset = new Vector2(0f, 0f);
         public Vector2 size = new Vector2(2.5f, 1f);
         [Tooltip("If this is set, the offset x will be changed base on the sprite flipX setting. e.g. Allow to make the damager always forward in the direction of sprite")]
         public bool offsetBasedOnSpriteFacing = true;
@@ -69,7 +71,7 @@ namespace Gamekit2D
 
         void FixedUpdate()
         {
-            if (!m_CanDamage)
+            if (!m_CanDamage || useTriggerCollider)
                 return;
 
             //Get global scale of this object 
@@ -88,36 +90,55 @@ namespace Gamekit2D
             Vector2 pointB = pointA + scaledSize;
 
             //check overlap
-            int hitCount = Physics2D.OverlapArea(pointA, pointB, m_AttackContactFilter, m_AttackOverlapResults);
+            int hitCount = Physics2D.OverlapArea(pointA, pointB, m_AttackContactFilter, m_AttackOverlapResults);           
 
             //loop through all the collider2d that was hit
             for (int i = 0; i < hitCount; i++)
             {
                 m_LastHit = m_AttackOverlapResults[i];
 
-                //get damageable component if exist
-                Damageable damageable = m_LastHit.GetComponent<Damageable>();
-
-                if (damageable)
-                {
-                    //if (!damageable.IsInvulnerable() || ignoreInvincibility)
-                    //{
-                    OnDamageableHit.Invoke(this, damageable);
-                    //}
-
-                    damageable.TakeDamage(this, ignoreInvincibility);
-
-                    if (disableDamageAfterHit)
-                    {
-
-                        DisableDamage();
-                    }
-                }
-                else
-                {
-                    OnNonDamageableHit.Invoke(this);
-                }
+                RunEvent();
             }
         }
+
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (!useTriggerCollider) return;
+
+            m_LastHit = collision;
+
+            RunEvent();
+            
+
+        }
+
+
+        private void RunEvent()
+        {
+            //get damageable component if exist
+            Damageable damageable = m_LastHit.GetComponent<Damageable>();
+
+            if (damageable)
+            {
+                //if (!damageable.IsInvulnerable() || ignoreInvincibility)
+                //{
+                OnDamageableHit.Invoke(this, damageable);
+                //}
+
+                damageable.TakeDamage(this, ignoreInvincibility);
+
+                if (disableDamageAfterHit)
+                {
+
+                    DisableDamage();
+                }
+            }
+            else
+            {
+                OnNonDamageableHit.Invoke(this);
+            }
+        }
+
     }
 }
