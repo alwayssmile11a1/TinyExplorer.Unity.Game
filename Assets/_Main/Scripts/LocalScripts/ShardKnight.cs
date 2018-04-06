@@ -9,7 +9,11 @@ public class ShardKnight : MonoBehaviour {
     public Transform targetToTrack;
 
     [Header("Chaser Attacks")]
-    public GameObject[] chaserAttacks;    
+    public GameObject[] chaserAttacks;
+
+    [Header("Laser")]
+    public Transform laserStartingPosition;
+    public Transform laserFollower;
 
     [Header("Fireballs")]
     public GameObject fireBall;
@@ -34,6 +38,7 @@ public class ShardKnight : MonoBehaviour {
     private Animator m_Animator;
     private Rigidbody2D m_RigidBody2D;
     private SpriteRenderer m_SpriteRenderer;
+    private LineRenderer m_LineRenderer;
 
     private Vector3[] chaserAttacksPositions;
 
@@ -63,6 +68,8 @@ public class ShardKnight : MonoBehaviour {
     private int m_FireBalls = 5;
     private int m_ConcentratingAttacks = 5;
     private bool m_FormChanged = false;
+    private bool m_LaserEnabled = false;
+    private float m_Timer;
 
     private void Awake()
     {
@@ -70,6 +77,7 @@ public class ShardKnight : MonoBehaviour {
         m_RigidBody2D = GetComponent<Rigidbody2D>();
         m_Damageable = GetComponent<Damageable>();
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        m_LineRenderer = GetComponent<LineRenderer>();
 
         m_Flicker = m_Animator.gameObject.AddComponent<Flicker>();
 
@@ -86,22 +94,29 @@ public class ShardKnight : MonoBehaviour {
 
         //Behaviour tree
         m_Ai.OpenBranch(
-            BT.If(() => { return m_Damageable.CurrentHealth > m_Damageable.startingHealth / 2; }).OpenBranch(
+            BT.If(() => { return m_Damageable.CurrentHealth < m_Damageable.startingHealth / 2; }).OpenBranch(
 
                  BT.RandomSequence(new int[] { 1, 1 }).OpenBranch(
                     BT.Sequence().OpenBranch(
-                            BT.Call(SpawnChaserAttacks),
-                            BT.Wait(5f)
-                        ),
+                        BT.Call(EnableLaser),
+                        BT.Wait(2f),
+                        BT.Call(DisableLaser)
+                    ),
 
                     BT.Sequence().OpenBranch(
-                            BT.Call(SpawnFireballs),
-                            BT.Wait(2f * m_FireBalls)
-                        )
+                        BT.Repeat((int)(2/Time.deltaTime)).OpenBranch(BT.Call(MoveToLower)),
+                        BT.Wait(1f),
+                        BT.Call(Form1Dash),
+                        BT.Wait(2f),
+                        BT.Call(OrientToTarget),
+                        BT.Repeat((int)(2 / Time.deltaTime)).OpenBranch(BT.Call(MoveToUpper)),
+                        BT.Wait(1f)
                     )
-                ),
 
-            BT.If(() => { return m_Damageable.CurrentHealth < m_Damageable.startingHealth / 2; }).OpenBranch(
+                )
+            ),
+
+            BT.If(() => { return m_Damageable.CurrentHealth > m_Damageable.startingHealth / 2; }).OpenBranch(
 
                 BT.If(() => { return !m_FormChanged; }).OpenBranch(
                     BT.Call(ChangeForm),
@@ -111,25 +126,29 @@ public class ShardKnight : MonoBehaviour {
 
                 BT.RandomSequence(new int[] { 3, 1, 3 }).OpenBranch(
 
-                    BT.Repeat(5).OpenBranch(
-                        BT.Call(Dash),
-                        BT.Wait(2f)
+                    BT.Repeat(3).OpenBranch(
+                        BT.Call(Form2Dash),
+                        BT.Wait(2f),
+                        BT.Call(OrientToTarget)
                     ),
 
                     BT.Sequence().OpenBranch(
                         BT.Call(SpawnFireballs),
-                        BT.Wait(1.5f * m_FireBalls)
+                        BT.WaitForAnimatorState(m_Animator, "ShardKnightAfterTransform"),
+                        BT.Wait(2f)
                     ),
 
                     BT.Sequence().OpenBranch(
                         BT.Call(SpawnConcentratingAttack),
-                        BT.Wait(1.5f * m_ConcentratingAttacks)
+                        BT.WaitForAnimatorState(m_Animator, "ShardKnightAfterTransform"),
+                        BT.Wait(2f)
                     )
                  ),
 
                 BT.Call(OrientToTarget)
               )
 
+            
         );
 
     }
@@ -140,9 +159,26 @@ public class ShardKnight : MonoBehaviour {
 
         m_Ai.Tick();
 
-        OrientToTarget();
+        if(m_LaserEnabled)
+        {
+            TrackTargerByLaser();
+        }
+       
+        if(m_Timer>0)
+        {
+            Debug.Log(m_Timer);
+            m_Timer -= Time.deltaTime;
+        }
+    }
 
+    private void StartCountDown()
+    {
+        m_Timer = 2f;
+    }
 
+    private bool IsCountDowning()
+    {
+        return m_Timer > 0;
     }
 
     private void OrientToTarget()
@@ -157,8 +193,6 @@ public class ShardKnight : MonoBehaviour {
         {
             m_SpriteRenderer.flipX = false;
         }
-
-
         
     }
 
@@ -355,22 +389,57 @@ public class ShardKnight : MonoBehaviour {
     }
 
 
-    public void ChangeForm()
+    private void ChangeForm()
     {
         m_Animator.SetTrigger(m_HashTransformPara);
         m_FormChanged = true;
     }
-
     
-    public void Dash()
-    {
 
-        StartCoroutine(InternalDash());
+    private void MoveTo(Vector3 position, float speed)
+    {
+        transform.position = Vector3.Slerp(transform.position, position, speed);
 
     }
 
+    private void MoveToLower()
+    {
+        if(!m_SpriteRenderer.flipX)
+        {
+            MoveTo(teleportPositions[0].position, 0.02f);
+        }
+        else
+        {
+            MoveTo(teleportPositions[1].position, 0.02f);
+        }
 
-    private IEnumerator InternalDash()
+    }
+
+    private void MoveToUpper()
+    {
+        if (!m_SpriteRenderer.flipX)
+        {
+            MoveTo(teleportPositions[2].position, 0.02f);
+        }
+        else
+        {
+            MoveTo(teleportPositions[3].position, 0.02f);
+        }
+    }
+
+    private void Form1Dash()
+    {
+        StartCoroutine(InternalDash(dashSpeed / 1.5f, 1f));
+
+    }
+
+    private void Form2Dash()
+    {
+        StartCoroutine(InternalDash(dashSpeed, 2f));
+    }
+
+
+    private IEnumerator InternalDash(float speed, float duration)
     {
         dashEffect.SetActive(true);
 
@@ -382,9 +451,9 @@ public class ShardKnight : MonoBehaviour {
         float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotationZ-90);
 
-        m_RigidBody2D.velocity = direction * dashSpeed;
+        m_RigidBody2D.velocity = direction * speed;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(duration);
 
         dashEffect.SetActive(false);
 
@@ -394,34 +463,70 @@ public class ShardKnight : MonoBehaviour {
 
     }
 
+    private void EnableLaser()
+    {
+        m_LineRenderer.enabled = true;
+        m_LaserEnabled = true;
+
+    }
+
+    private void DisableLaser()
+    {
+        m_LineRenderer.enabled = false;
+        m_LaserEnabled = false;
+    }
+    
+    private void TrackTargerByLaser()
+    {
+        m_LineRenderer.SetPosition(0, laserStartingPosition.position);
+
+        Vector3 direction = laserFollower.position - laserStartingPosition.position;
+
+        //if the laser hit something
+        RaycastHit2D m_RaycastHit2D = Physics2D.Raycast(laserStartingPosition.position, direction, 100, LayerMask.GetMask("Player","Platform"));
+
+        if (m_RaycastHit2D)
+        {
+            m_LineRenderer.SetPosition(1, m_RaycastHit2D.point);
+        }
+        else
+        {
+            m_LineRenderer.SetPosition(1, laserStartingPosition.position + direction * 100);
+
+        }
+
+    }
+
+
+
 
     public void GotHit(Damager damager, Damageable damageable)
     {
         m_Flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
 
 
-        //Teleport
-        int random1 = Random.Range(0, teleportPositions.Count);
-        Transform randomTransform1 = teleportPositions[random1];
-        teleportPositions.RemoveAt(random1);
+        ////Teleport
+        //int random1 = Random.Range(0, teleportPositions.Count);
+        //Transform randomTransform1 = teleportPositions[random1];
+        //teleportPositions.RemoveAt(random1);
 
-        int random2 = Random.Range(0, teleportPositions.Count);
-        Transform randomTransform2 = teleportPositions[random2];
-        teleportPositions.RemoveAt(random2);
-
-
-        //position to spawn
-        Vector3 teleportPosition = new Vector3(Random.Range(randomTransform1.position.x, randomTransform2.position.x),
-                                                        Random.Range(randomTransform1.position.y, randomTransform2.position.y), 0);
+        //int random2 = Random.Range(0, teleportPositions.Count);
+        //Transform randomTransform2 = teleportPositions[random2];
+        //teleportPositions.RemoveAt(random2);
 
 
-        //teleport
-        transform.position = teleportPosition;
+        ////position to spawn
+        //Vector3 teleportPosition = new Vector3(Random.Range(randomTransform1.position.x, randomTransform2.position.x),
+        //                                                Random.Range(randomTransform1.position.y, randomTransform2.position.y), 0);
 
 
-        //Add to teleport position again
-        teleportPositions.Add(randomTransform1);
-        teleportPositions.Add(randomTransform2);
+        ////teleport
+        //transform.position = teleportPosition;
+
+
+        ////Add to teleport position again
+        //teleportPositions.Add(randomTransform1);
+        //teleportPositions.Add(randomTransform2);
     }
 
 }

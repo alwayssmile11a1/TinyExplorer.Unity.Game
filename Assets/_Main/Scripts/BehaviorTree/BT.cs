@@ -17,6 +17,7 @@ namespace BTAI
         public static Root Root() { return new Root(); }
         public static Sequence Sequence() { return new Sequence(); }
         public static Selector Selector(bool shuffle = false) { return new Selector(shuffle); }
+        public static Action RunPureCoroutine(System.Func<IEnumerator> coroutine) { return new Action(coroutine); }
         public static Action RunCoroutine(System.Func<IEnumerator<BTState>> coroutine) { return new Action(coroutine); }
         public static Action Call(System.Action fn) { return new Action(fn); }
         public static ConditionalBranch If(System.Func<bool> fn) { return new ConditionalBranch(fn); }
@@ -179,8 +180,13 @@ namespace BTAI
     public class Action : BTNode
     {
         System.Action fn;
+
         System.Func<IEnumerator<BTState>> coroutineFactory;
         IEnumerator<BTState> coroutine;
+
+        System.Func<IEnumerator> pureCoroutineFactory;
+        IEnumerator pureCoroutine;
+
         public Action(System.Action fn)
         {
             this.fn = fn;
@@ -188,6 +194,10 @@ namespace BTAI
         public Action(System.Func<IEnumerator<BTState>> coroutineFactory)
         {
             this.coroutineFactory = coroutineFactory;
+        }
+        public Action(System.Func<IEnumerator> pureCoroutineFactory)
+        {
+            this.pureCoroutineFactory = pureCoroutineFactory;
         }
         public override BTState Tick()
         {
@@ -198,20 +208,37 @@ namespace BTAI
             }
             else
             {
-                if (coroutine == null)
-                    coroutine = coroutineFactory();
-                if (!coroutine.MoveNext())
+                if (pureCoroutineFactory == null)
                 {
-                    coroutine = null;
-                    return BTState.Success;
+                    if (coroutine == null)
+                        coroutine = coroutineFactory();
+                    if (!coroutine.MoveNext())
+                    {
+                        coroutine = null;
+                        return BTState.Success;
+                    }
+                    var result = coroutine.Current;
+                    if (result == BTState.Continue)
+                        return BTState.Continue;
+                    else
+                    {
+                        coroutine = null;
+                        return result;
+                    }
                 }
-                var result = coroutine.Current;
-                if (result == BTState.Continue)
-                    return BTState.Continue;
                 else
                 {
-                    coroutine = null;
-                    return result;
+                    if (pureCoroutine == null)
+                        pureCoroutine = pureCoroutineFactory();
+                    if (!pureCoroutine.MoveNext())
+                    {
+                        pureCoroutine = null;
+                        return BTState.Success;
+                    }
+                    else
+                    {
+                        return BTState.Continue;
+                    }
                 }
             }
         }

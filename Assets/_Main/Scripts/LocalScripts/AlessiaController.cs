@@ -40,7 +40,8 @@ public class AlessiaController : MonoBehaviour {
     private bool m_Dashing;
     private float m_DashTimer;
     private bool m_CanDash = true;
-    
+    //Allow dash in air only one time
+    private bool m_DashedInAir = false;
 
     private void Awake () {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -61,12 +62,13 @@ public class AlessiaController : MonoBehaviour {
             if (m_DashTimer <= 0)
             {
                 //if we haven't grounded yet, can not dash more (allow dash only 1 time in air)
-                if (!m_CharacterController2D.IsGrounded)
+                if (m_DashedInAir && !m_CharacterController2D.IsGrounded)
                 {
                     m_DashTimer += Time.deltaTime;
                 }
                 else
                 {
+                    m_DashedInAir = false;
                     m_CanDash = true;
                 }
             }
@@ -119,6 +121,18 @@ public class AlessiaController : MonoBehaviour {
     {
         if (!m_CanDash) return;
 
+        if (!m_CharacterController2D.IsGrounded)
+        {
+            if (m_DashedInAir)
+            {
+                return;
+            }
+            else
+            {
+                m_DashedInAir = true;
+            }
+        }
+    
         StartCoroutine(InternalDash());
     }
 
