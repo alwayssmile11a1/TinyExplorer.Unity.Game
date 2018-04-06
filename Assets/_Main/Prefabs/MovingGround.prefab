@@ -20,23 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4690542337662138}
   - component: {fileID: 212862397315370808}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CaveBottomRight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1075479907746308
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4524368970861006}
-  m_Layer: 0
-  m_Name: Destination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4848665205922520}
   - component: {fileID: 212479544481686148}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CaveBottomLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4035363053771304}
   - component: {fileID: 212106978727226914}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CaveTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4739305128817516}
   - component: {fileID: 212716642645746148}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CaveTopRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4147882827595486}
   - component: {fileID: 212003847611152514}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CaveSlopeLeftTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,10 +99,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4341739794520112}
+  - component: {fileID: 114605878261424700}
   - component: {fileID: 61352275680476478}
   - component: {fileID: 50691800025075554}
   - component: {fileID: 114199671713653274}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: MovingGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,8 +119,23 @@ GameObject:
   m_Component:
   - component: {fileID: 4608181052585482}
   - component: {fileID: 212513410808222564}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CaveBottom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1994185555600716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4460029351806716}
+  m_Layer: 11
+  m_Name: Destination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172,8 +173,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1543537382604738}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 68.49, y: 7.22, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 68.5, y: 12.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4848665205922520}
@@ -182,18 +183,18 @@ Transform:
   - {fileID: 4147882827595486}
   - {fileID: 4035363053771304}
   - {fileID: 4739305128817516}
-  - {fileID: 4524368970861006}
+  - {fileID: 4460029351806716}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4524368970861006
+--- !u!4 &4460029351806716
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1075479907746308}
+  m_GameObject: {fileID: 1994185555600716}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.86, z: 0}
+  m_LocalPosition: {x: 0, y: 5.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4341739794520112}
@@ -258,11 +259,11 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1543537382604738}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -307,9 +308,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d560aef1caeffa4da1e1dc333b38230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {fileID: 4524368970861006}
-  velocity: {x: 0, y: 0, z: 0}
-  canMove: 0
+  distance: {fileID: 4460029351806716}
+  velocity: {x: 0, y: 2}
+  canMove: 1
+  destination: {x: 0, y: 0}
+--- !u!114 &114605878261424700
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1543537382604738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b903e2f6a1ec14eb8c7c46619e1136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  platformCatcher: {fileID: 0}
+  speed: 1
+  platformType: 0
+  startMovingOnlyWhenVisible: 0
+  isMovingAtStart: 1
+  localNodes:
+  - {x: 0, y: 0, z: 0}
+  waitTimes:
+  - 0
+  m_WorldNode: []
+  m_Current: 0
+  m_Next: 0
+  m_Dir: 1
+  m_WaitTime: -1
+  m_Rigidbody2D: {fileID: 0}
+  m_Velocity: {x: 0, y: 0}
+  m_Started: 0
+  m_VeryFirstStart: 0
 --- !u!212 &212003847611152514
 SpriteRenderer:
   m_ObjectHideFlags: 1

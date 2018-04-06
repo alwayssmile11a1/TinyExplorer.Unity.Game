@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnightBT : MonoBehaviour
-{
+public class RideloidBT : MonoBehaviour {
     Animator m_Animator;
     Root m_Ai = BT.Root();
     EnemyBehaviour m_EnemyBehaviour;
@@ -31,8 +30,7 @@ public class KnightBT : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update () {
         m_Ai.Tick();
-    }
+	}
 }
