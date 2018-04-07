@@ -6,12 +6,13 @@ using UnityEngine;
 public class MovingGround : MonoBehaviour {
     public Transform destination;
     public Vector3 velocity;
-    [SerializeField]
+    //[SerializeField]
     private bool canMove;
     private Rigidbody2D platformRigidbody;
-    [SerializeField]
+    //[SerializeField]
     private Vector3 m_des;
-
+    public ParticleSystem[] triggerEffect;
+    public GameObject test;
     private void Awake()
     {
         platformRigidbody = GetComponent<Rigidbody2D>();
@@ -29,7 +30,9 @@ public class MovingGround : MonoBehaviour {
     void MovePlatform(Vector3 movement)
     {
         float dist = Vector3.Distance(m_des, transform.position);
-        //Debug.Log("Distance to other: " + dist);
+        Debug.Log("Distance to other: " + dist);
+        Debug.Log("m_des: " + m_des);
+        Debug.Log("m_transform: " + transform.position);
         if (dist > 0.05)
         {
             //Debug.Log(destination);
@@ -50,5 +53,22 @@ public class MovingGround : MonoBehaviour {
     {
         if (collision.collider.tag == "Player")
             collision.collider.transform.SetParent(null);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag.Equals("Player"))
+        {
+            canMove = true;
+            var children = test.GetComponentsInChildren<ParticleSystem>();
+            foreach(var child in children)
+            {
+                if (child.tag == "ParticleSystem")
+                {
+                    child.Stop();
+                }
+            }
+            //triggerEffect.Stop();
+        }
     }
 }

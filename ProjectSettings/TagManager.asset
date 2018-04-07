@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Summoner
   - Acid
+  - ParticleSystem
+  - RideloidRange
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - Platform
   - Enemy
   - MovingPlatform
-  - 
+  - EnemyRange
   - 
   - 
   - 
