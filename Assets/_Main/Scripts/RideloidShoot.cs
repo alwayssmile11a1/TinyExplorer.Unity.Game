@@ -5,13 +5,20 @@ using UnityEngine;
 public class RideloidShoot : MonoBehaviour {
     public LayerMask hitLayerMask;
     public float castDistance;
-    public GameObject RobotHand; 
+
+    public float shootCoolDown;
+    public Transform shootOrigin;
+    private float shootTime;
+
+    public float RobotHandExistsTime;
+    public GameObject RobotHand;
+    private float currentExistsTime;
+
     private Vector2 direction;
     private ContactFilter2D contactFilter2D;
     private CapsuleCollider2D capsuleCollider2D;
     private Rigidbody2D rigidbody2D;
     private Animator animator;
-    private bool foundPlayer;
     private List<GameObject> RobotHands;
     private Vector2 offset;
 
@@ -43,23 +50,22 @@ public class RideloidShoot : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        foundPlayer = false;
+        currentExistsTime = 0;
         direction = Vector2.right;
+        shootTime = shootCoolDown;
         contactFilter2D.layerMask = hitLayerMask;
         animator = GetComponent<Animator>();
         capsuleCollider2D = GetComponent<CapsuleCollider2D>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         Offset = new Vector2(capsuleCollider2D.size.x, 0);
 	}
-
-    private void Start()
-    {
-        // initialize RobotHands
-    }
+    
 
     private void FixedUpdate()
     {
         ScanForPlayer();
+        CoolDownShoot();
+        ResetRobotHand();
     }
 
     void ScanForPlayer()
@@ -73,23 +79,43 @@ public class RideloidShoot : MonoBehaviour {
         {
             if (item.rigidbody != null && item.collider.tag.Equals("Player"))
             {
-                foundPlayer = true;
                 ShootPlayer();
             }
         }
-        if (!foundPlayer && animator.GetBool("attack"))
-            animator.SetBool("attack", false);
-        foundPlayer = false;
+        //if (!foundPlayer && animator.GetBool("attack"))
+        //    animator.SetBool("attack", false);
     }
 
     void ShootPlayer()
     {
-        Debug.Log("Shoot");
-        animator.SetBool("attack", true);
+        if (shootTime >= shootCoolDown)
+        {
+            Debug.Log("Shoot");
+            animator.SetBool("attack", true);
+        }
     }
 
     public void Shooting()
     {
         RobotHand.SetActive(true);
+        shootTime -= shootCoolDown;
+        animator.SetBool("attack", false);
+        //Debug.Log(Time.deltaTime);
+    }
+
+    private void CoolDownShoot()
+    {
+        if (shootTime < shootCoolDown)
+            shootTime += Time.deltaTime;
+    }
+
+    private void ResetRobotHand()
+    {
+        currentExistsTime += Time.deltaTime;
+        if (currentExistsTime >= RobotHandExistsTime)
+        {
+            RobotHand.SetActive(false);
+            currentExistsTime = 0;
+        }
     }
 }

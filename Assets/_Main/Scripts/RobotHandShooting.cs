@@ -8,7 +8,6 @@ public class RobotHandShooting : MonoBehaviour {
     private Rigidbody2D rigidbody2D;
 	// Use this for initialization
 	void Start () {
-        velocity = new Vector2(1, 0);
         rigidbody2D = GetComponent<Rigidbody2D>();
         rigidbody2D.position = shootOrigin.position;
 	}
