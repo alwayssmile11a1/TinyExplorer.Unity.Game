@@ -7,11 +7,15 @@ public class RideloidShoot : MonoBehaviour {
     public float castDistance;
 
     public float shootCoolDown;
-    public Transform shootOrigin;
+    public Transform shootOriginRight;
+    public Transform shootOriginLeft;
     private float shootTime;
+    private bool Shooted;
 
     public float RobotHandExistsTime;
     public GameObject RobotHand;
+    private Transform RoBotHandPostion;
+    private RobotHandShooting robotHandShootingScript;
     private float currentExistsTime;
 
     private Vector2 direction;
@@ -19,7 +23,8 @@ public class RideloidShoot : MonoBehaviour {
     private CapsuleCollider2D capsuleCollider2D;
     private Rigidbody2D rigidbody2D;
     private Animator animator;
-    private List<GameObject> RobotHands;
+    private SpriteRenderer robotSpriteRenderer;
+    private SpriteRenderer robotHandSpriteRenderer;
     private Vector2 offset;
 
     public Vector2 Direction
@@ -53,8 +58,14 @@ public class RideloidShoot : MonoBehaviour {
         currentExistsTime = 0;
         direction = Vector2.right;
         shootTime = shootCoolDown;
+        Shooted = false;
         contactFilter2D.layerMask = hitLayerMask;
+        RoBotHandPostion = RobotHand.GetComponent<Transform>();
+        robotHandShootingScript = RobotHand.GetComponent<RobotHandShooting>();
+        //RoBotHandPostion.position = shootOrigin.position;
         animator = GetComponent<Animator>();
+        robotSpriteRenderer = GetComponent<SpriteRenderer>();
+        robotHandSpriteRenderer = RobotHand.GetComponent<SpriteRenderer>();
         capsuleCollider2D = GetComponent<CapsuleCollider2D>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         Offset = new Vector2(capsuleCollider2D.size.x, 0);
@@ -66,6 +77,15 @@ public class RideloidShoot : MonoBehaviour {
         ScanForPlayer();
         CoolDownShoot();
         ResetRobotHand();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag.Equals("RideloidRange"))
+        {
+            robotHandShootingScript.ReverseVelocity();
+            robotHandSpriteRenderer.flipX = !robotHandSpriteRenderer.flipX;
+        }
     }
 
     void ScanForPlayer()
@@ -98,8 +118,17 @@ public class RideloidShoot : MonoBehaviour {
     public void Shooting()
     {
         RobotHand.SetActive(true);
+        if (!robotSpriteRenderer.flipX)
+        {
+            RoBotHandPostion.position = shootOriginRight.position;
+        }
+        else
+        {
+            RoBotHandPostion.position = shootOriginLeft.position;
+        }
         shootTime -= shootCoolDown;
         animator.SetBool("attack", false);
+        Shooted = true;
         //Debug.Log(Time.deltaTime);
     }
 
@@ -111,11 +140,13 @@ public class RideloidShoot : MonoBehaviour {
 
     private void ResetRobotHand()
     {
-        currentExistsTime += Time.deltaTime;
-        if (currentExistsTime >= RobotHandExistsTime)
+        if (currentExistsTime >= RobotHandExistsTime && Shooted)
         {
             RobotHand.SetActive(false);
+            Shooted = false;
             currentExistsTime = 0;
         }
+        else if (Shooted)
+            currentExistsTime += Time.deltaTime;
     }
 }

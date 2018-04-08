@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RobotHandShooting : MonoBehaviour {
-    public Vector2 velocity;
-    public Transform shootOrigin;
+    [SerializeField]
+    private Vector2 velocity;
     private Rigidbody2D rigidbody2D;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         rigidbody2D = GetComponent<Rigidbody2D>();
-        rigidbody2D.position = shootOrigin.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         rigidbody2D.position += velocity * Time.deltaTime;
 	}
+
+    public void ReverseVelocity()
+    {
+        velocity *= -1;
+    }
 }
