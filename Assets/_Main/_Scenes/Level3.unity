@@ -22382,14 +22382,6 @@ Prefab:
       propertyPath: m_Name
       value: Robot (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 4668758778005306, guid: c0d85b8674d20c04396c9e0e77050dcf, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -0.57
-      objectReference: {fileID: 0}
-    - target: {fileID: 4470205426587124, guid: c0d85b8674d20c04396c9e0e77050dcf, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 2.845
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c0d85b8674d20c04396c9e0e77050dcf, type: 2}
   m_IsPrefabParent: 0
