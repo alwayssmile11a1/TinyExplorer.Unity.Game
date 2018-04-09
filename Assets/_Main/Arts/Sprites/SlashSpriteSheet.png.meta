@@ -1,0 +1,478 @@
+fileFormatVersion: 2
+guid: 4d5605bf8cb43f043a20f0bce8443ab5
+timeCreated: 1523279659
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: SlashSpriteSheet_0
+    21300002: SlashSpriteSheet_1
+    21300004: SlashSpriteSheet_2
+    21300006: SlashSpriteSheet_3
+    21300008: SlashSpriteSheet_4
+    21300010: SlashSpriteSheet_5
+    21300012: SlashSpriteSheet_6
+    21300014: SlashSpriteSheet_7
+    21300016: SlashSpriteSheet_8
+    21300018: SlashSpriteSheet_9
+    21300020: SlashSpriteSheet_10
+    21300022: SlashSpriteSheet_11
+    21300024: SlashSpriteSheet_12
+    21300026: SlashSpriteSheet_13
+    21300028: SlashSpriteSheet_14
+    21300030: SlashSpriteSheet_15
+    21300032: SlashSpriteSheet_16
+    21300034: SlashSpriteSheet_17
+    21300036: SlashSpriteSheet_18
+    21300038: SlashSpriteSheet_19
+    21300040: SlashSpriteSheet_20
+    21300042: SlashSpriteSheet_21
+    21300044: SlashSpriteSheet_22
+    21300046: SlashSpriteSheet_23
+    21300048: SlashSpriteSheet_24
+    21300050: SlashSpriteSheet_25
+    21300052: SlashSpriteSheet_26
+    21300054: SlashSpriteSheet_27
+    21300056: SlashSpriteSheet_28
+    21300058: SlashSpriteSheet_29
+    21300060: SlashSpriteSheet_30
+    21300062: SlashSpriteSheet_31
+    21300064: SlashSpriteSheet_32
+    21300066: SlashSpriteSheet_33
+    21300068: SlashSpriteSheet_34
+    21300070: SlashSpriteSheet_35
+    21300072: SlashSpriteSheet_36
+    21300074: SlashSpriteSheet_37
+    21300076: SlashSpriteSheet_38
+    21300078: SlashSpriteSheet_39
+    21300080: SlashSpriteSheet_40
+    21300082: SlashSpriteSheet_41
+    21300084: SlashSpriteSheet_42
+    21300086: SlashSpriteSheet_43
+    21300088: SlashSpriteSheet_44
+    21300090: SlashSpriteSheet_45
+    21300092: SlashSpriteSheet_46
+    21300094: SlashSpriteSheet_47
+    21300096: SlashSpriteSheet_48
+    21300098: SlashSpriteSheet_49
+    21300100: SlashSpriteSheet_50
+    21300102: SlashSpriteSheet_51
+    21300104: SlashSpriteSheet_52
+    21300106: SlashSpriteSheet_53
+    21300108: SlashSpriteSheet_54
+    21300110: SlashSpriteSheet_55
+    21300112: SlashSpriteSheet_56
+    21300114: SlashSpriteSheet_57
+    21300116: SlashSpriteSheet_58
+    21300118: SlashSpriteSheet_59
+    21300120: SlashSpriteSheet_60
+    21300122: SlashSpriteSheet_61
+    21300124: SlashSpriteSheet_62
+    21300126: SlashSpriteSheet_63
+    21300128: SlashSpriteSheet_64
+    21300130: SlashSpriteSheet_65
+    21300132: SlashSpriteSheet_66
+    21300134: SlashSpriteSheet_67
+    21300136: SlashSpriteSheet_68
+    21300138: SlashSpriteSheet_69
+    21300140: SlashSpriteSheet_70
+    21300142: SlashSpriteSheet_71
+    21300144: SlashSpriteSheet_72
+    21300146: SlashSpriteSheet_73
+    21300148: SlashSpriteSheet_74
+    21300150: SlashSpriteSheet_75
+    21300152: SlashSpriteSheet_76
+    21300154: SlashSpriteSheet_77
+    21300156: SlashSpriteSheet_78
+    21300158: SlashSpriteSheet_79
+    21300160: SlashSpriteSheet_80
+    21300162: SlashSpriteSheet_81
+    21300164: SlashSpriteSheet_82
+    21300166: SlashSpriteSheet_83
+    21300168: SlashSpriteSheet_84
+    21300170: SlashSpriteSheet_85
+    21300172: SlashSpriteSheet_86
+    21300174: SlashSpriteSheet_87
+    21300176: SlashSpriteSheet_88
+    21300178: SlashSpriteSheet_89
+    21300180: SlashSpriteSheet_90
+    21300182: SlashSpriteSheet_91
+    21300184: SlashSpriteSheet_92
+    21300186: SlashSpriteSheet_93
+    21300188: SlashSpriteSheet_94
+    21300190: SlashSpriteSheet_95
+    21300192: SlashSpriteSheet_96
+    21300194: SlashSpriteSheet_97
+    21300196: SlashSpriteSheet_98
+    21300198: SlashSpriteSheet_99
+    21300200: SlashSpriteSheet_100
+    21300202: SlashSpriteSheet_101
+    21300204: SlashSpriteSheet_102
+    21300206: SlashSpriteSheet_103
+    21300208: SlashSpriteSheet_104
+    21300210: SlashSpriteSheet_105
+    21300212: SlashSpriteSheet_106
+    21300214: SlashSpriteSheet_107
+    21300216: SlashSpriteSheet_108
+    21300218: SlashSpriteSheet_109
+    21300220: SlashSpriteSheet_110
+    21300222: SlashSpriteSheet_111
+    21300224: SlashSpriteSheet_112
+    21300226: SlashSpriteSheet_113
+    21300228: SlashSpriteSheet_114
+    21300230: SlashSpriteSheet_115
+    21300232: SlashSpriteSheet_116
+    21300234: SlashSpriteSheet_117
+    21300236: SlashSpriteSheet_118
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SlashSpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_11
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_12
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_13
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_14
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_16
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SlashSpriteSheet_17
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
