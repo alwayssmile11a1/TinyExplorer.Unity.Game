@@ -29529,7 +29529,7 @@ Prefab:
     - target: {fileID: 114855186862754034, guid: b4543ced2a30b3e489c1f689222ed111,
         type: 2}
       propertyPath: inputButtons.Array.data[2].inputEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Dash
+      value: StartDashing
       objectReference: {fileID: 0}
     - target: {fileID: 114855186862754034, guid: b4543ced2a30b3e489c1f689222ed111,
         type: 2}
@@ -30198,6 +30198,14 @@ Prefab:
     - target: {fileID: 1156354121137394, guid: c0d85b8674d20c04396c9e0e77050dcf, type: 2}
       propertyPath: m_Name
       value: Robot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4668758778005306, guid: c0d85b8674d20c04396c9e0e77050dcf, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470205426587124, guid: c0d85b8674d20c04396c9e0e77050dcf, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 2.873
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c0d85b8674d20c04396c9e0e77050dcf, type: 2}
@@ -34191,45 +34199,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 75cabef8c622f42229b80fec978c6a10, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1171150819 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1712942007129552, guid: b4543ced2a30b3e489c1f689222ed111,
-    type: 2}
-  m_PrefabInternal: {fileID: 702178472}
---- !u!114 &1171150822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1171150819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1506f7b67235554cb42519c257da979, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  useTriggerCollider: 0
-  offset: {x: 0, y: 0}
-  size: {x: 2.5, y: 1}
-  offsetBasedOnSpriteFacing: 1
-  spriteRenderer: {fileID: 0}
-  canHitTriggers: 0
-  disableDamageAfterHit: 0
-  forceRespawn: 0
-  ignoreInvincibility: 0
-  hittableLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  OnDamageableHit:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Gamekit2D.Damager+DamagableEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnNonDamageableHit:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Gamekit2D.Damager+NonDamagableEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!4 &1181652996 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4532368491988960, guid: 75cabef8c622f42229b80fec978c6a10,
@@ -35552,39 +35521,6 @@ Prefab:
     - target: {fileID: 4323301625461048, guid: c0d85b8674d20c04396c9e0e77050dcf, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4668758778005306, guid: c0d85b8674d20c04396c9e0e77050dcf, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.524
-      objectReference: {fileID: 0}
-    - target: {fileID: 4470205426587124, guid: c0d85b8674d20c04396c9e0e77050dcf, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 3.042
-      objectReference: {fileID: 0}
-    - target: {fileID: 50680145069355674, guid: c0d85b8674d20c04396c9e0e77050dcf,
-        type: 2}
-      propertyPath: m_UseFullKinematicContacts
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114873937003692500, guid: c0d85b8674d20c04396c9e0e77050dcf,
-        type: 2}
-      propertyPath: hittableLayers.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
-    - target: {fileID: 114873937003692500, guid: c0d85b8674d20c04396c9e0e77050dcf,
-        type: 2}
-      propertyPath: useTriggerCollider
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114873937003692500, guid: c0d85b8674d20c04396c9e0e77050dcf,
-        type: 2}
-      propertyPath: size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114084268706660784, guid: c0d85b8674d20c04396c9e0e77050dcf,
-        type: 2}
-      propertyPath: hittableLayers.m_Bits
-      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c0d85b8674d20c04396c9e0e77050dcf, type: 2}
