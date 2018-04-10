@@ -63,8 +63,11 @@ public class TimeManager : MonoBehaviour {
     /// <param name="duration"></param>
     public static void SlowdownTime(float amount, float duration, bool graduallyIncreaseTimeBackToNormal = true)
     {
-        m_TimeManager.m_GraduallyIncreaseTimeBackToNormal = graduallyIncreaseTimeBackToNormal;
+        //Change time back to normal first
+        m_TimeManager.ChangeTimeBackToNormal();
 
+        //Variables
+        m_TimeManager.m_GraduallyIncreaseTimeBackToNormal = graduallyIncreaseTimeBackToNormal;
         m_TimeManager.m_Timer = duration;
         m_TimeManager.m_Amount = Mathf.Clamp(amount, 0, 1);
         m_TimeManager.m_Duration = duration;

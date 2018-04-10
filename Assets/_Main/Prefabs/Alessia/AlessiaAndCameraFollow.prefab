@@ -544,6 +544,7 @@ MonoBehaviour:
   canHitTriggers: 1
   disableDamageAfterHit: 1
   forceRespawn: 0
+  receiveOnHitEventOnInvincibleObject: 1
   ignoreInvincibility: 0
   hittableLayers:
     serializedVersion: 2
@@ -553,7 +554,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114471711954427722}
         m_MethodName: AttackHit
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -905,7 +906,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1973555324
+  randomSeed: -1101202636
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4311,7 +4312,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 238430041
+  randomSeed: 809485130
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4956,9 +4957,9 @@ ParticleSystem:
       time: 0
       countCurve:
         serializedVersion: 2
-        minMaxState: 0
+        minMaxState: 3
         scalar: 3
-        minScalar: 0
+        minScalar: 2
         maxCurve:
           serializedVersion: 2
           m_Curve:
@@ -14439,7 +14440,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1567617850
+  randomSeed: -859847646
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -17845,7 +17846,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 162958352
+  randomSeed: 1776491298
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -18490,9 +18491,9 @@ ParticleSystem:
       time: 0
       countCurve:
         serializedVersion: 2
-        minMaxState: 0
+        minMaxState: 3
         scalar: 3
-        minScalar: 0
+        minScalar: 2
         maxCurve:
           serializedVersion: 2
           m_Curve:

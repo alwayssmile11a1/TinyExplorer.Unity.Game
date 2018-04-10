@@ -281,9 +281,9 @@ public class AlessiaController : MonoBehaviour {
         m_Slash.DisableDamage();
     }
 
-    public void AttackHit()
+    public void AttackHit(Damager damager, Damageable damagable)
     {
-
+        //Display slash hit effect
         if (!m_SpriteRenderer.flipX)
         {
             slashContactTransform.position = transform.position + m_OffsetFromSlashEffectToAlessia;
@@ -294,11 +294,26 @@ public class AlessiaController : MonoBehaviour {
             m_ReverseOffset.x *= -1;
             slashContactTransform.position = transform.position + m_ReverseOffset;
         }
-
-
         slashContactTransform.rotation = Quaternion.Euler(0, 0, Random.Range(-50f, 50f));      
-
         m_SlashContactEffect.Play();
+
+
+        ////Slowdown time a little bit
+        //TimeManager.SlowdownTime(0.2f, 0.2f);
+
+        //Push player back just a tiny bit
+        if(!m_SpriteRenderer.flipX)
+        {
+            m_ThrowVector += new Vector2(-1, 0);
+        }
+        else
+        {
+            m_ThrowVector += new Vector2(1, 0);
+        }
+        
+
+
+
     }
 
 

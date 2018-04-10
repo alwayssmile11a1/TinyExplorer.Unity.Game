@@ -50,7 +50,7 @@ namespace Gamekit2D
 
                 bool isActiveChild = branch.ActiveChild() == i;
                 GUI.color = (isActiveChild && parentIsActive) ? Color.green : Color.white;
-                EditorGUILayout.LabelField(nodes[i].ToString());
+                EditorGUILayout.LabelField(nodes[i].ToString(), EditorStyles.whiteLabel);
 
                 if (nodes[i] is Branch)
                     RecursiveTreeParsing(nodes[i] as Branch, indent + 1, isActiveChild);

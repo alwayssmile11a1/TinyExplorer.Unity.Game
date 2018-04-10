@@ -4,7 +4,7 @@ using UnityEngine;
 using Gamekit2D;
 using BTAI;
 
-public class ShardKnight : MonoBehaviour {
+public class ShardKnight : MonoBehaviour, IBTDebugable {
 
     public Transform targetToTrack;
 
@@ -39,11 +39,10 @@ public class ShardKnight : MonoBehaviour {
     private Rigidbody2D m_RigidBody2D;
     private SpriteRenderer m_SpriteRenderer;
     private LineRenderer m_LineRenderer;
-
     private Vector3[] chaserAttacksPositions;
-
     private BulletPool m_FireBallPool;
     private BulletPool m_ConcentratingAttackPool;
+
 
     #region Deprecated
     private GameObject rangeEnemyToSpawn;
@@ -69,7 +68,8 @@ public class ShardKnight : MonoBehaviour {
     private int m_ConcentratingAttacks = 5;
     private bool m_FormChanged = false;
     private bool m_LaserEnabled = false;
-    private float m_Timer;
+    private float m_DashTimer;
+    private Vector3 m_FuturePosition;
 
     private void Awake()
     {
@@ -77,8 +77,7 @@ public class ShardKnight : MonoBehaviour {
         m_RigidBody2D = GetComponent<Rigidbody2D>();
         m_Damageable = GetComponent<Damageable>();
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        m_LineRenderer = GetComponent<LineRenderer>();
-
+        m_LineRenderer = GetComponentInChildren<LineRenderer>();
         m_Flicker = m_Animator.gameObject.AddComponent<Flicker>();
 
         //Pool
@@ -100,18 +99,26 @@ public class ShardKnight : MonoBehaviour {
                     BT.Sequence().OpenBranch(
                         BT.Call(EnableLaser),
                         BT.Wait(2f),
-                        BT.Call(DisableLaser)
+                        BT.Call(LaserAttack),
+                        BT.Wait(2f),
+                        BT.Call(DisableLaser),
+                        BT.Wait(2f)
                     ),
 
                     BT.Sequence().OpenBranch(
-                        BT.Repeat((int)(2/Time.deltaTime)).OpenBranch(BT.Call(MoveToLower)),
+                        BT.Call(MoveToLower),
+                        BT.WaitUntil(MoveCheck),
                         BT.Wait(1f),
                         BT.Call(Form1Dash),
-                        BT.Wait(2f),
+                        BT.WaitUntil(MoveCheck),
+                        BT.Call(EndDashing),
+                        BT.Wait(0.5f),
                         BT.Call(OrientToTarget),
-                        BT.Repeat((int)(2 / Time.deltaTime)).OpenBranch(BT.Call(MoveToUpper)),
-                        BT.Wait(1f)
+                        BT.Call(MoveToUpper),
+                        BT.WaitUntil(MoveCheck),
+                        BT.Wait(2f)
                     )
+                    
 
                 )
             ),
@@ -129,6 +136,7 @@ public class ShardKnight : MonoBehaviour {
                     BT.Repeat(3).OpenBranch(
                         BT.Call(Form2Dash),
                         BT.Wait(2f),
+                        BT.Call(EndDashing),
                         BT.Call(OrientToTarget)
                     ),
 
@@ -153,6 +161,12 @@ public class ShardKnight : MonoBehaviour {
 
     }
 
+    public Root GetAIRoot()
+    {
+        return m_Ai;
+    }
+ 
+
     // Update is called once per frame
     void Update () {
 
@@ -164,21 +178,12 @@ public class ShardKnight : MonoBehaviour {
             TrackTargerByLaser();
         }
        
-        if(m_Timer>0)
-        {
-            Debug.Log(m_Timer);
-            m_Timer -= Time.deltaTime;
-        }
-    }
+        //if(m_DashTimer>0)
+        //{
+        //    m_DashTimer -= Time.deltaTime;
+        //    EndDashing();
+        //}
 
-    private void StartCountDown()
-    {
-        m_Timer = 2f;
-    }
-
-    private bool IsCountDowning()
-    {
-        return m_Timer > 0;
     }
 
     private void OrientToTarget()
@@ -353,7 +358,7 @@ public class ShardKnight : MonoBehaviour {
     }
 
 
-    public void SpawnConcentratingAttack()
+    private void SpawnConcentratingAttack()
     {
         StartCoroutine(InternalSpawnConcentraingAttacks());
     }
@@ -381,8 +386,7 @@ public class ShardKnight : MonoBehaviour {
 
             yield return new WaitForSeconds(0.5f);
 
-            
-
+           
         }
 
         m_Animator.SetTrigger(m_HashEndAnimationPara);
@@ -398,19 +402,29 @@ public class ShardKnight : MonoBehaviour {
 
     private void MoveTo(Vector3 position, float speed)
     {
-        transform.position = Vector3.Slerp(transform.position, position, speed);
+        Vector3 direction = (position - transform.position).normalized;
+
+        m_RigidBody2D.velocity = direction * speed;
+
+        //transform.position = Vector3.Slerp(transform.position, position, speed);
 
     }
 
     private void MoveToLower()
     {
+       
         if(!m_SpriteRenderer.flipX)
         {
-            MoveTo(teleportPositions[0].position, 0.02f);
+            MoveTo(teleportPositions[0].position, 5f);
+            m_FuturePosition = teleportPositions[0].position;
+
+
         }
         else
         {
-            MoveTo(teleportPositions[1].position, 0.02f);
+            MoveTo(teleportPositions[1].position, 5f);
+            m_FuturePosition = teleportPositions[1].position;
+            
         }
 
     }
@@ -419,27 +433,56 @@ public class ShardKnight : MonoBehaviour {
     {
         if (!m_SpriteRenderer.flipX)
         {
-            MoveTo(teleportPositions[2].position, 0.02f);
+            MoveTo(teleportPositions[2].position, 5f);
+            m_FuturePosition = teleportPositions[2].position;
         }
         else
         {
-            MoveTo(teleportPositions[3].position, 0.02f);
+            MoveTo(teleportPositions[3].position, 5f);
+            m_FuturePosition = teleportPositions[3].position;
         }
     }
 
     private void Form1Dash()
     {
-        StartCoroutine(InternalDash(dashSpeed / 1.5f, 1f));
+        dashEffect.SetActive(true);
+
+        if (!m_SpriteRenderer.flipX)
+        {
+            MoveTo(teleportPositions[1].position, 5f);
+
+            //rotate shardknight      
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+
+            m_FuturePosition = teleportPositions[1].position;
+
+
+        }
+        else
+        {
+            MoveTo(teleportPositions[0].position, 5f);
+
+            //rotate shardknight      
+            transform.rotation = Quaternion.Euler(0, 0, -90);
+
+            m_FuturePosition = teleportPositions[0].position;
+        }
 
     }
+
+    private bool MoveCheck()
+    {
+        if((transform.position - m_FuturePosition).sqrMagnitude <= 0.2f)
+        {
+            m_RigidBody2D.velocity = Vector2.zero;
+            return true;
+        }
+
+        return false;
+    }
+
 
     private void Form2Dash()
-    {
-        StartCoroutine(InternalDash(dashSpeed, 2f));
-    }
-
-
-    private IEnumerator InternalDash(float speed, float duration)
     {
         dashEffect.SetActive(true);
 
@@ -449,22 +492,23 @@ public class ShardKnight : MonoBehaviour {
 
         //rotate shardknight
         float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, rotationZ-90);
+        transform.rotation = Quaternion.Euler(0, 0, rotationZ - 90);
 
-        m_RigidBody2D.velocity = direction * speed;
-
-        yield return new WaitForSeconds(duration);
-
-        dashEffect.SetActive(false);
-
-        m_RigidBody2D.velocity = Vector3.zero;
-
-        transform.rotation = Quaternion.identity;
-
+        m_RigidBody2D.velocity = direction * 2f;
     }
+
+    private void EndDashing()
+    {
+        //rotate shardknight      
+        dashEffect.SetActive(false);
+        transform.rotation = Quaternion.identity;
+        m_RigidBody2D.velocity = Vector2.zero;
+    }
+
 
     private void EnableLaser()
     {
+        laserFollower.gameObject.SetActive(true);
         m_LineRenderer.enabled = true;
         m_LaserEnabled = true;
 
@@ -472,6 +516,7 @@ public class ShardKnight : MonoBehaviour {
 
     private void DisableLaser()
     {
+        laserFollower.gameObject.SetActive(false);
         m_LineRenderer.enabled = false;
         m_LaserEnabled = false;
     }
@@ -497,6 +542,10 @@ public class ShardKnight : MonoBehaviour {
 
     }
 
+    private void LaserAttack()
+    {
+
+    }
 
 
 

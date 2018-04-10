@@ -19,6 +19,7 @@ namespace Gamekit2D
         SerializedProperty m_CanHitTriggersProp;
         SerializedProperty m_DisableDamageAfterHit;
         SerializedProperty m_ForceRespawnProp;
+        SerializedProperty m_ReceiveOnHitEventOnInvincibleObject;
         SerializedProperty m_IgnoreInvincibilityProp;
         SerializedProperty m_HittableLayersProp;
         SerializedProperty m_OnDamageableHitProp;
@@ -35,6 +36,7 @@ namespace Gamekit2D
             m_CanHitTriggersProp = serializedObject.FindProperty("canHitTriggers");
             m_DisableDamageAfterHit = serializedObject.FindProperty("disableDamageAfterHit");
             m_ForceRespawnProp = serializedObject.FindProperty("forceRespawn");
+            m_ReceiveOnHitEventOnInvincibleObject = serializedObject.FindProperty("receiveOnHitEventOnInvincibleObject");
             m_IgnoreInvincibilityProp = serializedObject.FindProperty("ignoreInvincibility");
             m_HittableLayersProp = serializedObject.FindProperty("hittableLayers");
             m_OnDamageableHitProp = serializedObject.FindProperty("OnDamageableHit");
@@ -59,6 +61,7 @@ namespace Gamekit2D
             EditorGUILayout.PropertyField(m_CanHitTriggersProp);
             EditorGUILayout.PropertyField(m_DisableDamageAfterHit);
             EditorGUILayout.PropertyField(m_ForceRespawnProp);
+            EditorGUILayout.PropertyField(m_ReceiveOnHitEventOnInvincibleObject);
             EditorGUILayout.PropertyField(m_IgnoreInvincibilityProp);
             EditorGUILayout.PropertyField(m_HittableLayersProp);
             EditorGUILayout.PropertyField(m_OnDamageableHitProp);

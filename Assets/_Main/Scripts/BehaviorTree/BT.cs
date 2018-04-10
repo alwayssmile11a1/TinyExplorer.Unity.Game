@@ -25,6 +25,7 @@ namespace BTAI
         public static Condition Condition(System.Func<bool> fn) { return new Condition(fn); }
         public static Repeat Repeat(int count) { return new Repeat(count); }
         public static Wait Wait(float seconds) { return new Wait(seconds); }
+        public static WaitUntilTrue WaitUntil(System.Func<bool> fn) { return new WaitUntilTrue(fn); }
         public static Trigger Trigger(Animator animator, string name, bool set = true) { return new Trigger(animator, name, set); }
         public static WaitForAnimatorState WaitForAnimatorState(Animator animator, string name, int layer = 0) { return new WaitForAnimatorState(animator, name, layer); }
         public static SetBool SetBool(Animator animator, string name, bool value) { return new SetBool(animator, name, value); }
@@ -337,6 +338,32 @@ namespace BTAI
         public override string ToString()
         {
             return "While : " + fn.Method.ToString();
+        }
+    }
+
+    /// <summary>
+    /// Wait until a function return true, and return success 
+    /// </summary>
+    public class WaitUntilTrue : BTNode
+    {
+        public System.Func<bool> fn;
+
+        public WaitUntilTrue(System.Func<bool> fn)
+        {
+            this.fn = fn;
+        }
+
+        public override BTState Tick()
+        {
+            if (fn())
+                return BTState.Success;
+
+            return BTState.Continue;
+        }
+
+        public override string ToString()
+        {
+            return "Wait Until True : " + fn.Method.ToString();
         }
     }
 

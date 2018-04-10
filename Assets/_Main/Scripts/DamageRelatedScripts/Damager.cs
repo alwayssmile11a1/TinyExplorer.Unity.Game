@@ -33,6 +33,8 @@ namespace Gamekit2D
         public bool disableDamageAfterHit = false;
         [Tooltip("If set, the player will be forced to respawn to latest checkpoint in addition to loosing life")]
         public bool forceRespawn = false;
+        [Tooltip("If set, OnHitEvent will still be triggered when hitting an invincible gameObject")]
+        public bool receiveOnHitEventOnInvincibleObject = true;
         [Tooltip("If set, an invincible damageable hit will still get the onTakeDamage message (but won't loose any life)")]
         public bool ignoreInvincibility = false;
         public LayerMask hittableLayers;
@@ -121,10 +123,10 @@ namespace Gamekit2D
 
             if (damageable)
             {
-                //if (!damageable.IsInvulnerable() || ignoreInvincibility)
-                //{
-                OnDamageableHit.Invoke(this, damageable);
-                //}
+                if (receiveOnHitEventOnInvincibleObject || !damageable.IsInvulnerable())
+                {
+                    OnDamageableHit.Invoke(this, damageable);
+                }
 
                 damageable.TakeDamage(this, ignoreInvincibility);
 
@@ -136,7 +138,10 @@ namespace Gamekit2D
             }
             else
             {
-                OnNonDamageableHit.Invoke(this);
+                if (receiveOnHitEventOnInvincibleObject)
+                {
+                    OnNonDamageableHit.Invoke(this);
+                }
             }
         }
 
