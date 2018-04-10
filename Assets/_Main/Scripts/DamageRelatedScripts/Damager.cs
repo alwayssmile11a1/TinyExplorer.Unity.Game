@@ -96,7 +96,7 @@ namespace Gamekit2D
             for (int i = 0; i < hitCount; i++)
             {
                 m_LastHit = m_AttackOverlapResults[i];
-
+                
                 RunEvent();
             }
         }

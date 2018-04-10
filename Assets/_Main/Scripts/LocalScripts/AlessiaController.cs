@@ -24,6 +24,7 @@ public class AlessiaController : MonoBehaviour {
     [Header("Slash")]
     public ParticleSystem leftSlashEffect;
     public ParticleSystem rightSlashEffect;
+    public Transform slashContactTransform;
 
     private Damager m_Slash;
     private CharacterController2D m_CharacterController2D;
@@ -36,6 +37,10 @@ public class AlessiaController : MonoBehaviour {
     private SpriteRenderer m_SpriteRenderer;
     private CharacterInput m_CharacterInput;
     private Flicker m_Flicker;
+
+    private Transform m_AlessiaGraphics;
+    private ParticleSystem m_SlashContactEffect;
+    private Vector3 m_OffsetFromSlashEffectToAlessia;
 
     private int m_HashGroundedPara = Animator.StringToHash("Grounded");
     private int m_HashRunPara = Animator.StringToHash("Run");
@@ -55,11 +60,15 @@ public class AlessiaController : MonoBehaviour {
     private void Awake () {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        m_AlessiaGraphics = m_SpriteRenderer.gameObject.transform;
         m_Animator = GetComponentInChildren<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_CharacterInput = GetComponent<CharacterInput>();
         m_Flicker = m_SpriteRenderer.gameObject.AddComponent<Flicker>();
         m_Slash = GetComponent<Damager>();
+        m_Slash.DisableDamage();
+        m_SlashContactEffect = slashContactTransform.GetComponentInChildren<ParticleSystem>();
+        m_OffsetFromSlashEffectToAlessia = slashContactTransform.position - transform.position;
     }
 
     private void Update()
@@ -222,11 +231,11 @@ public class AlessiaController : MonoBehaviour {
         //rotate the sprite a little bit
         if (direction.x > 0)
         {
-            m_SpriteRenderer.gameObject.transform.rotation = Quaternion.Euler(0, 0, -15);
+            m_AlessiaGraphics.rotation = Quaternion.Euler(0, 0, -20);
         }
         else
         {
-            m_SpriteRenderer.gameObject.transform.rotation = Quaternion.Euler(0, 0, 15);
+            m_AlessiaGraphics.rotation = Quaternion.Euler(0, 0, 20);
         }
 
         //dash
@@ -242,7 +251,7 @@ public class AlessiaController : MonoBehaviour {
         m_BlockNormalAction = false;
         m_DashCoolDownTimer = dashCooldDownTime;
         m_Animator.SetBool(m_HashDashPara, false);
-        m_SpriteRenderer.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+        m_AlessiaGraphics.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     public void StartAttacking()
@@ -270,8 +279,26 @@ public class AlessiaController : MonoBehaviour {
     public void EndAttacking()
     {
         m_Slash.DisableDamage();
-        leftSlashEffect.Stop();
-        rightSlashEffect.Stop();
+    }
+
+    public void AttackHit()
+    {
+
+        if (!m_SpriteRenderer.flipX)
+        {
+            slashContactTransform.position = transform.position + m_OffsetFromSlashEffectToAlessia;
+        }
+        else
+        {
+            Vector3 m_ReverseOffset = m_OffsetFromSlashEffectToAlessia;
+            m_ReverseOffset.x *= -1;
+            slashContactTransform.position = transform.position + m_ReverseOffset;
+        }
+
+
+        slashContactTransform.rotation = Quaternion.Euler(0, 0, Random.Range(-50f, 50f));      
+
+        m_SlashContactEffect.Play();
     }
 
 

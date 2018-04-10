@@ -47,8 +47,6 @@ public class FlipWithSprite : MonoBehaviour {
 
         }
 
-    }
-
-    
+    }    
 
 }
