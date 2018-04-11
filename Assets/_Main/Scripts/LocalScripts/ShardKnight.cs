@@ -14,6 +14,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     [Header("Laser")]
     public Transform laserStartingPosition;
     public Transform laserFollower;
+    public GameObject laserAttackBullet;
 
     [Header("Fireballs")]
     public GameObject fireBall;
@@ -42,6 +43,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     private Vector3[] chaserAttacksPositions;
     private BulletPool m_FireBallPool;
     private BulletPool m_ConcentratingAttackPool;
+    private BulletPool m_LaserAttackPool;
 
 
     #region Deprecated
@@ -62,14 +64,15 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     private Flicker m_Flicker;
     private Damageable m_Damageable;
 
-    private Root m_Ai = BT.Root();
-
     private int m_FireBalls = 5;
     private int m_ConcentratingAttacks = 5;
     private bool m_FormChanged = false;
     private bool m_LaserEnabled = false;
     private float m_DashTimer;
     private Vector3 m_FuturePosition;
+    private FollowTarget m_LaserFollowComponent;
+
+    private Root m_Ai = BT.Root();
 
     private void Awake()
     {
@@ -79,10 +82,12 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_LineRenderer = GetComponentInChildren<LineRenderer>();
         m_Flicker = m_Animator.gameObject.AddComponent<Flicker>();
+        m_LaserFollowComponent = laserFollower.GetComponent<FollowTarget>(); 
 
         //Pool
-        m_FireBallPool = BulletPool.GetObjectPool(fireBall, 10);
+        m_FireBallPool = BulletPool.GetObjectPool(fireBall, 5);
         m_ConcentratingAttackPool = BulletPool.GetObjectPool(concentratingAttack, 5);
+        m_LaserAttackPool = BulletPool.GetObjectPool(laserAttackBullet, 10);
 
         //Setup chaserAttacks
         chaserAttacksPositions = new Vector3[chaserAttacks.Length];
@@ -95,12 +100,15 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         m_Ai.OpenBranch(
             BT.If(() => { return m_Damageable.CurrentHealth > m_Damageable.startingHealth / 2; }).OpenBranch(
 
-                 BT.RandomSequence(new int[] { 1, 1 }).OpenBranch(
+                 BT.RandomSequence(new int[] { 1 }).OpenBranch(
                     BT.Sequence().OpenBranch(
                         BT.Call(EnableLaser),
                         BT.Wait(2f),
-                        BT.Call(LaserAttack),
-                        BT.Wait(2f),
+                        BT.Call(() => m_LineRenderer.enabled = false),
+                        BT.Repeat(10).OpenBranch(
+                            BT.Call(LaserAttack),
+                            BT.Wait(0.1f)
+                        ),
                         BT.Call(DisableLaser),
                         BT.Wait(2f)
                     ),
@@ -118,7 +126,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
                         BT.WaitUntil(MoveCheck),
                         BT.Wait(2f)
                     )
-                    
+
 
                 )
             ),
@@ -449,7 +457,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
         if (!m_SpriteRenderer.flipX)
         {
-            MoveTo(teleportPositions[1].position, 5f);
+            MoveTo(teleportPositions[1].position, 8f);
 
             //rotate shardknight      
             transform.rotation = Quaternion.Euler(0, 0, 90);
@@ -460,7 +468,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         }
         else
         {
-            MoveTo(teleportPositions[0].position, 5f);
+            MoveTo(teleportPositions[0].position, 8f);
 
             //rotate shardknight      
             transform.rotation = Quaternion.Euler(0, 0, -90);
@@ -494,7 +502,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotationZ - 90);
 
-        m_RigidBody2D.velocity = direction * 2f;
+        m_RigidBody2D.velocity = direction * 10f;
     }
 
     private void EndDashing()
@@ -504,6 +512,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         transform.rotation = Quaternion.identity;
         m_RigidBody2D.velocity = Vector2.zero;
     }
+
 
 
     private void EnableLaser()
@@ -544,7 +553,23 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
     private void LaserAttack()
     {
+        //stop laser follower
+        m_LaserFollowComponent.speed = 0.2f;
 
+        Vector2 startingShootPosition1 = new Vector3(-0.5f, 0.6f,0) + transform.position;
+        Vector2 startingShootPosition2 = new Vector3(0.5f, 0.6f,0) + transform.position;
+        
+        //get bullet object
+        BulletObject laserAttackBulletObject = m_LaserAttackPool.Pop(Random.Range(0, 2) == 1 ? startingShootPosition1 : startingShootPosition2);
+        
+        Vector2 direction = (laserFollower.position - laserAttackBulletObject.transform.position).normalized;
+
+        //rotate
+        laserAttackBulletObject.transform.RotateToDirection(direction);
+
+        laserAttackBulletObject.rigidbody2D.velocity = direction * 15f;
+
+        m_LaserFollowComponent.speed = 1f;
     }
 
 

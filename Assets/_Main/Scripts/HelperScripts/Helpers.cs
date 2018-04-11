@@ -67,6 +67,32 @@ namespace Gamekit2D
 
             return new Bounds {center = center, extents = extents};
         }
+
+        /// <summary>
+        /// Rotate the transform to a specified direction
+        /// the rotationComparedToHorinzontal can be used to offset the rotation
+        /// </summary>
+        /// <param name="transform"></param>
+        /// <param name="direction"></param>
+        /// <param name="rotationComparedToHorinzontal">0 if it's aligned horizontally and 90 if it's aligned verically</param>
+        public static void RotateToDirection(this Transform transform, Vector2 direction, float rotationComparedToHorinzontal = 0)
+        {
+            float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, rotationZ - rotationComparedToHorinzontal);
+        }
+
+        public static void ChangeOffsetBasedOnSpriteFacing(this Transform transform, Transform target, SpriteRenderer spriteRenderer, Vector3 originalOffset)
+        {
+            if (!spriteRenderer.flipX)
+            {
+                transform.position = target.position + originalOffset;
+            }
+            else
+            {
+                transform.position = target.position + new Vector3(-originalOffset.x, originalOffset.y, 0);
+            }
+        }
+
     }
 
     public static class PlatformerEffector2DExtension

@@ -201,6 +201,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4896086604320236}
   - component: {fileID: 114784611302210184}
+  - component: {fileID: 120710239590623342}
+  - component: {fileID: 114781250304900972}
   m_Layer: 0
   m_Name: LaserFollower
   m_TagString: Untagged
@@ -330,7 +332,6 @@ GameObject:
   - component: {fileID: 4530585180126742}
   - component: {fileID: 50500756733872194}
   - component: {fileID: 70676073489452338}
-  - component: {fileID: 120571135532724112}
   - component: {fileID: 114740072673685848}
   - component: {fileID: 114515920500706292}
   - component: {fileID: 114786707292622842}
@@ -600,8 +601,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1570987512085900}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.17, y: -3.28, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.17, y: -4.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4178882188921936}
@@ -632,7 +633,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1693183112577346}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.115, y: 0.295, z: 0}
+  m_LocalPosition: {x: -0.09, y: 0.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4530585180126742}
@@ -794,8 +795,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1349703871066610}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.17, y: 3.28, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.19, y: 0.34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4530585180126742}
@@ -944,8 +945,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.1199265, y: 1.6928537}
+  m_Offset: {x: 0.006259918, y: -0.012523651}
+  m_Size: {x: 0.9320755, y: 1.4423733}
   m_Direction: 0
 --- !u!95 &95688256994439264
 Animator:
@@ -1196,6 +1197,8 @@ MonoBehaviour:
   - {fileID: 1518892962873054}
   laserStartingPosition: {fileID: 4574978586614962}
   laserFollower: {fileID: 4896086604320236}
+  laserAttackBullet: {fileID: 1209501022906890, guid: ce37345a5a95f9443b9dc4f8ec097af6,
+    type: 2}
   fireBall: {fileID: 1153904941152902, guid: cda2eb2906c11f3438488d163bccbf1a, type: 2}
   fireballRandomPosition1: {fileID: 4831839703325240}
   fireballRandomPosition2: {fileID: 4650276946731850}
@@ -1323,6 +1326,19 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: Gamekit2D.Damager+NonDamagableEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114781250304900972
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1349703871066610}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a06e1d32d306d44a827b379f2911e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 4530585180126742}
+  spriteRenderer: {fileID: 212510219867062976}
 --- !u!114 &114784611302210184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1335,9 +1351,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 2
+  speed: 1.5
   offsets:
-  - {x: 0, y: 0.2, z: 0}
+  - {x: 0, y: 0.6, z: 0}
   usedOffset: 0
   offsetBasedOnTargetSpriteFacing: 1
 --- !u!114 &114786707292622842
@@ -1413,12 +1429,12 @@ MonoBehaviour:
   orientToTarget: 1
   rotationZComparedToHorizontal: 0
   rotationSpeed: 150
---- !u!120 &120571135532724112
+--- !u!120 &120710239590623342
 LineRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1570987512085900}
+  m_GameObject: {fileID: 1349703871066610}
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1

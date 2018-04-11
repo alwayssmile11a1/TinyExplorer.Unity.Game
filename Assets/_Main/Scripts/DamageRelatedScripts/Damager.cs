@@ -106,7 +106,7 @@ namespace Gamekit2D
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!useTriggerCollider) return;
+            if (!useTriggerCollider||!m_AttackContactFilter.layerMask.Contains(collision.gameObject)) return;
 
             m_LastHit = collision;
 
