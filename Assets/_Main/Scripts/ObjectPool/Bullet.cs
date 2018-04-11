@@ -12,7 +12,9 @@ namespace Gamekit2D
 
         [Tooltip("If -1 never auto destroy, otherwise bullet is return to pool when that time is reached")]
         public float timeBeforeAutodestruct = -1.0f;
-    
+
+        public ParticleSystem BulletImpactEffect;
+
         [HideInInspector]
         public BulletObject bulletPoolObject;
         [HideInInspector]
@@ -30,6 +32,7 @@ namespace Gamekit2D
             m_SpriteRenderer = GetComponent<SpriteRenderer>();
             m_Timer = 0.0f;
         }
+
 
         public void ReturnToPool ()
         {
@@ -60,12 +63,14 @@ namespace Gamekit2D
 
         public void OnHitDamageable(Damager origin, Damageable damageable)
         {
-            FindSurface(origin.LastHit);
+            BulletImpactEffect.Play();
+            //FindSurface(origin.LastHit);
         }
 
         public void OnHitNonDamageable(Damager origin)
         {
-            FindSurface(origin.LastHit);
+            BulletImpactEffect.Play();
+            //FindSurface(origin.LastHit);
         }
 
         protected void FindSurface(Collider2D collider)
