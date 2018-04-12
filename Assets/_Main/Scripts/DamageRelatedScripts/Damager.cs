@@ -138,10 +138,7 @@ namespace Gamekit2D
             }
             else
             {
-                if (receiveOnHitEventOnInvincibleObject)
-                {
-                    OnNonDamageableHit.Invoke(this);
-                }
+                OnNonDamageableHit.Invoke(this);
             }
         }
 

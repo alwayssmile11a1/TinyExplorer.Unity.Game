@@ -87,7 +87,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         //Pool
         m_FireBallPool = BulletPool.GetObjectPool(fireBall, 5);
         m_ConcentratingAttackPool = BulletPool.GetObjectPool(concentratingAttack, 5);
-        m_LaserAttackPool = BulletPool.GetObjectPool(laserAttackBullet, 10);
+        m_LaserAttackPool = BulletPool.GetObjectPool(laserAttackBullet, 15);
 
         //Setup chaserAttacks
         chaserAttacksPositions = new Vector3[chaserAttacks.Length];
@@ -100,12 +100,12 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         m_Ai.OpenBranch(
             BT.If(() => { return m_Damageable.CurrentHealth > m_Damageable.startingHealth / 2; }).OpenBranch(
 
-                 BT.RandomSequence(new int[] { 1 }).OpenBranch(
+                 BT.RandomSequence(new int[] { 2, 1 }).OpenBranch(
                     BT.Sequence().OpenBranch(
                         BT.Call(EnableLaser),
                         BT.Wait(2f),
                         BT.Call(() => m_LineRenderer.enabled = false),
-                        BT.Repeat(10).OpenBranch(
+                        BT.Repeat(15).OpenBranch(
                             BT.Call(LaserAttack),
                             BT.Wait(0.1f)
                         ),

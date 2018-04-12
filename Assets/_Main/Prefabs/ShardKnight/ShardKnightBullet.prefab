@@ -139,7 +139,7 @@ MonoBehaviour:
   canHitTriggers: 0
   disableDamageAfterHit: 0
   forceRespawn: 0
-  receiveOnHitEventOnInvincibleObject: 1
+  receiveOnHitEventOnInvincibleObject: 0
   ignoreInvincibility: 0
   hittableLayers:
     serializedVersion: 2
