@@ -12,7 +12,7 @@ public class FireFlyController : MonoBehaviour {
     public int currentAbilityIndex = 0;
 
     private FollowTarget m_FollowTarget;
-    private SpriteRenderer m_AllessiaSpriteRenderer;
+    //private SpriteRenderer m_AllessiaSpriteRenderer;
     private float m_Timer;
     private AbilityScriptableObject m_CurrentAbility = null;
 
@@ -20,7 +20,7 @@ public class FireFlyController : MonoBehaviour {
     private void Awake()
     {
         m_FollowTarget = GetComponent<FollowTarget>();
-        m_AllessiaSpriteRenderer = m_FollowTarget.target.GetComponent<SpriteRenderer>();
+        //m_AllessiaSpriteRenderer = m_FollowTarget.target.GetComponent<SpriteRenderer>();
         
 
     }

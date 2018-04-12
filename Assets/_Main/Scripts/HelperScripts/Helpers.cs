@@ -114,4 +114,13 @@ namespace Gamekit2D
             return false;
         }
     }
+
+    public static class LayerMaskExtensions
+    {
+        public static bool Contains(this LayerMask layers, GameObject gameObject)
+        {
+            return 0 != (layers.value & 1 << gameObject.layer);
+        }
+    }
+
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace Gamekit2D
@@ -13,7 +14,7 @@ namespace Gamekit2D
         [Tooltip("If -1 never auto destroy, otherwise bullet is return to pool when that time is reached")]
         public float timeBeforeAutodestruct = -1.0f;
 
-        public ParticleSystem BulletImpactEffect;
+        public String vfxName = "BulletImpact";
 
         [HideInInspector]
         public BulletObject bulletPoolObject;
@@ -21,7 +22,7 @@ namespace Gamekit2D
         public Camera mainCamera;
 
         protected SpriteRenderer m_SpriteRenderer;
-        static readonly int VFX_HASH = VFXController.StringToHash("BulletImpact");
+        protected int VFX_HASH /*= VFXController.StringToHash("BulletImpact")*/;
 
         const float k_OffScreenError = 0.01f;
 
@@ -33,6 +34,10 @@ namespace Gamekit2D
             m_Timer = 0.0f;
         }
 
+        private void Awake()
+        {
+            VFX_HASH = VFXController.StringToHash(vfxName);
+        }
 
         public void ReturnToPool ()
         {
@@ -63,24 +68,31 @@ namespace Gamekit2D
 
         public void OnHitDamageable(Damager origin, Damageable damageable)
         {
-            BulletImpactEffect.Play();
-            //FindSurface(origin.LastHit);
+            FindSurface(origin.LastHit);
         }
 
         public void OnHitNonDamageable(Damager origin)
         {
-            BulletImpactEffect.Play();
-            //FindSurface(origin.LastHit);
+            FindSurface(origin.LastHit);
         }
 
         protected void FindSurface(Collider2D collider)
         {
-            Vector3 forward = spriteOriginallyFacesLeft ? Vector3.left : Vector3.right;
-            if (m_SpriteRenderer.flipX) forward.x = -forward.x;
+            Vector3 forward = spriteOriginallyFacesLeft ? -transform.right : transform.right;
+
+            if (m_SpriteRenderer != null)
+            {
+                if (m_SpriteRenderer.flipX) forward.x = -forward.x;
+            }
 
             TileBase surfaceHit = PhysicsHelper.FindTileForOverride(collider, transform.position, forward);
 
-            VFXController.Instance.Trigger(VFX_HASH, transform.position, 0, m_SpriteRenderer.flipX, null, surfaceHit);
+            if(surfaceHit==null)
+            {
+                Debug.Log("dsad");
+            }
+
+            VFXController.Instance.Trigger(VFX_HASH, transform.position, 0, m_SpriteRenderer != null ? m_SpriteRenderer.flipX : false, null, surfaceHit);
         }
     }
 }

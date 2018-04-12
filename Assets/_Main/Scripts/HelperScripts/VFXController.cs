@@ -209,7 +209,7 @@ namespace Gamekit2D
             }
         }
 
-        void CreateInstance(VFX vfx, Vector4 position, bool flip, Transform parent, TileBase tileOverride)
+        void CreateInstance(VFX vfx, Vector3 position, bool flip, Transform parent, TileBase tileOverride)
         {
             VFXInstancePool poolToUse = null;
 
