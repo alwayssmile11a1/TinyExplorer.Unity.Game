@@ -20,6 +20,8 @@ namespace BTAI
         public static Action RunPureCoroutine(System.Func<IEnumerator> coroutine) { return new Action(coroutine); }
         public static Action RunCoroutine(System.Func<IEnumerator<BTState>> coroutine) { return new Action(coroutine); }
         public static Action Call(System.Action fn) { return new Action(fn); }
+        public static Action<T> Call<T>(System.Action<T> fn, T info) { return new Action<T>(fn, info); }
+        public static Action<T1, T2> Call<T1,T2>(System.Action<T1,T2> fn, T1 info, T2 info2) { return new Action<T1,T2>(fn, info, info2); }
         public static ConditionalBranch If(System.Func<bool> fn) { return new ConditionalBranch(fn); }
         public static While While(System.Func<bool> fn) { return new While(fn); }
         public static Condition Condition(System.Func<bool> fn) { return new Condition(fn); }
@@ -192,6 +194,8 @@ namespace BTAI
         {
             this.fn = fn;
         }
+
+
         public Action(System.Func<IEnumerator<BTState>> coroutineFactory)
         {
             this.coroutineFactory = coroutineFactory;
@@ -249,6 +253,67 @@ namespace BTAI
             return "Action : " + fn.Method.ToString();
         }
     }
+
+    /// <summary>
+    /// Call a method, or run a coroutine.
+    /// </summary>
+    public class Action<T> : BTNode
+    {
+        System.Action<T> fn;
+        T info;
+
+
+        public Action(System.Action<T> fn, T info)
+        {
+            this.fn = fn;
+            this.info = info;
+        }
+
+
+
+        public override BTState Tick()
+        {
+            fn(info);
+            return BTState.Success;
+        }
+
+        public override string ToString()
+        {
+            return "Action : " + fn.Method.ToString();
+        }
+    }
+
+    /// <summary>
+    /// Call a method, or run a coroutine.
+    /// </summary>
+    public class Action<T1, T2> : BTNode
+    {
+        System.Action<T1, T2> fn;
+        T1 info;
+        T2 info2;
+
+
+        public Action(System.Action<T1, T2> fn, T1 info, T2 info2)
+        {
+            this.fn = fn;
+            this.info = info;
+            this.info2 = info2;
+        }
+
+
+
+        public override BTState Tick()
+        {
+            fn(info, info2);
+            return BTState.Success;
+        }
+
+        public override string ToString()
+        {
+            return "Action : " + fn.Method.ToString();
+        }
+    }
+
 
     /// <summary>
     /// Call a method, returns success if method returns true, else returns failure.
