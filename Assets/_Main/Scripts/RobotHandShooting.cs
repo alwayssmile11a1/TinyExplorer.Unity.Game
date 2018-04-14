@@ -6,8 +6,8 @@ public class RobotHandShooting : MonoBehaviour {
     [SerializeField]
     private Vector2 velocity;
     private Rigidbody2D rigidbody2D;
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake () {
         rigidbody2D = GetComponent<Rigidbody2D>();
 	}
 	
