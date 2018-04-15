@@ -46,12 +46,18 @@ public class MovingGround : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Player")
-            collision.collider.transform.SetParent(transform);
+        {
+            Debug.Log("set in ground");
+            //collision.collider.transform.SetParent(transform);
+        }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.collider.tag == "Player")
+        {
+            Debug.Log("unset in ground");
             collision.collider.transform.SetParent(null);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
