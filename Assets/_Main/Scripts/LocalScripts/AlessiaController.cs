@@ -56,7 +56,7 @@ public class AlessiaController : MonoBehaviour {
     private bool m_DashedInAir = false;
 
     private float m_AttackTimer;
-    private float m_ThrowTimer;
+    private float m_ExternalForceTimer;
 
 
     private void Awake () {
@@ -114,9 +114,9 @@ public class AlessiaController : MonoBehaviour {
             }
         }
 
-        if (m_ThrowTimer > 0)
+        if (m_ExternalForceTimer > 0)
         {
-            m_ThrowTimer -= Time.deltaTime;
+            m_ExternalForceTimer -= Time.deltaTime;
         }
 
 
@@ -135,7 +135,7 @@ public class AlessiaController : MonoBehaviour {
 
     public void Jump()
     {
-        if (m_CharacterController2D.IsGrounded && m_ThrowTimer <=0)
+        if (m_CharacterController2D.IsGrounded && m_ExternalForceTimer <=0)
         {
             m_JumpForceVector.y = jumpForce;
             m_Rigidbody2D.AddForce(m_JumpForceVector, ForceMode2D.Impulse);
@@ -151,7 +151,7 @@ public class AlessiaController : MonoBehaviour {
 
     private void Move()
     {
-        if (m_ThrowTimer <= 0)
+        if (m_ExternalForceTimer <= 0)
         {
             //set velocity 
             m_Velocity.Set(m_CharacterInput.HorizontalAxis * speed, m_Rigidbody2D.velocity.y);
@@ -276,7 +276,7 @@ public class AlessiaController : MonoBehaviour {
         m_ThrowVector.x = Mathf.Sign(damagerToThis.x) * -throwSpeed.x;
         m_Rigidbody2D.velocity = Vector2.zero;
         m_Rigidbody2D.AddForce(m_ThrowVector, ForceMode2D.Impulse);
-        m_ThrowTimer = 0.5f;
+        m_ExternalForceTimer = 0.5f;
 
         //Set animation
         m_Animator.SetTrigger(m_HashHurtPara);
@@ -289,9 +289,9 @@ public class AlessiaController : MonoBehaviour {
 
     }
 
-    public void AttackHit(Damager damager, Damageable damagable)
+    public void AttackHit(Damager damager, Damageable damageable)
     {
-        //Display slash hit effect
+        //set position of slash contact effect to be displayed
         if (!m_SpriteRenderer.flipX)
         {
             slashContactTransform.position = transform.position + m_OffsetFromSlashEffectToAlessia;
@@ -302,6 +302,7 @@ public class AlessiaController : MonoBehaviour {
             m_ReverseOffset.x *= -1;
             slashContactTransform.position = transform.position + m_ReverseOffset;
         }
+        //Display slash contact effect
         slashContactTransform.rotation = Quaternion.Euler(0, 0, Random.Range(-50f, 50f));      
         m_SlashContactEffect.Play();
 
@@ -310,16 +311,35 @@ public class AlessiaController : MonoBehaviour {
         //TimeManager.SlowdownTime(0.2f, 0.2f);
 
         //Push player back just a tiny bit
+        Vector2 m_PushBackVector; 
         if(!m_SpriteRenderer.flipX)
         {
-            m_ThrowVector += new Vector2(-1, 0);
+            m_PushBackVector = new Vector2(-1f, 0);
+            //m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + new Vector2(-0.1f, 0));
         }
         else
         {
-            m_ThrowVector += new Vector2(1, 0);
+            m_PushBackVector = new Vector2(1f, 0);
+            //m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + new Vector2(0.1f, 0));
         }
-        
 
+        m_Rigidbody2D.AddForce(m_PushBackVector, ForceMode2D.Impulse);
+        m_ExternalForceTimer = 0.2f;
+
+        ////Push damageable object back just a tiny bit
+        //Rigidbody2D damageableBody = damageable.GetComponent<Rigidbody2D>();
+
+        //if (damageableBody == null) return;
+
+        //Vector2 damagerToDamageable = damager.transform.position - damageableBody.transform.position;
+        //if (damagerToDamageable.x > 0)
+        //{
+        //    damageableBody.MovePosition(damageableBody.position + new Vector2(-0.2f, 0));
+        //}
+        //else
+        //{
+        //    damageableBody.MovePosition(damageableBody.position + new Vector2(0.2f, 0));
+        //}
 
 
     }

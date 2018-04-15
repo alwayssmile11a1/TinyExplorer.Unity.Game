@@ -8,21 +8,13 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
     public Transform targetToTrack;
 
-    [Header("Chaser Attacks")]
-    public GameObject[] chaserAttacks;
-
     [Header("Laser")]
     public Transform laserStartingPosition;
     public Transform laserFollower;
     public Gradient laserFollowAttackGradient;
     public Gradient circleLaserAttackGradient;
-
     public GameObject laserAttackBullet;
 
-    [Header("Fireballs")]
-    public GameObject fireBall;
-    public Transform fireballRandomPosition1;
-    public Transform fireballRandomPosition2;
 
     [Header("Exploding Attacks")]
     public GameObject concentratingAttack;
@@ -36,7 +28,8 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
     [Header("Others")]
     public float timeBetweenFlickering = 0.1f;
-
+    public ParticleSystem concentratingStateEffect;
+    public ParticleSystem tornadoEffect;
 
 
     private Animator m_Animator;
@@ -52,6 +45,10 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
 
     #region Deprecated
+    private GameObject[] chaserAttacks;
+    private GameObject fireBall;
+    private Transform fireballRandomPosition1;
+    private Transform fireballRandomPosition2;
     private GameObject rangeEnemyToSpawn;
     private GameObject meleeEnemyToSpawn;
     private List<Transform> spawnRangeEnemyPositions;
@@ -61,7 +58,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     private List<KeyValuePair<Transform, GameObject>> m_SpawnedMeleeEnemies = new List<KeyValuePair<Transform, GameObject>>();
     #endregion
 
-    private int m_HashFireBallAttackPara = Animator.StringToHash("FireBallAttack");
+    private int m_HashMeteorShowerAttackPara = Animator.StringToHash("MeteorShowerAttack");
     private int m_HashExplodingAttackPara = Animator.StringToHash("ExplodingAttack");
     private int m_HashHurtPara = Animator.StringToHash("Hurt");
     private int m_HashTransformPara = Animator.StringToHash("Transform");
@@ -69,20 +66,23 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     private Flicker m_Flicker;
     private Damageable m_Damageable;
 
+    //others
     private int m_FireBalls = 5;
-    private int m_ConcentratingAttacks = 5;
+    private Damager m_CurrentConcentratingAttack;
     private bool m_FormChanged = false;
     private Vector3 m_FuturePosition;
     private int m_CurrentMoveIndex;
-    private FollowTarget m_LaserFollowComponent;
+    private Vector3 m_OffsetFromLaserToShardKnight;
    
-
     //Laser
     private bool m_LaserEnabled = false;
     private float m_LaserAttackShotAngle = 0;
     private float m_LaserSweptAngle;
     private float laserAttackType; //1 is laserFollowAttack, 2 and 3 is circleLaseAttack
+    private FollowTarget m_LaserFollowComponent;
 
+
+    //Behavior Tree
     private Root m_Ai = BT.Root();
 
     private void Awake()
@@ -97,22 +97,17 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         m_trailRenderer = GetComponentInChildren<TrailRenderer>();
 
         //Pool
-        m_FireBallPool = BulletPool.GetObjectPool(fireBall, 5);
         m_ConcentratingAttackPool = BulletPool.GetObjectPool(concentratingAttack, 5);
         m_LaserAttackPool = BulletPool.GetObjectPool(laserAttackBullet, 20);
 
-        //Setup chaserAttacks
-        chaserAttacksPositions = new Vector3[chaserAttacks.Length];
-        for (int i = 0; i < chaserAttacks.Length; i++)
-        {
-            chaserAttacksPositions[i] = chaserAttacks[i].transform.position;
-        }
+
+        m_OffsetFromLaserToShardKnight = laserStartingPosition.position - m_SpriteRenderer.transform.position;
 
         //Behaviour tree
         m_Ai.OpenBranch(
             BT.If(() => { return m_Damageable.CurrentHealth >= m_Damageable.startingHealth / 2; }).OpenBranch(
 
-                 BT.RandomSequence(new int[] { 2, 1, 3 }).OpenBranch(
+                 BT.RandomSequence(new int[] { 3, 2, 4 }).OpenBranch(
                     //Laser follow attack
                     BT.Sequence().OpenBranch(
                         BT.Call(() => laserAttackType = 1),
@@ -145,25 +140,28 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
                     ),
                     //Dash
                     BT.Sequence().OpenBranch(
-                        BT.Call(DashToLower, 5f, false),
+                        BT.Call(()=> tornadoEffect.Play()),
+                        BT.Wait(1.5f),
+                        BT.Call(DashToLower, 3f, false),
                         BT.WaitUntil(MoveCheck),
                         BT.Wait(0.5f),
                         BT.Call(StartDashing),
                         BT.Call(DashToLower, 10f, true),
-                        BT.Call(RotateTowardsFuturePosition), 
+                        BT.Call(RotateTowardsFuturePosition),
                         BT.WaitUntil(MoveCheck),
                         BT.Call(EndDashing),
                         BT.Wait(0.5f),
                         BT.Call(FlipSpriteBasedOnSide),
-                        BT.Call(DashToUpper, 10f, false),
+                        BT.Call(DashToUpper, 3f, false),
                         BT.WaitUntil(MoveCheck),
-                        BT.Wait(1f)
+                        BT.Call(() => tornadoEffect.Stop()),
+                        BT.Wait(1.5f)
                     )
 
                 )
             ),
 
-            BT.If(() => { return m_Damageable.CurrentHealth <= m_Damageable.startingHealth / 2; }).OpenBranch(
+            BT.If(() => { return m_Damageable.CurrentHealth < m_Damageable.startingHealth / 2; }).OpenBranch(
                 //Change form animation
                 BT.If(() => { return !m_FormChanged; }).OpenBranch(
                     BT.Call(ChangeForm),
@@ -171,11 +169,13 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
                     BT.Wait(1f)
                  ),
 
-                BT.RandomSequence(new int[] { 2, 3, 1 }).OpenBranch(
+                BT.RandomSequence(new int[] { 3, 3, 2, 2 }).OpenBranch(
                     //Dash
                     BT.Sequence().OpenBranch(
+                        BT.Call(() => tornadoEffect.Play()),
+                        BT.Wait(1.5f),
                         BT.Call(StartDashing),
-                        BT.Call(DashToLower, 12f, true),
+                        BT.Call(DashToLower, 10f, true),
                         BT.Call(RotateTowardsFuturePosition),
                         BT.WaitUntil(MoveCheck),
                         BT.Wait(0.2f),
@@ -185,18 +185,25 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
                         BT.WaitUntil(MoveCheck),
                         BT.Wait(0.2f),
                         BT.Call(FlipSpriteBasedOnSide),
-                        BT.Call(DashToUpper, 12f, true),
+                        BT.Call(DashToUpper, 10f, true),
                         BT.Call(RotateTowardsFuturePosition),
                         BT.WaitUntil(MoveCheck),
                         BT.Call(EndDashing),
                         BT.Call(FlipSpriteBasedOnSide),
-                        BT.Wait(1f)
+                        BT.Call(() => tornadoEffect.Stop()),
+                        BT.Wait(1.5f)
 
                     ),
                     //Exploding Attack
                     BT.Sequence().OpenBranch(
-                        BT.Call(SpawnConcentratingAttack),
-                        BT.WaitForAnimatorState(m_Animator, "ShardKnightAfterTransform"),
+                        BT.Call(() => m_Animator.SetTrigger(m_HashExplodingAttackPara)),
+                        BT.Repeat(5).OpenBranch(
+                            BT.Call(SpawnConcentratingAttack),
+                            BT.Wait(0.5f),
+                            BT.Call(EnableConcentratingAttackDamager),
+                            BT.Wait(0.8f)
+                        ),
+                        BT.Call(() => m_Animator.SetTrigger(m_HashEndAnimationPara)),
                         BT.Wait(2f)
                     ),
                     //Cicle laser Attack
@@ -212,9 +219,21 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
                         ),
                         BT.Call(EndLaserAttack),
                         BT.Wait(1f)
+                    ),
+                    //Meteor shower
+                    BT.Sequence().OpenBranch(
+                        BT.Call(() => m_Animator.SetTrigger(m_HashMeteorShowerAttackPara)),
+                        BT.Wait(0.5f),
+                        BT.Call(() => concentratingStateEffect.Play()),
+                        BT.Wait(1f),
+                        BT.Repeat(30).OpenBranch(
+                            BT.Call(MeteorShowerAttack),
+                            BT.Wait(0.2f)
+                        ),
+                        BT.Call(() => m_Animator.SetTrigger(m_HashEndAnimationPara)),
+                        BT.Call(() => concentratingStateEffect.Stop()),
+                        BT.Wait(1f)
                     )
-
-
                  ),
 
                 BT.Call(OrientToTarget)
@@ -252,20 +271,6 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
     }
 
-    private void OrientToTarget()
-    {
-        if (targetToTrack == null) return;
-
-        if(targetToTrack.position.x > transform.position.x)
-        {
-            m_SpriteRenderer.flipX = true;
-        }
-        else
-        {
-            m_SpriteRenderer.flipX = false;
-        }
-        
-    }
 
     #region Deprecated
     public void SpawnEnemies()
@@ -348,7 +353,6 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
     }
 
-    #endregion
 
     public void SpawnChaserAttacks()
     {
@@ -397,7 +401,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     {
         CameraShaker.Shake(0.03f, 2f* m_FireBalls, false);
 
-        m_Animator.SetTrigger(m_HashFireBallAttackPara);
+        m_Animator.SetTrigger(m_HashMeteorShowerAttackPara);
 
         for (int i = 0; i < m_FireBalls; i++)
         {
@@ -423,40 +427,45 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         m_Animator.SetTrigger(m_HashEndAnimationPara);
     }
 
+    #endregion
+
+
+    private void OrientToTarget()
+    {
+        if (targetToTrack == null) return;
+
+        if (targetToTrack.position.x > transform.position.x)
+        {
+            m_SpriteRenderer.flipX = true;
+        }
+        else
+        {
+            m_SpriteRenderer.flipX = false;
+        }
+
+    }
+
 
     private void SpawnConcentratingAttack()
     {
-        StartCoroutine(InternalSpawnConcentraingAttacks());
+
+        Vector3 spawnPosition = new Vector3(targetToTrack.transform.position.x, targetToTrack.transform.position.y + 0.5f, 0);
+
+        BulletObject concentratingAttack = m_ConcentratingAttackPool.Pop(spawnPosition);
+
+        m_CurrentConcentratingAttack = concentratingAttack.bullet.GetComponent<Damager>();
+
+        m_CurrentConcentratingAttack.DisableDamage();
     }
 
-    private IEnumerator InternalSpawnConcentraingAttacks()
+    private void EnableConcentratingAttackDamager()
     {
-        m_Animator.SetTrigger(m_HashExplodingAttackPara);
+        CameraShaker.Shake(0.05f, 0.1f);
 
-        for (int i = 0; i < m_ConcentratingAttacks; i++)
-        {
-
-            Vector3 spawnPosition = new Vector3(targetToTrack.transform.position.x,targetToTrack.transform.position.y+0.5f,0);
-
-            BulletObject concentratingAttack = m_ConcentratingAttackPool.Pop(spawnPosition);
-
-            Damager damager = concentratingAttack.bullet.GetComponent<Damager>();
-
-            damager.DisableDamage();
-            
-            yield return new WaitForSeconds(0.8f);
-
-            CameraShaker.Shake(0.05f, 0.1f);
-
-            damager.EnableDamage();
-
-            yield return new WaitForSeconds(0.5f);
-
-           
-        }
-
-        m_Animator.SetTrigger(m_HashEndAnimationPara);
+        m_CurrentConcentratingAttack.EnableDamage();
     }
+
+
 
 
     private void ChangeForm()
@@ -465,6 +474,8 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         m_FormChanged = true;
     }
     
+
+
     private bool MoveCheck()
     {
         if ((transform.position - m_FuturePosition).sqrMagnitude <= 0.5f)
@@ -606,7 +617,9 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         m_LaserEnabled = true;
         m_LaserAttackShotAngle = 0;
         m_LaserSweptAngle = 0;
-        m_LineRenderer.SetPosition(0, laserStartingPosition.position);
+
+        laserStartingPosition.ChangeOffsetBasedOnSpriteFacing(m_SpriteRenderer.transform, m_SpriteRenderer, m_OffsetFromLaserToShardKnight);
+
     }
 
     private void EndLaserAttack()
@@ -614,10 +627,14 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         laserFollower.gameObject.SetActive(false);
         m_LineRenderer.enabled = false;
         m_LaserEnabled = false;
+        m_LineRenderer.startWidth = 0.05f;
+        m_LineRenderer.endWidth = 0.05f;
     }
     
     private void TrackTargerByLaser()
-    {    
+    {
+        m_LineRenderer.SetPosition(0, laserStartingPosition.position);
+
         Vector3 direction = laserFollower.position - laserStartingPosition.position;
 
         //if the laser hit something
@@ -633,10 +650,15 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
         }
 
+
+        m_LineRenderer.startWidth += 0.06f * Time.deltaTime;
+        m_LineRenderer.endWidth += 0.06f * Time.deltaTime;
     }
 
     private void DrawLaserFullCircle()
     {
+        m_LineRenderer.SetPosition(0, laserStartingPosition.position);
+
         Vector3 direction = Quaternion.Euler(0, 0, m_LaserSweptAngle) * Vector2.down;
 
         //if the laser hit something
@@ -704,11 +726,38 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     }
 
 
+    private void MeteorShowerAttack()
+    {
+        Vector2 startingShootPosition = new Vector2(targetToTrack.position.x + Random.Range(-3f,3f), targetToTrack.position.y + 10f);
+
+        //get bullet object
+        BulletObject laserAttackBulletObject = m_LaserAttackPool.Pop(startingShootPosition);
+
+        //rotate
+        laserAttackBulletObject.transform.RotateToDirection(Vector2.down);
+
+        laserAttackBulletObject.rigidbody2D.velocity = Vector2.down * 8f;
+    }
+
 
     public void GotHit(Damager damager, Damageable damageable)
     {
         m_Flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
 
+        ////Push damageable object back just a tiny bit
+        //Rigidbody2D damageableBody = damageable.GetComponent<Rigidbody2D>();
+
+        //if (damageableBody == null) return;
+
+        //Vector2 damagerToDamageable = damager.transform.position - damageableBody.transform.position;
+        //if (damagerToDamageable.x > 0)
+        //{
+        //    damageableBody.MovePosition(damageableBody.position + new Vector2(-0.2f, 0));
+        //}
+        //else
+        //{
+        //    damageableBody.MovePosition(damageableBody.position + new Vector2(0.2f, 0));
+        //}
 
         ////Teleport
         //int random1 = Random.Range(0, teleportPositions.Count);

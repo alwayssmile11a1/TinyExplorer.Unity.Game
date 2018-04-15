@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  useTriggerCollider: 0
   offset: {x: -0.075805664, y: -0.0042996407}
   size: {x: 0.6721039, y: 0.68857384}
   offsetBasedOnSpriteFacing: 1
@@ -174,6 +175,7 @@ MonoBehaviour:
   canHitTriggers: 0
   disableDamageAfterHit: 0
   forceRespawn: 0
+  receiveOnHitEventOnInvincibleObject: 1
   ignoreInvincibility: 0
   hittableLayers:
     serializedVersion: 2
@@ -201,7 +203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyWhenOutOfView: 0
   spriteOriginallyFacesLeft: 0
-  timeBeforeAutodestruct: 2.4
+  timeBeforeAutodestruct: 2.2
+  vfxName: BulletImpact
   mainCamera: {fileID: 0}
 --- !u!198 &198190601176083474
 ParticleSystem:

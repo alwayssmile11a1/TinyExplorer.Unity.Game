@@ -8211,7 +8211,40 @@ Tilemap:
   m_TileRefreshArray:
   - serializedVersion: 1
     m_DirtyIndex: 0
---- !u!1001 &1472619342
+--- !u!1 &1480158545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1480158546}
+  m_Layer: 0
+  m_Name: Clouds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1480158546
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1480158545}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1167058249}
+  - {fileID: 1841182551}
+  - {fileID: 1655871016}
+  - {fileID: 11776772}
+  - {fileID: 2112536176}
+  m_Father: {fileID: 808969866}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1491591473
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8250,22 +8283,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 114784611302210184, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 443814165}
-    - target: {fileID: 114740072673685848, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: targetToTrack
-      value: 
-      objectReference: {fileID: 597184113}
-    - target: {fileID: 114853500793041974, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 443814165}
-    - target: {fileID: 114552598907463120, guid: afb933bd6c4341044950e7372df4078e,
+    - target: {fileID: 114838149703133080, guid: afb933bd6c4341044950e7372df4078e,
         type: 2}
       propertyPath: target
       value: 
@@ -8275,47 +8293,34 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 443814165}
-    - target: {fileID: 114838149703133080, guid: afb933bd6c4341044950e7372df4078e,
+    - target: {fileID: 114552598907463120, guid: afb933bd6c4341044950e7372df4078e,
         type: 2}
       propertyPath: target
       value: 
       objectReference: {fileID: 443814165}
+    - target: {fileID: 114853500793041974, guid: afb933bd6c4341044950e7372df4078e,
+        type: 2}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 443814165}
+    - target: {fileID: 114740072673685848, guid: afb933bd6c4341044950e7372df4078e,
+        type: 2}
+      propertyPath: targetToTrack
+      value: 
+      objectReference: {fileID: 597184113}
+    - target: {fileID: 114784611302210184, guid: afb933bd6c4341044950e7372df4078e,
+        type: 2}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 443814165}
+    - target: {fileID: 114740072673685848, guid: afb933bd6c4341044950e7372df4078e,
+        type: 2}
+      propertyPath: tornadoEffect
+      value: 
+      objectReference: {fileID: 2063143556}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: afb933bd6c4341044950e7372df4078e, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1480158545
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1480158546}
-  m_Layer: 0
-  m_Name: Clouds
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1480158546
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1480158545}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1167058249}
-  - {fileID: 1841182551}
-  - {fileID: 1655871016}
-  - {fileID: 11776772}
-  - {fileID: 2112536176}
-  m_Father: {fileID: 808969866}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1504825733
 Prefab:
   m_ObjectHideFlags: 0
@@ -8360,6 +8365,30 @@ Prefab:
       propertyPath: m_BoundingShape2D
       value: 
       objectReference: {fileID: 382514442}
+    - target: {fileID: 114103457394814428, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: offset.x
+      value: 0.4957466
+      objectReference: {fileID: 0}
+    - target: {fileID: 114103457394814428, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: size.x
+      value: 1.2225266
+      objectReference: {fileID: 0}
+    - target: {fileID: 114103457394814428, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: offset.y
+      value: 0.56253767
+      objectReference: {fileID: 0}
+    - target: {fileID: 114103457394814428, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: size.y
+      value: 0.5473623
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621418144114974, guid: b4543ced2a30b3e489c1f689222ed111, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.1399999
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4543ced2a30b3e489c1f689222ed111, type: 2}
   m_IsPrefabParent: 0
@@ -8552,6 +8581,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &2063143556 stripped
+ParticleSystem:
+  m_PrefabParentObject: {fileID: 198163898096609602, guid: afb933bd6c4341044950e7372df4078e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1491591473}
 --- !u!1 &2112536175
 GameObject:
   m_ObjectHideFlags: 0
