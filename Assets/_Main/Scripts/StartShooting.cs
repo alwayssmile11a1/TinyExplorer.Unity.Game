@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RobotHandShooting : MonoBehaviour {
+public class StartShooting : MonoBehaviour {
     [SerializeField]
     private Vector2 velocity;
     private Rigidbody2D rigidbody2D;

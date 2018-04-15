@@ -15,7 +15,7 @@ public class RideloidShoot : MonoBehaviour {
     public float RobotHandExistsTime;
     public GameObject RobotHand;
     private Transform RoBotHandPostion;
-    private RobotHandShooting robotHandShootingScript;
+    private StartShooting robotHandShootingScript;
     private float currentExistsTime;
 
     private Vector2 direction;
@@ -61,7 +61,7 @@ public class RideloidShoot : MonoBehaviour {
         Shooted = false;
         contactFilter2D.layerMask = hitLayerMask;
         RoBotHandPostion = RobotHand.GetComponent<Transform>();
-        robotHandShootingScript = RobotHand.GetComponent<RobotHandShooting>();
+        robotHandShootingScript = RobotHand.GetComponent<StartShooting>();
         //RoBotHandPostion.position = shootOrigin.position;
         animator = GetComponent<Animator>();
         robotSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -117,6 +117,7 @@ public class RideloidShoot : MonoBehaviour {
 
     public void Shooting()
     {
+        Debug.Log("in shooting");
         RobotHand.SetActive(true);
         if (!robotSpriteRenderer.flipX)
         {

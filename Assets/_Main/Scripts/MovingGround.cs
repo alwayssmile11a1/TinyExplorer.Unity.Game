@@ -6,13 +6,12 @@ using UnityEngine;
 public class MovingGround : MonoBehaviour {
     public Transform destination;
     public Vector3 velocity;
-    //[SerializeField]
+    [SerializeField]
     private bool canMove;
     private Rigidbody2D platformRigidbody;
     //[SerializeField]
     private Vector3 m_des;
-    public ParticleSystem[] triggerEffect;
-    public GameObject test;
+    public GameObject Effect;
     private void Awake()
     {
         platformRigidbody = GetComponent<Rigidbody2D>();
@@ -60,7 +59,7 @@ public class MovingGround : MonoBehaviour {
         if (collision.tag.Equals("Player"))
         {
             canMove = true;
-            var children = test.GetComponentsInChildren<ParticleSystem>();
+            var children = Effect.GetComponentsInChildren<ParticleSystem>();
             foreach(var child in children)
             {
                 if (child.tag == "ParticleSystem")
