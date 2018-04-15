@@ -56,6 +56,8 @@ public class AlessiaController : MonoBehaviour {
     private bool m_DashedInAir = false;
 
     private float m_AttackTimer;
+    private float m_ThrowTimer;
+
 
     private void Awake () {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -112,7 +114,12 @@ public class AlessiaController : MonoBehaviour {
             }
         }
 
-        
+        if (m_ThrowTimer > 0)
+        {
+            m_ThrowTimer -= Time.deltaTime;
+        }
+
+
 
 
     }
@@ -128,9 +135,11 @@ public class AlessiaController : MonoBehaviour {
 
     public void Jump()
     {
-        if (m_CharacterController2D.IsGrounded)
+        if (m_CharacterController2D.IsGrounded && m_ThrowTimer <=0)
         {
             m_JumpForceVector.y = jumpForce;
+            m_Rigidbody2D.AddForce(m_JumpForceVector, ForceMode2D.Impulse);
+            m_JumpForceVector = Vector2.zero;
         }
     }
 
@@ -140,39 +149,17 @@ public class AlessiaController : MonoBehaviour {
         shield.Play();
     }
 
-    public void GotHit(Damager damager, Damageable damageable)
-    {
-        //throw player away a little bit
-        m_ThrowVector = new Vector2(0, throwSpeed.y);
-        Vector2 damagerToThis = damager.transform.position - transform.position;
-        m_ThrowVector.x = Mathf.Sign(damagerToThis.x) * -throwSpeed.x;
-
-        //Set animation
-        m_Animator.SetTrigger(m_HashHurtPara);
-
-        //Flicker
-        m_Flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
-
-        //Shake camera a little
-        CameraShaker.Shake(0.1f, 0.1f);
-
-    }
-
     private void Move()
     {
-       
-        //set velocity 
-        m_Velocity.Set(m_CharacterInput.HorizontalAxis * speed + m_ThrowVector.x, m_ThrowVector.y > 0 ? m_ThrowVector.y : m_Rigidbody2D.velocity.y);
+        if (m_ThrowTimer <= 0)
+        {
+            //set velocity 
+            m_Velocity.Set(m_CharacterInput.HorizontalAxis * speed, m_Rigidbody2D.velocity.y);
 
-        //Move rigidbody
-        m_Rigidbody2D.velocity = m_Velocity;
-        m_Rigidbody2D.AddForce(m_JumpForceVector, ForceMode2D.Impulse);
+            //Move rigidbody
+            m_Rigidbody2D.velocity = m_Velocity;
+        }
 
-        //Decrease throwVector
-        m_ThrowVector.x = Mathf.Abs(m_ThrowVector.x) > 0.2f ? (m_ThrowVector.x - Mathf.Sign(m_ThrowVector.x) * 0.1f) : 0;
-        m_ThrowVector.y = 0;
-
-        m_JumpForceVector = Vector2.zero;
     }
     
     private void Face()
@@ -279,6 +266,27 @@ public class AlessiaController : MonoBehaviour {
     public void EndAttacking()
     {
         m_Slash.DisableDamage();
+    }
+
+    public void GotHit(Damager damager, Damageable damageable)
+    {
+        //throw player away a little bit
+        m_ThrowVector = new Vector2(0, throwSpeed.y);
+        Vector2 damagerToThis = damager.transform.position - transform.position;
+        m_ThrowVector.x = Mathf.Sign(damagerToThis.x) * -throwSpeed.x;
+        m_Rigidbody2D.velocity = Vector2.zero;
+        m_Rigidbody2D.AddForce(m_ThrowVector, ForceMode2D.Impulse);
+        m_ThrowTimer = 0.5f;
+
+        //Set animation
+        m_Animator.SetTrigger(m_HashHurtPara);
+
+        //Flicker
+        m_Flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
+
+        //Shake camera a little
+        CameraShaker.Shake(0.1f, 0.1f);
+
     }
 
     public void AttackHit(Damager damager, Damageable damagable)
