@@ -52,6 +52,7 @@ public class AlessiaController : MonoBehaviour {
     private float m_DashTimer;
     private float m_OriginalGravity;
     private bool m_CanDash = true;
+    private bool m_CanSlash = true;
     //Allow dash in air only one time
     private bool m_DashedInAir = false;
 
@@ -243,6 +244,8 @@ public class AlessiaController : MonoBehaviour {
 
     public void StartAttacking()
     {
+        if (!m_CanSlash) return;
+
         //still attacking
         if (m_AttackTimer > 0) return;
 
@@ -345,5 +348,14 @@ public class AlessiaController : MonoBehaviour {
     }
 
 
+    public void CanDash(bool canDash)
+    {
+        m_CanDash = canDash;
+    }
+
+    public void CanSlash(bool canSlash)
+    {
+        m_CanSlash = canSlash;
+    }
 
 }

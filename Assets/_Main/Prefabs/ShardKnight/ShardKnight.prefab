@@ -255,7 +255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1420369915888108
 GameObject:
   m_ObjectHideFlags: 1
@@ -1448,6 +1448,7 @@ MonoBehaviour:
   - {fileID: 4660937051539504}
   timeBetweenFlickering: 0.1
   concentratingStateEffect: {fileID: 198396860166588842}
+  tornadoEffect: {fileID: 198163898096609602}
 --- !u!114 &114760475518903006
 MonoBehaviour:
   m_ObjectHideFlags: 1
