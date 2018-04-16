@@ -93,7 +93,7 @@ public class RideloidShoot : MonoBehaviour {
         RaycastHit2D[] hit = new RaycastHit2D[5];
         Vector2 Origin = rigidbody2D.position + Offset;
         Physics2D.Raycast(Origin, direction, contactFilter2D, hit, castDistance);
-        Debug.Log(hit);
+        //Debug.Log(hit);
         Debug.DrawRay(Origin , direction * castDistance);
         foreach (RaycastHit2D item in hit)
         {

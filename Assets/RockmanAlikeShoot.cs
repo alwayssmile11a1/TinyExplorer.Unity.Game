@@ -12,8 +12,11 @@ public class RockmanAlikeShoot : MonoBehaviour {
     public float shootCoolDown;
     public Transform shootOrigin;
     private float shootTime;
+    [SerializeField]
+    private int shootAngle;
+    private int angleToTarget;
 
-    public float BulletExistsTime;
+    //public float BulletExistsTime;
     public GameObject Bullet;
     private Transform BulletPostion;
     private StartShooting BulletShootingScript;
@@ -21,6 +24,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
 
     private Animator animator;
     private BulletPool bulletPool;
+    private StartShooting shootScript;
 
     // Use this for initialization
     void Awake () {
@@ -29,6 +33,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
         rayCastPosition = transform.position;
         bulletPool = BulletPool.GetObjectPool(Bullet, 10);
         animator = GetComponent<Animator>();
+        shootScript = Bullet.GetComponent<StartShooting>();
 
     }
 	
@@ -40,36 +45,36 @@ public class RockmanAlikeShoot : MonoBehaviour {
     public void ScanForPlayer()
     {
         RaycastHit2D[] hit = new RaycastHit2D[1];
-        int angle = 0;
+        shootAngle = 0;
         Vector2 direction;
         for (int i = 0; i < 3; i++)
         {
-        }
-        Debug.Log("shoot time in Scan player: " + shootTime);
-        Debug.Log("shoot cool down in Scan player: " + shootCoolDown);
-        direction = (Quaternion.Euler(0, 0, angle) * Vector2.left).normalized;
+        direction = (Quaternion.Euler(0, 0, shootAngle) * Vector2.left).normalized;
             Physics2D.Raycast(rayCastPosition, direction, contactFilter2D, hit, castDistance);
             Debug.DrawRay(rayCastPosition, direction * castDistance);
             if (hit[0].collider != null && shootTime >= shootCoolDown)
             {
                 Debug.Log(hit[0].collider.tag);
                 shootTime -= shootCoolDown;
+                angleToTarget = shootAngle;
                 animator.SetBool("attack", true);
             }
-            angle -= 30;
+            shootAngle -= 30;
+        }
     }
     public void Shooting()
     {
-        Debug.Log("in shooting");
         animator.SetBool("attack", false);
+        //pop instantiate at first call
         BulletObject bullet = bulletPool.Pop(shootOrigin.position);
+        bullet.instance.GetComponent<StartShooting>().direction = (Quaternion.Euler(0, 0, angleToTarget) * Vector2.left).normalized;
         Debug.Log(animator.GetBool("attack"));
+        StartCoroutine(test());
     }
     public void CoolDownShoot()
     {
         if (shootTime <= shootCoolDown)
             shootTime += Time.deltaTime;
-        Debug.Log("shoot time in CoolDowm: " + shootTime);
     }
 
     public void OnGetDamage()
@@ -80,5 +85,11 @@ public class RockmanAlikeShoot : MonoBehaviour {
     public void OnDie()
     {
         Debug.Log("die");
+    }
+
+    private IEnumerator test()
+    {
+        yield return new WaitForSeconds(0.3f);
+        shootScript.direction = new Vector2(-1, 0);
     }
 }

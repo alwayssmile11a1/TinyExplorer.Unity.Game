@@ -6,12 +6,10 @@ using UnityEngine;
 public class MovingGroundDownLoop : MonoBehaviour {
     public Transform pos;
     public Vector3 velocity;
-    private Transform t;
     private new Rigidbody2D rigidbody2D;
     
     private void Awake()
     {
-        t = GetComponent<Transform>();
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 

@@ -48,7 +48,7 @@ public class MovingGround : MonoBehaviour {
         if (collision.collider.tag == "Player")
         {
             Debug.Log("set in ground");
-            //collision.collider.transform.SetParent(transform);
+            collision.collider.transform.SetParent(transform);
         }
     }
     private void OnCollisionExit2D(Collision2D collision)

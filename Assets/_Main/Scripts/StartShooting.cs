@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StartShooting : MonoBehaviour {
-    [SerializeField]
-    private Vector2 velocity;
+    public Vector2 direction;
+    public float speed;
     private Rigidbody2D rigidbody2D;
+
+
     // Use this for initialization
     void Awake () {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -13,11 +15,11 @@ public class StartShooting : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        rigidbody2D.position += velocity * Time.deltaTime;
+        rigidbody2D.velocity = direction * speed;
 	}
 
     public void ReverseVelocity()
     {
-        velocity *= -1;
+        direction *= -1;
     }
 }
