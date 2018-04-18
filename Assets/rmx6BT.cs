@@ -11,6 +11,7 @@ public class rmx6BT : MonoBehaviour {
     private new Rigidbody2D rigidbody2D;
     private Animator animator;
     private rmx6Moving rmx6Moving;
+    private bool die;
     Vector2 oldVelocity;
 
 	// Use this for initialization
@@ -19,30 +20,24 @@ public class rmx6BT : MonoBehaviour {
         animator = GetComponent<Animator>();
         rmx6Moving = GetComponent<rmx6Moving>();
         oldVelocity = new Vector2(0, 0);
-
+        die = false;
         rmx6_BT.OpenBranch(
             BT.If(() => { return targetInRange; }).OpenBranch(
-
-                    BT.RandomSequence().OpenBranch(
-                        BT.Sequence().OpenBranch(
                         BT.Call(() => animator.SetBool("walk", true)),
-                        BT.Wait(0.3f),
-                        BT.Call(() => rmx6Moving.canWalk = true)
-                        )
-                    )
+                        BT.WaitForAnimatorState(animator, "walk"),
+                        //BT.Wait(0.3f),
+                        BT.Call(() => { if (!die) rmx6Moving.canWalk = true; })
                 ),
             BT.If(() => { return !targetInRange; }).OpenBranch(
-                BT.RandomSequence().OpenBranch(
-                    BT.Sequence().OpenBranch(
-                        BT.Call(() => animator.SetBool("hide", true)),
                         BT.Call(() => animator.SetBool("walk", false)),
-                        BT.Wait(0.3f),
+                        BT.Call(() => animator.SetBool("hide", true)),
+                        BT.WaitForAnimatorState(animator, "hide"),
+                        //BT.Wait(0.3f),
                         BT.Call(() => rmx6Moving.canWalk = false)
-                        )
-                    )
+
                 )
             );
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -76,6 +71,7 @@ public class rmx6BT : MonoBehaviour {
     public void OnDie()
     {
         Debug.Log("velocity on die: " + rmx6Moving.velocity);
+        die = true;
         rmx6Moving.velocity = new Vector2(0, 0);
         animator.SetBool("walk", false);
         animator.SetBool("freeze", true);

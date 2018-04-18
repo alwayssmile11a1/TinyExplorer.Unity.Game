@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class rmx6Moving : MonoBehaviour {
     public float timeToTurn;
+    [SerializeField]
     private float currentTimeMove;
     public Vector2 velocity;
 

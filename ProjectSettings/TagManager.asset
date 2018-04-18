@@ -22,7 +22,7 @@ TagManager:
   - Enemy
   - MovingPlatform
   - EnemyRange
-  - 
+  - HitableLayer
   - 
   - 
   - 
