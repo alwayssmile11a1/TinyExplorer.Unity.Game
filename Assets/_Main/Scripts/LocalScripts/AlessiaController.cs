@@ -317,12 +317,12 @@ public class AlessiaController : MonoBehaviour {
         Vector2 m_PushBackVector; 
         if(!m_SpriteRenderer.flipX)
         {
-            m_PushBackVector = new Vector2(-1f, 0);
+            m_PushBackVector = new Vector2(-0.5f, 0);
             //m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + new Vector2(-0.1f, 0));
         }
         else
         {
-            m_PushBackVector = new Vector2(1f, 0);
+            m_PushBackVector = new Vector2(0.5f, 0);
             //m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + new Vector2(0.1f, 0));
         }
 
