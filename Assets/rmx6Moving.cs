@@ -13,12 +13,14 @@ public class rmx6Moving : MonoBehaviour {
     public bool canWalk;
     private new Rigidbody2D rigidbody2D;
     private SpriteRenderer spriteRenderer;
-	// Use this for initialization
-	void Start () {
+    private CapsuleCollider2D capsuleJumpRange;
+    // Use this for initialization
+    void Start () {
         currentTimeMove = 0;
         rigidbody2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-	}
+        capsuleJumpRange = GetComponentInChildren<CapsuleCollider2D>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -38,6 +40,7 @@ public class rmx6Moving : MonoBehaviour {
         {
             currentTimeMove = 0;
             spriteRenderer.flipX = !spriteRenderer.flipX;
+            capsuleJumpRange.offset = new Vector2(capsuleJumpRange.offset.x * -1, capsuleJumpRange.offset.y);
             velocity = new Vector2(velocity.x * -1, velocity.y);
         }
     }

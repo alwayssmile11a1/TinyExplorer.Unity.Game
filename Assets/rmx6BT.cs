@@ -12,6 +12,7 @@ public class rmx6BT : MonoBehaviour {
     private Animator animator;
     private rmx6Moving rmx6Moving;
     private bool die;
+    private bool canJump = false;
     Vector2 oldVelocity;
 
 	// Use this for initialization
@@ -24,15 +25,15 @@ public class rmx6BT : MonoBehaviour {
         rmx6_BT.OpenBranch(
             BT.If(() => { return targetInRange; }).OpenBranch(
                         BT.Call(() => animator.SetBool("walk", true)),
-                        BT.WaitForAnimatorState(animator, "walk"),
-                        //BT.Wait(0.3f),
+                        //BT.WaitForAnimatorState(animator, "walk"),
+                        BT.Wait(0.3f),
                         BT.Call(() => { if (!die) rmx6Moving.canWalk = true; })
                 ),
             BT.If(() => { return !targetInRange; }).OpenBranch(
                         BT.Call(() => animator.SetBool("walk", false)),
                         BT.Call(() => animator.SetBool("hide", true)),
-                        BT.WaitForAnimatorState(animator, "hide"),
-                        //BT.Wait(0.3f),
+                        //BT.WaitForAnimatorState(animator, "hide"),
+                        BT.Wait(0.3f),
                         BT.Call(() => rmx6Moving.canWalk = false)
 
                 )
@@ -42,9 +43,8 @@ public class rmx6BT : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         rmx6_BT.Tick();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (canJump)
         {
-            Debug.Log("Space press");
             rmx6_JumpToTarget();
         }
 	}
@@ -64,6 +64,7 @@ public class rmx6BT : MonoBehaviour {
     public void ResetVelocity()
     {
         animator.SetBool("jump", false);
+        canJump = false;
         Debug.Log("reset velocity : " + rmx6Moving.velocity);
         rmx6Moving.velocity.y = 0;
     }
@@ -83,5 +84,13 @@ public class rmx6BT : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.3f);
         rmx6Moving.canWalk = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag.Equals("Player"))
+        {
+            canJump = true;
+        }
     }
 }
