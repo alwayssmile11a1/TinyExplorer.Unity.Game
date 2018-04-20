@@ -8,14 +8,18 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     public Transform targetToTrack;
 
+    [Header("Damagers")]
     public Damager shortDamager;
     public Damager longDamager;
     public Damager jumpDamager;
-    
-    private Animator m_Animator;
-    private Rigidbody2D m_RigidBody2D;
-    private SpriteRenderer m_SpriteRenderer;
 
+
+    [Header("Spells")]
+    public GameObject darkBallSpell;
+    public GameObject jumpAttackSpell;
+    
+
+    //Animation
     private int m_WakeUpPara = Animator.StringToHash("WakeUp");
     private int m_HashWalkPara = Animator.StringToHash("Walk");
     private int m_HashTopAttackPara = Animator.StringToHash("TopAttack");
@@ -23,15 +27,24 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     private int m_HashTopToDowmAttackPara = Animator.StringToHash("TopToDownAttack");
     private int m_HashJumpAttackPara = Animator.StringToHash("JumpAttack");
     private int m_HashIdlePara = Animator.StringToHash("Idle");
+    private int m_HashSummonPara = Animator.StringToHash("Summon");
+    private int m_HashDeathPara = Animator.StringToHash("Death");
 
-
-    private Flicker m_Flicker;
+    //References
+    private Animator m_Animator;
+    private Rigidbody2D m_RigidBody2D;
+    private SpriteRenderer m_SpriteRenderer;
     private Damageable m_Damageable;
+    private Flicker m_Flicker;
 
-    private Vector2 m_Force;
 
+    //Other variables
     private bool m_WokeUp = false;
+    private BulletPool m_JumpAttackSpellPool;
+    private BulletPool m_DarkMatterPool;
 
+    private List<BulletObject> m_DarkMatters;
+    private float m_DarkMatterTimer;
 
     //Behavior Tree
     private Root m_Ai = BT.Root();
@@ -49,52 +62,75 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
         longDamager.DisableDamage();
         jumpDamager.DisableDamage();
 
+
+        m_JumpAttackSpellPool = BulletPool.GetObjectPool(jumpAttackSpell, 4);
+        m_DarkMatterPool = BulletPool.GetObjectPool(darkBallSpell, 1);
+        m_DarkMatters = m_DarkMatterPool.GetAll();
+
         WakeUp();
+        
+
 
         //Behaviour tree
         m_Ai.OpenBranch(
-            BT.If(() => { return m_WokeUp; }).OpenBranch(
 
-                BT.RandomSequence(new int[] { 1, 1 }).OpenBranch(
-                    BT.Sequence().OpenBranch(
-                        BT.Call(() => m_Animator.SetBool(m_HashWalkPara, true)),
-                        BT.Call(() => SetHorizontalSpeed(1f)),
-                        BT.Wait(2.5f),
-                        BT.Call(() => SetHorizontalSpeed(0)),
-                        BT.Call(() => m_Animator.SetBool(m_HashWalkPara, false)),
-                        BT.Wait(1f)
+            //Death
+            BT.If(() => { return m_Damageable.CurrentHealth <= 0; }).OpenBranch(
+                BT.Call(()=>m_Animator.SetTrigger(m_HashDeathPara))
+            ),
+
+            //Still Alive
+            BT.If(() => { return m_Damageable.CurrentHealth > 0; }).OpenBranch(
+                //Woke up
+                BT.If(() => { return m_WokeUp; }).OpenBranch(
+                    BT.RandomSequence(new int[] { 1, 3 }).OpenBranch(
+                        ////Walk
+                        //BT.Sequence().OpenBranch(
+                        //    BT.Call(() => m_Animator.SetBool(m_HashWalkPara, true)),
+                        //    BT.Call(() => SetHorizontalSpeed(1f)),
+                        //    BT.Wait(2.5f),
+                        //    BT.Call(() => SetHorizontalSpeed(0)),
+                        //    BT.Call(() => m_Animator.SetBool(m_HashWalkPara, false)),
+                        //    BT.Wait(1f)
+                        //),
+                        //Top Attack
+                        BT.Sequence().OpenBranch(
+                            BT.Call(() => m_Animator.SetTrigger(m_HashTopAttackPara)),
+                            BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                            BT.Wait(5f)
+                        )
+                        // BT.Sequence().OpenBranch(
+                        //    BT.Call(() => m_Animator.SetTrigger(m_HashBottomAttackPara)),
+                        //    BT.Wait(0.5f),
+                        //    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                        //    BT.Call(()=>m_Animator.SetTrigger(m_HashTopToDowmAttackPara)),
+                        //    BT.Wait(0.5f),
+                        //    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                        //    BT.Call(() => m_Animator.SetTrigger(m_HashBottomAttackPara)),
+                        //    BT.Wait(0.5f),
+                        //    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                        //    BT.Wait(2f)
+                        //),
+                        //BT.Sequence().OpenBranch(
+                        //    BT.Call(() => m_Animator.SetTrigger(m_HashJumpAttackPara)),
+                        //    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                        //    BT.Wait(2f)
+                        //)
+                        //BT.Sequence().OpenBranch(
+                        //    BT.Call(() => m_Animator.SetTrigger(m_HashTopToDowmAttackPara)),
+                        //    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                        //    BT.Call(() => shortDamager.DisableDamage()),
+                        //    BT.Wait(1f)
+                        //)
+
                     ),
-                    BT.Sequence().OpenBranch(
-                        BT.Call(() => m_Animator.SetTrigger(m_HashTopAttackPara)),
-                        BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                        BT.Call(() => longDamager.DisableDamage()),
-                        BT.Wait(1f)
-                    ),
-                    BT.Sequence().OpenBranch(
-                        BT.Call(() => m_Animator.SetTrigger(m_HashBottomAttackPara)),
-                        BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                        BT.Call(() => shortDamager.DisableDamage()),
-                        BT.Wait(1f)
-                    ),
-                    BT.Sequence().OpenBranch(
-                        BT.Call(() => m_Animator.SetTrigger(m_HashJumpAttackPara)),
-                        BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                        BT.Call(() => jumpDamager.DisableDamage()),
-                        BT.Wait(1f)
-                    ),
-                    BT.Sequence().OpenBranch(
-                        BT.Call(() => m_Animator.SetTrigger(m_HashTopToDowmAttackPara)),
-                        BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                        BT.Call(() => shortDamager.DisableDamage()),
-                        BT.Wait(1f)
-                    )
 
-                ),
+                    BT.Call(OrientToTarget),
 
-                BT.Call(OrientToTarget),
+                    BT.Wait(1f)
 
-                BT.Wait(1f)
-
+                )
+               
             )
 
 
@@ -115,10 +151,13 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
         m_Ai.Tick();
 
 
-        if(m_RigidBody2D.velocity.x < 5)
+        if (!m_DarkMatters[0].inPool )
         {
-            m_RigidBody2D.AddForce(m_Force);
+            m_DarkMatters[0].rigidbody2D.position = new Vector2(m_DarkMatters[0].rigidbody2D.position.x, transform.position.y + Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
+            m_DarkMatters[1].rigidbody2D.position = new Vector2(m_DarkMatters[1].rigidbody2D.position.x, transform.position.y - Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
+            m_DarkMatterTimer += Time.deltaTime;
         }
+        
 
     }
 
@@ -157,21 +196,67 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     }
 
-    public void TopAttack()
+    public void StartTopAttack()
     {
         longDamager.EnableDamage();
+
+        BulletObject darkMatter1 = m_DarkMatterPool.Pop(transform.position + (m_SpriteRenderer.flipX? new Vector3(-0.5f, 0, 0): new Vector3(0.5f,0,0)));
+        darkMatter1.rigidbody2D.velocity = (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right) * 2;
+
+        BulletObject darkMatter2 = m_DarkMatterPool.Pop(transform.position + (m_SpriteRenderer.flipX ? new Vector3(-0.5f, 0, 0) : new Vector3(0.5f, 0, 0)));
+        darkMatter2.rigidbody2D.velocity = (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right) * 2;
+
+        m_DarkMatterTimer = 0;
+
     }
 
+    public void EndTopAttack()
+    {
+        longDamager.DisableDamage();
+    }
 
-    public void BottomAttack()
+    public void StartBottomAttack()
     {
         shortDamager.EnableDamage();
     }
 
-    public void JumpAttack()
+    public void EndBottomBottomAttack()
+    {
+        shortDamager.DisableDamage();
+    }
+
+    public void StartJumpAttack()
     {
         jumpDamager.EnableDamage();
+
+        //Fire magic spells
+        for (int i = 0; i < 4; i++)
+        {
+            Vector3 rightOffset = new Vector3(1.5f - i*0.2f, (i - 1) * 0.35f + 0.1f, 0);
+            Vector3 leftOffset = rightOffset;
+            leftOffset.x *= -1;
+
+            if (m_SpriteRenderer.flipX)
+            {
+                BulletObject bulletObject = m_JumpAttackSpellPool.Pop(transform.position + leftOffset );
+                bulletObject.rigidbody2D.velocity = Vector2.left  * 7;
+                bulletObject.rigidbody2D.transform.RotateToDirection(Vector2.right);
+            }
+            else
+            {
+                BulletObject bulletObject = m_JumpAttackSpellPool.Pop(transform.position + rightOffset);
+                bulletObject.rigidbody2D.velocity = Vector2.right * 7;
+                bulletObject.rigidbody2D.transform.RotateToDirection(Vector2.left);
+            }
+        }
+
     }
+
+    public void EndJumpAttack()
+    {
+        jumpDamager.DisableDamage();
+    }
+
 
 
 

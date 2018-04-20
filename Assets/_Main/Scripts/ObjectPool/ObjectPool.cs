@@ -100,6 +100,13 @@ namespace Gamekit2D
             poolObject.inPool = true;
             poolObject.Sleep();
         }
+
+
+        public List<TObject> GetAll()
+        {
+            return pool;
+        }
+
     }
 
 
