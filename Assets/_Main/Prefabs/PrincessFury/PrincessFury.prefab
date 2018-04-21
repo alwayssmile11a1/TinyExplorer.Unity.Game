@@ -117,8 +117,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1705889945225076}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.55000305, y: 0.09000015, z: -0.03952872}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4824487127509760}
@@ -157,7 +157,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1662217462014572}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 240, y: -4.59, z: 0.11687528}
+  m_LocalPosition: {x: 240, y: -4.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4104175207036182}
@@ -378,6 +378,7 @@ MonoBehaviour:
     type: 2}
   jumpAttackSpell: {fileID: 1645177810703796, guid: c1fca4e8d7e53b04f96b2edd0d3ab6ad,
     type: 2}
+  concentratingEffect: {fileID: 1705889945225076}
 --- !u!114 &114991030909227332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -389,9 +390,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960138f0450083543ad1d17e1352019d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 20
+  startingHealth: 50
   invulnerableAfterDamage: 1
-  invulnerabilityDuration: 3
+  invulnerabilityDuration: 0.5
   disableOnDeath: 0
   centreOffset: {x: 0, y: 1}
   OnHealthSet:
@@ -405,6 +406,17 @@ MonoBehaviour:
       - m_Target: {fileID: 114914166816350432}
         m_MethodName: GotHit
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114991030909227332}
+        m_MethodName: EnableInvulnerability
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -488,7 +500,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -2111842525
+  randomSeed: -1828230382
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -524,7 +536,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.01
+      scalar: -0.01
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -616,7 +628,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1094,14 +1106,14 @@ ParticleSystem:
         - serializedVersion: 2
           time: 0
           value: 0
-          inSlope: 0.4957992
-          outSlope: 0.4957992
+          inSlope: 0.5042068
+          outSlope: 0.5042068
           tangentMode: 34
         - serializedVersion: 2
           time: 1
-          value: 0.4957992
-          inSlope: 0.4957992
-          outSlope: 0.4957992
+          value: 0.5042068
+          inSlope: 0.5042068
+          outSlope: 0.5042068
           tangentMode: 34
         m_PreInfinity: 2
         m_PostInfinity: 2

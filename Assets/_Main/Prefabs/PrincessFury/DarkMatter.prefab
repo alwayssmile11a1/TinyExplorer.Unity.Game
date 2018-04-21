@@ -148,7 +148,7 @@ MonoBehaviour:
   ignoreInvincibility: 0
   hittableLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   OnDamageableHit:
     m_PersistentCalls:
       m_Calls: []
@@ -173,7 +173,7 @@ MonoBehaviour:
   destroyWhenOutOfView: 0
   spriteOriginallyFacesLeft: 0
   timeBeforeAutodestruct: 5
-  vfxName: BulletImpact
+  vfxName: ExpodingHitEffectDark
   mainCamera: {fileID: 0}
 --- !u!198 &198142108689244934
 ParticleSystem:
@@ -235,7 +235,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: 1507368628
+  randomSeed: 1386113138
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3518,7 +3518,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -1685443143
+  randomSeed: 494651029
   InitialModule:
     serializedVersion: 3
     enabled: 1

@@ -35,7 +35,14 @@ namespace BTAI
         public static WaitForAnimatorSignal WaitForAnimatorSignal(Animator animator, string name, string state, int layer = 0) { return new WaitForAnimatorSignal(animator, name, state, layer); }
         public static Terminate Terminate() { return new Terminate(); }
         public static Log Log(string msg) { return new Log(msg); }
-        public static RandomSequence RandomSequence(int[] weights = null) { return new BTAI.RandomSequence(weights); }
+
+        /// <summary>
+        /// random sequence with weights
+        /// </summary>
+        /// <param name="weights"></param>
+        /// <param name="avoidAbusingFactor">if set to a value > 0, an event will not be able to call more than that number in a row</param>
+        /// <returns></returns>
+        public static RandomSequence RandomSequence(int[] weights = null, int avoidAbusingFactor = -1) { return new BTAI.RandomSequence(weights, avoidAbusingFactor); }
 
         
 
@@ -526,17 +533,23 @@ namespace BTAI
     {
         int[] m_Weight = null;
         int[] m_AddedWeight = null;
+        int m_AvoidAbusingFactor = -1;
+        int m_ActiveChildPickCount = 0;
+        int m_PreviousActiveChild = -1;
 
         /// <summary>
         /// Will select one random child everytime it get triggered again
         /// </summary>
         /// <param name="weight">Leave null so that all child node have the same weight. 
         /// If there is less weight than children, all subsequent child will have weight = 1</param>
-        public RandomSequence(int[] weight = null)
+        public RandomSequence(int[] weight = null, int avoidAbusingFactor = -1)
         {
             activeChild = -1;
 
             m_Weight = weight;
+
+            m_AvoidAbusingFactor = avoidAbusingFactor;
+
         }
 
         public override Branch OpenBranch(params BTNode[] children)
@@ -585,6 +598,55 @@ namespace BTAI
         {
             int choice = Random.Range(0, m_AddedWeight[m_AddedWeight.Length - 1]);
 
+            for (int i = 0; i < m_AddedWeight.Length; ++i)
+            {
+                if (choice - m_AddedWeight[i] < 0)
+                {
+                    activeChild = i;
+
+                    //avoid abusing
+                    if (m_AvoidAbusingFactor > 0)
+                    {
+                        if (m_PreviousActiveChild == activeChild)
+                        {
+                            //increase activeChild pick count
+                            m_ActiveChildPickCount++;
+
+                            //if the active child is being abused, pick another child
+                            if (m_ActiveChildPickCount > m_AvoidAbusingFactor)
+                            {
+
+                                int minExclude = i > 0 ? m_AddedWeight[i - 1] : 0;
+                                int excludedLength = m_AddedWeight[i] - minExclude;
+
+                                PickNewNotAbuseChild(minExclude, excludedLength);
+
+                                //Save
+                                m_ActiveChildPickCount = 1;
+                                m_PreviousActiveChild = activeChild;
+
+                            }
+
+                        }
+                        else //next child is picked
+                        {
+                            m_PreviousActiveChild = activeChild;
+                            m_ActiveChildPickCount = 1;
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        void PickNewNotAbuseChild(int minExclude, int excludedLength)
+        {
+            //Calculate excludedLength
+            int newMax = m_AddedWeight[m_AddedWeight.Length - 1] - excludedLength;
+            int choice = Random.Range(0, newMax);
+
+            choice = choice >= minExclude ? choice + excludedLength : choice;
             for (int i = 0; i < m_AddedWeight.Length; ++i)
             {
                 if (choice - m_AddedWeight[i] < 0)

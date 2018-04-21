@@ -81,6 +81,14 @@ namespace Gamekit2D
             transform.rotation = Quaternion.Euler(0, 0, rotationZ - rotationComparedToHorinzontal);
         }
 
+        /// <summary>
+        /// Change offset of this transform based on sprite facing. 
+        /// If spriteRenderer is not being flipped, transform.position = target.position + originalOffset; and vice versa
+        /// </summary>
+        /// <param name="transform"></param>
+        /// <param name="target"></param>
+        /// <param name="spriteRenderer"></param>
+        /// <param name="originalOffset"></param>
         public static void ChangeOffsetBasedOnSpriteFacing(this Transform transform, Transform target, SpriteRenderer spriteRenderer, Vector3 originalOffset)
         {
             if (!spriteRenderer.flipX)

@@ -322,7 +322,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1644101990743624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 229.43, y: -4.98, z: 0}
+  m_LocalPosition: {x: 234.17, y: -4.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4828233843236984}
@@ -617,6 +617,7 @@ MonoBehaviour:
   jumpForce: 6
   timeBetweenFlickering: 0
   shield: {fileID: 0}
+  Blood: {fileID: 0}
   throwSpeed: {x: 5, y: 3}
   dashEffect: {fileID: 1770998099025398}
   dashSpeed: 10
@@ -21274,7 +21275,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -21328,7 +21329,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -21542,7 +21543,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 0540eeb6c369e1e499fc90e6880e6bce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

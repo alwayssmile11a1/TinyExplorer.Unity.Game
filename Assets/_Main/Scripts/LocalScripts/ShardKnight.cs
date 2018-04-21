@@ -107,7 +107,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         m_Ai.OpenBranch(
             BT.If(() => { return m_Damageable.CurrentHealth >= m_Damageable.startingHealth / 2; }).OpenBranch(
 
-                 BT.RandomSequence(new int[] { 3, 2, 4 }).OpenBranch(
+                 BT.RandomSequence(new int[] { 3, 2, 4 }, 2).OpenBranch(
                     //Laser follow attack
                     BT.Sequence().OpenBranch(
                         BT.Call(() => laserAttackType = 1),
@@ -169,7 +169,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
                     BT.Wait(1f)
                  ),
 
-                BT.RandomSequence(new int[] { 3, 3, 2, 2 }).OpenBranch(
+                BT.RandomSequence(new int[] { 3, 3, 2, 2 }, 2).OpenBranch(
                     //Dash
                     BT.Sequence().OpenBranch(
                         BT.Call(() => tornadoEffect.Play()),
