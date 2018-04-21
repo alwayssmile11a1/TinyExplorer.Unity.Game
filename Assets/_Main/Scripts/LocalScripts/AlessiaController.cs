@@ -11,7 +11,6 @@ public class AlessiaController : MonoBehaviour {
     public float jumpForce = 400f;
     public float timeBetweenFlickering = 0;
     public ParticleSystem shield;
-    public ParticleSystem Blood;
 
     [Tooltip("Throw speed when get hit")]
     public Vector2 throwSpeed = new Vector2(3,3);
@@ -272,10 +271,8 @@ public class AlessiaController : MonoBehaviour {
         m_Slash.DisableDamage();
     }
 
-    public void GotHit(Damager damager, Damageable damageable, bool isPlayer)
+    public void GotHit(Damager damager, Damageable damageable)
     {
-        if (isPlayer)
-            Blood.Play();
         //throw player away a little bit
         m_ThrowVector = new Vector2(0, throwSpeed.y);
         Vector2 damagerToThis = damager.transform.position - transform.position;

@@ -8,6 +8,7 @@ TagManager:
   - Acid
   - ParticleSystem
   - RideloidRange
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - MovingPlatform
   - EnemyRange
   - HitableLayer
-  - 
+  - BreakableWall
   - 
   - 
   - 
