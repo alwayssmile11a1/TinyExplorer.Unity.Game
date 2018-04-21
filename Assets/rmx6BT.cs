@@ -25,15 +25,15 @@ public class rmx6BT : MonoBehaviour {
         rmx6_BT.OpenBranch(
             BT.If(() => { return targetInRange; }).OpenBranch(
                         BT.Call(() => animator.SetBool("walk", true)),
-                        //BT.WaitForAnimatorState(animator, "walk"),
-                        BT.Wait(0.3f),
+                        BT.WaitForAnimatorState(animator, "rmx6_walking"),
+                        //BT.Wait(0.3f),
                         BT.Call(() => { if (!die) rmx6Moving.canWalk = true; })
                 ),
             BT.If(() => { return !targetInRange; }).OpenBranch(
                         BT.Call(() => animator.SetBool("walk", false)),
                         BT.Call(() => animator.SetBool("hide", true)),
-                        //BT.WaitForAnimatorState(animator, "hide"),
-                        BT.Wait(0.3f),
+                        BT.WaitForAnimatorState(animator, "rmx6_hiding"),
+                        //BT.Wait(0.3f),
                         BT.Call(() => rmx6Moving.canWalk = false)
 
                 )
