@@ -28,6 +28,8 @@ namespace Gamekit2D
         public bool offsetBasedOnSpriteFacing = true;
         [Tooltip("SpriteRenderer used to read the flipX value used by offset Based OnSprite Facing")]
         public SpriteRenderer spriteRenderer;
+        [Tooltip("If set, enable damager on awake")]
+        public bool enableDamageOnAwake = true;
         [Tooltip("If disabled, damager ignore trigger when casting for damage")]
         public bool canHitTriggers;
         public bool disableDamageAfterHit = false;
@@ -59,6 +61,7 @@ namespace Gamekit2D
                 m_SpriteOriginallyFlipped = spriteRenderer.flipX;
 
             m_DamagerTransform = transform;
+            m_CanDamage = enableDamageOnAwake;
         }
 
         public void EnableDamage()

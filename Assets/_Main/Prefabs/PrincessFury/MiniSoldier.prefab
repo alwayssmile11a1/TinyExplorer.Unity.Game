@@ -25,8 +25,10 @@ GameObject:
   - component: {fileID: 61127675299787164}
   - component: {fileID: 114636827411940760}
   - component: {fileID: 114340396175042204}
-  - component: {fileID: 114652942454855092}
   - component: {fileID: 114447286456420658}
+  - component: {fileID: 114628125615404846}
+  - component: {fileID: 114652942454855092}
+  - component: {fileID: 114578702950477254}
   m_Layer: 10
   m_Name: MiniSoldier
   m_TagString: Untagged
@@ -41,7 +43,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1929987268802862}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 237.97, y: -4.78, z: 0}
+  m_LocalPosition: {x: 237.97, y: -4.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,14 +78,14 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.85714287, y: 0.87142855}
+    oldSize: {x: 1, y: 1.0166667}
     newSize: {x: 0.6, y: 0.61}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -122,10 +124,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   useTriggerCollider: 0
-  offset: {x: -0.4, y: 0.013702631}
-  size: {x: 0.41000003, y: 0.4992385}
+  offset: {x: -0.444729, y: 0.013702631}
+  size: {x: 0.49945801, y: 0.4992385}
   offsetBasedOnSpriteFacing: 1
   spriteRenderer: {fileID: 212968528854963352}
+  enableDamageOnAwake: 0
   canHitTriggers: 0
   disableDamageAfterHit: 0
   forceRespawn: 0
@@ -157,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 5
   invulnerableAfterDamage: 1
-  invulnerabilityDuration: 0.5
+  invulnerabilityDuration: 0.1
   disableOnDeath: 0
   centreOffset: {x: 0, y: 1}
   OnHealthSet:
@@ -179,11 +182,44 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114578702950477254}
+        m_MethodName: StartDefaultColorFlicker
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Gamekit2D.Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnDie:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114628125615404846}
+        m_MethodName: ReturnToPool
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114652942454855092}
+        m_MethodName: DeActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Gamekit2D.Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnGainHealth:
@@ -194,6 +230,35 @@ MonoBehaviour:
   dataSettings:
     dataTag: 64736009-3047-47c2-8970-9d85dc099053
     persistenceType: 3
+--- !u!114 &114578702950477254
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1929987268802862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987d197336b316a4693daa7706c07ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.1
+  timeBetweenFlickering: 0.1
+--- !u!114 &114628125615404846
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1929987268802862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ea98018d1796f4fa92b4f42b8fad6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyWhenOutOfView: 0
+  spriteOriginallyFacesLeft: 0
+  timeBeforeAutodestruct: -1
+  vfxName: BulletImpact
+  mainCamera: {fileID: 0}
 --- !u!114 &114636827411940760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,6 +276,7 @@ MonoBehaviour:
   size: {x: 0.57, y: 0.74}
   offsetBasedOnSpriteFacing: 1
   spriteRenderer: {fileID: 0}
+  enableDamageOnAwake: 0
   canHitTriggers: 0
   disableDamageAfterHit: 0
   forceRespawn: 0
@@ -240,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a65172c00838c84ca4075ca99e77b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetToTrack: {fileID: 0}
+  bodyDamager: {fileID: 114636827411940760}
   attackDamager: {fileID: 114340396175042204}
 --- !u!212 &212968528854963352
 SpriteRenderer:
@@ -275,9 +341,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300038, guid: c99cdc570b3e13d4db326d133c0f6bb8, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.805071, b: 0.77205884, a: 0.81}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0

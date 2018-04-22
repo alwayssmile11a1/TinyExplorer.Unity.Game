@@ -132,7 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyWhenOutOfView: 0
   spriteOriginallyFacesLeft: 0
-  timeBeforeAutodestruct: 7
+  timeBeforeAutodestruct: 10
   vfxName: ExplodingHitEffectDark
   mainCamera: {fileID: 0}
 --- !u!114 &114971350754598758
@@ -152,6 +152,7 @@ MonoBehaviour:
   size: {x: 2.5, y: 1}
   offsetBasedOnSpriteFacing: 1
   spriteRenderer: {fileID: 0}
+  enableDamageOnAwake: 1
   canHitTriggers: 0
   disableDamageAfterHit: 0
   forceRespawn: 0

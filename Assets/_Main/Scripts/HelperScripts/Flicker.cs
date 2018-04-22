@@ -13,25 +13,38 @@ public class Flicker : MonoBehaviour {
     private Color m_OriginalColor;
     private Coroutine m_Coroutine;
 
+    private Color defaultFlickerColor;
 
     private void Awake()
     {
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_OriginalColor = m_SpriteRenderer.color;
+        defaultFlickerColor = new Color(1f, 100f/255f, 100f/255f, 1f);
     }
 
+    
     public void StartFlickering()
     {
         InternalFlickering(duration, timeBetweenFlickering);
     }
 
-   
+    public void StartDefaultColorFlicker()
+    {
+        InternalFlickering(duration, timeBetweenFlickering, defaultFlickerColor);
+    }
+
     public Coroutine StartFlickering(float duration, float timeBetweenFlickering)
     {
         return InternalFlickering(duration, timeBetweenFlickering);
     }
 
-    private Coroutine InternalFlickering(float duration, float timeBetweenFlickering)
+    //Color flickering, default value is (255,100,100,255).
+    public Coroutine StartColorFickering(float duration, float timeBetweenFlickering, Color? color = null)
+    {     
+        return InternalFlickering(duration, timeBetweenFlickering, color??defaultFlickerColor);
+    }
+
+    private Coroutine InternalFlickering(float duration, float timeBetweenFlickering, Color? color = null)
     {
         this.duration = duration;
         this.timeBetweenFlickering = timeBetweenFlickering;
@@ -44,7 +57,7 @@ public class Flicker : MonoBehaviour {
         }
 
         //start new coroutine
-        m_Coroutine = StartCoroutine(Flickering());
+        m_Coroutine = StartCoroutine(Flickering(color));
 
         return m_Coroutine;
     }
@@ -54,17 +67,30 @@ public class Flicker : MonoBehaviour {
         StopCoroutine(m_Coroutine);
     }
 
-    private IEnumerator Flickering()
+    private IEnumerator Flickering(Color? color = null)
     {
 
         float timer = 0f;
         float sinceLastChange = 0.0f;
 
-        Color transparent = m_OriginalColor;
-        transparent.a = 0.2f;
         int state = 1;
 
-        m_SpriteRenderer.color = transparent;
+        Color flickerColor;
+
+
+        if (!color.HasValue)
+        {
+            Color transparent = m_OriginalColor;
+            transparent.a = 0.2f;
+            flickerColor = transparent;
+            m_SpriteRenderer.color = transparent;
+        }
+        else
+        {
+            flickerColor = color.Value;
+            m_SpriteRenderer.color = color.Value;
+        }
+
 
         while (timer < duration)
         {
@@ -75,12 +101,13 @@ public class Flicker : MonoBehaviour {
             {
                 sinceLastChange -= timeBetweenFlickering;
                 state = 1 - state;
-                m_SpriteRenderer.color = state == 1 ? transparent : m_OriginalColor;
+                m_SpriteRenderer.color = state == 1 ? flickerColor : m_OriginalColor;
             }
         }
 
         m_SpriteRenderer.color = m_OriginalColor;
     }
+
 
 
 }
