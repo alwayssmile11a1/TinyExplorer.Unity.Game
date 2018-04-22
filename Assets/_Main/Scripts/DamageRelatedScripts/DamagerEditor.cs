@@ -16,6 +16,7 @@ namespace Gamekit2D
         SerializedProperty m_SizeProp;
         SerializedProperty m_OffsetBasedOnSpriteFacingProp;
         SerializedProperty m_SpriteRendererProp;
+        SerializedProperty m_EnableDamageOnAwake;
         SerializedProperty m_CanHitTriggersProp;
         SerializedProperty m_DisableDamageAfterHit;
         SerializedProperty m_ForceRespawnProp;
@@ -33,6 +34,7 @@ namespace Gamekit2D
             m_SizeProp = serializedObject.FindProperty("size");
             m_OffsetBasedOnSpriteFacingProp = serializedObject.FindProperty("offsetBasedOnSpriteFacing");
             m_SpriteRendererProp = serializedObject.FindProperty("spriteRenderer");
+            m_EnableDamageOnAwake = serializedObject.FindProperty("enableDamageOnAwake");
             m_CanHitTriggersProp = serializedObject.FindProperty("canHitTriggers");
             m_DisableDamageAfterHit = serializedObject.FindProperty("disableDamageAfterHit");
             m_ForceRespawnProp = serializedObject.FindProperty("forceRespawn");
@@ -58,6 +60,7 @@ namespace Gamekit2D
                 if (m_OffsetBasedOnSpriteFacingProp.boolValue)
                     EditorGUILayout.PropertyField(m_SpriteRendererProp);
             }
+            EditorGUILayout.PropertyField(m_EnableDamageOnAwake);
             EditorGUILayout.PropertyField(m_CanHitTriggersProp);
             EditorGUILayout.PropertyField(m_DisableDamageAfterHit);
             EditorGUILayout.PropertyField(m_ForceRespawnProp);

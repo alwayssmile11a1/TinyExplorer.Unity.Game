@@ -20,6 +20,13 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     public GameObject concentratingEffect;
 
+
+    [Header("Summon")]
+    public Transform summonPosition1;
+    public Transform summonPosition2;
+    public Transform summonTeleportPosition;
+    public GameObject miniSoldier;
+
     //Animation
     private int m_WakeUpPara = Animator.StringToHash("WakeUp");
     private int m_HashWalkPara = Animator.StringToHash("Walk");
@@ -41,11 +48,24 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     //Other variables
     private bool m_WokeUp = false;
+
     private BulletPool m_JumpAttackSpellPool;
+
     private BulletPool m_DarkMatterPool;
-    private List<BulletObject> m_DarkMatters;
+    private BulletObject m_DarkMatter1;
+    private BulletObject m_DarkMatter2;
     private float m_DarkMatterTimer;
-    private Vector2 m_CurrentLocalConcentratingEffectPosition;
+
+    private BulletPool m_SoldierPool;
+    private List<BulletObject> m_Soldiers = new List<BulletObject>();
+    private int m_SoldierCount = 3;
+    private float m_SoldierAppearingTimer;
+
+    //Teleport
+    private float m_TeleportTimer;
+    private Vector3 m_TeleportToPosition;
+
+    private int m_VortexGroundEffectHash = VFXController.StringToHash("Vortex_Ground");
 
     //Behavior Tree
     private Root m_Ai = BT.Root();
@@ -66,8 +86,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
         m_JumpAttackSpellPool = BulletPool.GetObjectPool(jumpAttackSpell, 4);
         m_DarkMatterPool = BulletPool.GetObjectPool(darkBallSpell, 2);
-        m_DarkMatters = m_DarkMatterPool.GetAll();
-        
+        m_SoldierPool = BulletPool.GetObjectPool(miniSoldier, 4);
 
         WakeUp();
 
@@ -85,7 +104,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
             BT.If(() => { return m_Damageable.CurrentHealth > 0; }).OpenBranch(
                 //Woke up
                 BT.If(() => { return m_WokeUp; }).OpenBranch(
-                    BT.RandomSequence(new int[] { 3, 1, 2, 2 }, 2).OpenBranch(
+                    BT.RandomSequence(new int[] { 2, 1, 2, 2, 2,1 }, 2).OpenBranch(
                         //Walk
                         BT.Sequence().OpenBranch(
                             BT.Call(() => m_Animator.SetBool(m_HashWalkPara, true)),
@@ -94,6 +113,11 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
                             BT.Call(() => SetHorizontalSpeed(0)),
                             BT.Call(() => m_Animator.SetBool(m_HashWalkPara, false)),
                             BT.Wait(0.5f)
+                        ),
+                        //Teleport
+                        BT.Sequence().OpenBranch(
+                            BT.Call(() => TeleportToRandom()),
+                            BT.Wait(4.5f)
                         ),
                         //Top to bottom Attack
                         BT.Sequence().OpenBranch(
@@ -104,7 +128,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
                             BT.Wait(1.5f)
                         ),
                          //Combo Attack
-                         BT.If(()=> { return (targetToTrack.position - transform.position).sqrMagnitude < 4f; }).OpenBranch(
+                         BT.If(() => { return (targetToTrack.position - transform.position).sqrMagnitude < 4f; }).OpenBranch(
                              BT.Sequence().OpenBranch(
                                 BT.Call(() => m_Animator.SetTrigger(m_HashTopAttackPara)),
                                 BT.Wait(0.5f),
@@ -126,7 +150,22 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
                             BT.Call(() => m_Animator.SetTrigger(m_HashJumpAttackPara)),
                             BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
                             BT.Wait(1.5f)
+                        ),
+                        //Summon
+                        BT.Sequence().OpenBranch(
+                            BT.Call(() => TeleportTo(summonTeleportPosition.position)),
+                            BT.Wait(4.5f),
+                            BT.Call(() => m_SpriteRenderer.flipX = true),
+                            BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-0.15f, 1.5f))),
+                            BT.Call(() => m_Animator.SetTrigger(m_HashSummonPara)),
+                            BT.Wait(1f),
+                            BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                            BT.WaitUntil(SummonActionEndCheck),                           
+                            BT.Wait(0.5f),
+                            BT.Call(() => TeleportToRandom()),
+                            BT.Wait(5f)
                         )
+
 
                     ),
 
@@ -156,13 +195,51 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
         m_Ai.Tick();
 
 
-        if (!m_DarkMatters[0].inPool)
+        if (m_DarkMatter1 !=null && !m_DarkMatter1.inPool)
         {
-            m_DarkMatters[0].rigidbody2D.position = new Vector2(m_DarkMatters[0].rigidbody2D.position.x, transform.position.y + Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
-            m_DarkMatters[1].rigidbody2D.position = new Vector2(m_DarkMatters[1].rigidbody2D.position.x, transform.position.y - Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
+            m_DarkMatter1.rigidbody2D.position = new Vector2(m_DarkMatter1.rigidbody2D.position.x, transform.position.y + Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
+            m_DarkMatter2.rigidbody2D.position = new Vector2(m_DarkMatter2.rigidbody2D.position.x, transform.position.y - Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
             m_DarkMatterTimer += Time.deltaTime;
         }
-        
+
+
+        if(m_SoldierAppearingTimer>0)
+        {
+            m_SoldierAppearingTimer -= Time.deltaTime;
+
+            if(m_SoldierAppearingTimer<=0)
+            {
+                for (int i = 0; i < m_Soldiers.Count; i++)
+                {
+                    m_Soldiers[i].rigidbody2D.velocity = Vector2.zero;
+                    m_Soldiers[i].transform.GetComponent<MiniSoldier>().Active();
+                }
+
+
+            }
+
+        }
+
+
+        if (m_TeleportTimer > 0)
+        {
+            m_TeleportTimer -= Time.deltaTime;
+
+            if (m_TeleportTimer <= 0)
+            {
+                m_RigidBody2D.velocity = Vector2.zero;
+                m_SpriteRenderer.sortingOrder = 5;
+            }
+            else
+            {
+                if (m_TeleportTimer <= 2f && m_RigidBody2D.velocity.y < 0)
+                {
+                    m_RigidBody2D.position = new Vector2(m_TeleportToPosition.x, m_TeleportToPosition.y - 1f);
+                    m_RigidBody2D.velocity = Vector2.up * 0.75f;
+                }
+            }
+
+        }
 
     }
 
@@ -218,11 +295,11 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     {
         shortDamager.EnableDamage();
 
-        BulletObject darkMatter1 = m_DarkMatterPool.Pop(transform.position + (m_SpriteRenderer.flipX ? new Vector3(-0.5f, -1, 0) : new Vector3(0.5f, 0, 0)));
-        darkMatter1.rigidbody2D.velocity = (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right) * 2;
+        m_DarkMatter1 = m_DarkMatterPool.Pop(transform.position + (m_SpriteRenderer.flipX ? new Vector3(-0.5f, 0, 0) : new Vector3(0.5f, 0, 0)));
+        m_DarkMatter1.rigidbody2D.velocity = (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right) * 2;
 
-        BulletObject darkMatter2 = m_DarkMatterPool.Pop(transform.position + (m_SpriteRenderer.flipX ? new Vector3(-0.5f, -1, 0) : new Vector3(0.5f, 0, 0)));
-        darkMatter2.rigidbody2D.velocity = (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right) * 2;
+        m_DarkMatter2 = m_DarkMatterPool.Pop(transform.position + (m_SpriteRenderer.flipX ? new Vector3(-0.5f, 0, 0) : new Vector3(0.5f, 0, 0)));
+        m_DarkMatter2.rigidbody2D.velocity = (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right) * 2;
 
         m_DarkMatterTimer = 0;
 
@@ -230,7 +307,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     public void EndTopToBottomAttack()
     {
-        shortDamager.EnableDamage();
+        shortDamager.DisableDamage();
     }
 
 
@@ -296,10 +373,63 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
         concentratingEffect.SetActive(false);
     }
 
+    
+    public void SummonMiniSoldier()
+    {
+        m_Soldiers.Clear();
+
+        for (int i = 0; i < m_SoldierCount; i++)
+        {
+            float xPosition = Random.Range(summonPosition1.position.x, summonPosition2.position.x);
+            VFXController.Instance.Trigger(m_VortexGroundEffectHash, new Vector3(xPosition, summonPosition1.position.y, 0), 0, false, null);
+            BulletObject soldier = m_SoldierPool.Pop(new Vector3(xPosition, summonPosition1.position.y - 1.5f));
+            m_Soldiers.Add(soldier);
+            soldier.rigidbody2D.velocity = Vector2.up * 0.5f;
+
+        }
+       
+
+        m_SoldierAppearingTimer = 3.7f;
+
+        //m_SoldierCount++;
+    }
+
+
+    private void TeleportTo(Vector3 position)
+    {
+        VFXController.Instance.Trigger(m_VortexGroundEffectHash, position, 0, false, null);
+        VFXController.Instance.Trigger(m_VortexGroundEffectHash, new Vector3(transform.position.x, transform.position.y  - 0.5f, 0), 0, false, null);
+
+        m_RigidBody2D.velocity = Vector2.down * 0.7f;
+        m_SpriteRenderer.sortingOrder = 0;
+        m_TeleportToPosition = position;
+
+        m_TeleportTimer = 4f;
+
+    }
+
+    private void TeleportToRandom()
+    {
+        float xPosition = Random.Range(summonPosition1.position.x, summonPosition2.position.x);
+
+        TeleportTo(new Vector3(xPosition, summonPosition1.position.y, 0));
+    }
+
+
+    private bool SummonActionEndCheck()
+    {
+        for (int i = 0; i < m_Soldiers.Count; i++)
+        {
+            if (!m_Soldiers[i].inPool) return false;
+        }
+
+        return true;
+    }
+
 
     public void GotHit(Damager damager, Damageable damageable)
     {
-        m_Flicker.StartFlickering(damageable.invulnerabilityDuration, 0.1f);
+        m_Flicker.StartColorFickering(damageable.invulnerabilityDuration, 0.1f);
     }
 
 }

@@ -254,6 +254,7 @@ public class AlessiaController : MonoBehaviour {
         //enable attack damage
         m_Slash.EnableDamage();
 
+
         //Play attack effect
         if(m_SpriteRenderer.flipX)
         {
@@ -294,40 +295,37 @@ public class AlessiaController : MonoBehaviour {
 
     public void AttackHit(Damager damager, Damageable damageable)
     {
-        //set position of slash contact effect to be displayed
+        //push back player a little bit
+        Vector2 m_PushBackVector;
+
         if (!m_SpriteRenderer.flipX)
         {
+            //set position of slash contact effect to be displayed
             slashContactTransform.position = transform.position + m_OffsetFromSlashEffectToAlessia;
+
+            m_PushBackVector = new Vector2(-0.8f, 0);
         }
         else
         {
+            //set position of slash contact effect to be displayed
             Vector3 m_ReverseOffset = m_OffsetFromSlashEffectToAlessia;
             m_ReverseOffset.x *= -1;
             slashContactTransform.position = transform.position + m_ReverseOffset;
+
+            m_PushBackVector = new Vector2(0.8f, 0);
         }
+
         //Display slash contact effect
         slashContactTransform.rotation = Quaternion.Euler(0, 0, Random.Range(-50f, 50f));      
         m_SlashContactEffect.Play();
 
+        //Push back
+        m_Rigidbody2D.AddForce(m_PushBackVector, ForceMode2D.Impulse);
+        m_ExternalForceTimer = 0.1f;
 
         ////Slowdown time a little bit
         //TimeManager.SlowdownTime(0.2f, 0.2f);
 
-        //Push player back just a tiny bit
-        Vector2 m_PushBackVector; 
-        if(!m_SpriteRenderer.flipX)
-        {
-            m_PushBackVector = new Vector2(-0.5f, 0);
-            //m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + new Vector2(-0.1f, 0));
-        }
-        else
-        {
-            m_PushBackVector = new Vector2(0.5f, 0);
-            //m_Rigidbody2D.MovePosition(m_Rigidbody2D.position + new Vector2(0.1f, 0));
-        }
-
-        m_Rigidbody2D.AddForce(m_PushBackVector, ForceMode2D.Impulse);
-        m_ExternalForceTimer = 0.2f;
 
         ////Push damageable object back just a tiny bit
         //Rigidbody2D damageableBody = damageable.GetComponent<Rigidbody2D>();

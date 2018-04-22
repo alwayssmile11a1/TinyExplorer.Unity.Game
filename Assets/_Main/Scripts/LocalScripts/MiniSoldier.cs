@@ -6,10 +6,12 @@ using BTAI;
 
 public class MiniSoldier : MonoBehaviour,IBTDebugable {
 
-    public Transform targetToTrack;
+    public Damager bodyDamager;
     public Damager attackDamager;
 
+
     //References
+    private Transform m_TargetToTrack;
     private Animator m_Animator;
     private Rigidbody2D m_RigidBody2D;
     private SpriteRenderer m_SpriteRenderer;
@@ -22,6 +24,8 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
     private int m_HashAttackPara = Animator.StringToHash("Attack");
     private int m_HashIdlePara = Animator.StringToHash("Idle");
 
+    private bool actived = false;
+
     private Vector3 m_TargetPosition;
 
     //Behavior Tree
@@ -30,30 +34,32 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
 
 
     // Use this for initialization
-    void Awake () {
+    void Awake() {
+
+        m_TargetToTrack = GameObject.FindGameObjectWithTag("Player").transform;
+
         m_Animator = GetComponent<Animator>();
         m_RigidBody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Damageable = GetComponent<Damageable>();
-
-        m_TargetPosition = targetToTrack.transform.position;
+        
+        m_TargetPosition = m_TargetToTrack.transform.position;
 
         //Behaviour tree
         m_Ai.OpenBranch(
-            BT.If(() => { return (m_TargetPosition - transform.position).sqrMagnitude < 1f; }).OpenBranch(
-                BT.Sequence().OpenBranch(
-                    BT.Call(() => SetHorizontalSpeed(0f)),
-                    BT.Call(() => m_Animator.SetTrigger(m_HashAttackPara)),
-                    BT.Wait(0.5f),
-                    BT.WaitForAnimatorState(m_Animator, "MiniSoldier_Idle"),
-                    BT.Wait(1f)
-                )
+            BT.If(() => { return (m_TargetPosition - transform.position).sqrMagnitude < 0.9f; }).OpenBranch(
+                BT.Call(() => m_Animator.ResetTrigger(m_HashWalkPara)),
+                BT.Call(() => SetHorizontalSpeed(0f)),
+                BT.Call(() => m_Animator.SetTrigger(m_HashAttackPara)),
+                BT.Wait(0.5f),
+                BT.WaitForAnimatorState(m_Animator, "MiniSoldier_Idle")
             ),
-            BT.If(() => { return (m_TargetPosition - transform.position).sqrMagnitude >= 1f; }).OpenBranch(
+            BT.If(() => { return (m_TargetPosition - transform.position).sqrMagnitude >= 0.9f; }).OpenBranch(
                 BT.Call(() => m_Animator.SetTrigger(m_HashWalkPara)),
                 BT.Call(() => SetHorizontalSpeed(1f))
             ),
-            BT.Call(() => m_TargetPosition = targetToTrack.transform.position),
+            BT.Call(() => m_TargetPosition = m_TargetToTrack.transform.position),
+            BT.Wait(0.5f),
             BT.Call(OrientToTarget)
         );
     }
@@ -61,8 +67,39 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
     // Update is called once per frame
     void Update() {
 
-        m_Ai.Tick();
+        if (actived)
+        {
+            m_Ai.Tick();
+        }
+    }
 
+    public void Active()
+    {
+
+        m_SpriteRenderer.sortingOrder = 5;
+
+        Color color = m_SpriteRenderer.color;
+        color.a = 1f;
+        m_SpriteRenderer.color = color;
+
+        bodyDamager.EnableDamage();
+
+        OrientToTarget();
+
+        actived = true;
+    }
+
+    public void DeActive()
+    {
+        m_SpriteRenderer.sortingOrder = 0;
+
+        Color color = m_SpriteRenderer.color;
+        color.a = 0.8f;
+        m_SpriteRenderer.color = color;
+
+        bodyDamager.DisableDamage();
+
+        actived = false;
     }
 
     public Root GetAIRoot()
@@ -72,9 +109,9 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
 
     private void OrientToTarget()
     {
-        if (targetToTrack == null) return;
+        if (m_TargetToTrack == null) return;
 
-        if (targetToTrack.position.x > transform.position.x)
+        if (m_TargetToTrack.position.x > transform.position.x)
         {
             m_SpriteRenderer.flipX = false;
         }
@@ -86,6 +123,9 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
 
     private void SetHorizontalSpeed(float speed)
     {
+
+        speed += Random.Range(-0.2f, 0.2f);
+
         m_RigidBody2D.velocity = speed * (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right);
 
 

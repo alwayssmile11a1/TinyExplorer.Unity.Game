@@ -706,7 +706,7 @@ namespace BTAI
         string triggerName;
         bool set = true;
 
-        //if set == false, it reset the trigger istead of setting it.
+        //if set == false, it reset the trigger instead of setting it.
         public Trigger(Animator animator, string name, bool set = true)
         {
             this.id = Animator.StringToHash(name);
