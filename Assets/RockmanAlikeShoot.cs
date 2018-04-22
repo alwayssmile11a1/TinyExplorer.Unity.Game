@@ -8,6 +8,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
     private ContactFilter2D contactFilter2D;
     public float castDistance;
     private Vector2 rayCastPosition;
+    public Vector2 castDirection = Vector2.left;
 
     public float shootCoolDown;
     public Transform shootOrigin;
@@ -49,7 +50,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
         Vector2 direction;
         for (int i = 0; i < 3; i++)
         {
-        direction = (Quaternion.Euler(0, 0, shootAngle) * Vector2.left).normalized;
+        direction = (Quaternion.Euler(0, 0, shootAngle) * castDirection).normalized;
             Physics2D.Raycast(rayCastPosition, direction, contactFilter2D, hit, castDistance);
             Debug.DrawRay(rayCastPosition, direction * castDistance);
             if (hit[0].collider != null && shootTime >= shootCoolDown)

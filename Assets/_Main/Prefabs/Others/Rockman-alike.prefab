@@ -248,6 +248,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   castDistance: 3
+  castDirection: {x: -1, y: 0}
   shootCoolDown: 1
   shootOrigin: {fileID: 4323306014296340}
   shootAngle: 0

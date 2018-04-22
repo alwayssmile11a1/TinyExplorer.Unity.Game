@@ -335,8 +335,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: {fileID: 4460029351806716}
   velocity: {x: 1.5, y: 0, z: 0}
-  triggerEffect: []
-  test: {fileID: 0}
+  canMove: 0
+  Effect: {fileID: 0}
 --- !u!212 &212003847611152514
 SpriteRenderer:
   m_ObjectHideFlags: 1
