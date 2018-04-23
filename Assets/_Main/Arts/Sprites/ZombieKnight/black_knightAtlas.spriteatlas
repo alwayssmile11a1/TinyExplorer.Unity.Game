@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: black_knightAtlas
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: c2baa3b5bec50d54eb200e1481aadb67, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: b17764a51469fb441bde0f139501d917, type: 3}
+  - {fileID: 21300000, guid: e3362999e8162564eadba7b697537a0f, type: 3}
+  - {fileID: 21300000, guid: 821abcfb801fe67429d67383ea178e34, type: 3}
+  - {fileID: 21300000, guid: f6fb44eb26ccc644dae67f8208ad6dd8, type: 3}
+  - {fileID: 21300000, guid: b961f01a755ffd242ad64da7d2f75add, type: 3}
+  - {fileID: 21300000, guid: f8da0e28e87be554f82046c18f0c440f, type: 3}
+  - {fileID: 21300000, guid: 0894fb89e7503d642a4d28978bb6be56, type: 3}
+  - {fileID: 21300000, guid: fca32db73032b4c41add3e7cfe752a6a, type: 3}
+  - {fileID: 21300000, guid: f65340a89e721604e9772ee7654ca775, type: 3}
+  - {fileID: 21300000, guid: 2fb708611acecd14ba75056d0c8f0724, type: 3}
+  - {fileID: 21300000, guid: 4a26eebc45a6cd44a9fc81fa219b9163, type: 3}
+  - {fileID: 21300000, guid: ba61d950e3aba56449c0da292a11e9e0, type: 3}
+  - {fileID: 21300000, guid: dc576f72d5ae092458f6a5b949dfdf9c, type: 3}
+  - {fileID: 21300000, guid: ac905667ec0bf53409feab75c289cec2, type: 3}
+  - {fileID: 21300000, guid: fab8ab3d51811cf45871644b7c7fbcc6, type: 3}
+  - {fileID: 21300000, guid: c729c84b4b9d829429b15c99b7a70aa2, type: 3}
+  - {fileID: 21300000, guid: f664c6e3e1f617046a3fcfe594cc82b6, type: 3}
+  - {fileID: 21300000, guid: d6dcf91357618ad4b87d8f905ed60331, type: 3}
+  - {fileID: 21300000, guid: 5bda55a4dd6fed144ac07d5cc45dced5, type: 3}
+  - {fileID: 21300000, guid: 6f38e81cea4741145baafde506202a3a, type: 3}
+  - {fileID: 21300000, guid: c3a485874b3d38442a05dbe79f879ecd, type: 3}
+  - {fileID: 21300000, guid: c24b607f2ca695344afd4804a68f2552, type: 3}
+  - {fileID: 21300000, guid: f941705f3d3749146afca7cf2af7ca1f, type: 3}
+  - {fileID: 21300000, guid: 42544a43522a672408a0cf8cb5455bec, type: 3}
+  - {fileID: 21300000, guid: c4fbf157b6308054eba5afb39f7b01c7, type: 3}
+  - {fileID: 21300000, guid: f5930151dfe04ec4d85de2321b3c0d26, type: 3}
+  - {fileID: 21300000, guid: cff47ecb021321845b2298aee1439483, type: 3}
+  - {fileID: 21300000, guid: 3fbad6afb19776542ad3fa59f5ef1b2c, type: 3}
+  - {fileID: 21300000, guid: f783896d7b3df7b4f9957b0cbd1bd2a4, type: 3}
+  - {fileID: 21300000, guid: 241020fc22de1a046a39174d538a37a8, type: 3}
+  - {fileID: 21300000, guid: 1676af89eab8e83448fecf006baff201, type: 3}
+  - {fileID: 21300000, guid: 63888b9a2bc7ef04c83bc155e3bc116d, type: 3}
+  - {fileID: 21300000, guid: 8cbd14bade133384cb0ea73cf9f8ed8d, type: 3}
+  - {fileID: 21300000, guid: b3bd23ab75e8160449803a1aa6542346, type: 3}
+  - {fileID: 21300000, guid: 5abba91cfc6471446a2baae69b85f2f0, type: 3}
+  - {fileID: 21300000, guid: b92a8a0094ab3cd4cab837c2904db394, type: 3}
+  - {fileID: 21300000, guid: 4e090a821c8ff0048930a7e27bd365c0, type: 3}
+  - {fileID: 21300000, guid: e66fa1affc2a41544a581457dd55dec5, type: 3}
+  - {fileID: 21300000, guid: c9eddcc6899d61948a5186a13e89755a, type: 3}
+  - {fileID: 21300000, guid: 36d71dbc505cb9d4b8c8376b90f608a8, type: 3}
+  - {fileID: 21300000, guid: 551c41241f754b44cba353bc16c14076, type: 3}
+  - {fileID: 21300000, guid: dad88f95144e0284ba58a4f1f2c391a2, type: 3}
+  - {fileID: 21300000, guid: e99c06ae574d5474ca005bbe04cb6b55, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - skill2_1
+  - skill2_3
+  - skill2_2
+  - skill2_4
+  - skill1_21
+  - skill1_22
+  - skill1_23
+  - cloak_1
+  - cloak_2
+  - cloak_3
+  - weapon_1
+  - skill_3
+  - skill_2
+  - skill_1
+  - head_1
+  - eye_2
+  - eye_1
+  - skill1_15
+  - skill1_14
+  - skill1_16
+  - skill1_11
+  - skill1_13
+  - skill1_12
+  - weapon_2
+  - coat_2
+  - body_2
+  - coat_1
+  - leg_r_1
+  - head_2
+  - leg_l_2
+  - leg_r_2
+  - arm_l_2
+  - arm_l_1
+  - buttock
+  - body_1
+  - arm_r_3
+  - leg_l_1
+  - leg_l_3
+  - arm_r_1
+  - arm_r_2
+  - leg_r_3
+  - arm_l_3
+  - neck
+  m_Tag: black_knightAtlas
+  m_IsVariant: 0

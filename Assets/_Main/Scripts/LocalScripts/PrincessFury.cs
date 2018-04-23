@@ -55,6 +55,8 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     private BulletObject m_DarkMatter1;
     private BulletObject m_DarkMatter2;
     private float m_DarkMatterTimer;
+    private Vector3 m_PrincessFuryPosition;
+
 
     private BulletPool m_SoldierPool;
     private List<BulletObject> m_Soldiers = new List<BulletObject>();
@@ -197,8 +199,8 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
         if (m_DarkMatter1 !=null && !m_DarkMatter1.inPool)
         {
-            m_DarkMatter1.rigidbody2D.position = new Vector2(m_DarkMatter1.rigidbody2D.position.x, transform.position.y + Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
-            m_DarkMatter2.rigidbody2D.position = new Vector2(m_DarkMatter2.rigidbody2D.position.x, transform.position.y - Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
+            m_DarkMatter1.rigidbody2D.position = new Vector2(m_DarkMatter1.rigidbody2D.position.x, m_PrincessFuryPosition.y + Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
+            m_DarkMatter2.rigidbody2D.position = new Vector2(m_DarkMatter2.rigidbody2D.position.x, m_PrincessFuryPosition.y - Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
             m_DarkMatterTimer += Time.deltaTime;
         }
 
@@ -265,8 +267,6 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     {
         m_RigidBody2D.velocity = speed * (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right);
 
-        //m_Force = speed * (!m_SpriteRenderer.flipX ? Vector2.left : Vector2.right);
-
     }
 
     public void WakeUp()
@@ -300,6 +300,8 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
         m_DarkMatter2 = m_DarkMatterPool.Pop(transform.position + (m_SpriteRenderer.flipX ? new Vector3(-0.5f, 0, 0) : new Vector3(0.5f, 0, 0)));
         m_DarkMatter2.rigidbody2D.velocity = (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right) * 2;
+
+        m_PrincessFuryPosition = transform.position;
 
         m_DarkMatterTimer = 0;
 

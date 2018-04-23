@@ -50,11 +50,8 @@ public class Flicker : MonoBehaviour {
         this.timeBetweenFlickering = timeBetweenFlickering;
 
         //stop previous corountine
-        if (m_Coroutine != null)
-        {
-            m_SpriteRenderer.color = m_OriginalColor;
-            StopFlickering();
-        }
+        StopFlickering();
+        
 
         //start new coroutine
         m_Coroutine = StartCoroutine(Flickering(color));
@@ -64,7 +61,11 @@ public class Flicker : MonoBehaviour {
 
     public void StopFlickering()
     {
-        StopCoroutine(m_Coroutine);
+        if (m_Coroutine != null)
+        {
+            m_SpriteRenderer.color = m_OriginalColor;
+            StopCoroutine(m_Coroutine);
+        }
     }
 
     private IEnumerator Flickering(Color? color = null)

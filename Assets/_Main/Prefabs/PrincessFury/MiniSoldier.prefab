@@ -220,6 +220,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114578702950477254}
+        m_MethodName: StopFlickering
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Gamekit2D.Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnGainHealth:
@@ -243,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.1
   timeBetweenFlickering: 0.1
+  defaultFlickerColor: {r: 1, g: 0.39215687, b: 0.39215687, a: 1}
 --- !u!114 &114628125615404846
 MonoBehaviour:
   m_ObjectHideFlags: 1
