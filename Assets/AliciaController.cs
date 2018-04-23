@@ -11,19 +11,16 @@ public class AliciaController : MonoBehaviour {
 
    
     public float distance;
-    public bool isReplica;
+
     //public Vector2 velocity;
     [Header("Attack1")]
     public GameObject bulletAttack1;
     public Transform[] shootRight;
-    public Transform shootLeft;
+    public Transform[] shootLeft;
 
-    [Header("Attack3")]
-    public Transform newPos;
-    public Transform oldPos;
-    public float speed;
-    public GameObject aliciaReplica;
-    public GameObject spawnReplica;
+    [Header("Attack2")]
+    public float dashSpeed;
+    public Damager attack2Damager;
 
     private int explodingHash;
 
@@ -51,30 +48,30 @@ public class AliciaController : MonoBehaviour {
             BT.If(() => { return true; }).OpenBranch(
                 BT.Sequence().OpenBranch(
                     BT.Wait(3),
-                    BT.Call(() => animator.SetBool("attack1", true)),
+                    BT.Call(OrientToTarget),
+                    BT.SetBool(animator, "attack1", true),
                     BT.WaitForAnimatorState(animator, "attack1"),
-                    BT.Call(() => animator.SetBool("attack1", false)),
+                    BT.SetBool(animator, "attack1", false),
                     BT.Call(Attack1),
                     BT.WaitForAnimatorState(animator, "Idle"),
                     BT.Call(() => Debug.Log("Finish Dash"))
                 ),
                 BT.Sequence().OpenBranch(
                     BT.Wait(2f),
-                    BT.Call(() => animator.SetBool("attack2", true)),
-                    BT.WaitForAnimatorState(animator, "attack2"),
-                    BT.Call(() => animator.SetBool("attack2", false)),
-                    BT.Call(Attack2)
-                ),
-                BT.If(() => !isReplica).OpenBranch(
-                    BT.Sequence().OpenBranch(
-                    BT.Wait(2f),
-                    BT.Call(MoveToOldPos),
+                    BT.Call(OrientToTarget),
+                    BT.SetBool(animator, "dash", true),
+                    BT.WaitForAnimatorState(animator, "beforeDash"),
+                    BT.WaitForAnimatorState(animator, "dash"),
+                    BT.Call(MoveToTarget),
                     BT.WaitUntil(MoveCheck),
-                    BT.Wait(1.5f),
-                    BT.Call(ActiveReplica),
-                    BT.Wait(20f)
-                    // nếu giết đc phân thân thì sao đó
-                    )
+                    BT.SetBool(animator, "dash", false)
+                ),
+                BT.Sequence().OpenBranch(
+                    BT.Call(OrientToTarget),
+                    BT.SetBool(animator, "attack2", true),
+                    BT.WaitForAnimatorState(animator, "attack2"),
+                    BT.SetBool(animator, "attack2", false),
+                    BT.Call(Attack2)
                 )
             )
         );
@@ -86,22 +83,22 @@ public class AliciaController : MonoBehaviour {
         AliciaBT.Tick();
 	}
 
-    private void ScanForTarget()
-    {
-        Vector2 origin = rigidbody2D.position + boxCollider2D.offset;
-        RaycastHit2D raycastHit2DRight = Physics2D.Raycast(origin, Vector2.right, distance, LayerMask.GetMask("Player"));
-        RaycastHit2D raycastHit2DLeft = Physics2D.Raycast(origin, Vector2.left, distance, LayerMask.GetMask("Player"));
-        Debug.DrawRay(transform.position, Vector2.right * distance);
-        Debug.DrawRay(transform.position, Vector2.left * distance);
-        if (raycastHit2DRight && raycastHit2DRight.collider.tag.Equals("Player"))
-        {
-            Debug.Log("right: " + raycastHit2DRight.collider.tag);
-        }
-        if(raycastHit2DLeft && raycastHit2DLeft.collider.tag.Equals("Player"))
-        {
-            Debug.Log("left: " + raycastHit2DLeft.collider.tag);
-        }
-    }
+    //private void ScanForTarget()
+    //{
+    //    Vector2 origin = rigidbody2D.position + boxCollider2D.offset;
+    //    RaycastHit2D raycastHit2DRight = Physics2D.Raycast(origin, Vector2.right, distance, LayerMask.GetMask("Player"));
+    //    RaycastHit2D raycastHit2DLeft = Physics2D.Raycast(origin, Vector2.left, distance, LayerMask.GetMask("Player"));
+    //    Debug.DrawRay(transform.position, Vector2.right * distance);
+    //    Debug.DrawRay(transform.position, Vector2.left * distance);
+    //    if (raycastHit2DRight && raycastHit2DRight.collider.tag.Equals("Player"))
+    //    {
+    //        Debug.Log("right: " + raycastHit2DRight.collider.tag);
+    //    }
+    //    if(raycastHit2DLeft && raycastHit2DLeft.collider.tag.Equals("Player"))
+    //    {
+    //        Debug.Log("left: " + raycastHit2DLeft.collider.tag);
+    //    }
+    //}
 
     private void Attack1()
     {
@@ -117,37 +114,74 @@ public class AliciaController : MonoBehaviour {
         }
         else
         {
-            BulletObject bullet = bulletPool1.Pop(shootLeft.position);
-            bullet.instance.GetComponent<StartShooting>().direction = Vector2.left;
+            foreach (var item in shootLeft)
+            {
+                BulletObject bullet = bulletPool1.Pop(item.position);
+                bullet.instance.GetComponent<StartShooting>().direction = Vector2.left;
+            }
         }
     }
-    private void MoveToOldPos()
+    private void MoveToTarget()
     {
         Debug.Log("Move");
-        Vector2 direction = (newPos.position - transform.position).normalized;
+        Vector2 direction = (targetToTrack.position - transform.position).normalized;
 
-        rigidbody2D.velocity = direction * speed;
+        rigidbody2D.velocity = new Vector2(direction.x, 0) * dashSpeed;
     }
     private bool MoveCheck()
     {
-        if ((transform.position - newPos.position).sqrMagnitude <= 0.5f)
+        OrientToTarget();
+        if(transform.position.x < targetToTrack.position.x && rigidbody2D.velocity.x < 0)
+        {
+            rigidbody2D.velocity = -rigidbody2D.velocity;
+        }
+        else if(transform.position.x >= targetToTrack.position.x && rigidbody2D.velocity.x > 0)
+        {
+            rigidbody2D.velocity = -rigidbody2D.velocity;
+        }
+        if ((transform.position - targetToTrack.position).sqrMagnitude <= 1.3f)
         {
             rigidbody2D.velocity = Vector2.zero;
             return true;
         }
-
         return false;
     }
-    private void ActiveReplica()
+    private void OrientToTarget()
     {
-        Debug.Log("Spawn replica");
-        aliciaReplica.SetActive(true);
-        spawnReplica.SetActive(true);
+        if (targetToTrack == null) return;
+
+        if (targetToTrack.position.x > transform.position.x && !spriteRenderer.flipX)
+        {
+            FlipAlicia(true);
+        }
+        else if (targetToTrack.position.x <= transform.position.x && spriteRenderer.flipX)
+        {
+            FlipAlicia(false);
+        }
+    }
+
+    private void FlipAlicia(bool b)
+    {
+        spriteRenderer.flipX = b;
+        boxCollider2D.offset = -boxCollider2D.offset;
+        attack2Damager.offset = -attack2Damager.offset;
     }
 
     private void Attack2()
     {
         Debug.Log("Attack2");
+    }
+
+    public void EnableDamager()
+    {
+        attack2Damager.EnableDamage();
+        Debug.Log("Enabled");
+    }
+
+    public void DisableDamager()
+    {
+        attack2Damager.DisableDamage();
+        Debug.Log("Disabled");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
