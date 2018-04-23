@@ -79,6 +79,7 @@ namespace Gamekit2D
         {
             float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rotationZ - rotationComparedToHorinzontal);
+
         }
 
         /// <summary>

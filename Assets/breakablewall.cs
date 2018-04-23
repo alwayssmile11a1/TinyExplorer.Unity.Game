@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class breakablewall : MonoBehaviour {
-    public Transform breakPos;
+
+    int Hash = VFXController.StringToHash("CFX2_RockHit");
+    
     public void OnDie()
     {
         Debug.Log("Break");
-        GameObject.Destroy(this);
-        VFXController.Instance.Trigger("CFX2_RockHit", breakPos.position, 0, false, null, null);
+        VFXController.Instance.Trigger(Hash, transform.position, 0, false, null, null);
+        Destroy(gameObject);
     }
 }

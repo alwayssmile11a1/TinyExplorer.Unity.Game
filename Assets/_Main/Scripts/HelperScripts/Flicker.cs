@@ -8,18 +8,18 @@ public class Flicker : MonoBehaviour {
 
     public float duration;
     public float timeBetweenFlickering;
+    public Color defaultFlickerColor = new Color(1f, 100/255f, 100/255f, 1f);
 
     private SpriteRenderer m_SpriteRenderer;
     private Color m_OriginalColor;
     private Coroutine m_Coroutine;
 
-    private Color defaultFlickerColor;
 
     private void Awake()
     {
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_OriginalColor = m_SpriteRenderer.color;
-        defaultFlickerColor = new Color(1f, 100f/255f, 100f/255f, 1f);
+
     }
 
     

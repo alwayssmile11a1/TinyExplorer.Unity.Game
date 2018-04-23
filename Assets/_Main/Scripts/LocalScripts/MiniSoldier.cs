@@ -16,7 +16,6 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
     private Rigidbody2D m_RigidBody2D;
     private SpriteRenderer m_SpriteRenderer;
     private Damageable m_Damageable;
-    private Flicker m_Flicker;
 
 
     //Animations

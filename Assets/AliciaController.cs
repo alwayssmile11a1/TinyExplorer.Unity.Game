@@ -15,7 +15,7 @@ public class AliciaController : MonoBehaviour {
     //public Vector2 velocity;
     [Header("Attack1")]
     public GameObject bulletAttack1;
-    public Transform shootRight;
+    public Transform[] shootRight;
     public Transform shootLeft;
 
     [Header("Attack3")]
@@ -25,6 +25,7 @@ public class AliciaController : MonoBehaviour {
     public GameObject aliciaReplica;
     public GameObject spawnReplica;
 
+    private int explodingHash;
 
     private Animator animator;
     private new Rigidbody2D rigidbody2D;
@@ -39,6 +40,7 @@ public class AliciaController : MonoBehaviour {
     void Start() {
         currentTimeInIdle = 0;
         bulletPool1 = BulletPool.GetObjectPool(bulletAttack1, 5);
+        explodingHash = VFXController.StringToHash("ExplodingHitEffect");
 
         animator = GetComponentInChildren<Animator>();
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -106,9 +108,12 @@ public class AliciaController : MonoBehaviour {
         Debug.Log("Attack1");
         if(spriteRenderer.flipX)
         {
-            Debug.Log("Pop bullet");
-            BulletObject bullet = bulletPool1.Pop(shootRight.position);
-            bullet.instance.GetComponent<StartShooting>().direction = Vector2.right;
+            foreach (var item in shootRight)
+            {
+                Debug.Log("Pop bullet");
+                BulletObject bullet = bulletPool1.Pop(item.position);
+                bullet.instance.GetComponent<StartShooting>().direction = Vector2.right;
+            }
         }
         else
         {
@@ -116,7 +121,6 @@ public class AliciaController : MonoBehaviour {
             bullet.instance.GetComponent<StartShooting>().direction = Vector2.left;
         }
     }
-
     private void MoveToOldPos()
     {
         Debug.Log("Move");
