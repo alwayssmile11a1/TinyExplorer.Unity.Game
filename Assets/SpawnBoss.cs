@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnAcilia : MonoBehaviour {
-    public GameObject Alicia;
+public class SpawnBoss : MonoBehaviour {
+    public GameObject boss;
     public GameObject AppearEffect;
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,7 +18,7 @@ public class SpawnAcilia : MonoBehaviour {
     private IEnumerator SpawnAlicia()
     {
         yield return new WaitForSeconds(0.25f);
-        if(!Alicia.activeSelf)
-            Alicia.SetActive(true);
+        if(!boss.activeSelf)
+            boss.SetActive(true);
     }
 }

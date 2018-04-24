@@ -188,4 +188,8 @@ public class AliciaController : MonoBehaviour {
     {
         Debug.Log("OnTriggerEnter: " + collision.tag);
     }
+    public void OnDie()
+    {
+        BlackKnightController.aliciaDied = true;
+    }
 }
