@@ -70238,6 +70238,34 @@ Transform:
   m_PrefabParentObject: {fileID: 4460029351806716, guid: 1c46c3f75a4917345b88b7827b96101f,
     type: 2}
   m_PrefabInternal: {fileID: 270320622}
+--- !u!1 &696128331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 696128332}
+  m_Layer: 0
+  m_Name: Skill3Pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &696128332
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 696128331}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.5, y: -0.75, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_Children: []
+  m_Father: {fileID: 759783731}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &707454111
 GameObject:
   m_ObjectHideFlags: 0
@@ -70565,6 +70593,7 @@ Transform:
   - {fileID: 2086036357}
   - {fileID: 1596460366}
   - {fileID: 1269851328}
+  - {fileID: 696128332}
   - {fileID: 1689319012}
   - {fileID: 1376742701}
   m_Father: {fileID: 0}
@@ -86660,7 +86689,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4546975849494416, guid: 2a972a79be35d334db682a87c1af093e, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1658304710544568, guid: 2a972a79be35d334db682a87c1af093e, type: 2}
       propertyPath: m_IsActive
@@ -114805,7 +114834,7 @@ Transform:
   m_LocalScale: {x: 2.75, y: 2.75, z: 1}
   m_Children: []
   m_Father: {fileID: 759783731}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1705559711 stripped
 Transform:
@@ -123018,7 +123047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2086036357
 Transform:
   m_ObjectHideFlags: 0
@@ -123104,7 +123133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetToTrack: {fileID: 714170286}
   bullet: {fileID: 1501786688444616, guid: 2235bd8dec33fd9499acb6d1127986f3, type: 2}
-  speed: 6
+  bulletSpeed: 6
   attack1CoolDown: 3.5
   amount: 3
   attack1Effect: {fileID: 1846368028}
@@ -123117,6 +123146,9 @@ MonoBehaviour:
   spawnPos: {fileID: 1689319012}
   aliciaAppearEffect: {fileID: 1082726700}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  movePos: {fileID: 696128332}
+  moveSpeed: 4
+  turn: 3
 --- !u!114 &2086036361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123212,7 +123244,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.02}

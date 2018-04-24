@@ -8,7 +8,7 @@ using UnityEngine;
 public class BlackKnightController : MonoBehaviour {
     public Transform targetToTrack;
     public GameObject bullet;
-    public float speed;
+    public float bulletSpeed;
 
     [Header("Attack1")]
     public float attack1CoolDown;
@@ -28,9 +28,15 @@ public class BlackKnightController : MonoBehaviour {
     [HideInInspector]
     public static bool aliciaDied = false;
 
+    [Header("Attack3")]
+    public Transform movePos;
+    public float moveSpeed;
+
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-
+    private Rigidbody2D rigidbody2D;
+    [SerializeField]
+    int turn;
     BulletPool bulletPool;
 
     Root BlackKnightBT = BT.Root();
@@ -40,12 +46,15 @@ public class BlackKnightController : MonoBehaviour {
         bulletObjects = new BulletObject[shootPoints.Length];
         timeToCoolDown = 0;
         currentAmount = 0;
+        //turn = 1;
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
 
         BlackKnightBT.OpenBranch(
-            BT.Sequence().OpenBranch(
+            BT.If(() => turn <= 2).OpenBranch(
+                BT.Sequence().OpenBranch(
                 BT.Wait(3f),
                 BT.SetBool(animator, "attack1", true),
                 BT.WaitForAnimatorState(animator, "attack1"),
@@ -54,16 +63,25 @@ public class BlackKnightController : MonoBehaviour {
                 BT.Wait(1.5f),
                 BT.SetBool(animator, "attack1", false),
                 BT.Call(() => attack1Effect.Stop())
+                ),
+                BT.Sequence().OpenBranch(
+                    BT.Wait(2f),
+                    BT.SetBool(animator, "attack2", true),
+                    BT.WaitForAnimatorState(animator, "attack2"),
+                    BT.Call(ActiveAlicia),
+                    BT.WaitUntil(() => aliciaDied),
+                    BT.Call(DeactiveAlicia),
+                    BT.SetBool(animator, "attack2", false)
+                )
             ),
-            BT.Sequence().OpenBranch(
-                BT.Wait(2f),
-                BT.SetBool(animator, "attack2", true),
-                BT.WaitForAnimatorState(animator, "attack2"),
-                BT.Call(ActiveAlicia),
-                BT.WaitUntil(() => aliciaDied),
-                BT.Call(DeactiveAlicia),
-                BT.SetBool(animator, "attack2", false)
+            BT.If(() => turn == 3).OpenBranch(
+                BT.Sequence().OpenBranch(
+                    BT.Wait(2f),
+                    BT.Call(MoveToNewPos),
+                    BT.WaitUntil(MoveCheck)
+                )
             )
+            //BT.Call(() => turn++)
         );
 	}
     // Update is called once per frame
@@ -97,6 +115,29 @@ public class BlackKnightController : MonoBehaviour {
         return false;
     }
 
+    private void MoveToNewPos()
+    {
+        Debug.Log("Move ");
+        Vector2 direction = (movePos.position - transform.position).normalized;
+        Debug.Log(rigidbody2D.position);
+        rigidbody2D.position = movePos.position;
+        Debug.Log(rigidbody2D.position);
+        Debug.Log(rigidbody2D.tag);
+    }
+
+    private bool MoveCheck()
+    {
+        float test = (movePos.position - transform.position).sqrMagnitude;
+        if ((movePos.position - transform.position).sqrMagnitude <= 1.2f)
+        {
+            Debug.Log("check true");
+            rigidbody2D.velocity = new Vector2(0, 0);
+            return true;
+        }
+        Debug.Log("check false");
+        return false;
+    }
+
     private IEnumerator WaitToShoot()
     {
         Debug.Log("before wait");
@@ -106,7 +147,7 @@ public class BlackKnightController : MonoBehaviour {
         {
             StartShooting startShooting = bulletObjects[i].instance.GetComponent<StartShooting>();
             startShooting.direction = (targetToTrack.transform.position - bulletObjects[i].instance.transform.position).normalized;
-            startShooting.speed = speed;
+            startShooting.speed = bulletSpeed;
             Debug.Log(bulletObjects[i].instance.GetComponent<StartShooting>().speed);
         }
     }
