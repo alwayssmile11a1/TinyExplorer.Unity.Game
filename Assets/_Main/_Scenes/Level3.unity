@@ -116096,13 +116096,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1901851520}
-  - component: {fileID: 1901851523}
   - component: {fileID: 1901851528}
   - component: {fileID: 1901851525}
   - component: {fileID: 1901851527}
   - component: {fileID: 1901851526}
-  - component: {fileID: 1901851524}
-  - component: {fileID: 1901851522}
   - component: {fileID: 1901851521}
   m_Layer: 10
   m_Name: Attack3Bullet
@@ -116118,7 +116115,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1901851519}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.36, y: 0, z: 0}
+  m_LocalPosition: {x: 0.01, y: 0.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 792735640}
@@ -116131,90 +116128,17 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1901851519}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 035131d9cb8975148b5b623a17d417b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 714170286}
-  speed: 1
-  offsets: []
+  speed: 0.8
+  offsets:
+  - {x: 0, y: 0, z: 0}
   usedOffset: 0
   offsetBasedOnTargetSpriteFacing: 1
---- !u!114 &1901851522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1901851519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 987d197336b316a4693daa7706c07ced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 0.1
-  timeBetweenFlickering: 0.1
-  defaultFlickerColor: {r: 1, g: 0.39215687, b: 0.39215687, a: 1}
---- !u!212 &1901851523
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1901851519}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
-  m_MaskInteraction: 0
---- !u!114 &1901851524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1901851519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08ea98018d1796f4fa92b4f42b8fad6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyWhenOutOfView: 1
-  spriteOriginallyFacesLeft: 0
-  timeBeforeAutodestruct: -1
-  vfxName: BulletImpact
-  mainCamera: {fileID: 0}
 --- !u!50 &1901851525
 Rigidbody2D:
   serializedVersion: 4
@@ -116258,18 +116182,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnTakeDamage:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1901851522}
-        m_MethodName: StartDefaultColorFlicker
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: Gamekit2D.Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnDie:
@@ -116314,7 +116227,7 @@ MonoBehaviour:
   OnDamageableHit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1901851524}
+      - m_Target: {fileID: 0}
         m_MethodName: ReturnToPool
         m_Mode: 1
         m_Arguments:
@@ -123608,9 +123521,10 @@ MonoBehaviour:
   spawnPos: {fileID: 1689319012}
   aliciaAppearEffect: {fileID: 1082726700}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  attack3Bullet: {fileID: 1901851519}
   movePos: {fileID: 696128332}
   parentRigidbody: {fileID: 889651003}
-  moveSpeed: 3
+  moveSpeed: 1
   Flying_Upward_Effect: {fileID: 1207270136}
   turn: 3
 --- !u!114 &2086036361
