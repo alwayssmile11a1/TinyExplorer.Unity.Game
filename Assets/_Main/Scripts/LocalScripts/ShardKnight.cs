@@ -45,7 +45,6 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
 
     #region Deprecated
-    private GameObject[] chaserAttacks;
     private GameObject rangeEnemyToSpawn;
     private GameObject meleeEnemyToSpawn;
     private List<Transform> spawnRangeEnemyPositions;
@@ -348,42 +347,6 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
         return true;
 
-    }
-
-
-    public void SpawnChaserAttacks()
-    {
-        StartCoroutine(InternalSpawnChaserAttacks());
-    }
-
-    private IEnumerator InternalSpawnChaserAttacks()
-    {
-        for (int i = 0; i < chaserAttacks.Length; i++)
-        {
- 
-            chaserAttacks[i].SetActive(true);
-            chaserAttacks[i].GetComponent<ChaseTarget>().StopChasing();
-
-            //return to original position
-            chaserAttacks[i].transform.position = chaserAttacksPositions[i];
-
-            yield return new WaitForSeconds(0.75f);
-
-        }
-
-        //chaser start attacking
-        for (int i = 0; i < chaserAttacks.Length; i++)
-        {
-            chaserAttacks[i].GetComponent<ChaseTarget>().StartChasing();
-        }
-
-    }
-
-    public void OnChaserHit(Damager damager)
-    {
-        GameObject chaser = damager.gameObject;
-        chaser.SetActive(false);
-        chaser.GetComponent<ChaseTarget>().StopChasing();
     }
 
 

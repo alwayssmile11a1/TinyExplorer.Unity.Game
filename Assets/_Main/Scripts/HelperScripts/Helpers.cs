@@ -83,6 +83,22 @@ namespace Gamekit2D
         }
 
         /// <summary>
+        /// Rotate the transform to a specified position
+        /// the rotationComparedToHorinzontal can be used to offset the rotation
+        /// </summary>
+        /// <param name="transform"></param>
+        /// <param name="direction"></param>
+        /// <param name="rotationComparedToHorinzontal">0 if it's aligned horizontally and 90 if it's aligned verically</param>
+        public static void RotateTo(this Transform transform, Vector3 targetPosition, float rotationComparedToHorinzontal = 0)
+        {
+            Vector3 direction = targetPosition - transform.position;
+
+            float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, rotationZ - rotationComparedToHorinzontal);
+
+        }
+
+        /// <summary>
         /// Change offset of this transform based on sprite facing. 
         /// If spriteRenderer is not being flipped, transform.position = target.position + originalOffset; and vice versa
         /// </summary>

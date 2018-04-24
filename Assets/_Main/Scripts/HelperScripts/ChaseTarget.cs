@@ -10,6 +10,9 @@ using UnityEditor;
 public class ChaseTarget : MonoBehaviour {
 
     public Transform target;
+    [Tooltip("if set, tag will be used rather than targer transform (the value of target will also be changed)")]
+    public bool findTargetByTag = false;
+    public string tag = "target";
     public Vector3 offsetFromTarget;
     [Tooltip("set to true if you want the offset to be relative with the target sprite facing")]
     public bool offsetBasedOnTargetSpriteFacing = true;
@@ -33,13 +36,31 @@ public class ChaseTarget : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
-        m_TargetSpriteRenderer = target.GetComponent<SpriteRenderer>();
+        if(findTargetByTag)
+        {
+            target = GameObject.FindGameObjectWithTag(tag).transform;
+        }
+
+        if (target != null)
+        {
+            m_TargetSpriteRenderer = target.GetComponent<SpriteRenderer>();
+        }
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         if (chaseOnAwake) m_CanChase = true;
     }
 
     void FixedUpdate()
     {
+
+        Orient();
+        Chase();
+        
+    }
+
+    private void Orient()
+    {
+        if (!orientToTarget) return;
+
         //Get offset from target
         m_Offset = offsetFromTarget;
         if (offsetBasedOnTargetSpriteFacing && m_TargetSpriteRenderer != null)
@@ -54,18 +75,8 @@ public class ChaseTarget : MonoBehaviour {
             }
         }
 
-
-        Orient();
-        Chase();
-        
-    }
-
-    private void Orient()
-    {
-        if (!orientToTarget) return;
-
         //direction from target to the gameObject
-        Vector2 direction = (target.position - transform.position).normalized;
+        Vector2 direction = (target.position + m_Offset - transform.position).normalized;
 
         ////rotate
         //float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

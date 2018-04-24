@@ -37,6 +37,7 @@ namespace Gamekit2D
         private void Awake()
         {
             VFX_HASH = VFXController.StringToHash(vfxName);
+            mainCamera = Camera.main;
         }
 
         public void ReturnToPool ()
