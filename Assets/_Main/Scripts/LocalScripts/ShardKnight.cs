@@ -742,7 +742,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
     public void GotHit(Damager damager, Damageable damageable)
     {
-        m_Flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
+        m_Flicker.StartColorFickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
 
         ////Push damageable object back just a tiny bit
         //Rigidbody2D damageableBody = damageable.GetComponent<Rigidbody2D>();

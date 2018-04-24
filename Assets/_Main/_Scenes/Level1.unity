@@ -822,6 +822,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 485601a18f52f4740908094326a45077, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1066235451 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114986627032759538, guid: eabe57963649ce54ea3c55ec70d6370e,
+    type: 2}
+  m_PrefabInternal: {fileID: 2126828958}
+  m_Script: {fileID: 11500000, guid: 721308ef9c2ef490fb1940d70811441e, type: 3}
 --- !u!1 &1167058248
 GameObject:
   m_ObjectHideFlags: 0
@@ -20097,6 +20103,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114981958665157886, guid: eabe57963649ce54ea3c55ec70d6370e,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4491758864791922, guid: eabe57963649ce54ea3c55ec70d6370e, type: 2}
       propertyPath: m_LocalPosition.x
       value: 238.21
@@ -20134,10 +20145,30 @@ Prefab:
       propertyPath: targetToTrack
       value: 
       objectReference: {fileID: 443814165}
-    - target: {fileID: 212064312920753852, guid: eabe57963649ce54ea3c55ec70d6370e,
+    - target: {fileID: 114981958665157886, guid: eabe57963649ce54ea3c55ec70d6370e,
         type: 2}
-      propertyPath: m_FlipX
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114981958665157886, guid: eabe57963649ce54ea3c55ec70d6370e,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114981958665157886, guid: eabe57963649ce54ea3c55ec70d6370e,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1066235451}
+    - target: {fileID: 114981958665157886, guid: eabe57963649ce54ea3c55ec70d6370e,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GotHit
+      objectReference: {fileID: 0}
+    - target: {fileID: 114981958665157886, guid: eabe57963649ce54ea3c55ec70d6370e,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eabe57963649ce54ea3c55ec70d6370e, type: 2}

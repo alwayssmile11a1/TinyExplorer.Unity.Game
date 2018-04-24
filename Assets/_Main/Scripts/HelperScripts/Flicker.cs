@@ -38,10 +38,27 @@ public class Flicker : MonoBehaviour {
         return InternalFlickering(duration, timeBetweenFlickering);
     }
 
-    //Color flickering, default value is (255,100,100,255).
+
+    /// <summary>
+    /// Color flickering, default value is (255,100,100,255).
+    /// </summary>
+    /// <param name="duration"></param>
+    /// <param name="timeBetweenFlickering"></param>
+    /// <param name="color"></param>
+    /// <returns></returns>
     public Coroutine StartColorFickering(float duration, float timeBetweenFlickering, Color? color = null)
     {     
         return InternalFlickering(duration, timeBetweenFlickering, color??defaultFlickerColor);
+    }
+
+
+    public void StopFlickering()
+    {
+        if (m_Coroutine != null)
+        {
+            m_SpriteRenderer.color = m_OriginalColor;
+            StopCoroutine(m_Coroutine);
+        }
     }
 
     private Coroutine InternalFlickering(float duration, float timeBetweenFlickering, Color? color = null)
@@ -51,21 +68,12 @@ public class Flicker : MonoBehaviour {
 
         //stop previous corountine
         StopFlickering();
-        
+
 
         //start new coroutine
         m_Coroutine = StartCoroutine(Flickering(color));
 
         return m_Coroutine;
-    }
-
-    public void StopFlickering()
-    {
-        if (m_Coroutine != null)
-        {
-            m_SpriteRenderer.color = m_OriginalColor;
-            StopCoroutine(m_Coroutine);
-        }
     }
 
     private IEnumerator Flickering(Color? color = null)
