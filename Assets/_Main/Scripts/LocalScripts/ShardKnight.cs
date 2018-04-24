@@ -46,9 +46,6 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
     #region Deprecated
     private GameObject[] chaserAttacks;
-    private GameObject fireBall;
-    private Transform fireballRandomPosition1;
-    private Transform fireballRandomPosition2;
     private GameObject rangeEnemyToSpawn;
     private GameObject meleeEnemyToSpawn;
     private List<Transform> spawnRangeEnemyPositions;
@@ -389,43 +386,6 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         chaser.GetComponent<ChaseTarget>().StopChasing();
     }
 
-
-    public void SpawnFireballs()
-    {
-        StartCoroutine(InternalSpawnFireballs());
-
-
-    }
-
-    private IEnumerator InternalSpawnFireballs()
-    {
-        CameraShaker.Shake(0.03f, 2f* m_FireBalls, false);
-
-        m_Animator.SetTrigger(m_HashMeteorShowerAttackPara);
-
-        for (int i = 0; i < m_FireBalls; i++)
-        {
-            //position to spawn
-            Vector3 spawnPosition = new Vector3(Random.Range(fireballRandomPosition1.position.x, fireballRandomPosition2.position.x), fireballRandomPosition1.position.y, 0);
-
-            BulletObject fireBall = m_FireBallPool.Pop(spawnPosition);
-
-            //direction from player to the fireball
-            Vector3 direction = (targetToTrack.position - fireBall.transform.position).normalized;
-
-            fireBall.rigidbody2D.velocity = direction * 10f;
-
-            //rotate to player
-            float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            fireBall.transform.rotation = Quaternion.Euler(0, 0, rotationZ);
-
-            yield return new WaitForSeconds(1f);
-
-            
-        }
-
-        m_Animator.SetTrigger(m_HashEndAnimationPara);
-    }
 
     #endregion
 

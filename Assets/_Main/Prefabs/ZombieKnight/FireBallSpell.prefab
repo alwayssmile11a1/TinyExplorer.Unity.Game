@@ -84,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1395406367889724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.564, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4420641795341624}
@@ -137,8 +137,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.15876092, y: -0.012700876}
-  m_Size: {x: 2.6191053, y: 0.970039}
+  m_Offset: {x: -1.47, y: -0.012700876}
+  m_Size: {x: 2.89, y: 0.970039}
   m_Direction: 1
 --- !u!114 &114283029680985336
 MonoBehaviour:
@@ -154,6 +154,7 @@ MonoBehaviour:
   destroyWhenOutOfView: 0
   spriteOriginallyFacesLeft: 0
   timeBeforeAutodestruct: 10
+  vfxName: ExplodingHitEffect
   mainCamera: {fileID: 0}
 --- !u!114 &114637860677476914
 MonoBehaviour:
@@ -172,21 +173,56 @@ MonoBehaviour:
   size: {x: 0.8518901, y: 2.1339548}
   offsetBasedOnSpriteFacing: 0
   spriteRenderer: {fileID: 0}
+  enableDamageOnAwake: 1
   canHitTriggers: 0
   disableDamageAfterHit: 0
   forceRespawn: 0
+  receiveOnHitEventOnInvincibleObject: 0
   ignoreInvincibility: 0
   hittableLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
   OnDamageableHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114283029680985336}
+        m_MethodName: OnHitDamageable
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Gamekit2D.Damager+DamagableEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnNonDamageableHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114283029680985336}
+        m_MethodName: OnHitNonDamageable
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114283029680985336}
+        m_MethodName: ReturnToPool
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Gamekit2D.Damager+NonDamagableEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!198 &198536385487516012
@@ -249,7 +285,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -740097245
+  randomSeed: -375035609
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3610,7 +3646,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1013777851
+  randomSeed: 666394211
   InitialModule:
     serializedVersion: 3
     enabled: 1

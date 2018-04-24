@@ -8,8 +8,14 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
 
     public Transform targetToTrack;
 
-    [Header("Damagers")]
-    public Damager shortDamager;
+    [Header("Slash")]
+    public GameObject slash;
+
+    [Header("FireBalls")]
+    public Transform fireBallSpawnPosition1;
+    public Transform fireBallSpawnPosition2;
+    public GameObject fireBall;
+
 
     [Header("Flicker")]
     public Color flickerColor = new Color(1f,100/255f, 100/255f, 1f);
@@ -33,6 +39,12 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
     private Vector3 m_OriginalGraphicsLocalScale;
 
 
+    //Pools
+    private BulletPool m_SlashPool;
+    private BulletPool m_FireBallPool;
+
+    private int m_FireBallCount = 10;
+
     //Custom flickering
     private SpriteRenderer[] m_SpriteRenderers;
     private Color[] m_OriginalSpriteColors;
@@ -46,11 +58,12 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
 
     private void Awake()
     {
-        m_Animator = GetComponentInChildren<Animator>();
-        m_RigidBody2D = GetComponent<Rigidbody2D>();
+        //Get references
+        m_Animator = GetComponent<Animator>();
+        m_RigidBody2D = GetComponentInParent<Rigidbody2D>();
         m_Damageable = GetComponent<Damageable>();
 
-        m_GraphicsTransform = m_Animator.GetComponent<Transform>();
+        m_GraphicsTransform = transform;
         m_OriginalGraphicsLocalScale = m_GraphicsTransform.localScale;
 
         m_SpriteRenderers = m_GraphicsTransform.GetComponentsInChildren<SpriteRenderer>();
@@ -60,12 +73,15 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
             m_OriginalSpriteColors[i] = m_SpriteRenderers[i].color;
         }
 
+        //Pools
+        m_SlashPool = BulletPool.GetObjectPool(slash, 3);
+        m_FireBallPool = BulletPool.GetObjectPool(fireBall, 10);
 
 
         //Behaviour tree
         m_Ai.OpenBranch(
 
-            BT.RandomSequence(new int[] { 2, 1, 2, 2, 2, 1 }, 2).OpenBranch(
+            BT.RandomSequence(new int[] { 2, 2, 2, 2, 2, 2 }, 2).OpenBranch(
                 //Walk
                 BT.Sequence().OpenBranch(
                     BT.Call(() => m_Animator.SetBool(m_HashWalkPara, true)),
@@ -77,35 +93,37 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
                 ),
                 //Run
                 BT.Sequence().OpenBranch(
+                    BT.Call(() => m_Animator.SetTrigger(m_HashIdle2Para)),
+                    BT.Wait(0.5f),
+                    BT.WaitForAnimatorState(m_Animator, "idle_1"),
+                    BT.Call(OrientToTarget),
                     BT.Call(() => m_Animator.SetBool(m_HashRunPara, true)),
-                    BT.Call(() => SetHorizontalSpeed(3f)),
+                    BT.Call(() => SetHorizontalSpeed(5f)),
                     BT.Wait(2.5f),
                     BT.Call(() => SetHorizontalSpeed(0)),
                     BT.Call(() => m_Animator.SetBool(m_HashRunPara, false)),
                     BT.Wait(0.5f)
                 ),
-                //Skill1
+                //Slash
                 BT.Sequence().OpenBranch(
                     BT.Call(() => m_Animator.SetTrigger(m_HashSkill1Para)),
-                    BT.Wait(0.5f),
-                    BT.WaitForAnimatorState(m_Animator,"idle_1"),
-                    BT.Wait(1f)
-                ),
-                //Skill2
-                BT.Sequence().OpenBranch(
-                    BT.Call(() => m_Animator.SetTrigger(m_HashSkill2Para)),
                     BT.Wait(0.5f),
                     BT.WaitForAnimatorState(m_Animator, "idle_1"),
                     BT.Wait(1f)
                 )
+                ////Fireball
+                //BT.Sequence().OpenBranch(
+                //    BT.Call(() => m_Animator.SetTrigger(m_HashIdle2Para)),
+                //    BT.Wait(0.5f),
+                //    BT.WaitForAnimatorState(m_Animator, "idle_1"),
+                //    BT.Wait(1f)
+                //)
 
             ),
 
             BT.Call(OrientToTarget),
 
             BT.Wait(1f)
-
-
 
         );
 
@@ -163,10 +181,67 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
     }
 
 
+    public void StartSlashAttacking()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (m_GraphicsTransform.localScale.x < 0)
+            {
+                Vector3 position = transform.position + new Vector3(-1f - 0.6f * i, 0.9f, 0);
+                BulletObject slashObject = m_SlashPool.Pop(position);
+                slashObject.transform.GetComponent<SpriteRenderer>().flipX = true;
+                slashObject.rigidbody2D.velocity = Vector2.left * 6f;
+            }
+            else
+            {
+                Vector3 position = transform.position + new Vector3(1f + 0.6f*i, 0.9f, 0);
+                BulletObject slashObject = m_SlashPool.Pop(position);
+                slashObject.transform.GetComponent<SpriteRenderer>().flipX = false;
+                slashObject.rigidbody2D.velocity = Vector2.right * 6f;
+            }
+        }
+
+    }
+
+    public void SpawnFireballs()
+    {
+        StartCoroutine(InternalSpawnFireballs());
+
+    }
+
+    private IEnumerator InternalSpawnFireballs()
+    {
+        CameraShaker.Shake(0.03f, 2f * m_FireBallCount, false);
+
+        for (int i = 0; i < m_FireBallCount; i++)
+        {
+            //position to spawn
+            Vector3 spawnPosition = new Vector3(Random.Range(fireBallSpawnPosition1.position.x, fireBallSpawnPosition2.position.x), fireBallSpawnPosition1.position.y, 0);
+
+            BulletObject fireBall = m_FireBallPool.Pop(spawnPosition);
+
+            //direction from player to the fireball
+            Vector3 direction = (targetToTrack.position - fireBall.transform.position).normalized;
+
+            fireBall.rigidbody2D.velocity = direction * 10f;
+
+            //rotate to player
+            float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            fireBall.transform.rotation = Quaternion.Euler(0, 0, rotationZ);
+
+            yield return new WaitForSeconds(1f);
+
+
+        }
+
+    }
+
+
     public void GotHit(Damager damager, Damageable damageable)
     {
         StartFlickering();
     }
+
 
     public void StartFlickering()
     {
