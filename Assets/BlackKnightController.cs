@@ -29,20 +29,24 @@ public class BlackKnightController : MonoBehaviour {
     public static bool aliciaDied = false;
 
     [Header("Attack3")]
+    public GameObject attack3Bullet;
     public Transform movePos;
+    public Rigidbody2D parentRigidbody;
     public float moveSpeed;
+    public ParticleSystem Flying_Upward_Effect;
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    private Rigidbody2D rigidbody2D;
     [SerializeField]
     int turn;
     BulletPool bulletPool;
+    BulletPool attack3BulletPool;
 
     Root BlackKnightBT = BT.Root();
 	// Use this for initialization
 	void Start () {
         bulletPool = BulletPool.GetObjectPool(bullet, 5);
+        attack3BulletPool = BulletPool.GetObjectPool(attack3Bullet, 8);
         bulletObjects = new BulletObject[shootPoints.Length];
         timeToCoolDown = 0;
         currentAmount = 0;
@@ -50,7 +54,6 @@ public class BlackKnightController : MonoBehaviour {
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        rigidbody2D = GetComponent<Rigidbody2D>();
 
         BlackKnightBT.OpenBranch(
             BT.If(() => turn <= 2).OpenBranch(
@@ -74,11 +77,20 @@ public class BlackKnightController : MonoBehaviour {
                     BT.SetBool(animator, "attack2", false)
                 )
             ),
-            BT.If(() => turn == 3).OpenBranch(
+            BT.If(() => turn++ == 3).OpenBranch(
                 BT.Sequence().OpenBranch(
                     BT.Wait(2f),
+                    BT.Call(() => Flying_Upward_Effect.Play()),
+                    BT.Wait(0.5f),
+                    BT.SetBool(animator, "move", true),
+                    BT.WaitForAnimatorState(animator, "move"),
                     BT.Call(MoveToNewPos),
-                    BT.WaitUntil(MoveCheck)
+                    BT.WaitUntil(MoveCheck),
+                    BT.SetBool(animator, "move", false),
+                    BT.Wait(1f),
+                    BT.Call(() => attack3Bullet.SetActive(true)),
+                    BT.Wait(3f),
+                    BT.Call(BulletFollowTarget)
                 )
             )
             //BT.Call(() => turn++)
@@ -117,25 +129,23 @@ public class BlackKnightController : MonoBehaviour {
 
     private void MoveToNewPos()
     {
-        Debug.Log("Move ");
         Vector2 direction = (movePos.position - transform.position).normalized;
-        Debug.Log(rigidbody2D.position);
-        rigidbody2D.position = movePos.position;
-        Debug.Log(rigidbody2D.position);
-        Debug.Log(rigidbody2D.tag);
+        parentRigidbody.velocity = direction * moveSpeed;
     }
 
     private bool MoveCheck()
     {
-        float test = (movePos.position - transform.position).sqrMagnitude;
-        if ((movePos.position - transform.position).sqrMagnitude <= 1.2f)
+        if ((movePos.position - transform.position).sqrMagnitude <= 0.5f)
         {
-            Debug.Log("check true");
-            rigidbody2D.velocity = new Vector2(0, 0);
+            parentRigidbody.velocity = new Vector2(0, 0);
             return true;
         }
-        Debug.Log("check false");
         return false;
+    }
+
+    private void BulletFollowTarget()
+    {
+        attack3Bullet.GetComponent<FollowTarget>().enabled = true;
     }
 
     private IEnumerator WaitToShoot()
