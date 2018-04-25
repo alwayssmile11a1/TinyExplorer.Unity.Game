@@ -80,6 +80,15 @@ MonoBehaviour:
   - prefab: {fileID: 1499421069178104, guid: 82663063525a545419b93adc3a3bbf71, type: 2}
     lifetime: 6
     vfxOverride: []
+  - prefab: {fileID: 1504344020526494, guid: b563a19efbd844c4f8a31443cb631540, type: 2}
+    lifetime: 0.2
+    vfxOverride: []
+  - prefab: {fileID: 1342027947474214, guid: 3777da077e9c6fc4bb1c7ae2b549a47a, type: 2}
+    lifetime: 0.2
+    vfxOverride: []
+  - prefab: {fileID: 1951638912879258, guid: 010194723134943488cdf19154b38964, type: 2}
+    lifetime: 0.2
+    vfxOverride: []
 --- !u!114 &114755206480212802
 MonoBehaviour:
   m_ObjectHideFlags: 1

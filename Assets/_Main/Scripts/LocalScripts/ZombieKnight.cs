@@ -8,6 +8,10 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
 
     public Transform targetToTrack;
 
+    [Header("Damager")]
+    public Damager leftHeadDamager;
+    public Damager rightHeadDamager;
+
     [Header("Slash")]
     public GameObject slash;
 
@@ -24,6 +28,7 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
 
 
     [Header("DarkVoidPositions")]
+    public GameObject darkVoid;
     public string darkVoidEffectName = "DarkVoid";
     public Transform darkVoidPosition1;
     public Transform darkVoidPosition2;
@@ -50,7 +55,7 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
     private Animator m_Animator;
     private Rigidbody2D m_RigidBody2D;
     private Damageable m_Damageable;
-    private Transform m_GraphicsTransform;
+    private Transform m_ParentTransform;
     private Vector3 m_OriginalGraphicsLocalScale;
 
     //Pools
@@ -58,13 +63,15 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
     private BulletPool m_FireBallPool;
     private BulletPool m_ChaserPool;
     private BulletPool m_PortalPool;
+    private BulletPool m_DarkVoidPool;
 
     private int m_FireBallCount = 10;
 
     //Portal
     private List<BulletObject> m_PortalObjects;
-    private float m_PortalDelayTimer; 
-    private float m_PortalLiveTimer; 
+    private float m_PortalLiveTimer;
+    private float m_PortalDelayTimer;
+    private int m_PortalImpactHash;
 
     //DarkVoid
     private int m_DarkVoidHash;
@@ -88,10 +95,10 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
         //Get references
         m_Animator = GetComponent<Animator>();
         m_RigidBody2D = GetComponentInParent<Rigidbody2D>();
-        m_Damageable = GetComponent<Damageable>();
-        m_GraphicsTransform = transform;
-        m_OriginalGraphicsLocalScale = m_GraphicsTransform.localScale;
-        m_SpriteRenderers = m_GraphicsTransform.GetComponentsInChildren<SpriteRenderer>();
+        m_Damageable = GetComponentInParent<Damageable>();
+        m_OriginalGraphicsLocalScale = transform.localScale;
+        m_ParentTransform = transform.parent;
+        m_SpriteRenderers = transform.GetComponentsInChildren<SpriteRenderer>();
         m_OriginalSpriteColors = new Color[m_SpriteRenderers.Length];
         for (int i = 0; i < m_SpriteRenderers.Length; i++)
         {
@@ -103,60 +110,71 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
         m_FireBallPool = BulletPool.GetObjectPool(fireBall, 10);
         m_ChaserPool = BulletPool.GetObjectPool(chaser, 5);
         m_PortalPool = BulletPool.GetObjectPool(portal, 3);
+        m_DarkVoidPool = BulletPool.GetObjectPool(darkVoid, 1);
 
         //Effect
         m_DarkVoidHash = VFXController.StringToHash(darkVoidEffectName);
-
+        m_PortalImpactHash = VFXController.StringToHash("ImpactEffect");
 
         m_PortalObjects = new List<BulletObject>();
 
         //Behaviour tree
         m_Ai.OpenBranch(
-
-            BT.RandomSequence(new int[] { 2, 2, 2, 2, 2, 2 }, 2).OpenBranch(
+            BT.RandomSequence(new int[] { 1, 2, 3, 2, 3 }, 2).OpenBranch(
                 //Walk
-                BT.Sequence().OpenBranch(
-                    BT.Call(() => m_Animator.SetBool(m_HashWalkPara, true)),
-                    BT.Call(() => SetHorizontalSpeed(1f)),
-                    BT.Wait(2.5f),
-                    BT.Call(() => SetHorizontalSpeed(0)),
-                    BT.Call(() => m_Animator.SetBool(m_HashWalkPara, false)),
-                    BT.Wait(0.5f)
+                BT.If(() => { return !MoveOutOfBoundCheck(); }).OpenBranch(
+                    BT.Sequence().OpenBranch(
+                        BT.Call(() => m_Animator.SetBool(m_HashWalkPara, true)),
+                        BT.Call(() => SetHorizontalSpeed(1f)),
+                        BT.Wait(2f),
+                        BT.Call(() => SetHorizontalSpeed(0)),
+                        BT.Call(() => m_Animator.SetBool(m_HashWalkPara, false)),
+                        BT.Wait(0.5f)
+                    )
                 ),
+                BT.If(() => { return !MoveOutOfBoundCheck(); }).OpenBranch(
                 //Run
                 BT.Sequence().OpenBranch(
-                    BT.Call(() => m_Animator.SetTrigger(m_HashIdle2Para)),
-                    BT.Wait(0.5f),
-                    BT.WaitForAnimatorState(m_Animator, "idle_1"),
-                    BT.Call(OrientToTarget),
-                    BT.Call(() => m_Animator.SetBool(m_HashRunPara, true)),
-                    BT.Call(() => SetHorizontalSpeed(5f)),
-                    BT.Wait(2.5f),
-                    BT.Call(() => SetHorizontalSpeed(0)),
-                    BT.Call(() => m_Animator.SetBool(m_HashRunPara, false)),
-                    BT.Wait(0.5f)
+                        BT.Call(() => m_Animator.SetTrigger(m_HashIdle2Para)),
+                        BT.Wait(0.5f),
+                        BT.WaitForAnimatorState(m_Animator, "idle_1"),
+                        BT.Call(OrientToTarget),
+                        BT.Call(() => m_Animator.SetBool(m_HashRunPara, true)),
+                        BT.Call(() => SetHorizontalSpeed(5f)),
+                        BT.Wait(2f),
+                        BT.Call(() => SetHorizontalSpeed(0)),
+                        BT.Call(() => m_Animator.SetBool(m_HashRunPara, false)),
+                        BT.Wait(0.5f)
+                    )
                 ),
+
                 //Slash
                 BT.Sequence().OpenBranch(
                     BT.Call(() => m_Animator.SetTrigger(m_HashSkill1Para)),
                     BT.Wait(0.5f),
                     BT.WaitForAnimatorState(m_Animator, "idle_1"),
-                    BT.Wait(1f)
+                    BT.Wait(0.5f)
                 ),
-                //DarkVoid
+                ////DarkVoid
+                //BT.Sequence().OpenBranch(
+                //    BT.Call(() => m_Animator.SetTrigger(m_HashSkill2Para)),
+                //    BT.Wait(0.5f),
+                //    BT.Call(SpawnRandomDarkVoid),
+                //    BT.Wait(1.5f),
+                //    BT.Repeat(5).OpenBranch(
+                //        BT.Call(SpawnChaserAttack),
+                //        BT.Wait(0.5f)
+                //    )
+                //),
+                //DarkVoid Attacking
                 BT.Sequence().OpenBranch(
                     BT.Call(() => m_Animator.SetTrigger(m_HashSkill2Para)),
                     BT.Wait(0.5f),
-                    BT.Call(SpawnRandomDarkVoid),
-                    BT.Wait(1.5f),
-                    BT.Repeat(5).OpenBranch(
-                        BT.Call(SpawnChaserAttack),
-                        BT.Wait(1f)
-                    ),
-                    BT.Wait(2f)
+                    BT.Call(StartDarkVoidAttacking),
+                    BT.Wait(5f)
                 ),
                 //Portal
-                BT.If(() => { return m_PortalObjects.Count <= 0; }).OpenBranch(
+                BT.If(() => { return m_Damageable.CurrentHealth <m_Damageable.startingHealth/1.5f && m_PortalObjects.Count <= 0; }).OpenBranch(
                     BT.Sequence().OpenBranch(
                         BT.Call(() => m_Animator.SetTrigger(m_HashSkill2Para)),
                         BT.Wait(0.5f),
@@ -176,7 +194,7 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
 
             BT.Call(OrientToTarget),
 
-            BT.Wait(1f)
+            BT.Wait(0.5f)
 
         );
 
@@ -220,38 +238,58 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
         }
 
 
-        if (m_PortalDelayTimer > 0)
+        if(m_PortalDelayTimer>0)
         {
             m_PortalDelayTimer -= Time.deltaTime;
+            if(m_PortalDelayTimer<=0)
+            {
+                EnablePortal();
+            }
         }
-        else
+
+        if (MoveOutOfBoundCheck())
         {
-            Portalling();
+            m_RigidBody2D.velocity = Vector2.zero;
         }
 
 
+    }
+
+    private bool MoveOutOfBoundCheck()
+    {
+        if (transform.position.x < portalPosition1.position.x && transform.localScale.x < 0 || transform.position.x > portalPosition2.position.x && transform.localScale.x >= 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private void OrientToTarget()
     {
         if (targetToTrack == null) return;
 
-        if (targetToTrack.position.x < m_RigidBody2D.position.x)
+        if (targetToTrack.position.x < m_ParentTransform.position.x)
         {
-            m_GraphicsTransform.localScale = m_OriginalGraphicsLocalScale;
+            transform.localScale = m_OriginalGraphicsLocalScale;
+            leftHeadDamager.EnableDamage();
+            rightHeadDamager.DisableDamage();
         }
         else
         {
             Vector3 reverseScale = m_OriginalGraphicsLocalScale;
             reverseScale.x *= -1;
-            m_GraphicsTransform.localScale = reverseScale;
+            transform.localScale = reverseScale;
+            leftHeadDamager.DisableDamage();
+            rightHeadDamager.EnableDamage();
+
         }
     }
 
 
     private void SetHorizontalSpeed(float speed)
     {
-        m_RigidBody2D.velocity = speed * (m_GraphicsTransform.localScale.x < 0 ? Vector2.left : Vector2.right);
+        m_RigidBody2D.velocity = speed * (transform.localScale.x < 0 ? Vector2.left : Vector2.right);
 
     }
 
@@ -260,7 +298,7 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
     {
         for (int i = 0; i < 2; i++)
         {
-            if (m_GraphicsTransform.localScale.x < 0)
+            if (transform.localScale.x < 0)
             {
                 Vector3 position = transform.position + new Vector3(-1f - 0.6f * i, 0.9f, 0);
                 BulletObject slashObject = m_SlashPool.Pop(position);
@@ -278,6 +316,14 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
 
     }
 
+    public void StartDarkVoidAttacking()
+    {
+        BulletObject darkVoidObject = m_DarkVoidPool.Pop(new Vector3(Random.Range(darkVoidPosition1.position.x, darkVoidPosition2.position.x), darkVoidPosition1.position.y, 0f));
+
+        darkVoidObject.rigidbody2D.velocity = Vector2.down * 2f;
+
+    }
+
     public void SpawnRandomDarkVoid()
     {
         m_CurrentDarkVoidPosition = new Vector3(Random.Range(darkVoidPosition1.position.x, darkVoidPosition2.position.x), darkVoidPosition1.position.y, 0f);
@@ -288,58 +334,107 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
     {
         m_PortalObjects.Clear();
 
-        for (int i = 0; i < 2; i++)
-        {
-            Vector3 randomPosition = new Vector3(Random.Range(portalPosition1.position.x, portalPosition2.position.x), portalPosition1.position.y, 0f);
+        //Spawn Portal
+        Vector3 randomPosition1 = new Vector3(portalPosition1.position.x + Random.Range(-0f,2f), portalPosition1.position.y, 0f);
+        BulletObject portalObject1 = m_PortalPool.Pop(randomPosition1);
+        m_PortalObjects.Add(portalObject1);
 
-            BulletObject portalObject = m_PortalPool.Pop(randomPosition);
-           
-            m_PortalObjects.Add(portalObject);
-        }
+        Vector3 randomPosition2 = new Vector3(portalPosition2.position.x + Random.Range(-0f, -2f), portalPosition1.position.y, 0f);
+        BulletObject portalObject2 = m_PortalPool.Pop(randomPosition2);
+        m_PortalObjects.Add(portalObject2);
 
-        m_PortalLiveTimer = 10f;
+
+        //Link portals
+        Portal portal1 = m_PortalObjects[0].transform.GetComponent<Portal>();
+        Portal portal2 = m_PortalObjects[1].transform.GetComponent<Portal>();
+
+        portal1.RemoveListener(Portalling);
+        portal1.linkedPortal = portal2;
+        portal1.AddListener(Portalling);
+        portal1.CanPortal(false);
+
+        portal2.RemoveListener(Portalling);
+        portal2.linkedPortal = portal1;
+        portal2.AddListener(Portalling);
+        portal2.CanPortal(false);
+
+        m_PortalLiveTimer = 20f;
+
+        m_PortalDelayTimer = 1f;
 
     }
 
-    private void Portalling()
+    private void Portalling(Portal portal, Portal linkedPortal, Collider2D collision)
     {
-        if (m_PortalObjects.Count > 0)
+        //Slash 
+        if (collision.transform.GetComponent<ZombieKnightSlash>() != null)
         {
-            int nearestIndex = -1;
 
-            for (int i = 0; i < m_PortalObjects.Count; i++)
+            Transform slashTransform = collision.transform;
+            Rigidbody2D slashRB2D = slashTransform.GetComponent<Rigidbody2D>();
+
+            VFXController.Instance.Trigger(m_PortalImpactHash, slashTransform.position, 0.1f, false, null);
+            VFXController.Instance.Trigger(m_PortalImpactHash, portal.transform.position, 0, false, null);
+
+            slashTransform.position = new Vector2(linkedPortal.transform.position.x, linkedPortal.transform.position.y - 0.3f);
+
+            if(slashTransform.position.x > targetToTrack.position.x)
             {
-                if (Mathf.Abs(m_RigidBody2D.position.x - m_PortalObjects[i].transform.position.x) < 0.2f)
+                slashTransform.GetComponent<SpriteRenderer>().flipX = true;
+                slashRB2D.velocity = Vector2.left * 6f;
+            }
+            else
+            {
+                slashTransform.GetComponent<SpriteRenderer>().flipX = false;
+                slashRB2D.velocity = Vector2.right * 6f;
+            }
+
+        }
+        else
+        {
+            //Dark Matter
+            if(collision.transform.GetComponent<Bullet>() != null)
+            {
+                Transform darkMatterTransform = collision.transform;
+                Rigidbody2D darkMatterRB2D = darkMatterTransform.GetComponent<Rigidbody2D>();
+
+                VFXController.Instance.Trigger(m_PortalImpactHash, darkMatterTransform.position, 0.1f, false, null);
+                VFXController.Instance.Trigger(m_PortalImpactHash, portal.transform.position, 0, false, null);
+
+                darkMatterTransform.position = new Vector2(linkedPortal.transform.position.x, linkedPortal.transform.position.y - 0.3f);
+
+                if (darkMatterTransform.position.x > targetToTrack.position.x)
                 {
-                    nearestIndex = i;
-                    break;
+                    darkMatterRB2D.velocity = Vector2.left * 6f;
+                }
+                else
+                {
+                    darkMatterRB2D.velocity = Vector2.right * 6f;
                 }
             }
+        }
+        //else //ZombieKnight
+        //{
+        //    if (collision.transform.GetComponentInChildren<ZombieKnight>()!=null)
+        //    {
+        //        Debug.Log(m_RigidBody2D.position);
 
-            switch (nearestIndex)
-            {
-                case -1:
-                    return;
-                case 0:
-                    {
-                        m_RigidBody2D.position = new Vector3(m_PortalObjects[1].transform.position.x, transform.position.y, 0f);
+        //        m_ParentTransform.position = new Vector2(linkedPortal.transform.position.x, linkedPortal.transform.position.y - 1.2f);
 
-                        break;
-                    }
-                case 1:
-                    {
-                        m_RigidBody2D.position = new Vector3(m_PortalObjects[0].transform.position.x, transform.position.y, 0f);
+        //        OrientToTarget();
+        //        m_RigidBody2D.velocity = transform.localScale.x < 0 ? new Vector2(-Mathf.Abs(m_RigidBody2D.velocity.x), m_RigidBody2D.velocity.y)
+        //                                                                      : new Vector2(Mathf.Abs(m_RigidBody2D.velocity.x), m_RigidBody2D.velocity.y);
+        //    }
 
-                        break;
-                    }
-            }
+        //}
 
-            m_PortalDelayTimer = 4f;
-            OrientToTarget();
-            m_RigidBody2D.velocity = m_GraphicsTransform.localScale.x < 0 ? new Vector2(-Mathf.Abs(m_RigidBody2D.velocity.x), m_RigidBody2D.velocity.y)
-                                                                          : new Vector2(Mathf.Abs(m_RigidBody2D.velocity.x), m_RigidBody2D.velocity.y);
+    }
 
-
+    private void EnablePortal()
+    {
+        for (int i = 0; i < m_PortalObjects.Count; i++)
+        {
+            m_PortalObjects[i].transform.GetComponent<Portal>().CanPortal(true);
         }
     }
 

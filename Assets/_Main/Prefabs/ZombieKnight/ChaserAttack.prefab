@@ -20,10 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4088166728585644}
   - component: {fileID: 50182839680426526}
+  - component: {fileID: 61501127553996768}
   - component: {fileID: 114805044955027324}
   - component: {fileID: 114926599291421806}
   - component: {fileID: 114559998399286244}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ChaserAttack
   m_TagString: Untagged
   m_Icon: {fileID: -6488666005112524639, guid: 0000000000000000d000000000000000, type: 0}
@@ -40,7 +41,7 @@ GameObject:
   - component: {fileID: 4575668384318370}
   - component: {fileID: 198273396103546690}
   - component: {fileID: 199628385968267946}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 'Trail '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +58,7 @@ GameObject:
   - component: {fileID: 4871103952288230}
   - component: {fileID: 198867698089678376}
   - component: {fileID: 199393461287336362}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,6 +126,31 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &61501127553996768
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1188665247495534}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.62, y: 0.58}
+  m_EdgeRadius: 0
 --- !u!114 &114559998399286244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -260,10 +286,10 @@ MonoBehaviour:
   offsetFromTarget: {x: 0, y: 0, z: 0}
   offsetBasedOnTargetSpriteFacing: 0
   chaseOnAwake: 0
-  chaseSpeed: 2
+  chaseSpeed: 3
   orientToTarget: 1
   rotationZComparedToHorizontal: 0
-  rotationSpeed: 100
+  rotationSpeed: 150
 --- !u!198 &198273396103546690
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -324,7 +350,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2015472210
+  randomSeed: -1843133756
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3685,7 +3711,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 2009133684
+  randomSeed: -729398553
   InitialModule:
     serializedVersion: 3
     enabled: 1
