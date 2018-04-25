@@ -48,13 +48,15 @@ public class BlackKnightController : MonoBehaviour {
 
     BulletPool bulletPool;
     BulletPool skill3BulletPool;
-    BulletObject skill3BulletObject;
+    BulletObject[] skill3BulletObjects;
+    int skill3PollIndex = -1;
 
     Root BlackKnightBT = BT.Root();
     // Use this for initialization
     void Start() {
         bulletPool = BulletPool.GetObjectPool(bullet, 5);
         skill3BulletPool = BulletPool.GetObjectPool(skill3Bullet, 4);
+        skill3BulletObjects = new BulletObject[4];
         bulletObjects = new BulletObject[shootPoints.Length];
         timeToCoolDown = 0;
         currentAmount = 0;
@@ -74,7 +76,9 @@ public class BlackKnightController : MonoBehaviour {
                 BT.Wait(1.5f),
                 BT.SetBool(animator, "attack1", false),
                 BT.Call(() => attack1Effect.Stop())
-                ),
+                )
+            ),
+            BT.If(() => turn <= 1).OpenBranch(
                 BT.Sequence().OpenBranch(
                     BT.Wait(2f),
                     BT.SetBool(animator, "attack2", true),
@@ -157,14 +161,21 @@ public class BlackKnightController : MonoBehaviour {
 
     private void PopBlackKnightBullet()
     {
-        skill3BulletObject = skill3BulletPool.Pop(skill3Pos.position);
+        skill3BulletObjects[(skill3PollIndex + 1) % 4] = skill3BulletPool.Pop(skill3Pos.position);
     }
    
     private void BulletFollowTarget()
     {
-        FollowTarget followTarget = skill3BulletObject.instance.GetComponent<FollowTarget>();
-        followTarget.target = targetToTrack;
-        followTarget.enabled = true;
+        foreach (var item in skill3BulletObjects)
+        {
+            if (item != null && !item.inPool)
+            {
+                FollowTarget followTarget = item.instance.GetComponent<FollowTarget>();
+                followTarget.target = targetToTrack;
+                followTarget.enabled = true;
+            }
+        }
+        
         //skill3BulletObject.instance.GetComponent<FollowTarget>().enabled = true;
     }
 
@@ -208,7 +219,13 @@ public class BlackKnightController : MonoBehaviour {
 
     public void BlackKnightDieEffect()
     {
-        skill3BulletObject.instance.SetActive(false);
+        foreach (var item in skill3BulletObjects)
+        {
+            if (item != null && !item.inPool)
+            {
+                item.instance.SetActive(false);
+            }
+        }
         Flying_Upward_Effect.Stop();
     }
 
