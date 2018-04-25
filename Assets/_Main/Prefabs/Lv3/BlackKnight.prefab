@@ -261,7 +261,7 @@ GameObject:
   m_Layer: 0
   m_Name: StartBombPos
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -982381405332843317, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -609,7 +609,7 @@ GameObject:
   m_Layer: 0
   m_Name: EndBombPos
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -982381405332843317, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1572,7 +1572,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1178141771742954}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 4.5, z: 0}
+  m_LocalPosition: {x: -0.5, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4141810345974810}
@@ -1653,7 +1653,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1546763783950336}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 4.5, z: 0}
+  m_LocalPosition: {x: 8.5, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4141810345974810}
@@ -2207,10 +2207,11 @@ MonoBehaviour:
   - {fileID: 4833402353389784}
   dashSpeed: 6
   attack2Damager: {fileID: 114232695771437104}
-  backwardPos: {fileID: 4197041853498742}
-  Bomb: {fileID: 1073488315884010, guid: 10f26864b87288343b1b6b12d90aa8a4, type: 2}
+  backwardPos: {fileID: 4021823486267034}
+  Bomb: {fileID: 1929987268802862, guid: 78d771e8ab1f2a2408d881179a2de1e3, type: 2}
   startRandomBombPos: {fileID: 4831364686114582}
   endRandomBombPos: {fileID: 4903640079453118}
+  numberOfSoldier: 3
 --- !u!114 &114878399333589856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2222,7 +2223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960138f0450083543ad1d17e1352019d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 10
+  startingHealth: 30
   invulnerableAfterDamage: 1
   invulnerabilityDuration: 3
   disableOnDeath: 0
@@ -2287,7 +2288,7 @@ MonoBehaviour:
   bullet: {fileID: 1501786688444616, guid: 2235bd8dec33fd9499acb6d1127986f3, type: 2}
   bulletSpeed: 6
   hitEffect: {fileID: 198169333544717334}
-  blackKnightHealth: 5
+  blackKnightHealth: 1
   attack1CoolDown: 3.5
   amount: 3
   attack1Effect: {fileID: 198820074293622134}
@@ -2319,7 +2320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960138f0450083543ad1d17e1352019d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 30
+  startingHealth: 100
   invulnerableAfterDamage: 1
   invulnerabilityDuration: 3
   disableOnDeath: 0
