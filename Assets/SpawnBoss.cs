@@ -5,6 +5,11 @@ using UnityEngine;
 public class SpawnBoss : MonoBehaviour {
     public GameObject boss;
     public GameObject AppearEffect;
+    private BoxCollider2D boxCollider2D;
+    private void Awake()
+    {
+        boxCollider2D = GetComponent<BoxCollider2D>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag.Equals("Player"))
@@ -12,6 +17,7 @@ public class SpawnBoss : MonoBehaviour {
             if(AppearEffect != null && !AppearEffect.activeSelf)
                 AppearEffect.SetActive(true);
             StartCoroutine(SpawnAlicia());
+            Destroy(boxCollider2D);
         }
     }
 

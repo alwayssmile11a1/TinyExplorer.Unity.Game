@@ -5,7 +5,7 @@ using UnityEngine;
 public class StartShooting : MonoBehaviour {
     public Vector2 direction;
     public float speed;
-    private Rigidbody2D rigidbody2D;
+    private new Rigidbody2D rigidbody2D;
 
 
     // Use this for initialization

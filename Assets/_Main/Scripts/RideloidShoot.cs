@@ -21,7 +21,7 @@ public class RideloidShoot : MonoBehaviour {
     private Vector2 direction;
     private ContactFilter2D contactFilter2D;
     private CapsuleCollider2D capsuleCollider2D;
-    private Rigidbody2D rigidbody2D;
+    private new Rigidbody2D rigidbody2D;
     private Animator animator;
     private SpriteRenderer robotSpriteRenderer;
     private SpriteRenderer robotHandSpriteRenderer;

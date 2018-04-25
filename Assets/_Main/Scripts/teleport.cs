@@ -8,8 +8,11 @@ public class teleport : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(target.position);
-        target.position = destination.position;
-        Debug.Log(target.position);
+        if (collision.tag.Equals("Player"))
+        {
+            Debug.Log(target.position);
+            target.position = destination.position;
+            Debug.Log(target.position);
+        }
     }
 }

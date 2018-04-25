@@ -9,6 +9,9 @@ public class BlackKnightController : MonoBehaviour {
     public Transform targetToTrack;
     public GameObject bullet;
     public float bulletSpeed;
+    public ParticleSystem hitEffect;
+    [Range(1, 50)]
+    public int blackKnightHealth;
 
     [Header("Attack1")]
     public float attack1CoolDown;
@@ -29,28 +32,33 @@ public class BlackKnightController : MonoBehaviour {
     public static bool aliciaDied = false;
 
     [Header("Attack3")]
-    public GameObject attack3Bullet;
+    public GameObject skill3Bullet;
+    public Transform skill3Pos;
     public Transform movePos;
     public Rigidbody2D parentRigidbody;
     public float moveSpeed;
     public ParticleSystem Flying_Upward_Effect;
 
+    [Header("Teleport")]
+    public GameObject teleport;
+
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    [SerializeField]
-    int turn;
+    private int turn;
+
     BulletPool bulletPool;
-    BulletPool attack3BulletPool;
+    BulletPool skill3BulletPool;
+    BulletObject skill3BulletObject;
 
     Root BlackKnightBT = BT.Root();
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         bulletPool = BulletPool.GetObjectPool(bullet, 5);
-        attack3BulletPool = BulletPool.GetObjectPool(attack3Bullet, 8);
+        skill3BulletPool = BulletPool.GetObjectPool(skill3Bullet, 4);
         bulletObjects = new BulletObject[shootPoints.Length];
         timeToCoolDown = 0;
         currentAmount = 0;
-        //turn = 1;
+        turn = 1;
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -77,7 +85,7 @@ public class BlackKnightController : MonoBehaviour {
                     BT.SetBool(animator, "attack2", false)
                 )
             ),
-            BT.If(() => turn++ == 3).OpenBranch(
+            BT.If(() => turn == 3).OpenBranch(
                 BT.Sequence().OpenBranch(
                     BT.Wait(2f),
                     BT.Call(() => Flying_Upward_Effect.Play()),
@@ -86,24 +94,28 @@ public class BlackKnightController : MonoBehaviour {
                     BT.WaitForAnimatorState(animator, "move"),
                     BT.Call(MoveToNewPos),
                     BT.WaitUntil(MoveCheck),
-                    BT.SetBool(animator, "move", false),
+                    BT.SetBool(animator, "move", false)
+                )
+            ),
+            BT.If(() => turn++ >= 3 && blackKnightHealth > 0).OpenBranch(
+                BT.Sequence().OpenBranch(
                     BT.Wait(1f),
-                    BT.Call(() => attack3Bullet.SetActive(true)),
+                    BT.Call(PopBlackKnightBullet),
                     BT.Wait(3f),
-                    BT.Call(BulletFollowTarget)
+                    BT.Call(BulletFollowTarget),
+                    BT.Wait(4f)
                 )
             )
-            //BT.Call(() => turn++)
         );
-	}
+    }
     // Update is called once per frame
-    void Update () {
+    void Update() {
         BlackKnightBT.Tick();
-	}
+    }
 
     private bool Attack1()
     {
-        if(timeToCoolDown <= 0)
+        if (timeToCoolDown <= 0)
         {
             //throw new NotImplementedException();
             for (int i = 0; i < shootPoints.Length; i++)
@@ -113,7 +125,7 @@ public class BlackKnightController : MonoBehaviour {
             }
             StartCoroutine(WaitToShoot());
             timeToCoolDown = attack1CoolDown;
-            if(++currentAmount == amount)
+            if (++currentAmount == amount)
             {
                 currentAmount = 0;
                 return true;
@@ -143,9 +155,17 @@ public class BlackKnightController : MonoBehaviour {
         return false;
     }
 
+    private void PopBlackKnightBullet()
+    {
+        skill3BulletObject = skill3BulletPool.Pop(skill3Pos.position);
+    }
+   
     private void BulletFollowTarget()
     {
-        attack3Bullet.GetComponent<FollowTarget>().enabled = true;
+        FollowTarget followTarget = skill3BulletObject.instance.GetComponent<FollowTarget>();
+        followTarget.target = targetToTrack;
+        followTarget.enabled = true;
+        //skill3BulletObject.instance.GetComponent<FollowTarget>().enabled = true;
     }
 
     private IEnumerator WaitToShoot()
@@ -176,5 +196,25 @@ public class BlackKnightController : MonoBehaviour {
     {
         alicia.SetActive(false);
         aliciaDied = false;
+    }
+
+    public void OnHit()
+    {
+        if (hitEffect != null)
+            hitEffect.Play();
+        if (--blackKnightHealth == 0)
+            animator.SetBool("die", true);
+    }
+
+    public void BlackKnightDieEffect()
+    {
+        skill3BulletObject.instance.SetActive(false);
+        Flying_Upward_Effect.Stop();
+    }
+
+    public void DisableBlackKnight()
+    {
+        gameObject.SetActive(false);
+        teleport.SetActive(true);
     }
 }
