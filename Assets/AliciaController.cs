@@ -20,9 +20,11 @@ public class AliciaController : MonoBehaviour {
 
     [Header("Attack3")]
     public Transform backwardPos;
-    public GameObject Bomb;
+    public GameObject attack3Soldier;
+    public GameObject spawnSoldierEffect;
     public Transform startRandomBombPos;
     public Transform endRandomBombPos;
+    [Range(1, 7)]
     public int numberOfSoldier;
 
     private int explodingHash;
@@ -41,12 +43,15 @@ public class AliciaController : MonoBehaviour {
     /// </summary>
     BulletPool bulletPool3;
     BulletObject[] attack3BulletObject;
+    BulletPool vortexGroundEffect;
+    BulletObject[] vortexGrounds;
 
     Root AliciaBT = BT.Root();
     // Use this for initialization
     void Start() {
         bulletPool1 = BulletPool.GetObjectPool(bulletAttack1, 5);
-        bulletPool3 = BulletPool.GetObjectPool(Bomb, 7);
+        bulletPool3 = BulletPool.GetObjectPool(attack3Soldier, 7);
+        vortexGroundEffect = BulletPool.GetObjectPool(spawnSoldierEffect, 7);
         explodingHash = VFXController.StringToHash("ExplodingHitEffect");
 
         animator = GetComponentInChildren<Animator>();
@@ -91,6 +96,9 @@ public class AliciaController : MonoBehaviour {
                 BT.SetBool(animator, "attack3", true),
                 BT.SetBool(animator, "backward", false),
                 BT.WaitForAnimatorState(animator, "attack3"),
+                BT.Call(PopVortex),
+                BT.Call(SpawnSoldier),
+                BT.Wait(1.2f),
                 BT.Call(Attack3),
                 BT.WaitUntil(Attack3Check),
                 BT.SetBool(animator, "attack3", false),
@@ -104,23 +112,6 @@ public class AliciaController : MonoBehaviour {
 	void Update () {
         AliciaBT.Tick();
 	}
-
-    //private void ScanForTarget()
-    //{
-    //    Vector2 origin = rigidbody2D.position + boxCollider2D.offset;
-    //    RaycastHit2D raycastHit2DRight = Physics2D.Raycast(origin, Vector2.right, distance, LayerMask.GetMask("Player"));
-    //    RaycastHit2D raycastHit2DLeft = Physics2D.Raycast(origin, Vector2.left, distance, LayerMask.GetMask("Player"));
-    //    Debug.DrawRay(transform.position, Vector2.right * distance);
-    //    Debug.DrawRay(transform.position, Vector2.left * distance);
-    //    if (raycastHit2DRight && raycastHit2DRight.collider.tag.Equals("Player"))
-    //    {
-    //        Debug.Log("right: " + raycastHit2DRight.collider.tag);
-    //    }
-    //    if(raycastHit2DLeft && raycastHit2DLeft.collider.tag.Equals("Player"))
-    //    {
-    //        Debug.Log("left: " + raycastHit2DLeft.collider.tag);
-    //    }
-    //}
 
     private void Attack1()
     {
@@ -190,13 +181,32 @@ public class AliciaController : MonoBehaviour {
     {
         rigidbody2D.position = new Vector2(rigidbody2D.position.x, rigidbody2D.position.y - 0.55f);
     }
-    private void Attack3()
+    private void PopVortex()
+    {
+        vortexGrounds = new BulletObject[numberOfSoldier];
+        for (int i = 0; i < numberOfSoldier; ++i)
+        {
+            float x = Random.Range(startRandomBombPos.position.x, endRandomBombPos.position.x);
+            vortexGrounds[i] = vortexGroundEffect.Pop(new Vector2(x, startRandomBombPos.position.y));
+        }
+    }
+
+    private void SpawnSoldier()
     {
         attack3BulletObject = new BulletObject[numberOfSoldier];
         for (int i = 0; i < numberOfSoldier; ++i)
         {
             float x = Random.Range(startRandomBombPos.position.x, endRandomBombPos.position.x);
-            attack3BulletObject[i] = bulletPool3.Pop(new Vector2(x, startRandomBombPos.position.y));
+            attack3BulletObject[i] = bulletPool3.Pop(new Vector2(vortexGrounds[i].instance.transform.position.x, startRandomBombPos.position.y-1));
+            attack3BulletObject[i].instance.GetComponent<Rigidbody2D>().velocity = Vector2.up;
+            //attack3BulletObject[i].instance.GetComponent<MiniSoldier>().Active();
+        }
+    }
+    private void Attack3()
+    {
+        for (int i = 0; i < numberOfSoldier; ++i)
+        {
+            vortexGrounds[i].ReturnToPool();
             attack3BulletObject[i].instance.GetComponent<MiniSoldier>().Active();
         }
     }
@@ -204,7 +214,7 @@ public class AliciaController : MonoBehaviour {
     {
         foreach (var item in attack3BulletObject)
         {
-            if (!item.inPool)
+            if (item != null && !item.inPool)
                 return false;
         }
         return true;
