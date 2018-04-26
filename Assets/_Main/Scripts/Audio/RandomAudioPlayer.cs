@@ -22,12 +22,15 @@ namespace Gamekit2D
         public bool randomizePitch = false;
         public float pitchRange = 0.2f;
 
+
         protected AudioSource m_Source;
+        protected float m_OriginalPitch;
         protected Dictionary<TileBase, AudioClip[]> m_LookupOverride;
 
         private void Awake()
         {
             m_Source = GetComponent<AudioSource>();
+            m_OriginalPitch = m_Source.pitch;
             m_LookupOverride = new Dictionary<TileBase, AudioClip[]>();
 
             for(int i = 0; i < overrides.Length; ++i)
@@ -50,7 +53,7 @@ namespace Gamekit2D
             int choice = Random.Range(0, source.Length);
 
             if(randomizePitch)
-                m_Source.pitch = Random.Range(1.0f - pitchRange, 1.0f + pitchRange);
+                m_Source.pitch = Random.Range(m_OriginalPitch - pitchRange, m_OriginalPitch + pitchRange);
 
             m_Source.PlayOneShot(source[choice]);
         }

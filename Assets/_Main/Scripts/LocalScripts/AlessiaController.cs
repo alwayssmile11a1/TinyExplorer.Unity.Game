@@ -13,7 +13,7 @@ public class AlessiaController : MonoBehaviour {
     public ParticleSystem shield;
 
     [Tooltip("Throw speed when get hit")]
-    public Vector2 throwSpeed = new Vector2(3,3);
+    public Vector2 throwSpeed = new Vector2(3, 3);
 
     [Header("Dash")]
     public GameObject dashEffect;
@@ -25,6 +25,14 @@ public class AlessiaController : MonoBehaviour {
     public ParticleSystem leftSlashEffect;
     public ParticleSystem rightSlashEffect;
     public Transform slashContactTransform;
+
+
+    [Header("Audio")]
+    public RandomAudioPlayer footStepAudioPlayer;
+    public RandomAudioPlayer slashAudioPlayer;
+    public RandomAudioPlayer landAudioPlayer;
+    public RandomAudioPlayer dashAudioPlayer;
+
 
     private Damager m_Slash;
     private CharacterController2D m_CharacterController2D;
@@ -64,7 +72,7 @@ public class AlessiaController : MonoBehaviour {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_AlessiaGraphics = m_SpriteRenderer.gameObject.transform;
-        m_Animator = GetComponentInChildren<Animator>();
+        m_Animator = GetComponent<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_CharacterInput = GetComponent<CharacterInput>();
         m_Flicker = m_SpriteRenderer.gameObject.AddComponent<Flicker>();
@@ -216,15 +224,15 @@ public class AlessiaController : MonoBehaviour {
         //get direction
         Vector2 direction = m_SpriteRenderer.flipX ? Vector2.left : Vector2.right;
 
-        //rotate the sprite a little bit
-        if (direction.x > 0)
-        {
-            m_AlessiaGraphics.rotation = Quaternion.Euler(0, 0, -20);
-        }
-        else
-        {
-            m_AlessiaGraphics.rotation = Quaternion.Euler(0, 0, 20);
-        }
+        ////rotate the sprite a little bit
+        //if (direction.x > 0)
+        //{
+        //    m_AlessiaGraphics.rotation = Quaternion.Euler(0, 0, -20);
+        //}
+        //else
+        //{
+        //    m_AlessiaGraphics.rotation = Quaternion.Euler(0, 0, 20);
+        //}
 
         //dash
         m_Rigidbody2D.velocity = direction * dashSpeed;
@@ -254,9 +262,10 @@ public class AlessiaController : MonoBehaviour {
         //enable attack damage
         m_Slash.EnableDamage();
 
+        slashAudioPlayer.PlayRandomSound();
 
         //Play attack effect
-        if(m_SpriteRenderer.flipX)
+        if (m_SpriteRenderer.flipX)
         {
             leftSlashEffect.Play();
         }
@@ -269,6 +278,7 @@ public class AlessiaController : MonoBehaviour {
 
     public void EndAttacking()
     {
+        slashAudioPlayer.Stop();
         m_Slash.DisableDamage();
     }
 
@@ -354,6 +364,28 @@ public class AlessiaController : MonoBehaviour {
     public void CanSlash(bool canSlash)
     {
         m_CanSlash = canSlash;
+    }
+
+
+
+    public void PlayFootStepAudioPlayer()
+    {
+        footStepAudioPlayer.PlayRandomSound();
+    }
+
+    public void PlayLandAudioPlayer()
+    {
+        landAudioPlayer.PlayRandomSound();
+    }
+
+    public void PlaySlashAudioPlayer()
+    {
+        slashAudioPlayer.PlayRandomSound();
+    }
+
+    public void PlayDashAudioPlayer()
+    {
+        dashAudioPlayer.PlayRandomSound();
     }
 
 }
