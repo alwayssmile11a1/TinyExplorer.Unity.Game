@@ -115,7 +115,7 @@ namespace Gamekit2D
             {
                 OnDie.Invoke(damager, this);
                 m_ResetHealthOnSceneReload = true;
-                EnableInvulnerability();
+                //EnableInvulnerability(true);
                 if (disableOnDeath) gameObject.SetActive(false);
             }
         }

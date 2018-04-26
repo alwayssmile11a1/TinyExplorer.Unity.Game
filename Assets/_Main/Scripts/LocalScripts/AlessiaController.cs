@@ -32,7 +32,7 @@ public class AlessiaController : MonoBehaviour {
     public RandomAudioPlayer slashAudioPlayer;
     public RandomAudioPlayer landAudioPlayer;
     public RandomAudioPlayer dashAudioPlayer;
-
+    public RandomAudioPlayer hurtAudioPlayer;
 
     private Damager m_Slash;
     private CharacterController2D m_CharacterController2D;
@@ -236,6 +236,10 @@ public class AlessiaController : MonoBehaviour {
 
         //dash
         m_Rigidbody2D.velocity = direction * dashSpeed;
+
+
+        dashAudioPlayer.PlayRandomSound();
+
     }
 
 
@@ -387,5 +391,12 @@ public class AlessiaController : MonoBehaviour {
     {
         dashAudioPlayer.PlayRandomSound();
     }
+
+    public void PlayHurtAudioPlayer()
+    {
+        hurtAudioPlayer.PlayRandomSound();
+    }
+
+
 
 }

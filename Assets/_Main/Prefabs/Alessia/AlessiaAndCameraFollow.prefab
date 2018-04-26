@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 82807117936698468}
   - component: {fileID: 114004645247083260}
   m_Layer: 8
-  m_Name: SlashSource
+  m_Name: HurtSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,6 +103,23 @@ GameObject:
   - component: {fileID: 4230377362113228}
   m_Layer: 8
   m_Name: Graphics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1365742732585142
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4166810888960066}
+  - component: {fileID: 82181871022734656}
+  - component: {fileID: 114842920417041094}
+  m_Layer: 8
+  m_Name: SlashSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -373,8 +390,9 @@ Transform:
   m_Children:
   - {fileID: 4480796827380620}
   - {fileID: 4174766149162032}
-  - {fileID: 4662610956574842}
+  - {fileID: 4166810888960066}
   - {fileID: 4269221829336812}
+  - {fileID: 4662610956574842}
   m_Father: {fileID: 4828233843236984}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -391,6 +409,19 @@ Transform:
   - {fileID: 4488287493488424}
   - {fileID: 4498786595729738}
   m_Father: {fileID: 4828233843236984}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4166810888960066
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1365742732585142}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4015956764658114}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4174766149162032
@@ -478,7 +509,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1644101990743624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 232.24, y: -4.78, z: -1.3203125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4828233843236984}
@@ -567,7 +598,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4015956764658114}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4696673139298336
 Transform:
@@ -689,6 +720,86 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.44}
   m_Size: {x: 0.38, y: 0.9}
   m_Direction: 0
+--- !u!82 &82181871022734656
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1365742732585142}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!82 &82183025184666872
 AudioSource:
   m_ObjectHideFlags: 1
@@ -860,8 +971,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.24
-  m_Pitch: 1
+  m_Volume: 0.1
+  m_Pitch: 0.9
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -1038,7 +1149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 0df90adaf9c58f44da98df944f409163, type: 3}
+  - {fileID: 8300000, guid: d50f2e0626e662041aa8a2ff5f8ebcc6, type: 3}
+  - {fileID: 8300000, guid: 151cb0c18bcdc6040aa921203a4ca7a5, type: 3}
   overrides: []
   randomizePitch: 1
   pitchRange: 0.2
@@ -1058,7 +1170,7 @@ MonoBehaviour:
   offset: {x: 0.4957466, y: 0.56253767}
   size: {x: 1.2225266, y: 0.5473623}
   offsetBasedOnSpriteFacing: 1
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 212394205911254694}
   enableDamageOnAwake: 1
   canHitTriggers: 1
   disableDamageAfterHit: 1
@@ -1136,10 +1248,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: d1c2b13115d59ec4796a522290749951, type: 3}
+  - {fileID: 8300000, guid: 4b775698401b70d4ca202201edeba096, type: 3}
   overrides: []
   randomizePitch: 1
-  pitchRange: 0.2
+  pitchRange: 0.1
 --- !u!114 &114390718065337810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1180,9 +1292,10 @@ MonoBehaviour:
   rightSlashEffect: {fileID: 198114455793106092}
   slashContactTransform: {fileID: 4954724611654730}
   footStepAudioPlayer: {fileID: 114261837375215190}
-  slashAudioPlayer: {fileID: 114004645247083260}
+  slashAudioPlayer: {fileID: 114842920417041094}
   landAudioPlayer: {fileID: 114762216333204674}
   dashAudioPlayer: {fileID: 114328256305824006}
+  hurtAudioPlayer: {fileID: 114004645247083260}
 --- !u!114 &114545590891511968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1251,6 +1364,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: 44f6cb0b04d4047489d2298231310bf4, type: 3}
+  overrides: []
+  randomizePitch: 1
+  pitchRange: 0.2
+--- !u!114 &114842920417041094
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1365742732585142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6abcd50fdc97f3e409820b29f208d704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 0df90adaf9c58f44da98df944f409163, type: 3}
   overrides: []
   randomizePitch: 1
   pitchRange: 0.2
@@ -1350,14 +1479,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960138f0450083543ad1d17e1352019d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 20
+  startingHealth: 5
   invulnerableAfterDamage: 1
   invulnerabilityDuration: 2
   disableOnDeath: 0
   centreOffset: {x: 0, y: 1}
   OnHealthSet:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: ChangeHitPointUI
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Gamekit2D.Damageable+HealthEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnTakeDamage:
@@ -1385,11 +1525,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114471711954427722}
+        m_MethodName: PlayHurtAudioPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Gamekit2D.Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnDie:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114907937855742030}
+        m_MethodName: EnableInvulnerability
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: Gamekit2D.Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnGainHealth:
