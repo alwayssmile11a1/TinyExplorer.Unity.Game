@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114755206480212802}
   - component: {fileID: 114648551697320220}
   - component: {fileID: 114472133522873758}
-  - component: {fileID: 114355852423892310}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -43,27 +42,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114355852423892310
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1598938823740364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 174f17fb28d6d6347ba8b9089d14fd00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicAudioClip: {fileID: 8300000, guid: 0121a30913901ed41a8c4073f13721bb, type: 3}
-  musicOutput: {fileID: 243771002084737210, guid: b61cf0da27dc91c4aba8577cff293150,
-    type: 2}
-  musicPlayOnAwake: 1
-  musicVolume: 0.1
-  ambientAudioClip: {fileID: 8300000, guid: 35013b1993d1a78409b6f7b9e965fcb6, type: 3}
-  ambientOutput: {fileID: 243295666145841046, guid: b61cf0da27dc91c4aba8577cff293150,
-    type: 2}
-  ambientPlayOnAwake: 1
-  ambientVolume: 0.1
 --- !u!114 &114472133522873758
 MonoBehaviour:
   m_ObjectHideFlags: 1
