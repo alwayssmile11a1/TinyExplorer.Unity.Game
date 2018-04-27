@@ -10,8 +10,7 @@ public class BlackKnightController : MonoBehaviour {
     public GameObject bullet;
     public float bulletSpeed;
     public ParticleSystem hitEffect;
-    [Range(1, 50)]
-    public int blackKnightHealth;
+    private int blackKnightHealth;
 
     [Header("Attack1")]
     public float attack1CoolDown;
@@ -61,6 +60,7 @@ public class BlackKnightController : MonoBehaviour {
         timeToCoolDown = 0;
         currentAmount = 0;
         turn = 1;
+        blackKnightHealth = GetComponent<Damageable>().startingHealth;
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
