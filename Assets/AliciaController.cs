@@ -24,6 +24,8 @@ public class AliciaController : MonoBehaviour {
     public GameObject spawnSoldierEffect;
     public Transform startRandomBombPos;
     public Transform endRandomBombPos;
+    public ParticleSystem fireShield;
+    public Damager shieldDamager;
     [Range(1, 7)]
     public int numberOfSoldier;
 
@@ -96,6 +98,8 @@ public class AliciaController : MonoBehaviour {
                 BT.SetBool(animator, "attack3", true),
                 BT.SetBool(animator, "backward", false),
                 BT.WaitForAnimatorState(animator, "attack3"),
+                BT.Call(() => fireShield.Play()),
+                BT.Call(() => shieldDamager.EnableDamage()),
                 BT.Call(PopVortex),
                 BT.Call(SpawnSoldier),
                 BT.Wait(1.2f),
@@ -103,6 +107,8 @@ public class AliciaController : MonoBehaviour {
                 BT.WaitUntil(Attack3Check),
                 BT.SetBool(animator, "attack3", false),
                 BT.Call(() => rigidbody2D.position = new Vector2(rigidbody2D.position.x, rigidbody2D.position.y - 0.55f)),
+                BT.Call(() => fireShield.Stop()),
+                BT.Call(() => shieldDamager.DisableDamage()),
                 BT.Call(() => Debug.Log("after attack3"))
             )
         );

@@ -36,47 +36,47 @@ AnimationClip:
       value: {fileID: 21300000, guid: a336bdf7053066d4b9c5fbf049b98e77, type: 3}
     - time: 1.0166667
       value: {fileID: 21300000, guid: 7c68d4ad1bb854f40a8af3d5f8995786, type: 3}
-    - time: 1.0666667
+    - time: 1.1666666
       value: {fileID: 21300000, guid: 3f19c2ddba10ed44db683b381abfde57, type: 3}
-    - time: 1.15
-      value: {fileID: 21300000, guid: b885698f1cb56b14780f963356350e4f, type: 3}
-    - time: 1.2
-      value: {fileID: 21300000, guid: e3a8c2e1c503dfe44ac7c94c7c946c80, type: 3}
     - time: 1.2833333
+      value: {fileID: 21300000, guid: b885698f1cb56b14780f963356350e4f, type: 3}
+    - time: 1.4
+      value: {fileID: 21300000, guid: e3a8c2e1c503dfe44ac7c94c7c946c80, type: 3}
+    - time: 1.5
       value: {fileID: 21300000, guid: 8e1ce8170eb48ef42b4446dc2dbda2a9, type: 3}
-    - time: 1.35
+    - time: 1.5833334
       value: {fileID: 21300000, guid: 65fe685dc1327714fb15bfa9342a811a, type: 3}
-    - time: 1.4166666
+    - time: 1.6833333
       value: {fileID: 21300000, guid: 07e6a5da8fd2bc94c83a6cf6b1b2ba97, type: 3}
-    - time: 1.4833333
-      value: {fileID: 21300000, guid: 0de16de3e03aaee478ae0fde9f618442, type: 3}
-    - time: 1.55
-      value: {fileID: 21300000, guid: 7a372a990b0fc574ba53578c6d43a1bf, type: 3}
-    - time: 1.6166667
-      value: {fileID: 21300000, guid: ceb43bcf2b4851a4dbbcdfbaea2792d8, type: 3}
-    - time: 1.7
-      value: {fileID: 21300000, guid: 22dcad0d393e79d4b916204bd82270c3, type: 3}
     - time: 1.75
-      value: {fileID: 21300000, guid: f4703c12e8013a04b97d290c8a166186, type: 3}
-    - time: 1.8333334
-      value: {fileID: 21300000, guid: c2ebbdf79b8a785438c362cb25238caf, type: 3}
-    - time: 1.8833333
-      value: {fileID: 21300000, guid: 277945377c1918c459f5836e34dd9cc0, type: 3}
-    - time: 1.9666667
-      value: {fileID: 21300000, guid: e21aa5b7623647041b0d6786c6ef0d7c, type: 3}
-    - time: 2.0166667
-      value: {fileID: 21300000, guid: e03c2b54c5cbc624a8ac62adaed56f2b, type: 3}
+      value: {fileID: 21300000, guid: 0de16de3e03aaee478ae0fde9f618442, type: 3}
+    - time: 1.85
+      value: {fileID: 21300000, guid: 7a372a990b0fc574ba53578c6d43a1bf, type: 3}
+    - time: 1.9166666
+      value: {fileID: 21300000, guid: ceb43bcf2b4851a4dbbcdfbaea2792d8, type: 3}
+    - time: 2.0333333
+      value: {fileID: 21300000, guid: 22dcad0d393e79d4b916204bd82270c3, type: 3}
     - time: 2.1
+      value: {fileID: 21300000, guid: f4703c12e8013a04b97d290c8a166186, type: 3}
+    - time: 2.2
+      value: {fileID: 21300000, guid: c2ebbdf79b8a785438c362cb25238caf, type: 3}
+    - time: 2.2666667
+      value: {fileID: 21300000, guid: 277945377c1918c459f5836e34dd9cc0, type: 3}
+    - time: 2.3833334
+      value: {fileID: 21300000, guid: e21aa5b7623647041b0d6786c6ef0d7c, type: 3}
+    - time: 2.4333334
+      value: {fileID: 21300000, guid: e03c2b54c5cbc624a8ac62adaed56f2b, type: 3}
+    - time: 2.55
       value: {fileID: 21300000, guid: 10d3eca0a443eeb4a9c08b4cdcc24c58, type: 3}
-    - time: 2.1833334
+    - time: 2.65
       value: {fileID: 21300000, guid: 642de8d9a93dd564d992b52a548e3047, type: 3}
-    - time: 2.2333333
+    - time: 2.7
       value: {fileID: 21300000, guid: 2902e074c679c304eae407bf04eee5ea, type: 3}
-    - time: 2.3166666
+    - time: 2.8166666
       value: {fileID: 21300000, guid: 66427f78972bf414baafcb8056e0d55b, type: 3}
-    - time: 2.3666666
+    - time: 2.8666666
       value: {fileID: 21300000, guid: 1dc12358fdf16d94ab124815481b2b37, type: 3}
-    - time: 2.45
+    - time: 2.9833333
       value: {fileID: 21300000, guid: 7fd1471e7df37f74eac8ad9472f4b759, type: 3}
     attribute: m_Sprite
     path: 
@@ -132,7 +132,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 2.4666667
+    m_StopTime: 3
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -161,20 +161,27 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.0166667
-    functionName: ActiveAttack1Damager
+    functionName: ActiveAttack1_1st2nd_Damager
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.8333334
+  - time: 1.5833334
+    functionName: ActiveAttack1_3rd_Damager
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.9166666
     functionName: DeactiveAttack1Damager
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.3666666
+  - time: 2.75
     functionName: ResetOffsetInnerRangeDamagerAT1
     data: 
     objectReferenceParameter: {fileID: 0}
