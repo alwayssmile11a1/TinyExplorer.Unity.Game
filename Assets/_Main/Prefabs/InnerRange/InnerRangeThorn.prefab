@@ -23,8 +23,9 @@ GameObject:
   - component: {fileID: 61495838242580406}
   - component: {fileID: 114001753442632666}
   - component: {fileID: 114485711126485496}
+  - component: {fileID: 114204756916694882}
   m_Layer: 0
-  m_Name: ShardKnightBullet
+  m_Name: InnerRangeThorn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,6 +137,7 @@ MonoBehaviour:
   size: {x: 2.5, y: 1}
   offsetBasedOnSpriteFacing: 1
   spriteRenderer: {fileID: 0}
+  enableDamageOnAwake: 1
   canHitTriggers: 0
   disableDamageAfterHit: 0
   forceRespawn: 0
@@ -198,6 +200,19 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: Gamekit2D.Damager+NonDamagableEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114204756916694882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1209501022906890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8741835574f9e24cbb256e97a2828c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0}
+  speed: 10
 --- !u!114 &114485711126485496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -209,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ea98018d1796f4fa92b4f42b8fad6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyWhenOutOfView: 0
+  destroyWhenOutOfView: 1
   spriteOriginallyFacesLeft: 0
   timeBeforeAutodestruct: 5
   vfxName: ExplodingHitEffect
@@ -1176,8 +1191,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.8263215, g: 0.9117647, b: 0.026816634, a: 0}
-        key1: {r: 0.77931035, g: 1, b: 0, a: 1}
+        key0: {r: 0, g: 0.91724133, b: 1, a: 1}
+        key1: {r: 0.8295848, g: 0.999997, b: 1, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0.1764706}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1193,7 +1208,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 24865
+        atime1: 65535
         atime2: 55512
         atime3: 65535
         atime4: 0
@@ -1202,7 +1217,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 4
+        m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

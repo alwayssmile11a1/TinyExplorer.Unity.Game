@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Gamekit2D;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,13 +11,16 @@ public class RideloidShoot : MonoBehaviour {
     public Transform shootOriginRight;
     public Transform shootOriginLeft;
     private float shootTime;
-    private bool Shooted;
+    //private bool Shooted;
 
-    public float RobotHandExistsTime;
+    //public float RobotHandExistsTime;
     public GameObject RobotHand;
     private Transform RoBotHandPostion;
     private StartShooting robotHandShootingScript;
-    private float currentExistsTime;
+    //private float currentExistsTime;
+
+    public ParticleSystem robotHitEffect;
+    public ParticleSystem robotDieEffect;
 
     private Vector2 direction;
     private ContactFilter2D contactFilter2D;
@@ -55,10 +59,10 @@ public class RideloidShoot : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        currentExistsTime = 0;
+        //currentExistsTime = 0;
         direction = Vector2.right;
         shootTime = shootCoolDown;
-        Shooted = false;
+        //Shooted = false;
         contactFilter2D.layerMask = hitLayerMask;
         RoBotHandPostion = RobotHand.GetComponent<Transform>();
         robotHandShootingScript = RobotHand.GetComponent<StartShooting>();
@@ -76,7 +80,7 @@ public class RideloidShoot : MonoBehaviour {
     {
         ScanForPlayer();
         CoolDownShoot();
-        ResetRobotHand();
+        //ResetRobotHand();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -129,8 +133,25 @@ public class RideloidShoot : MonoBehaviour {
         }
         shootTime -= shootCoolDown;
         animator.SetBool("attack", false);
-        Shooted = true;
+        //Shooted = true;
         //Debug.Log(Time.deltaTime);
+    }
+
+    public void OnHit()
+    {
+        robotHitEffect.Play();
+    }
+
+    public void OnDie()
+    {
+        robotDieEffect.Play();
+        StartCoroutine(WaitToDisable());
+    }
+
+    private IEnumerator WaitToDisable()
+    {
+        yield return new WaitForSeconds(0.5f);
+        gameObject.SetActive(false);
     }
 
     private void CoolDownShoot()
@@ -139,15 +160,19 @@ public class RideloidShoot : MonoBehaviour {
             shootTime += Time.deltaTime;
     }
 
-    private void ResetRobotHand()
+    //public void ResetRobotHand()
+    //{
+    //    if (currentExistsTime >= RobotHandExistsTime && Shooted)
+    //    {
+    //        RobotHand.SetActive(false);
+    //        Shooted = false;
+    //        currentExistsTime = 0;
+    //    }
+    //    else if (Shooted)
+    //        currentExistsTime += Time.deltaTime;
+    //}
+    public void ResetHand()
     {
-        if (currentExistsTime >= RobotHandExistsTime && Shooted)
-        {
-            RobotHand.SetActive(false);
-            Shooted = false;
-            currentExistsTime = 0;
-        }
-        else if (Shooted)
-            currentExistsTime += Time.deltaTime;
+        RobotHand.SetActive(false);
     }
 }

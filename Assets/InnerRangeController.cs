@@ -10,7 +10,7 @@ public class InnerRangeController : MonoBehaviour {
 
     [Header("Attack1")]
     public Damager innerRangeDamager;
-    public Damager[] attack1Damager;
+    public EdgeCollider2D[] attack1Damager;
     public float followSpeed;
 
     [Header("SpawnSphere")]
@@ -223,19 +223,23 @@ public class InnerRangeController : MonoBehaviour {
         StartCoroutine(WaitToStopAttack2FireParticle());
     }
     
-    public void ActiveAttack1_1st2nd_Damager()
+    public void ActiveAttack1_1st_Damager()
     {
-        attack1Damager[0].EnableDamage();
+        attack1Damager[0].GetComponent<EdgeCollider2D>().enabled = true;
+    }
+    public void ActiveAttack1_2nd_Damager()
+    {
+        attack1Damager[1].GetComponent<EdgeCollider2D>().enabled = true;
     }
     public void ActiveAttack1_3rd_Damager()
     {
-        attack1Damager[1].EnableDamage();
+        attack1Damager[2].GetComponent<EdgeCollider2D>().enabled = true;
     }
     public void DeactiveAttack1Damager()
     {
         foreach (var item in attack1Damager)
         {
-            item.DisableDamage();
+            item.GetComponent<EdgeCollider2D>().enabled = false;
         }
     }
     public void SetOffsetInnerRangeDamagerAT1()
