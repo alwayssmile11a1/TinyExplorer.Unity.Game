@@ -13,11 +13,26 @@ public class InnerRangeController : MonoBehaviour {
     public Damager[] attack1Damager;
     public float followSpeed;
 
+    [Header("SpawnSphere")]
+    public ParticleSystem spawnSphereEffect;
+    public GameObject Sphere;
+    public Transform[] spherePos;
+    private BulletPool sphereBulletPool;
+    private BulletObject[] sphereBulletObjects;
+
     [Header("Attack2")]
     public ParticleSystem attack2FireParticle1;
     public ParticleSystem attack2FireParticle2;
     public ParticleSystem[] attack2PurpleExplodeParticles;
     public EdgeCollider2D[] edgeColliders;
+    public float moveToApproPosSpeed;
+
+    [Header("Attack Thorn")]
+    public GameObject ThornBullet;
+    public GameObject LoadThorn;
+    public Transform[] loadThornPos;
+    private BulletPool thornLoadBulletPool;
+    private BulletPool thornBulletPool;
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -31,16 +46,50 @@ public class InnerRangeController : MonoBehaviour {
         animator = GetComponent<Animator>();
         rigidbody2D = GetComponent<Rigidbody2D>();
 
+        sphereBulletPool = BulletPool.GetObjectPool(Sphere, 5);
+        thornLoadBulletPool = BulletPool.GetObjectPool(LoadThorn, 4);
+        thornBulletPool = BulletPool.GetObjectPool(ThornBullet, 20);
+
         innerRangeBT.OpenBranch(
-            BT.SetBool(animator, "move", true),
-            BT.WaitForAnimatorState(animator, "move"),
-            BT.WaitUntil(CheckMoveToTarget),
-            BT.SetBool(animator, "attack1", true),
-            BT.SetBool(animator, "move", false),
-            BT.WaitForAnimatorState(animator, "attack1"),
-            BT.SetBool(animator, "attack1", false),
-            BT.Call(Attack1),
-            BT.Wait(5f)
+            BT.Sequence().OpenBranch(
+                BT.SetBool(animator, "move", true),
+                BT.WaitForAnimatorState(animator, "move"),
+                BT.WaitUntil(CheckMoveToTarget),
+                BT.SetBool(animator, "attack1", true),
+                BT.SetBool(animator, "move", false),
+                BT.WaitForAnimatorState(animator, "attack1"),
+                BT.SetBool(animator, "attack1", false),
+                BT.WaitForAnimatorState(animator, "stand")
+            ),
+            BT.Sequence().OpenBranch(
+                BT.Call(() => spawnSphereEffect.Play()),
+                BT.Wait(0.5f),
+                BT.Call(PopSphere),
+                BT.Wait(1.5f),
+                BT.Call(SetSphereVelocity),
+                BT.Wait(2f),
+                BT.Call(() => spawnSphereEffect.Stop())
+            ),
+            BT.Sequence().OpenBranch(
+                BT.SetBool(animator, "move", true),
+                BT.WaitForAnimatorState(animator, "move"),
+                BT.WaitUntil(CheckMoveToTarget),
+                //BT.Call(MoveToAttack2Pos),
+                BT.Call(ResetVelocity),
+                BT.SetBool(animator, "attack2", true),
+                BT.SetBool(animator, "move", false),
+                BT.WaitForAnimatorState(animator, "attack2"),
+                BT.SetBool(animator, "attack2", false),
+                BT.WaitForAnimatorState(animator, "stand")
+            ),
+            BT.Sequence().OpenBranch(
+                BT.Call(MoveToAttack2Pos),
+                BT.Wait(1),
+                BT.Call(ResetVelocity),
+                BT.Call(PopLoadThorn),
+                BT.Wait(1.5f),
+                BT.Call(ShootThorns)
+            )
         );
     }
 
@@ -49,10 +98,10 @@ public class InnerRangeController : MonoBehaviour {
     {
         innerRangeBT.Tick();
     }
-    
+    #region Attack1
     private bool CheckMoveToTarget()
     {
-        if ((transform.position - targetToTrack.position).sqrMagnitude <= 1)
+        if ((transform.position - targetToTrack.position).sqrMagnitude <= 1.5)
         {
             rigidbody2D.velocity = Vector2.zero;
             return true;
@@ -74,6 +123,70 @@ public class InnerRangeController : MonoBehaviour {
     {
 
     }
+    #endregion
+
+    #region Attack Sphere
+    private void PopSphere()
+    {
+        sphereBulletObjects = new BulletObject[spherePos.Length];
+        for (int i = 0; i < spherePos.Length; ++i)
+        {
+            sphereBulletObjects[i] = sphereBulletPool.Pop(spherePos[i].position);
+            sphereBulletObjects[i].instance.GetComponent<FallTowardTarget>().target = targetToTrack;
+        }
+    }
+
+    private void SetSphereVelocity()
+    {
+        for (int i = 0; i < spherePos.Length; ++i)
+        {
+            sphereBulletObjects[i].instance.GetComponent<FallTowardTarget>().SetVelocity();
+        }
+        
+    }
+    #endregion
+
+    #region Attack2
+    private void MoveToAttack2Pos()
+    {
+        rigidbody2D.velocity = Vector2.up * moveToApproPosSpeed;
+    }
+    private void ResetVelocity()
+    {
+        rigidbody2D.velocity = Vector2.zero;
+    }
+    #endregion
+
+    #region Attack Thorn
+    private void PopLoadThorn()
+    {
+        Debug.Log("Pop Thorn");
+        foreach (var item in loadThornPos)
+        {
+            thornLoadBulletPool.Pop(item.position);
+        }
+    }
+
+    private void ShootThorns()
+    {
+        int angle = 0;
+        Debug.Log("load thorn position: " + loadThornPos.Length);
+        for (int i = 0; i < loadThornPos.Length; ++i)
+        {
+            for (int j = 0; j < 6; ++j)
+            {
+                BulletObject bulletObject = thornBulletPool.Pop(loadThornPos[i].position);
+                bulletObject.instance.GetComponent<StartShooting>().direction = (Quaternion.Euler(0, 0, angle) * Vector2.right).normalized;
+                bulletObject.instance.GetComponent<Transform>().rotation = Quaternion.Euler(0, 0, angle);
+                angle = angle - 60 == -360 ? 0 : angle - 60;
+                Debug.Log("thorn " + i + " :" + bulletObject.instance.GetComponent<Transform>().rotation.z);
+            }
+        }
+    }
+
+    
+
+    #endregion
 
     #region Animation Event
     public void ActiveDamagerAndAttack2Par()
@@ -129,13 +242,27 @@ public class InnerRangeController : MonoBehaviour {
     {
         Debug.Log("Set offset");
         Vector2 Offset = innerRangeDamager.offset;
-        innerRangeDamager.offset = new Vector2(Offset.x + 1.5f, Offset.y);
+        if (spriteRenderer.flipX)
+        {
+            innerRangeDamager.offset = new Vector2(Offset.x + 1.5f, Offset.y);
+        }
+        else
+        {
+            innerRangeDamager.offset = new Vector2(Offset.x - 1.5f, Offset.y);
+        }
     }
     public void ResetOffsetInnerRangeDamagerAT1()
     {
         Debug.Log("Reset offset");
         Vector2 Offset = innerRangeDamager.offset;
-        innerRangeDamager.offset = new Vector2(Offset.x - 1.5f, Offset.y);
+        if (spriteRenderer.flipX)
+        {
+            innerRangeDamager.offset = new Vector2(Offset.x - 1.5f, Offset.y);
+        }
+        else
+        {
+            innerRangeDamager.offset = new Vector2(Offset.x + 1.5f, Offset.y);
+        }
     }
     public void SetOffsetInnerRangeDamagerAT2()
     {
