@@ -35,7 +35,7 @@ public class AlessiaController : MonoBehaviour {
     public RandomAudioPlayer hurtAudioPlayer;
 
     private Damager m_Slash;
-    private CharacterController2D m_CharacterController2D;
+    private SimpleCharacterController2D m_CharacterController2D;
     private Vector2 m_Velocity = new Vector2();
     private Rigidbody2D m_Rigidbody2D;
     private Vector2 m_JumpForceVector;
@@ -73,7 +73,7 @@ public class AlessiaController : MonoBehaviour {
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_AlessiaGraphics = m_SpriteRenderer.gameObject.transform;
         m_Animator = GetComponent<Animator>();
-        m_CharacterController2D = GetComponent<CharacterController2D>();
+        m_CharacterController2D = GetComponent<SimpleCharacterController2D>();
         m_CharacterInput = GetComponent<CharacterInput>();
         m_Flicker = m_SpriteRenderer.gameObject.AddComponent<Flicker>();
         m_Slash = GetComponent<Damager>();
@@ -303,7 +303,7 @@ public class AlessiaController : MonoBehaviour {
         m_Flicker.StartFlickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
 
         //Shake camera a little
-        CameraShaker.Shake(0.1f, 0.1f);
+        CameraShaker.Shake(0.15f, 0.3f);
 
     }
 

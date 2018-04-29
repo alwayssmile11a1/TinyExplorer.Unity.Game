@@ -6,14 +6,11 @@ using Gamekit2D;
 using UnityEditor;
 #endif
 
-
-[RequireComponent(typeof(CharacterController2D))]
+[RequireComponent(typeof(SimpleCharacterController2D))]
 [RequireComponent(typeof(Collider2D))]
-public class EnemyBehaviour : MonoBehaviour
+public class SimpleEnemyBehaviour : MonoBehaviour
 {
-    static Collider2D[] s_ColliderCache = new Collider2D[16];
-
-    public Vector3 moveVector { get { return m_MoveVector; } }
+    Collider2D[] s_ColliderCache = new Collider2D[16];
 
     //the current target. Null if can not find the target inside the view distance.
     public Transform CurrentTarget { get { return m_Target; } }
@@ -23,9 +20,11 @@ public class EnemyBehaviour : MonoBehaviour
     [Tooltip("If the sprite face left on the spritesheet, enable this. Otherwise, leave disabled")]
     public bool spriteFaceLeft = false;
 
+    public bool deactiveOnDie = true;
+
     [Header("Movement")]
     public float speed;
-    public float gravity = 10.0f;
+    public float runSpeed;
 
     [Header("References")]
     [Tooltip("If the enemy will be using ranged attack, set a prefab of the projectile it should use")]
@@ -42,23 +41,30 @@ public class EnemyBehaviour : MonoBehaviour
     public float timeBeforeTargetLost = 3.0f;
 
     [Header("Melee Attack Data")]
-    public string meleeAttackTransitionName = "MeleeAttack";
-    [EnemyMeleeRangeCheck]
+    [EnemyMeleeRange]
     public float meleeRange = 0.0f;
     public Damager meleeDamager;
-    public Damager contactDamager;
     [Tooltip("if true, the enemy will jump/dash forward when it melee attack")]
     public bool attackDash;
     [Tooltip("The force used by the dash")]
     public Vector2 attackForce;
 
     [Header("Range Attack Data")]
-    public string rangeAttackTransitionName = "Shooting";
     [Tooltip("From where the projectile are spawned")]
     public Transform shootingOrigin;
     public float shootAngle = 45.0f;
     public float shootForce = 100.0f;
     public float fireRate = 2.0f;
+
+
+    [Header("Animation")]
+    public string meleeAttackTransitionName = "MeleeAttack";
+    public string rangeAttackTransitionName = "Shooting";
+    public string patrollingTransitionName = "Patrolling";
+    public string runTransitionName = "Run";
+    public string deathTransitionName = "Dead";
+    public string hitTransitionName = "Hit";
+
 
     [Header("Audio")]
     public RandomAudioPlayer shootingAudio;
@@ -68,14 +74,16 @@ public class EnemyBehaviour : MonoBehaviour
 
     [Header("Misc")]
     [Tooltip("Time in seconds during which the enemy flicker after being hit")]
-    public float flickeringDuration;
+    public float flickeringDuration = 0.1f;
+    public Color flickerColor = new Color(1f, 100 / 255f, 100 / 255f, 1f);
+    public string deadEffectName = "DeadEffect";
+
 
     protected SpriteRenderer m_SpriteRenderer;
-    protected CharacterController2D m_CharacterController2D;
+    protected SimpleCharacterController2D m_CharacterController2D;
     protected Collider2D m_Collider;
     protected Animator m_Animator;
 
-    protected Vector3 m_MoveVector;
     protected Transform m_Target;
     protected Vector3 m_TargetShootPosition;
     protected float m_TimeSinceLastTargetView;
@@ -95,26 +103,35 @@ public class EnemyBehaviour : MonoBehaviour
 
     protected BulletPool m_BulletPool;
 
+    protected int hashDeadEffect;
+
     protected bool m_Dead = false;
 
 
 
-    private int m_HashMeleeAttackPara;
-    private int m_HashShootingPara;
-    protected readonly int m_HashSpottedPara = Animator.StringToHash("Spotted");
-    protected readonly int m_HashTargetLostPara = Animator.StringToHash("TargetLost");
-    protected readonly int m_HashHitPara = Animator.StringToHash("Hit");
-    protected readonly int m_HashDeathPara = Animator.StringToHash("Death");
-    protected readonly int m_HashGroundedPara = Animator.StringToHash("Grounded");
+    public int HashMeleeAttackPara { get; private set; }
+    public int HashShootingPara { get; private set; }
+    public int HashPatrollingPara { get; private set; }
+    public int HashRunPara { get; private set; }
+    public int HashDeathPara { get; private set; }
+    public int HashHitPara { get; private set; }
+    //protected readonly int m_HashTargetLostPara = Animator.StringToHash("TargetLost");
+    //protected readonly int m_HashGroundedPara = Animator.StringToHash("Grounded");
 
 
 
     private void Awake()
     {
-        m_HashMeleeAttackPara = Animator.StringToHash(meleeAttackTransitionName);
-        m_HashShootingPara = Animator.StringToHash(rangeAttackTransitionName);
+        HashMeleeAttackPara = Animator.StringToHash(meleeAttackTransitionName);
+        HashShootingPara = Animator.StringToHash(rangeAttackTransitionName);
+        HashPatrollingPara = Animator.StringToHash(patrollingTransitionName);
+        HashRunPara = Animator.StringToHash(runTransitionName);
+        HashDeathPara = Animator.StringToHash(deathTransitionName);
+        HashHitPara = Animator.StringToHash(hitTransitionName);
 
-        m_CharacterController2D = GetComponent<CharacterController2D>();
+        hashDeadEffect = VFXController.StringToHash(deadEffectName);
+        
+        m_CharacterController2D = GetComponent<SimpleCharacterController2D>();
         m_Collider = GetComponent<Collider2D>();
         m_Animator = GetComponent<Animator>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -137,12 +154,11 @@ public class EnemyBehaviour : MonoBehaviour
             EndAttack();
 
         m_Dead = false;
-        m_Collider.enabled = true;
+        //m_Collider.enabled = true;
     }
 
     private void Start()
     {
-        //SceneLinkedSMB<EnemyBehaviour>.Initialise(m_Animator, this);
 
         m_LocalBounds = new Bounds();
         int count = m_CharacterController2D.Rigidbody2D.GetAttachedColliders(s_ColliderCache);
@@ -169,12 +185,6 @@ public class EnemyBehaviour : MonoBehaviour
         if (m_Dead)
             return;
 
-        m_MoveVector.y = Mathf.Max(m_MoveVector.y - gravity * Time.deltaTime, -gravity);
-
-        m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
-
-        //m_CharacterController2D.CheckCapsuleEndCollisions(); //????
-
         UpdateTimers();
 
         //m_Animator.SetBool(m_HashGroundedPara, m_CharacterController2D.IsGrounded);
@@ -191,7 +201,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void SetHorizontalSpeed(float horizontalSpeed)
     {
-        m_MoveVector.x = horizontalSpeed * m_SpriteForward.x;
+        m_CharacterController2D.Rigidbody2D.velocity = new Vector2(horizontalSpeed * m_SpriteForward.x, m_CharacterController2D.Rigidbody2D.velocity.y);
     }
 
     public bool CheckForObstacle(float forwardDistance)
@@ -202,7 +212,7 @@ public class EnemyBehaviour : MonoBehaviour
             return true;
         }
 
-        Vector3 castingPosition = (Vector2)(transform.position + m_LocalBounds.center) + m_SpriteForward * m_LocalBounds.extents.x;
+        Vector3 castingPosition = (Vector2)(transform.position + m_LocalBounds.center) + m_SpriteForward * (m_LocalBounds.extents.x+ forwardDistance);
         Debug.DrawLine(castingPosition, castingPosition + Vector3.down * (m_LocalBounds.extents.y + 0.2f));
 
         if (!Physics2D.CircleCast(castingPosition, 0.1f, Vector2.down, m_LocalBounds.extents.y + 0.2f, m_CharacterController2D.groundedLayerMask.value))
@@ -227,15 +237,15 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    public void SetMoveVector(Vector2 newMoveVector)
+    public void SetVelocity(Vector2 velocity)
     {
-        m_MoveVector = newMoveVector;
+        m_CharacterController2D.Rigidbody2D.velocity = velocity;
     }
 
     public void UpdateFacing()
     {
-        bool faceLeft = m_MoveVector.x < 0f;
-        bool faceRight = m_MoveVector.x > 0f;
+        bool faceLeft = m_CharacterController2D.Rigidbody2D.velocity.x < 0f;
+        bool faceRight = m_CharacterController2D.Rigidbody2D.velocity.x > 0f;
 
         if (faceLeft)
         {
@@ -279,8 +289,62 @@ public class EnemyBehaviour : MonoBehaviour
         m_Target = targetToTrack.transform;
         m_TimeSinceLastTargetView = timeBeforeTargetLost;
 
-        m_Animator.SetTrigger(m_HashSpottedPara);
+        //m_Animator.SetTrigger(m_HashSpottedPara);
     }
+
+    /// <summary>
+    /// Patrolling around and flip if necessary
+    /// </summary>
+    /// <param name="forwardDistance"></param>
+    public void Patrolling(float forwardDistance)
+    {
+        if(!CheckForObstacle(forwardDistance))
+        {
+            SetHorizontalSpeed(speed);
+            m_Animator.SetBool(HashPatrollingPara, true);
+        }
+        else
+        {
+            Flip();
+        }
+    }
+
+
+    public void StopPatrolling()
+    {
+        m_Animator.SetBool(HashPatrollingPara, false);
+        SetHorizontalSpeed(0);
+    }
+
+    /// <summary>
+    /// Run to target and avoid obstacles
+    /// </summary>
+    /// <param name="forwardDistance"></param>
+    public void RunToTarget(float forwardDistance)
+    {
+        if (m_Target == null) return;
+
+        OrientToTarget();
+
+        if (!CheckForObstacle(forwardDistance))
+        {
+            SetHorizontalSpeed(runSpeed);
+            m_Animator.SetBool(HashRunPara, true);
+        }
+        else
+        {
+            SetHorizontalSpeed(0);
+            m_Animator.SetBool(HashRunPara, false);
+        }
+    }
+
+    public void StopRunningToTarget()
+    {
+        SetHorizontalSpeed(0);
+        m_Animator.SetBool(HashRunPara, false);
+    }
+
+
 
     public void OrientToTarget()
     {
@@ -295,6 +359,11 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    public void Flip()
+    {
+        SetFacingData(Mathf.RoundToInt(-m_SpriteForward.x));
+    }
+
     public void CheckTargetStillVisible()
     {
         if (m_Target == null)
@@ -304,8 +373,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (toTarget.sqrMagnitude < viewDistance * viewDistance)
         {
-            Vector3 testForward = Quaternion.Euler(0, 0, spriteFaceLeft ? -viewDirection : viewDirection) * m_SpriteForward;
-            if (m_SpriteRenderer.flipX) testForward.x = -testForward.x;
+            Vector3 testForward = Quaternion.Euler(0, 0, spriteFaceLeft ? Mathf.Sign(m_SpriteForward.x) * -viewDirection : Mathf.Sign(m_SpriteForward.x) * viewDirection) * m_SpriteForward;
 
             float angle = Vector3.Angle(testForward, toTarget);
 
@@ -316,7 +384,6 @@ public class EnemyBehaviour : MonoBehaviour
             }
         }
 
-
         if (m_TimeSinceLastTargetView <= 0.0f)
         {
             ForgetTarget();
@@ -325,7 +392,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void ForgetTarget()
     {
-        m_Animator.SetTrigger(m_HashTargetLostPara);
+        //m_Animator.SetTrigger(m_HashTargetLostPara);
         m_Target = null;
     }
 
@@ -340,35 +407,47 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     //Call every frame when the enemy is in pursuit to check for range & Trigger the attack if in range
-    public void CheckMeleeAttack()
+    public bool CheckMeleeAttack()
     {
         if (m_Target == null)
         {//we lost the target, shouldn't attack
-            return;
+            return false;
         }
 
         if ((m_Target.transform.position - transform.position).sqrMagnitude < (meleeRange * meleeRange))
         {
-            m_Animator.SetTrigger(m_HashMeleeAttackPara);
+            //PerformMeleeAttack();
 
-            if (meleeAttackAudio != null)
-                meleeAttackAudio.PlayRandomSound();
+            return true;
         }
+
+        return false;
+    }
+
+    public void PerformMeleeAttack()
+    {
+        m_Animator.SetTrigger(HashMeleeAttackPara);
+
+        if (meleeAttackAudio != null)
+            meleeAttackAudio.PlayRandomSound();
     }
 
     //This is called when the damager get enabled (so the enemy can damage the player). Likely be called by the animation throught animation event (see the attack animation of the Chomper)
     public void StartAttack()
     {
-        if (m_SpriteRenderer.flipX)
-            meleeDamager.transform.localPosition = Vector3.Scale(m_LocalDamagerPosition, new Vector3(-1, 1, 1));
-        else
-            meleeDamager.transform.localPosition = m_LocalDamagerPosition;
+        //if (m_SpriteRenderer.flipX)
+        //    meleeDamager.transform.localPosition = Vector3.Scale(m_LocalDamagerPosition, new Vector3(-1, 1, 1));
+        //else
+        //    meleeDamager.transform.localPosition = m_LocalDamagerPosition;
 
-        meleeDamager.EnableDamage();
+        if (meleeDamager != null)
+        {
+            meleeDamager.EnableDamage();
+        }
         //meleeDamager.gameObject.SetActive(true);
 
-        if (attackDash)
-            m_MoveVector = new Vector2(m_SpriteForward.x * attackForce.x, attackForce.y);
+        //if (attackDash)
+        //    m_MoveVector = new Vector2(m_SpriteForward.x * attackForce.x, attackForce.y);
     }
 
     public void EndAttack()
@@ -393,7 +472,7 @@ public class EnemyBehaviour : MonoBehaviour
             return;
         }
 
-        m_Animator.SetTrigger(m_HashShootingPara);
+        m_Animator.SetTrigger(HashShootingPara);
 
         if (shootingAudio != null)
             shootingAudio.PlayRandomSound();
@@ -483,21 +562,29 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void Die(Damager damager, Damageable damageable)
     {
-        Vector2 throwVector = new Vector2(0, 2.0f);
-        Vector2 damagerToThis = damager.transform.position - transform.position;
+        //Vector2 throwVector = new Vector2(0, 2.0f);
+        //Vector2 damagerToThis = damager.transform.position - transform.position;
 
-        throwVector.x = Mathf.Sign(damagerToThis.x) * -4.0f;
-        SetMoveVector(throwVector);
+        //throwVector.x = Mathf.Sign(damagerToThis.x) * -4.0f;
+        //SetMoveVector(throwVector);
 
-        m_Animator.SetTrigger(m_HashDeathPara);
+        m_Animator.SetTrigger(HashDeathPara);
 
         if (dieAudio != null)
             dieAudio.PlayRandomSound();
 
         m_Dead = true;
-        m_Collider.enabled = false;
 
-        CameraShaker.Shake(0.15f, 0.3f);
+        if(deactiveOnDie)
+        {
+            gameObject.SetActive(false);
+        }
+
+        VFXController.Instance.Trigger(hashDeadEffect, transform.position, 0, m_SpriteForward.x > 0 ? false : true, null);
+
+        //m_Collider.enabled = false;
+
+        //CameraShaker.Shake(0.15f, 0.3f);
     }
 
     public void Hit(Damager damager, Damageable damageable)
@@ -505,13 +592,13 @@ public class EnemyBehaviour : MonoBehaviour
         if (damageable.CurrentHealth <= 0)
             return;
 
-        m_Animator.SetTrigger(m_HashHitPara);
+        m_Animator.SetTrigger(HashHitPara);
 
-        Vector2 throwVector = new Vector2(0, 3.0f);
-        Vector2 damagerToThis = damager.transform.position - transform.position;
+        //Vector2 throwVector = new Vector2(0, 3.0f);
+        //Vector2 damagerToThis = damager.transform.position - transform.position;
 
-        throwVector.x = Mathf.Sign(damagerToThis.x) * -2.0f;
-        m_MoveVector = throwVector;
+        //throwVector.x = Mathf.Sign(damagerToThis.x) * -2.0f;
+        //m_MoveVector = throwVector;
 
         if (m_FlickeringCoroutine != null)
         {
@@ -521,7 +608,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         m_FlickeringCoroutine = StartCoroutine(Flicker(damageable));
 
-        CameraShaker.Shake(0.15f, 0.3f);
+        //CameraShaker.Shake(0.15f, 0.3f);
     }
 
 
@@ -531,11 +618,11 @@ public class EnemyBehaviour : MonoBehaviour
         float timer = 0f;
         float sinceLastChange = 0.0f;
 
-        Color transparent = m_OriginalColor;
-        transparent.a = 0.2f;
+        //Color transparent = m_OriginalColor;
+        //transparent.a = 0.2f;
         int state = 1;
 
-        m_SpriteRenderer.color = transparent;
+        m_SpriteRenderer.color = flickerColor;
 
         while (timer < damageable.invulnerabilityDuration)
         {
@@ -546,7 +633,7 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 sinceLastChange -= flickeringDuration;
                 state = 1 - state;
-                m_SpriteRenderer.color = state == 1 ? transparent : m_OriginalColor;
+                m_SpriteRenderer.color = state == 1 ? flickerColor : m_OriginalColor;
             }
         }
 
@@ -557,8 +644,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (meleeDamager != null)
             meleeDamager.DisableDamage();
-        if (contactDamager != null)
-            contactDamager.DisableDamage();
+        //if (contactDamager != null)
+        //    contactDamager.DisableDamage();
     }
 
     public void PlayFootStep()
@@ -566,6 +653,8 @@ public class EnemyBehaviour : MonoBehaviour
         if (footStepAudio != null)
             footStepAudio.PlayRandomSound();
     }
+
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
@@ -589,14 +678,14 @@ public class EnemyBehaviour : MonoBehaviour
 
 //bit hackish, to avoid to have to redefine the whole inspector, we use an attirbute and associated property drawer to 
 //display a warning above the melee range when it get over the view distance.
-public class EnemyMeleeRangeCheckAttribute : PropertyAttribute
+public class EnemyMeleeRangeAttribute : PropertyAttribute
 {
 
 }
 
 #if UNITY_EDITOR
-[CustomPropertyDrawer(typeof(EnemyMeleeRangeCheckAttribute))]
-public class EnemyMeleeRangePropertyDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(EnemyMeleeRangeAttribute))]
+public class EnemyMeleeRangeDrawer : PropertyDrawer
 {
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

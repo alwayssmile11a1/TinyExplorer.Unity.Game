@@ -6,8 +6,8 @@ using Gamekit2D;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Flicker : MonoBehaviour {
 
-    public float duration;
-    public float timeBetweenFlickering;
+    public float duration = 0.1f;
+    public float timeBetweenFlickering = 0.1f;
     public Color defaultFlickerColor = new Color(1f, 100/255f, 100/255f, 1f);
 
     private SpriteRenderer m_SpriteRenderer;
