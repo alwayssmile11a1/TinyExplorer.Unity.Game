@@ -12,11 +12,14 @@ public class rmx6BT : MonoBehaviour {
     private Animator animator;
     private rmx6Moving rmx6Moving;
     private bool die;
-    private bool canJump = false;
+    private bool canJump = false; 
     Vector2 oldVelocity;
 
-	// Use this for initialization
-	void Awake () {
+    public ParticleSystem hitEffect;
+    public ParticleSystem dieEffect;
+
+    // Use this for initialization
+    void Awake () {
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         rmx6Moving = GetComponent<rmx6Moving>();
@@ -71,19 +74,28 @@ public class rmx6BT : MonoBehaviour {
 
     public void OnDie()
     {
-        Debug.Log("velocity on die: " + rmx6Moving.velocity);
-        die = true;
-        rmx6Moving.velocity = new Vector2(0, 0);
-        animator.SetBool("walk", false);
-        animator.SetBool("freeze", true);
-        rmx6Moving.canWalk = false;
-        StartCoroutine(DeactiveWalk());
+        //Debug.Log("velocity on die: " + rmx6Moving.velocity);
+        //die = true;
+        //rmx6Moving.velocity = new Vector2(0, 0);
+        //animator.SetBool("walk", false);
+        //animator.SetBool("freeze", true);
+        //rmx6Moving.canWalk = false;
+        //StartCoroutine(DeactiveWalk());
+
+        dieEffect.Play();
+        StartCoroutine(WaitToDeactive());
     }
 
-    private IEnumerator DeactiveWalk()
+    public void OnHit()
     {
-        yield return new WaitForSeconds(0.3f);
-        rmx6Moving.canWalk = false;
+        hitEffect.Play();
+    }
+    
+
+    private IEnumerator WaitToDeactive()
+    {
+        yield return new WaitForSeconds(0.5f);
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

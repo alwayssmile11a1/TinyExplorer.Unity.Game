@@ -12,6 +12,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
 
     public float shootCoolDown;
     public Transform shootOrigin;
+    public Transform shootOriginRight;
     private float shootTime;
     [SerializeField]
     private int shootAngle;
@@ -23,9 +24,13 @@ public class RockmanAlikeShoot : MonoBehaviour {
     private StartShooting BulletShootingScript;
     private float currentExistsTime;
 
+    public ParticleSystem hitEffect;
+    public ParticleSystem dieEfect;
+
     private Animator animator;
     private BulletPool bulletPool;
     private StartShooting shootScript;
+    private SpriteRenderer spriteRenderer;
 
     // Use this for initialization
     void Awake () {
@@ -35,7 +40,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
         bulletPool = BulletPool.GetObjectPool(Bullet, 10);
         animator = GetComponent<Animator>();
         shootScript = Bullet.GetComponent<StartShooting>();
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
@@ -67,10 +72,23 @@ public class RockmanAlikeShoot : MonoBehaviour {
     {
         animator.SetBool("attack", false);
         //pop instantiate at first call
-        BulletObject bullet = bulletPool.Pop(shootOrigin.position);
+        BulletObject bullet;
+        if (spriteRenderer.flipX)
+        {
+            angleToTarget += 240;
+            bullet = bulletPool.Pop(shootOriginRight.position);
+        }
+        else
+        {
+            bullet = bulletPool.Pop(shootOrigin.position);
+        }
+
+        //if (bullet == null)
+        //    return;
+        Debug.Log("angle to target: " + angleToTarget);
         bullet.instance.GetComponent<StartShooting>().direction = (Quaternion.Euler(0, 0, angleToTarget) * Vector2.left).normalized;
         Debug.Log(animator.GetBool("attack"));
-        StartCoroutine(test());
+        StartCoroutine(ResetBullet());
     }
     public void CoolDownShoot()
     {
@@ -80,15 +98,21 @@ public class RockmanAlikeShoot : MonoBehaviour {
 
     public void OnGetDamage()
     {
-        Debug.Log("get damage");
+        hitEffect.Play();
     }
 
     public void OnDie()
     {
-        Debug.Log("die");
+        dieEfect.Play();
+        StartCoroutine(WaitToDisable());
+    }
+    private IEnumerator WaitToDisable()
+    {
+        yield return new WaitForSeconds(0.5f);
+        gameObject.SetActive(false);
     }
 
-    private IEnumerator test()
+    private IEnumerator ResetBullet()
     {
         yield return new WaitForSeconds(0.3f);
         shootScript.direction = new Vector2(-1, 0);

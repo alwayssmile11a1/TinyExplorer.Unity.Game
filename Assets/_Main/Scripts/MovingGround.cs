@@ -9,7 +9,8 @@ public class MovingGround : MonoBehaviour {
     [SerializeField]
     private bool canMove;
     private Rigidbody2D platformRigidbody;
-    //[SerializeField]
+    [SerializeField]
+    private float distance;
     private Vector3 m_des;
     public GameObject Effect;
     private void Awake()
@@ -32,7 +33,7 @@ public class MovingGround : MonoBehaviour {
         Debug.Log("Distance to other: " + dist);
         Debug.Log("m_des: " + m_des);
         Debug.Log("m_transform: " + transform.position);
-        if (dist > 0.05)
+        if (dist > distance)
         {
             //Debug.Log(destination);
             Vector2 currentPosition = platformRigidbody.position;
@@ -43,6 +44,8 @@ public class MovingGround : MonoBehaviour {
             canMove = false;
 
     }
+    void MovePlatform_1() { 
+}
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Player")
