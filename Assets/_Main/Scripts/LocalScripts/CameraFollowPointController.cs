@@ -12,21 +12,27 @@ public class CameraFollowPointController : MonoBehaviour {
     public float delayBeforeMoving = 1f;
 
 
-    private Vector3 m_OriginalLocalPosition;
+    private float m_OriginalYLocalPosition;
     private float m_HoldDownTimer;
     private float m_HoldUpTimer;
+    private bool isMoving;
 
     private void Start()
     {
-        m_OriginalLocalPosition = transform.localPosition;
+        m_OriginalYLocalPosition = transform.localPosition.y;
     }
 
     private void Update()
     {
-        if (transform.localPosition != m_OriginalLocalPosition)
+        if (Mathf.Approximately(m_HoldDownTimer, 0) && Mathf.Approximately(m_HoldUpTimer, 0))
         {
-            transform.localPosition = Vector3.Slerp(transform.localPosition, m_OriginalLocalPosition, moveToOriginSpeed * Time.deltaTime);
+            if (!Mathf.Approximately(transform.localPosition.y, m_OriginalYLocalPosition))
+            {
+                Vector3 desiredPosition = new Vector3(transform.localPosition.x, m_OriginalYLocalPosition, transform.localPosition.z);
+                transform.localPosition = Vector3.Slerp(transform.localPosition, desiredPosition, moveToOriginSpeed * Time.deltaTime);
+            }
         }
+
         if(Input.GetKey(KeyCode.DownArrow))
         {
             m_HoldDownTimer += Time.deltaTime;
@@ -55,6 +61,10 @@ public class CameraFollowPointController : MonoBehaviour {
             MoveUp();
         }
 
+
+
+
+
     }
 
 
@@ -63,7 +73,7 @@ public class CameraFollowPointController : MonoBehaviour {
     {
         //if (m_HoldDownTimer >= delayBeforeMoving)
         {
-            if (m_OriginalLocalPosition.y - transform.localPosition.y > maxMoveDownOffset)
+            if (m_OriginalYLocalPosition - transform.localPosition.y > maxMoveDownOffset)
             {
                 return;
             }
@@ -72,6 +82,8 @@ public class CameraFollowPointController : MonoBehaviour {
             newPosition.y -= 5f * Time.deltaTime;
 
             transform.localPosition = newPosition;
+
+            isMoving = true;
         }
     }
     
@@ -79,7 +91,7 @@ public class CameraFollowPointController : MonoBehaviour {
     {
         //if (m_HoldUpTimer >= delayBeforeMoving)
         {
-            if (transform.localPosition.y - m_OriginalLocalPosition.y > maxMoveUpOffset)
+            if (transform.localPosition.y - m_OriginalYLocalPosition > maxMoveUpOffset)
             {
                 return;
             }
@@ -88,6 +100,7 @@ public class CameraFollowPointController : MonoBehaviour {
             newPosition.y += 5f * Time.deltaTime;
 
             transform.localPosition = newPosition;
+            isMoving = true;
         }
     }
 

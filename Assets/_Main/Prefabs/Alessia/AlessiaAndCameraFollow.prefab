@@ -37,10 +37,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4202923279061800}
   - component: {fileID: 114390718065337810}
+  - component: {fileID: 114072815401110002}
   m_Layer: 8
   m_Name: CameraFollowPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -3839803715187477772, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -134,7 +135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4901694117371138}
   - component: {fileID: 114640938010721482}
-  - component: {fileID: 114645424840472340}
+  - component: {fileID: 114385534339677756}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -444,7 +445,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1191080171683058}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.1399999, z: 0}
+  m_LocalPosition: {x: 0.5, y: 2.1399999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4828233843236984}
@@ -509,7 +510,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1644101990743624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 232.24, y: -4.78, z: -1.3203125}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4828233843236984}
@@ -580,7 +581,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1637308157254370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.1399999, z: -10}
+  m_LocalPosition: {x: 0.4999997, y: 2.1399999, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4901694117371138}
@@ -1154,6 +1155,19 @@ MonoBehaviour:
   overrides: []
   randomizePitch: 1
   pitchRange: 0.2
+--- !u!114 &114072815401110002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1191080171683058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a06e1d32d306d44a827b379f2911e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 4828233843236984}
+  spriteRenderer: {fileID: 212394205911254694}
 --- !u!114 &114103457394814428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1252,6 +1266,42 @@ MonoBehaviour:
   overrides: []
   randomizePitch: 1
   pitchRange: 0.1
+--- !u!114 &114385534339677756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1486341870705164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f425265c28d2943956a14c96784b16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
+  m_ScreenX: 0.5
+  m_ScreenY: 0.5
+  m_CameraDistance: 10
+  m_DeadZoneWidth: 0.07
+  m_DeadZoneHeight: 0.03
+  m_DeadZoneDepth: 0
+  m_UnlimitedSoftZone: 0
+  m_SoftZoneWidth: 0.8
+  m_SoftZoneHeight: 0.8
+  m_BiasX: 0
+  m_BiasY: 0
+  m_GroupFramingMode: 2
+  m_AdjustmentMode: 2
+  m_GroupFramingSize: 0.8
+  m_MaxDollyIn: 5000
+  m_MaxDollyOut: 5000
+  m_MinimumDistance: 1
+  m_MaximumDistance: 5000
+  m_MinimumFOV: 3
+  m_MaximumFOV: 60
+  m_MinimumOrthoSize: 1
+  m_MaximumOrthoSize: 100
 --- !u!114 &114390718065337810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1332,25 +1382,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2fb0c8d15b05a54090ba44e94cfd442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114645424840472340
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1486341870705164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bebfff2b78ad604f914fe155303f1c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 0, z: -10}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
-  m_PitchDamping: 0
-  m_YawDamping: 0
-  m_RollDamping: 0
 --- !u!114 &114762216333204674
 MonoBehaviour:
   m_ObjectHideFlags: 1
