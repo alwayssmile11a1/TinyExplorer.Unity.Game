@@ -106,7 +106,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
             BT.If(() => { return m_Damageable.CurrentHealth > 0; }).OpenBranch(
                 //Woke up
                 BT.If(() => { return m_WokeUp; }).OpenBranch(
-                    BT.RandomSequence(new int[] { 2, 1, 2, 2, 2,1 }, 2).OpenBranch(
+                    BT.RandomSequence(new int[] { 1, 2, 2, 2, 2 }, 2).OpenBranch(
                         //Walk
                         BT.Sequence().OpenBranch(
                             BT.Call(() => m_Animator.SetBool(m_HashWalkPara, true)),
@@ -116,18 +116,18 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
                             BT.Call(() => m_Animator.SetBool(m_HashWalkPara, false)),
                             BT.Wait(0.5f)
                         ),
-                        //Teleport
-                        BT.Sequence().OpenBranch(
-                            BT.Call(() => TeleportToRandom()),
-                            BT.Wait(4.5f)
-                        ),
+                        ////Teleport
+                        //BT.Sequence().OpenBranch(
+                        //    BT.Call(() => TeleportToRandom()),
+                        //    BT.Wait(4.5f)
+                        //),
                         //Top to bottom Attack
                         BT.Sequence().OpenBranch(
                             BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-1.3f, 1f))),
                             BT.Call(() => m_Animator.SetTrigger(m_HashTopToDowmAttackPara)),
                             BT.Wait(0.5f),
                             BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                            BT.Wait(1.5f)
+                            BT.Wait(1f)
                         ),
                          //Combo Attack
                          BT.If(() => { return (targetToTrack.position - transform.position).sqrMagnitude < 4f; }).OpenBranch(
@@ -151,7 +151,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
                             BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-0.85f, -0.75f))),
                             BT.Call(() => m_Animator.SetTrigger(m_HashJumpAttackPara)),
                             BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                            BT.Wait(1.5f)
+                            BT.Wait(1f)
                         ),
                         //Summon
                         BT.Sequence().OpenBranch(
@@ -393,7 +393,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
         m_SoldierAppearingTimer = 3.7f;
 
-        //m_SoldierCount++;
+        m_SoldierCount++;
     }
 
 
