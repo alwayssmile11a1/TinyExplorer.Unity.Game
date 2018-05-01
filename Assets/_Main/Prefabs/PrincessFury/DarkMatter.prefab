@@ -141,6 +141,7 @@ MonoBehaviour:
   size: {x: 0.97, y: 0.88}
   offsetBasedOnSpriteFacing: 1
   spriteRenderer: {fileID: 0}
+  enableDamageOnAwake: 1
   canHitTriggers: 0
   disableDamageAfterHit: 0
   forceRespawn: 0
@@ -172,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyWhenOutOfView: 0
   spriteOriginallyFacesLeft: 0
-  timeBeforeAutodestruct: 5
+  timeBeforeAutodestruct: 15
   vfxName: ExpodingHitEffectDark
   mainCamera: {fileID: 0}
 --- !u!198 &198142108689244934
@@ -235,7 +236,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: 1386113138
+  randomSeed: -322270575
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3518,7 +3519,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: 494651029
+  randomSeed: -2113692262
   InitialModule:
     serializedVersion: 3
     enabled: 1

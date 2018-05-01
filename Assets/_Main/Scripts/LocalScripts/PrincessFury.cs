@@ -48,6 +48,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     //Other variables
     private bool m_WokeUp = false;
+    private float m_WakeUpTimer;
 
     private BulletPool m_JumpAttackSpellPool;
 
@@ -96,7 +97,10 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
             //Death
             BT.If(() => { return m_Damageable.CurrentHealth <= 0; }).OpenBranch(
-                BT.Call(() => m_Animator.SetTrigger(m_HashDeathPara))
+                BT.Call(() => bodyDamager.DisableDamage()),
+                BT.Call(() => m_Animator.SetTrigger(m_HashDeathPara)),
+                BT.Wait(2f),
+                BT.Call(()=>gameObject.SetActive(false))
             ),
 
             //Still Alive
@@ -219,6 +223,15 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
         }
 
+        if(m_WakeUpTimer>0)
+        {
+            m_WakeUpTimer -= Time.deltaTime;
+            if(m_WakeUpTimer<=0)
+            {
+                InternalWakeUp();
+            }
+        }
+       
 
         if (m_TeleportTimer > 0)
         {
@@ -268,15 +281,14 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     public void WakeUp()
     {
-        if (m_WokeUp == false)
-        {
-            m_Animator.SetTrigger(m_WakeUpPara);
-            bodyDamager.EnableDamage();
+        m_WakeUpTimer = 3f;
+        m_Animator.SetTrigger(m_WakeUpPara);
+    }
 
-        }
-
+    private void InternalWakeUp()
+    {
+        bodyDamager.EnableDamage();
         m_WokeUp = true;
-
     }
 
     public void StartTopAttack()
@@ -431,6 +443,12 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     public void GotHit(Damager damager, Damageable damageable)
     {
         m_Flicker.StartColorFickering(damageable.invulnerabilityDuration, 0.1f);
+    }
+
+
+    public void Die()
+    {
+        //Play some effect here
     }
 
 }

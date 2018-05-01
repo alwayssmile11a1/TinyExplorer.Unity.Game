@@ -52,12 +52,16 @@ namespace Gamekit2D
         private float m_OriginalDeadZoneHeight;
 
         private Transform m_VirtualTransform;
-        //private float m_OrthoVirtualSize;
 
         private Transform m_DesiredTransform;
         private float m_DesiredOrthoSize;
 
-        private Coroutine m_CurrentCoroutine;
+        private Coroutine m_CurrentFollowingPointChagingCoroutine;
+        private Coroutine m_CurrentOrthoSizeChagingCoroutine;
+
+        //Timer
+        private float m_MaxFollowingPointChangingTimer;
+        private float m_MaxOrthoSizeChaingTimer;
 
 
         private void Awake()
@@ -68,6 +72,7 @@ namespace Gamekit2D
             m_CinemachineComposer = m_CinemachineVirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineFramingTransposer>();
             m_OriginalCameraFollowPoint = m_CinemachineVirtualCamera.Follow;
             m_OriginalOrthographicSize = m_CinemachineVirtualCamera.m_Lens.OrthographicSize;
+            m_OriginalCameraBound = m_CinemachineConfiner.m_BoundingShape2D;
 
             if (m_CinemachineComposer != null)
             {
@@ -90,17 +95,115 @@ namespace Gamekit2D
 
         }
 
+        public void ChangeToNewState(float delayTime = 0f)
+        {
+            StartCoroutine(InternalChangeToNewState(delayTime));
+        }
+
+        public void ChangeBackToOrginalState(float delayTime = 0f)
+        {
+            StartCoroutine(InternalChangeBackToOrginalState(delayTime));
+        }
+
+        private IEnumerator InternalChangeToNewState(float delayTime)
+        {
+            yield return new WaitForSeconds(delayTime);
+
+            if (cameraBound != null)
+            {                
+                m_CinemachineConfiner.m_BoundingShape2D = cameraBound;
+            }
+
+            if (changeCameraFollowPoint)
+            {
+                m_VirtualTransform.position = m_CinemachineTransform.position;
+                m_CinemachineVirtualCamera.Follow = m_VirtualTransform;
+
+                m_DesiredTransform = cameraFollowPoint;
+
+                if (m_CinemachineComposer != null)
+                {
+
+                    m_CinemachineComposer.m_DeadZoneWidth = 0;
+                    m_CinemachineComposer.m_DeadZoneHeight = 0;
+
+                }
+
+                if (m_CurrentFollowingPointChagingCoroutine != null)
+                    StopCoroutine(m_CurrentFollowingPointChagingCoroutine);
+                m_CurrentFollowingPointChagingCoroutine = StartCoroutine(ChangeCameraFollowPoint());
+
+            }
+
+            if (changeOrthographicSize)
+            {
+                m_DesiredOrthoSize = orthographicSize;
+
+                if (m_CurrentOrthoSizeChagingCoroutine != null)
+                {
+                    StopCoroutine(m_CurrentOrthoSizeChagingCoroutine);
+                }
+
+                m_CurrentOrthoSizeChagingCoroutine = StartCoroutine(ChangeOrthoSize());
+            }
+
+        }
+
+        private IEnumerator InternalChangeBackToOrginalState(float delayTime)
+        {
+            yield return new WaitForSeconds(delayTime);
+
+            if (cameraBound != null)
+            {
+                m_CinemachineConfiner.m_BoundingShape2D = m_OriginalCameraBound;
+            }
+
+            if (changeCameraFollowPoint)
+            {
+                m_VirtualTransform.position = m_CinemachineTransform.position;
+                m_CinemachineVirtualCamera.Follow = m_VirtualTransform;
+                m_DesiredTransform = m_OriginalCameraFollowPoint;
+
+
+                if (m_CinemachineComposer != null)
+                {
+                    m_CinemachineComposer.m_DeadZoneWidth = 0;
+                    m_CinemachineComposer.m_DeadZoneHeight = 0;
+
+                }
+
+                if (m_CurrentFollowingPointChagingCoroutine != null)
+                    StopCoroutine(m_CurrentFollowingPointChagingCoroutine);
+
+                m_CurrentFollowingPointChagingCoroutine = StartCoroutine(ChangeCameraFollowPoint());
+            }
+
+            if (changeOrthographicSize)
+            {
+                m_DesiredOrthoSize = m_OriginalOrthographicSize;
+
+                if (m_CurrentOrthoSizeChagingCoroutine != null)
+                {
+                    StopCoroutine(m_CurrentOrthoSizeChagingCoroutine);
+                }
+
+                m_CurrentOrthoSizeChagingCoroutine = StartCoroutine(ChangeOrthoSize());
+            }
+
+
+        }
+
+
         private IEnumerator ChangeCameraFollowPoint()
         {
-            float m_MaxTimer = (m_VirtualTransform.position - m_DesiredTransform.position).sqrMagnitude / (10f * followPointChangingSmoothSpeed * 10f * followPointChangingSmoothSpeed);
+            m_MaxFollowingPointChangingTimer = (m_VirtualTransform.position - m_DesiredTransform.position).sqrMagnitude / (10f * followPointChangingSmoothSpeed * 10f * followPointChangingSmoothSpeed);
 
-            Debug.Log(m_MaxTimer);
 
             //while((m_VirtualTransform.position - m_DesiredTransform.position).sqrMagnitude > 0.0001f)
-            while ((!Mathf.Approximately(m_CinemachineTransform.position.x, m_DesiredTransform.position.x) || !Mathf.Approximately(m_CinemachineTransform.position.y, m_DesiredTransform.position.y)) && m_MaxTimer > 0)
+            while ((!Mathf.Approximately(m_CinemachineTransform.position.x, m_DesiredTransform.position.x) || !Mathf.Approximately(m_CinemachineTransform.position.y, m_DesiredTransform.position.y)) && m_MaxFollowingPointChangingTimer > 0)
             {
                 m_VirtualTransform.position = Vector3.MoveTowards(m_VirtualTransform.position, m_DesiredTransform.position, Time.deltaTime * 10f * followPointChangingSmoothSpeed);
-                m_MaxTimer -= Time.deltaTime;
+                m_MaxFollowingPointChangingTimer -= Time.deltaTime;
                 yield return null;
             }
 
@@ -110,30 +213,31 @@ namespace Gamekit2D
             m_CinemachineComposer.m_DeadZoneHeight = m_OriginalDeadZoneHeight;
 
             OnFinishChangingFollowPoint.Invoke();
-
+            m_MaxOrthoSizeChaingTimer = 0;
         }
 
         private IEnumerator ChangeOrthoSize()
         {
-            //yield return new WaitForSeconds(0.05f);
-
+            m_MaxOrthoSizeChaingTimer = (m_CinemachineVirtualCamera.m_Lens.OrthographicSize - m_DesiredOrthoSize) / orthoSizeChangingSmoothSpeed;
 
             while (!Mathf.Approximately(m_CinemachineVirtualCamera.m_Lens.OrthographicSize, m_DesiredOrthoSize))
             {
                 m_CinemachineVirtualCamera.m_Lens.OrthographicSize = Mathf.MoveTowards(m_CinemachineVirtualCamera.m_Lens.OrthographicSize, m_DesiredOrthoSize, orthoSizeChangingSmoothSpeed * Time.deltaTime);
+                m_MaxOrthoSizeChaingTimer -= Time.deltaTime;
                 yield return null;
             }
 
             m_CinemachineVirtualCamera.m_Lens.OrthographicSize = m_DesiredOrthoSize;
 
             OnFinishChangingOrthoSize.Invoke();
-
+            m_MaxOrthoSizeChaingTimer = 0;
         }
 
         private IEnumerator DisableSchedule()
         {
-            //Wait for about 20 seconds before disable because if we disable this gameobject to soon, the coroutines will be interrupted
-            yield return new WaitForSeconds(20f);
+            //Wait for seconds before disable because if we disable this gameobject to soon, the coroutines will be interrupted
+            yield return new WaitForSeconds(m_MaxFollowingPointChangingTimer + m_MaxOrthoSizeChaingTimer + 5f);
+
 
             gameObject.SetActive(false);
             PersistentDataManager.SetDirty(this);
@@ -151,44 +255,7 @@ namespace Gamekit2D
                     needToBeActiveGameObjects[i].SetActive(true);
                 }
 
-                if (cameraBound != null)
-                {
-                    m_OriginalCameraBound = m_CinemachineConfiner.m_BoundingShape2D;
-                    m_CinemachineConfiner.m_BoundingShape2D = cameraBound;
-                }
-
-                if (changeCameraFollowPoint)
-                {
-                    //m_OriginalCameraFollowPoint = m_CinemachineVirtualCamera.Follow;
-
-                    m_VirtualTransform.position = m_CinemachineTransform.position;
-                    m_CinemachineVirtualCamera.Follow = m_VirtualTransform;
-
-                    m_DesiredTransform = cameraFollowPoint;
-
-                    if (m_CinemachineComposer != null)
-                    {
-
-                        m_CinemachineComposer.m_DeadZoneWidth = 0;
-                        m_CinemachineComposer.m_DeadZoneHeight = 0;
-
-                    }
-
-                    if (m_CurrentCoroutine != null)
-                        StopCoroutine(m_CurrentCoroutine);
-                    m_CurrentCoroutine = StartCoroutine(ChangeCameraFollowPoint());
-
-                }
-
-                if (changeOrthographicSize)
-                {
-                    //m_OriginalOrthographicSize = m_CinemachineVirtualCamera.m_Lens.OrthographicSize;
-
-                    //m_OrthoVirtualSize = m_OriginalOrthographicSize;
-                    m_DesiredOrthoSize = orthographicSize;
-
-                    StartCoroutine(ChangeOrthoSize());
-                }
+                ChangeToNewState();
 
                 OnEnterActiveBound.Invoke();
 
@@ -206,38 +273,7 @@ namespace Gamekit2D
                     needToBeActiveGameObjects[i].SetActive(false);
                 }
 
-                if (cameraBound != null)
-                {
-                    m_CinemachineConfiner.m_BoundingShape2D = m_OriginalCameraBound;
-                }
-
-                if (changeCameraFollowPoint)
-                {
-                    m_VirtualTransform.position = m_CinemachineTransform.position;
-                    m_CinemachineVirtualCamera.Follow = m_VirtualTransform;
-                    m_DesiredTransform = m_OriginalCameraFollowPoint;
-
-
-                    if (m_CinemachineComposer != null)
-                    {
-                        m_CinemachineComposer.m_DeadZoneWidth = 0;
-                        m_CinemachineComposer.m_DeadZoneHeight = 0;
-
-                    }
-
-                    if (m_CurrentCoroutine != null)
-                        StopCoroutine(m_CurrentCoroutine);
-
-                    m_CurrentCoroutine = StartCoroutine(ChangeCameraFollowPoint());
-                }
-
-                if (changeOrthographicSize)
-                {
-                    //m_OrthoVirtualSize = m_CinemachineVirtualCamera.m_Lens.OrthographicSize;
-                    m_DesiredOrthoSize = m_OriginalOrthographicSize;
-
-                    m_CurrentCoroutine = StartCoroutine(ChangeOrthoSize());
-                }
+                ChangeBackToOrginalState();
 
                 OnExitActiveBound.Invoke();
 
@@ -247,7 +283,6 @@ namespace Gamekit2D
                 {
                     StartCoroutine(DisableSchedule());
                 }
-
             }
         }
 
