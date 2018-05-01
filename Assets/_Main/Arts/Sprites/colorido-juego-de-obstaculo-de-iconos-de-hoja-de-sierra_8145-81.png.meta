@@ -3,7 +3,20 @@ guid: ff8db4503a12ca04ebddae3b57b87e26
 timeCreated: 1523978364
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_0
+    21300002: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_1
+    21300004: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_2
+    21300006: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_4
+    21300008: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_5
+    21300010: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_10
+    21300012: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_11
+    21300014: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_12
+    21300016: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_13
+    21300018: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_23
+    21300020: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_25
+    21300022: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_26
+    21300024: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_27
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -40,7 +53,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -66,9 +79,197 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_0
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 437
+        width: 179
+        height: 179
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_1
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 620
+        width: 5
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_2
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 433
+        width: 186
+        height: 186
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_4
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 524
+        width: 8
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_5
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 516
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_10
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 221
+        width: 184
+        height: 184
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_11
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 221
+        width: 184
+        height: 184
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_12
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 414
+        width: 7
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_13
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 417
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 178
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_26
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 7
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: colorido-juego-de-obstaculo-de-iconos-de-hoja-de-sierra_8145-81_27
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 7
+        width: 185
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
   spritePackingTag: 
