@@ -4347,10 +4347,6 @@ Prefab:
       propertyPath: OnHealthSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 967904393}
-    - target: {fileID: 4621418144114974, guid: b4543ced2a30b3e489c1f689222ed111, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4543ced2a30b3e489c1f689222ed111, type: 2}
   m_IsPrefabParent: 0

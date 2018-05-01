@@ -39983,8 +39983,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fcdd10da8ff04144ae80e5b6b10cfeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 2002674068}
-  needActiveGameObjects: []
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  needToBeActiveGameObjects: []
   cameraBound: {fileID: 0}
   changeCameraFollowPoint: 1
   cameraFollowPoint: {fileID: 243732704}
@@ -39992,7 +39994,7 @@ MonoBehaviour:
   changeOrthographicSize: 1
   orthographicSize: 3.5
   orthoSizeChangingSmoothSpeed: 5
-  onlyOneTime: 0
+  disableBoundOnExit: 0
   OnEnterActiveBound:
     m_PersistentCalls:
       m_Calls: []
@@ -40003,6 +40005,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  OnFinishChangingFollowPoint:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnFinishChangingOrthoSize:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  dataSettings:
+    dataTag: ae25b38e-ccba-497c-a1dd-7b08cf858fe9
+    persistenceType: 3
 --- !u!60 &243732703
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -55010,7 +55025,7 @@ Prefab:
     - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
         type: 2}
       propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114103457394814428, guid: b4543ced2a30b3e489c1f689222ed111,
         type: 2}
@@ -55214,6 +55229,91 @@ Prefab:
       propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1723031231}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnHealthSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1692687365}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnHealthSet.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeHitPointUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1723031231}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnableInvulnerability
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1826591003}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: PlayHurtAudioPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114907937855742030, guid: b4543ced2a30b3e489c1f689222ed111,
+        type: 2}
+      propertyPath: OnTakeDamage.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4543ced2a30b3e489c1f689222ed111, type: 2}
   m_IsPrefabParent: 0
@@ -79978,11 +80078,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9c07e4d86fb0de409218f85e15a5e80, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &2002674068 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1539096513172812, guid: b4543ced2a30b3e489c1f689222ed111,
-    type: 2}
-  m_PrefabInternal: {fileID: 797814105}
 --- !u!1 &2013776202 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1664439218178398, guid: 37e36274afec4134a91a98ff2b169392,
