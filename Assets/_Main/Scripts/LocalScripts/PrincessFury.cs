@@ -9,10 +9,10 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     public Transform targetToTrack;
 
     [Header("Damagers")]
+    public Damager bodyDamager;
     public Damager shortDamager;
     public Damager longDamager;
     public Damager jumpDamager;
-
 
     [Header("Spells")]
     public GameObject darkBallSpell;
@@ -89,9 +89,6 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
         m_JumpAttackSpellPool = BulletPool.GetObjectPool(jumpAttackSpell, 4);
         m_DarkMatterPool = BulletPool.GetObjectPool(darkBallSpell, 2);
         m_SoldierPool = BulletPool.GetObjectPool(miniSoldier, 4);
-
-        WakeUp();
-
 
 
         //Behaviour tree
@@ -274,6 +271,8 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
         if (m_WokeUp == false)
         {
             m_Animator.SetTrigger(m_WakeUpPara);
+            bodyDamager.EnableDamage();
+
         }
 
         m_WokeUp = true;

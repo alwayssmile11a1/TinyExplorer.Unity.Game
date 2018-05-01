@@ -206,14 +206,14 @@ public class SimpleEnemyBehaviour : MonoBehaviour
 
     public bool CheckForObstacle(float forwardDistance)
     {
-        //we circle cast with a size sligly small than the collider height. That avoid to collide with very small bump on the ground
+        //we circle cast with a size sligly smaller than the collider height. That avoid to collide with very small bump on the ground
         if (Physics2D.CircleCast(m_Collider.bounds.center, m_Collider.bounds.extents.y - 0.2f, m_SpriteForward, forwardDistance, m_Filter.layerMask.value))
         {
             return true;
         }
 
         Vector3 castingPosition = (Vector2)(transform.position + m_LocalBounds.center) + m_SpriteForward * (m_LocalBounds.extents.x+ forwardDistance);
-        Debug.DrawLine(castingPosition, castingPosition + Vector3.down * (m_LocalBounds.extents.y + 0.2f));
+        //Debug.DrawLine(castingPosition, castingPosition + Vector3.down * (m_LocalBounds.extents.y + 0.2f));
 
         if (!Physics2D.CircleCast(castingPosition, 0.1f, Vector2.down, m_LocalBounds.extents.y + 0.2f, m_CharacterController2D.groundedLayerMask.value))
         {
@@ -301,7 +301,10 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         if(!CheckForObstacle(forwardDistance))
         {
             SetHorizontalSpeed(speed);
-            m_Animator.SetBool(HashPatrollingPara, true);
+            if (HashPatrollingPara != 0)
+            {
+                m_Animator.SetBool(HashPatrollingPara, true);
+            }
         }
         else
         {
@@ -312,7 +315,10 @@ public class SimpleEnemyBehaviour : MonoBehaviour
 
     public void StopPatrolling()
     {
-        m_Animator.SetBool(HashPatrollingPara, false);
+        if (HashPatrollingPara != 0)
+        {
+            m_Animator.SetBool(HashPatrollingPara, false);
+        }
         SetHorizontalSpeed(0);
     }
 
@@ -329,19 +335,29 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         if (!CheckForObstacle(forwardDistance))
         {
             SetHorizontalSpeed(runSpeed);
-            m_Animator.SetBool(HashRunPara, true);
+
+            if (HashRunPara != 0)
+            {
+                m_Animator.SetBool(HashRunPara, true);
+            }
         }
         else
         {
             SetHorizontalSpeed(0);
-            m_Animator.SetBool(HashRunPara, false);
+            if (HashRunPara != 0)
+            {
+                m_Animator.SetBool(HashRunPara, false);
+            }
         }
     }
 
     public void StopRunningToTarget()
     {
         SetHorizontalSpeed(0);
-        m_Animator.SetBool(HashRunPara, false);
+        if (HashRunPara != 0)
+        {
+            m_Animator.SetBool(HashRunPara, false);
+        }
     }
 
 

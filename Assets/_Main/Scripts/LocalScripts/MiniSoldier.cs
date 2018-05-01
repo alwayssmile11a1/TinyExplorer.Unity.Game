@@ -15,7 +15,7 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
     private Animator m_Animator;
     private Rigidbody2D m_RigidBody2D;
     private SpriteRenderer m_SpriteRenderer;
-    private Damageable m_Damageable;
+    //private Damageable m_Damageable;
 
 
     //Animations
@@ -40,7 +40,7 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
         m_Animator = GetComponent<Animator>();
         m_RigidBody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
-        m_Damageable = GetComponent<Damageable>();
+        //m_Damageable = GetComponent<Damageable>();
         
         m_TargetPosition = m_TargetToTrack.transform.position;
 

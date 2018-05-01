@@ -12,7 +12,7 @@ public class ChaseTarget : MonoBehaviour {
     public Transform target;
     [Tooltip("if set, tag will be used rather than targer transform (the value of target will also be changed)")]
     public bool findTargetByTag = false;
-    public string tag = "target";
+    public string targetTag = "target";
     public Vector3 offsetFromTarget;
     [Tooltip("set to true if you want the offset to be relative with the target sprite facing")]
     public bool offsetBasedOnTargetSpriteFacing = true;

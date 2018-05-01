@@ -44,15 +44,15 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     private BulletPool m_LaserAttackPool;
 
 
-    #region Deprecated
-    private GameObject rangeEnemyToSpawn;
-    private GameObject meleeEnemyToSpawn;
-    private List<Transform> spawnRangeEnemyPositions;
-    private List<Transform> spawnMeleeEnemyPositions;
-    //store spawned enemies and their spawned positions (in order to not spawn another enemy on top of an already spawned one)
-    private List<KeyValuePair<Transform,GameObject>> m_SpawnedRangeEnemies = new List<KeyValuePair<Transform, GameObject>>();
-    private List<KeyValuePair<Transform, GameObject>> m_SpawnedMeleeEnemies = new List<KeyValuePair<Transform, GameObject>>();
-    #endregion
+    //#region Deprecated
+    //private GameObject rangeEnemyToSpawn;
+    //private GameObject meleeEnemyToSpawn;
+    //private List<Transform> spawnRangeEnemyPositions;
+    //private List<Transform> spawnMeleeEnemyPositions;
+    ////store spawned enemies and their spawned positions (in order to not spawn another enemy on top of an already spawned one)
+    //private List<KeyValuePair<Transform,GameObject>> m_SpawnedRangeEnemies = new List<KeyValuePair<Transform, GameObject>>();
+    //private List<KeyValuePair<Transform, GameObject>> m_SpawnedMeleeEnemies = new List<KeyValuePair<Transform, GameObject>>();
+    //#endregion
 
     private int m_HashMeteorShowerAttackPara = Animator.StringToHash("MeteorShowerAttack");
     private int m_HashExplodingAttackPara = Animator.StringToHash("ExplodingAttack");
@@ -63,7 +63,6 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     private Damageable m_Damageable;
 
     //others
-    private int m_FireBalls = 5;
     private Damager m_CurrentConcentratingAttack;
     private bool m_FormChanged = false;
     private Vector3 m_FuturePosition;
@@ -268,89 +267,89 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     }
 
 
-    #region Deprecated
-    public void SpawnEnemies()
-    {
-        StartCoroutine(InternalSpawnEnemies());
-    }
+    //#region Deprecated
+    //public void SpawnEnemies()
+    //{
+    //    StartCoroutine(InternalSpawnEnemies());
+    //}
 
-    private IEnumerator InternalSpawnEnemies()
-    {
+    //private IEnumerator InternalSpawnEnemies()
+    //{
 
        
-        yield return new WaitForSeconds(2f);
+    //    yield return new WaitForSeconds(2f);
 
 
 
-        //random the number of enemies to spawn
-        int numberOfEnemies = Random.Range(1, 3);
+    //    //random the number of enemies to spawn
+    //    int numberOfEnemies = Random.Range(1, 3);
 
 
-        for (int i = 0; i < numberOfEnemies; i++)
-        {
-            //random type of enemies to spawn (1 is range, 2 is melee)
-            int type = Random.Range(1, 3);
+    //    for (int i = 0; i < numberOfEnemies; i++)
+    //    {
+    //        //random type of enemies to spawn (1 is range, 2 is melee)
+    //        int type = Random.Range(1, 3);
 
-            switch (type)
-            {
-                case 1:
-                    {
-                        if (!SpawnEnemy(rangeEnemyToSpawn, spawnRangeEnemyPositions, m_SpawnedRangeEnemies))
-                        {
-                            SpawnEnemy(meleeEnemyToSpawn, spawnMeleeEnemyPositions, m_SpawnedMeleeEnemies);
-                        }
+    //        switch (type)
+    //        {
+    //            case 1:
+    //                {
+    //                    if (!SpawnEnemy(rangeEnemyToSpawn, spawnRangeEnemyPositions, m_SpawnedRangeEnemies))
+    //                    {
+    //                        SpawnEnemy(meleeEnemyToSpawn, spawnMeleeEnemyPositions, m_SpawnedMeleeEnemies);
+    //                    }
 
-                        break;
-                    }
+    //                    break;
+    //                }
 
-                case 2:
-                    {
-                        if (!SpawnEnemy(meleeEnemyToSpawn, spawnMeleeEnemyPositions, m_SpawnedMeleeEnemies))
-                        {
-                            SpawnEnemy(rangeEnemyToSpawn, spawnRangeEnemyPositions, m_SpawnedRangeEnemies);
-                        }
-                        break;
-                    }
-            }
-        }
+    //            case 2:
+    //                {
+    //                    if (!SpawnEnemy(meleeEnemyToSpawn, spawnMeleeEnemyPositions, m_SpawnedMeleeEnemies))
+    //                    {
+    //                        SpawnEnemy(rangeEnemyToSpawn, spawnRangeEnemyPositions, m_SpawnedRangeEnemies);
+    //                    }
+    //                    break;
+    //                }
+    //        }
+    //    }
 
-    }
+    //}
 
-    private bool SpawnEnemy(GameObject enemyToSpawn,List<Transform> positions, List<KeyValuePair<Transform, GameObject>> spawnedEnemies)
-    {
+    //private bool SpawnEnemy(GameObject enemyToSpawn,List<Transform> positions, List<KeyValuePair<Transform, GameObject>> spawnedEnemies)
+    //{
 
-        if (enemyToSpawn == null) return false;
+    //    if (enemyToSpawn == null) return false;
 
-        //find and remove null value from m_SpawnedRangeEnemies
-        for (int i = 0; i < spawnedEnemies.Count; i++)
-        {
-            if (spawnedEnemies[i].Value == null)
-            {
-                positions.Add(spawnedEnemies[i].Key);
-                spawnedEnemies.RemoveAt(i);
-            }
-        }
+    //    //find and remove null value from m_SpawnedRangeEnemies
+    //    for (int i = 0; i < spawnedEnemies.Count; i++)
+    //    {
+    //        if (spawnedEnemies[i].Value == null)
+    //        {
+    //            positions.Add(spawnedEnemies[i].Key);
+    //            spawnedEnemies.RemoveAt(i);
+    //        }
+    //    }
 
-        if (positions.Count == 0) return false;
+    //    if (positions.Count == 0) return false;
 
-        //get random position to spawn an enemy
-        int randomIndex = Random.Range(0, positions.Count);
-        Transform spawnPosition = positions[randomIndex];
-        positions.RemoveAt(randomIndex);
+    //    //get random position to spawn an enemy
+    //    int randomIndex = Random.Range(0, positions.Count);
+    //    Transform spawnPosition = positions[randomIndex];
+    //    positions.RemoveAt(randomIndex);
 
-        //spawn enemy
-        GameObject cloneEnemy = Instantiate(enemyToSpawn, spawnPosition.position, Quaternion.identity, transform);
+    //    //spawn enemy
+    //    GameObject cloneEnemy = Instantiate(enemyToSpawn, spawnPosition.position, Quaternion.identity, transform);
 
-        //add to list of spawned enemies
-        spawnedEnemies.Add(new KeyValuePair<Transform, GameObject>(spawnPosition, cloneEnemy));
-
-
-        return true;
-
-    }
+    //    //add to list of spawned enemies
+    //    spawnedEnemies.Add(new KeyValuePair<Transform, GameObject>(spawnPosition, cloneEnemy));
 
 
-    #endregion
+    //    return true;
+
+    //}
+
+
+    //#endregion
 
 
     private void OrientToTarget()

@@ -788,12 +788,12 @@ TextureImporter:
       name: PrincessFury_19
       rect:
         serializedVersion: 2
-        x: 12
-        y: 404
+        x: 15
+        y: 403
         width: 80
         height: 88
       alignment: 9
-      pivot: {x: 0.8, y: 0.4}
+      pivot: {x: 0.75, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -39, y: 42.5}
@@ -818,11 +818,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 105
-        y: 405
-        width: 78
-        height: 86
+        y: 403
+        width: 80
+        height: 88
       alignment: 9
-      pivot: {x: 0.77, y: 0.4}
+      pivot: {x: 0.75, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -4, y: 42}
@@ -855,10 +855,10 @@ TextureImporter:
       name: PrincessFury_21
       rect:
         serializedVersion: 2
-        x: 196
-        y: 404
-        width: 78
-        height: 87
+        x: 197
+        y: 403
+        width: 80
+        height: 88
       alignment: 9
       pivot: {x: 0.75, y: 0.4}
       border: {x: 0, y: 0, z: 0, w: 0}

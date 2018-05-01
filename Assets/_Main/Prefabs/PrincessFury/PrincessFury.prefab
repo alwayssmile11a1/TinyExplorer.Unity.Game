@@ -248,7 +248,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1838605472832434}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 152.77, y: -9.13, z: 0.109375}
+  m_LocalPosition: {x: 211.95, y: -4.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4898692455400542}
@@ -509,6 +509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToTrack: {fileID: 0}
+  bodyDamager: {fileID: 114618858687437838}
   shortDamager: {fileID: 114321789454850266}
   longDamager: {fileID: 114939539996609432}
   jumpDamager: {fileID: 114243698799692198}
@@ -539,7 +540,7 @@ MonoBehaviour:
   size: {x: 0.6338501, y: 1.0434079}
   offsetBasedOnSpriteFacing: 1
   spriteRenderer: {fileID: 0}
-  enableDamageOnAwake: 1
+  enableDamageOnAwake: 0
   canHitTriggers: 0
   disableDamageAfterHit: 0
   forceRespawn: 0
@@ -3965,7 +3966,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300126, guid: afdc43ce2c29b8f448f2c9c8bec599d4, type: 3}
+  m_Sprite: {fileID: 21300170, guid: afdc43ce2c29b8f448f2c9c8bec599d4, type: 3}
   m_Color: {r: 0.6993915, g: 0.5808823, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
