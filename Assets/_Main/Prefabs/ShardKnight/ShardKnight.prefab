@@ -255,7 +255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1420369915888108
 GameObject:
   m_ObjectHideFlags: 1
@@ -915,8 +915,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1412277154090420}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 250.7, y: 20.47, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.25, y: -1.84, z: 0.265625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4530585180126742}
@@ -1219,6 +1219,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  findTargetByTag: 0
+  targetTag: target
   offsetFromTarget: {x: 0, y: 0.5, z: 0}
   offsetBasedOnTargetSpriteFacing: 0
   chaseOnAwake: 0
@@ -1299,6 +1301,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  findTargetByTag: 0
+  targetTag: target
   offsetFromTarget: {x: 0, y: 0.5, z: 0}
   offsetBasedOnTargetSpriteFacing: 0
   chaseOnAwake: 0
@@ -1632,6 +1636,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  findTargetByTag: 0
+  targetTag: target
   offsetFromTarget: {x: 0, y: 0.5, z: 0}
   offsetBasedOnTargetSpriteFacing: 0
   chaseOnAwake: 0
@@ -1651,6 +1657,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  findTargetByTag: 0
+  targetTag: target
   offsetFromTarget: {x: 0, y: 0.5, z: 0}
   offsetBasedOnTargetSpriteFacing: 0
   chaseOnAwake: 0
