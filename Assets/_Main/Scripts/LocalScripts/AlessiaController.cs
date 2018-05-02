@@ -68,6 +68,10 @@ public class AlessiaController : MonoBehaviour {
     private float m_ExternalForceTimer;
 
 
+    private Checkpoint m_LastCheckpoint = null;
+    private Damageable m_Damageable;
+
+
     private void Awake () {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -80,6 +84,7 @@ public class AlessiaController : MonoBehaviour {
         m_Slash.DisableDamage();
         m_SlashContactEffect = slashContactTransform.GetComponentInChildren<ParticleSystem>();
         m_OffsetFromSlashEffectToAlessia = slashContactTransform.position - transform.position;
+        m_Damageable = GetComponent<Damageable>();
     }
 
     private void Update()
@@ -357,6 +362,34 @@ public class AlessiaController : MonoBehaviour {
         //}
 
 
+    }
+
+    public void Respawn(bool resetHealth)
+    {
+        if (m_LastCheckpoint != null)
+        {
+            m_Rigidbody2D.velocity = Vector2.zero;
+
+            if (resetHealth)
+                m_Damageable.SetHealth(m_Damageable.startingHealth);
+
+            //we reset the hurt trigger, as we don't want the player to go back to hurt animation once respawned
+            m_Animator.ResetTrigger(m_HashHurtPara);
+
+            m_Flicker.StopFlickering();
+
+            m_SpriteRenderer.flipX = m_LastCheckpoint.respawnFacingLeft;
+
+
+            transform.position = m_LastCheckpoint.transform.position;
+
+        }
+
+    }
+
+    public void SetChekpoint(Checkpoint checkpoint)
+    {
+        m_LastCheckpoint = checkpoint;
     }
 
 

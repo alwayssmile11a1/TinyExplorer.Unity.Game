@@ -14,13 +14,15 @@ namespace Gamekit2D
             GetComponent<BoxCollider2D>().isTrigger = true; 
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        protected void OnTriggerEnter2D(Collider2D collision)
         {
-            PlayerCharacter c = collision.GetComponent<PlayerCharacter>();
-            if(c != null)
+            AlessiaController alessia = collision.GetComponent<AlessiaController>();
+
+            if (alessia != null)
             {
-                c.SetChekpoint(this);
+                alessia.SetChekpoint(this);
             }
+
         }
     }
 }

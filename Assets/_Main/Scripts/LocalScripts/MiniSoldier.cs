@@ -21,7 +21,7 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
     //Animations
     private int m_HashWalkPara = Animator.StringToHash("Walk");
     private int m_HashAttackPara = Animator.StringToHash("Attack");
-    private int m_HashIdlePara = Animator.StringToHash("Idle");
+    //private int m_HashIdlePara = Animator.StringToHash("Idle");
 
     private bool actived = false;
 

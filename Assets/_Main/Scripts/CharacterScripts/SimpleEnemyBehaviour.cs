@@ -608,7 +608,10 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         if (damageable.CurrentHealth <= 0)
             return;
 
-        m_Animator.SetTrigger(HashHitPara);
+        if (HashHitPara != 0)
+        {
+            m_Animator.SetTrigger(HashHitPara);
+        }
 
         //Vector2 throwVector = new Vector2(0, 3.0f);
         //Vector2 damagerToThis = damager.transform.position - transform.position;

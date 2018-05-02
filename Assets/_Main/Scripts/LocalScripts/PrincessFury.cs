@@ -34,7 +34,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     private int m_HashBottomAttackPara = Animator.StringToHash("BottomAttack");
     private int m_HashTopToDowmAttackPara = Animator.StringToHash("TopToDownAttack");
     private int m_HashJumpAttackPara = Animator.StringToHash("JumpAttack");
-    private int m_HashIdlePara = Animator.StringToHash("Idle");
+    //private int m_HashIdlePara = Animator.StringToHash("Idle");
     private int m_HashSummonPara = Animator.StringToHash("Summon");
     private int m_HashDeathPara = Animator.StringToHash("Death");
 
