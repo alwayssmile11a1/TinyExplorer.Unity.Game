@@ -358,6 +358,7 @@ MonoBehaviour:
   castDirection: {x: -1, y: 0}
   shootCoolDown: 1
   shootOrigin: {fileID: 4323306014296340}
+  shootOriginRight: {fileID: 0}
   shootAngle: 0
   Bullet: {fileID: 1878410788121356, guid: 198b4b751fa46f74f96ced869dd245dc, type: 2}
   hitEffect: {fileID: 198923944871676664}
@@ -422,7 +423,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -1639295238
+  randomSeed: -1100794640
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3636,7 +3637,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -231653760
+  randomSeed: -313326925
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6934,7 +6935,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: 1336265343
+  randomSeed: 1640365879
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10219,7 +10220,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_RenderMode: 0
   m_SortMode: 1
   m_MinParticleSize: 0
@@ -10327,7 +10328,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -10379,7 +10380,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300068, guid: 9737e462efa67314783e619493f69283, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

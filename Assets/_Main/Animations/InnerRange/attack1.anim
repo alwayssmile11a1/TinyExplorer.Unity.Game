@@ -153,13 +153,6 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
-  - time: 0
-    functionName: SetOffsetInnerRangeDamagerAT1
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 1.0166667
     functionName: ActiveAttack1_1st_Damager
     data: 
@@ -183,13 +176,6 @@ AnimationClip:
     messageOptions: 0
   - time: 1.9166666
     functionName: DeactiveAttack1Damager
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 2.75
-    functionName: ResetOffsetInnerRangeDamagerAT1
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

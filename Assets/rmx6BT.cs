@@ -54,13 +54,13 @@ public class rmx6BT : MonoBehaviour {
 
     void rmx6_JumpToTarget()
     {
-        Debug.Log("rmx6_jump");
+        //Debug.Log("rmx6_jump");
         animator.SetBool("jump", true);
     }
     
     public void setVelocity()
     {
-        Debug.Log("Set velocity: " + rmx6Moving.velocity);
+        //Debug.Log("Set velocity: " + rmx6Moving.velocity);
         rmx6Moving.velocity.y = thrust;
     }
 
@@ -68,7 +68,7 @@ public class rmx6BT : MonoBehaviour {
     {
         animator.SetBool("jump", false);
         canJump = false;
-        Debug.Log("reset velocity : " + rmx6Moving.velocity);
+        //Debug.Log("reset velocity : " + rmx6Moving.velocity);
         rmx6Moving.velocity.y = 0;
     }
 
@@ -81,13 +81,14 @@ public class rmx6BT : MonoBehaviour {
         //animator.SetBool("freeze", true);
         //rmx6Moving.canWalk = false;
         //StartCoroutine(DeactiveWalk());
-
+        Debug.Log("Die");
         dieEffect.Play();
         StartCoroutine(WaitToDeactive());
     }
 
     public void OnHit()
     {
+        Debug.Log("Hit");
         hitEffect.Play();
     }
     

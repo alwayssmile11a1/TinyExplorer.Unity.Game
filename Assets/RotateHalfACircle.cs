@@ -30,7 +30,7 @@ public class RotateHalfACircle : MonoBehaviour {
             //StartCoroutine(RotateObj(0.5f, new Vector3(0, 0, -180)));
         }
 
-        Debug.Log("rotation: " + transform.rotation.z);
+        //Debug.Log("rotation: " + transform.rotation.z);
     }
     IEnumerator RotateObj(float timeToRotate, Vector3 direction)
     {

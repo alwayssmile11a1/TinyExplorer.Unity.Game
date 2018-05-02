@@ -32,7 +32,7 @@ public class rmx6Moving : MonoBehaviour {
 
     private void rmx6Move()
     {
-        Debug.Log("velocity in moveing: " + velocity);
+        //Debug.Log("velocity in moveing: " + velocity);
         Vector2 movement = velocity * Time.deltaTime;
         rigidbody2D.position += movement;
         currentTimeMove += Time.deltaTime;

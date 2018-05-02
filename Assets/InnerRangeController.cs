@@ -7,6 +7,7 @@ using UnityEngine;
 public class InnerRangeController : MonoBehaviour {
     [Header("General")]
     public Transform targetToTrack;
+    public ParticleSystem hitEffect;
 
     [Header("Attack1")]
     public Damager innerRangeDamager;
@@ -101,7 +102,7 @@ public class InnerRangeController : MonoBehaviour {
     #region Attack1
     private bool CheckMoveToTarget()
     {
-        if ((transform.position - targetToTrack.position).sqrMagnitude <= 1.5)
+        if ((transform.position - targetToTrack.position).sqrMagnitude <= 1.8)
         {
             rigidbody2D.velocity = Vector2.zero;
             return true;
@@ -113,12 +114,16 @@ public class InnerRangeController : MonoBehaviour {
         else
         {
             spriteRenderer.flipX = true;
+            SetAttack1DamagerOffset();
         }
         Vector2 direction = (targetToTrack.position - transform.position).normalized;
         rigidbody2D.velocity = direction * followSpeed;
         return false;
     }
+    private void SetAttack1DamagerOffset()
+    {
 
+    }
     private void Attack1()
     {
 
@@ -225,61 +230,95 @@ public class InnerRangeController : MonoBehaviour {
     
     public void ActiveAttack1_1st_Damager()
     {
-        attack1Damager[0].GetComponent<EdgeCollider2D>().enabled = true;
+        //attack1Damager[0].GetComponent<EdgeCollider2D>().enabled = true;
+        attack1Damager[0].enabled = true;
+        if (spriteRenderer.flipX)
+        {
+            Vector2 offset = attack1Damager[0].offset;
+            attack1Damager[0].offset = new Vector2(-offset.x, offset.y);
+        }
+        //attack1Damager[0].offset
     }
     public void ActiveAttack1_2nd_Damager()
     {
-        attack1Damager[1].GetComponent<EdgeCollider2D>().enabled = true;
+        //attack1Damager[1].GetComponent<EdgeCollider2D>().enabled = true;
+        attack1Damager[1].enabled = true;
+        if (spriteRenderer.flipX)
+        {
+            Vector2 offset = attack1Damager[1].offset;
+            attack1Damager[1].offset = new Vector2(-offset.x, offset.y);
+        }
     }
     public void ActiveAttack1_3rd_Damager()
     {
-        attack1Damager[2].GetComponent<EdgeCollider2D>().enabled = true;
+        //attack1Damager[2].GetComponent<EdgeCollider2D>().enabled = true;
+        attack1Damager[2].enabled = true;
+        if (spriteRenderer.flipX)
+        {
+            Vector2 offset = attack1Damager[2].offset;
+            attack1Damager[2].offset = new Vector2(-offset.x, offset.y);
+        }
     }
     public void DeactiveAttack1Damager()
     {
         foreach (var item in attack1Damager)
         {
-            item.GetComponent<EdgeCollider2D>().enabled = false;
+            //item.GetComponent<EdgeCollider2D>().enabled = false;
+            item.enabled = false;
+            if (spriteRenderer.flipX)
+            {
+                Vector2 offset = item.offset;
+                item.offset = new Vector2(-offset.x, offset.y);
+            }
         }
     }
-    public void SetOffsetInnerRangeDamagerAT1()
+    public void OnHit()
     {
-        Debug.Log("Set offset");
-        Vector2 Offset = innerRangeDamager.offset;
-        if (spriteRenderer.flipX)
-        {
-            innerRangeDamager.offset = new Vector2(Offset.x + 1.5f, Offset.y);
-        }
-        else
-        {
-            innerRangeDamager.offset = new Vector2(Offset.x - 1.5f, Offset.y);
-        }
+        hitEffect.Play();
+        animator.SetTrigger("hit");
     }
-    public void ResetOffsetInnerRangeDamagerAT1()
+    public void ResetHitTrigger()
     {
-        Debug.Log("Reset offset");
-        Vector2 Offset = innerRangeDamager.offset;
-        if (spriteRenderer.flipX)
-        {
-            innerRangeDamager.offset = new Vector2(Offset.x - 1.5f, Offset.y);
-        }
-        else
-        {
-            innerRangeDamager.offset = new Vector2(Offset.x + 1.5f, Offset.y);
-        }
+        animator.ResetTrigger("hit");
     }
-    public void SetOffsetInnerRangeDamagerAT2()
-    {
-        Debug.Log("Set offset");
-        Vector2 Offset = innerRangeDamager.offset;
-        innerRangeDamager.offset = new Vector2(Offset.x -0.2f, Offset.y -1.5f);
-    }
-    public void ResetOffsetInnerRangeDamagerAT2()
-    {
-        Debug.Log("Reset offset");
-        Vector2 Offset = innerRangeDamager.offset;
-        innerRangeDamager.offset = new Vector2(Offset.x + 0.2f, Offset.y + 1.5f);
-    }
+    //public void SetOffsetInnerRangeDamagerAT1()
+    //{
+    //    Debug.Log("Set offset");
+    //    Vector2 Offset = innerRangeDamager.offset;
+    //    if (spriteRenderer.flipX)
+    //    {
+    //        innerRangeDamager.offset = new Vector2(Offset.x + 1.5f, Offset.y);
+    //    }
+    //    else
+    //    {
+    //        innerRangeDamager.offset = new Vector2(Offset.x - 1.5f, Offset.y);
+    //    }
+    //}
+    //public void ResetOffsetInnerRangeDamagerAT1()
+    //{
+    //    Debug.Log("Reset offset");
+    //    Vector2 Offset = innerRangeDamager.offset;
+    //    if (spriteRenderer.flipX)
+    //    {
+    //        innerRangeDamager.offset = new Vector2(Offset.x - 1.5f, Offset.y);
+    //    }
+    //    else
+    //    {
+    //        innerRangeDamager.offset = new Vector2(Offset.x + 1.5f, Offset.y);
+    //    }
+    //}
+    //public void SetOffsetInnerRangeDamagerAT2()
+    //{
+    //    Debug.Log("Set offset");
+    //    Vector2 Offset = innerRangeDamager.offset;
+    //    innerRangeDamager.offset = new Vector2(Offset.x -0.2f, Offset.y -1.5f);
+    //}
+    //public void ResetOffsetInnerRangeDamagerAT2()
+    //{
+    //    Debug.Log("Reset offset");
+    //    Vector2 Offset = innerRangeDamager.offset;
+    //    innerRangeDamager.offset = new Vector2(Offset.x + 0.2f, Offset.y + 1.5f);
+    //}
 
     private IEnumerator WaitToStopAttack2FireParticle()
     {
