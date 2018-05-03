@@ -20,13 +20,13 @@ namespace Gamekit2D
         [Tooltip("when the target enter the bound, the camera will follow this point")]
         public Transform cameraFollowPoint;
         [Tooltip("SmoothSpeed")]
-        public float followPointChangingSmoothSpeed = 5f;
+        public float followPointChangingSmoothSpeed = 1f;
 
         [Header("Orthographic Size")]
         public bool changeOrthographicSize = false;
-        public float orthographicSize = 3.5f;
+        public float orthographicSize = 4f;
         [Tooltip("SmoothSpeed")]
-        public float orthoSizeChangingSmoothSpeed = 5f;
+        public float orthoSizeChangingSmoothSpeed = 1f;
 
         [Space(7)]
         public bool disableBoundOnExit = false;

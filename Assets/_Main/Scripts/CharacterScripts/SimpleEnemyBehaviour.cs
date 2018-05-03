@@ -583,9 +583,10 @@ public class SimpleEnemyBehaviour : MonoBehaviour
 
         //throwVector.x = Mathf.Sign(damagerToThis.x) * -4.0f;
         //SetMoveVector(throwVector);
-
-        m_Animator.SetTrigger(HashDeathPara);
-
+        if (HashDeathPara != 0)
+        {
+            m_Animator.SetTrigger(HashDeathPara);
+        }
         if (dieAudio != null)
             dieAudio.PlayRandomSound();
 

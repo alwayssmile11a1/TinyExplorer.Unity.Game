@@ -364,6 +364,20 @@ public class AlessiaController : MonoBehaviour {
 
     }
 
+    public void OnDie(Damager damager, Damageable damageable)
+    {
+        StartCoroutine(DieRespawnCoroutine(true));
+    }
+
+    private IEnumerator DieRespawnCoroutine(bool resetHealth)
+    {       
+        yield return new WaitForSeconds(0.2f); //wait one second before respawing
+        yield return StartCoroutine(ScreenFader.FadeSceneOut());
+        Respawn(resetHealth);
+        yield return new WaitForSeconds(0.3f);
+        yield return StartCoroutine(ScreenFader.FadeSceneIn());
+    }
+
     public void Respawn(bool resetHealth)
     {
         if (m_LastCheckpoint != null)
@@ -380,9 +394,7 @@ public class AlessiaController : MonoBehaviour {
 
             m_SpriteRenderer.flipX = m_LastCheckpoint.respawnFacingLeft;
 
-
             transform.position = m_LastCheckpoint.transform.position;
-
         }
 
     }

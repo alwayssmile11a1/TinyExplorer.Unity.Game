@@ -155,34 +155,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 38f2d0d89a1f8b446a310393304b2ec8, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &67160618 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1139721340499178, guid: 38f2d0d89a1f8b446a310393304b2ec8,
+--- !u!114 &67160619 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114140717815013338, guid: 38f2d0d89a1f8b446a310393304b2ec8,
     type: 2}
   m_PrefabInternal: {fileID: 67160617}
---- !u!114 &67160619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 67160618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fac800b4b8f563143a81c41995d789af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &67160620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 67160618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d038236493b76b4c813fee442c1e3c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialSceneTransitionDestination: {fileID: 0}
 --- !u!1 &74873912
 GameObject:
   m_ObjectHideFlags: 0

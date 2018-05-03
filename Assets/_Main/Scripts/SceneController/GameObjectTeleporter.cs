@@ -75,7 +75,10 @@ namespace Gamekit2D
             {
                 if (m_PlayerInput == null)
                     m_PlayerInput = FindObjectOfType<PlayerInput> ();
-                m_PlayerInput.ReleaseControl (resetInputValues);
+                if (m_PlayerInput != null)
+                {
+                    m_PlayerInput.ReleaseControl(resetInputValues);
+                }
             }
 
             if(fade)
