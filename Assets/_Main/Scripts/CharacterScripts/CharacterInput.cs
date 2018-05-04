@@ -38,15 +38,22 @@ public class CharacterInput : MonoBehaviour {
 
     private float horizontal;
     private float vertical;
+    private bool m_Actived = true;
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (!m_Actived)
+        {
+            horizontal = 0;
+            vertical = 0;
+            return;
+        }
 
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
@@ -129,6 +136,10 @@ public class CharacterInput : MonoBehaviour {
 
     }
 
+    public void SetInputActive(bool actived)
+    {
+        m_Actived = actived;
+    }
 
 
 }

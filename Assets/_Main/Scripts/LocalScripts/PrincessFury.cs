@@ -27,6 +27,10 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     public Transform summonTeleportPosition;
     public GameObject miniSoldier;
 
+
+    [Header("Death")]
+    public string deathEffectName;
+
     //Animation
     private int m_WakeUpPara = Animator.StringToHash("WakeUp");
     private int m_HashWalkPara = Animator.StringToHash("Walk");
@@ -48,10 +52,9 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     //Other variables
     private bool m_WokeUp = false;
-    private float m_WakeUpTimer;
+    private float m_WakeTimer = 0;
 
     private BulletPool m_JumpAttackSpellPool;
-
     private BulletPool m_DarkMatterPool;
     private BulletObject m_DarkMatter1;
     private BulletObject m_DarkMatter2;
@@ -61,7 +64,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     private BulletPool m_SoldierPool;
     private List<BulletObject> m_Soldiers = new List<BulletObject>();
-    private int m_SoldierCount = 3;
+    private int m_SoldierCount = 2;
     private float m_SoldierAppearingTimer;
 
     //Teleport
@@ -94,93 +97,99 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
         //Behaviour tree
         m_Ai.OpenBranch(
+            BT.If(()=> { return m_Damageable.CurrentHealth == m_Damageable.startingHealth && m_SoldierCount == 2; }).OpenBranch(
 
-            //Death
-            BT.If(() => { return m_Damageable.CurrentHealth <= 0; }).OpenBranch(
-                BT.Call(() => bodyDamager.DisableDamage()),
-                BT.Call(() => m_Animator.SetTrigger(m_HashDeathPara)),
-                BT.Wait(2f),
-                BT.Call(()=>gameObject.SetActive(false))
+                //Summon
+                BT.Sequence().OpenBranch(
+                    BT.Call(() => TeleportTo(summonTeleportPosition.position)),
+                    BT.Wait(4.5f),
+                    BT.Call(() => m_SpriteRenderer.flipX = true),
+                    BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-0.15f, 1.5f))),
+                    BT.Call(() => m_Animator.SetTrigger(m_HashSummonPara)),
+                    BT.Wait(1f),
+                    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                    BT.WaitUntil(SummonActionEndCheck),
+                    BT.Wait(0.5f),
+                    BT.Call(() => TeleportToRandom()),
+                    BT.Wait(5f)
+                )
+
             ),
 
-            //Still Alive
-            BT.If(() => { return m_Damageable.CurrentHealth > 0; }).OpenBranch(
-                //Woke up
-                BT.If(() => { return m_WokeUp; }).OpenBranch(
-                    BT.RandomSequence(new int[] { 1, 2, 2, 2, 2 }, 2).OpenBranch(
-                        //Walk
-                        BT.Sequence().OpenBranch(
-                            BT.Call(() => m_Animator.SetBool(m_HashWalkPara, true)),
-                            BT.Call(() => SetHorizontalSpeed(1f)),
-                            BT.Wait(2.5f),
-                            BT.Call(() => SetHorizontalSpeed(0)),
-                            BT.Call(() => m_Animator.SetBool(m_HashWalkPara, false)),
-                            BT.Wait(0.5f)
-                        ),
-                        ////Teleport
-                        //BT.Sequence().OpenBranch(
-                        //    BT.Call(() => TeleportToRandom()),
-                        //    BT.Wait(4.5f)
-                        //),
-                        //Top to bottom Attack
-                        BT.Sequence().OpenBranch(
-                            BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-1.3f, 1f))),
-                            BT.Call(() => m_Animator.SetTrigger(m_HashTopToDowmAttackPara)),
-                            BT.Wait(0.5f),
-                            BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                            BT.Wait(1f)
-                        ),
-                         //Combo Attack
-                         BT.If(() => { return (targetToTrack.position - transform.position).sqrMagnitude < 4f; }).OpenBranch(
-                             BT.Sequence().OpenBranch(
-                                BT.Call(() => m_Animator.SetTrigger(m_HashTopAttackPara)),
-                                BT.Wait(0.5f),
-                                BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                                BT.Call(OrientToTarget),
-                                BT.Call(() => m_Animator.SetTrigger(m_HashBottomAttackPara)),
-                                BT.Wait(0.5f),
-                                BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                                BT.Call(OrientToTarget),
-                                BT.Call(() => m_Animator.SetTrigger(m_HashTopAttackPara)),
-                                BT.Wait(0.5f),
-                                BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                                BT.Wait(1f)
-                            )
-                        ),
-                        //JumpAttack
-                        BT.Sequence().OpenBranch(
-                            BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-0.85f, -0.75f))),
-                            BT.Call(() => m_Animator.SetTrigger(m_HashJumpAttackPara)),
-                            BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                            BT.Wait(1f)
-                        ),
-                        //Summon
-                        BT.Sequence().OpenBranch(
-                            BT.Call(() => TeleportTo(summonTeleportPosition.position)),
-                            BT.Wait(4.5f),
-                            BT.Call(() => m_SpriteRenderer.flipX = true),
-                            BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-0.15f, 1.5f))),
-                            BT.Call(() => m_Animator.SetTrigger(m_HashSummonPara)),
-                            BT.Wait(1f),
-                            BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                            BT.WaitUntil(SummonActionEndCheck),                           
-                            BT.Wait(0.5f),
-                            BT.Call(() => TeleportToRandom()),
-                            BT.Wait(5f)
-                        )
+            BT.If(() => { return m_Damageable.CurrentHealth <= m_Damageable.startingHealth/2 && m_SoldierCount == 3; }).OpenBranch(
 
-
-                    ),
-
-                    BT.Call(OrientToTarget),
-
-                    BT.Wait(1f)
-
+                //Summon
+                BT.Sequence().OpenBranch(
+                    BT.Call(() => TeleportTo(summonTeleportPosition.position)),
+                    BT.Wait(4.5f),
+                    BT.Call(() => m_SpriteRenderer.flipX = true),
+                    BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-0.15f, 1.5f))),
+                    BT.Call(() => m_Animator.SetTrigger(m_HashSummonPara)),
+                    BT.Wait(1f),
+                    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                    BT.WaitUntil(SummonActionEndCheck),
+                    BT.Wait(0.5f),
+                    BT.Call(() => TeleportToRandom()),
+                    BT.Wait(5f)
                 )
-               
-            )
+
+            ),
 
 
+            BT.RandomSequence(new int[] { 3, 2, 2, 2, 2 }, 2).OpenBranch(
+                //Walk
+                BT.Sequence().OpenBranch(
+                    BT.Call(() => m_Animator.SetBool(m_HashWalkPara, true)),
+                    BT.Call(() => SetHorizontalSpeed(1f)),
+                    BT.Wait(2.5f),
+                    BT.Call(() => SetHorizontalSpeed(0)),
+                    BT.Call(() => m_Animator.SetBool(m_HashWalkPara, false)),
+                    BT.Wait(0.5f)
+                ),
+                ////Teleport
+                //BT.Sequence().OpenBranch(
+                //    BT.Call(() => TeleportToRandom()),
+                //    BT.Wait(4.5f)
+                //),
+                //Top to bottom Attack
+                BT.Sequence().OpenBranch(
+                    BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-1.3f, 1f))),
+                    BT.Call(() => m_Animator.SetTrigger(m_HashTopToDowmAttackPara)),
+                    BT.Wait(0.5f),
+                    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                    BT.Wait(1f)
+                ),
+                    //Combo Attack
+                    BT.If(() => { return (targetToTrack.position - transform.position).sqrMagnitude < 4f; }).OpenBranch(
+                        BT.Sequence().OpenBranch(
+                        BT.Call(() => m_Animator.SetTrigger(m_HashTopAttackPara)),
+                        BT.Wait(0.5f),
+                        BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                        BT.Call(OrientToTarget),
+                        BT.Call(() => m_Animator.SetTrigger(m_HashBottomAttackPara)),
+                        BT.Wait(0.5f),
+                        BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                        BT.Call(OrientToTarget),
+                        BT.Call(() => m_Animator.SetTrigger(m_HashTopAttackPara)),
+                        BT.Wait(0.5f),
+                        BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                        BT.Wait(1f)
+                    )
+                ),
+                //JumpAttack
+                BT.Sequence().OpenBranch(
+                    BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-0.85f, -0.75f))),
+                    BT.Call(() => m_Animator.SetTrigger(m_HashJumpAttackPara)),
+                    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                    BT.Wait(1f)
+                )
+
+
+            ),
+
+            BT.Call(OrientToTarget),
+
+            BT.Wait(1f)
         );
 
     }
@@ -195,7 +204,25 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     void Update()
     {
 
-        m_Ai.Tick();
+        if (m_Damageable.CurrentHealth > 0) 
+        {
+            if (m_WokeUp)
+            {
+                m_Ai.Tick();
+            }
+        }
+
+        if(m_WakeTimer>0)
+        {
+            m_WakeTimer -= Time.deltaTime;
+
+            if(m_WakeTimer<=0)
+            {
+                InternalWakeUp();
+
+
+            }
+        }
 
 
         if (m_DarkMatter1 !=null && !m_DarkMatter1.inPool)
@@ -223,14 +250,6 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
         }
 
-        if(m_WakeUpTimer>0)
-        {
-            m_WakeUpTimer -= Time.deltaTime;
-            if(m_WakeUpTimer<=0)
-            {
-                InternalWakeUp();
-            }
-        }
        
 
         if (m_TeleportTimer > 0)
@@ -279,13 +298,19 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     }
 
-    public void WakeUp()
+    public void WakeUp(float delayTime)
     {
-        m_WakeUpTimer = 3f;
-        m_Animator.SetTrigger(m_WakeUpPara);
+        m_WakeTimer = delayTime; 
+
     }
 
     private void InternalWakeUp()
+    {
+        m_Animator.SetTrigger(m_WakeUpPara);
+        VFXController.Instance.Trigger(VFXController.StringToHash("Implode"), transform.position, 0, false, null);
+    }
+
+    public void StartAction()
     {
         bodyDamager.EnableDamage();
         m_WokeUp = true;
@@ -446,9 +471,21 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     }
 
 
-    public void Die()
+    public void Die(Damager damager, Damageable damageable)
     {
-        //Play some effect here
+        bodyDamager.DisableDamage();
+        m_Animator.SetTrigger(m_HashDeathPara);
+
+        //Death effect
+        VFXController.Instance.Trigger(VFXController.StringToHash(deathEffectName), transform.position, 0.1f, false,null);
+
+
     }
+
+    public void Disable()
+    {
+        gameObject.SetActive(false);
+    }
+
 
 }

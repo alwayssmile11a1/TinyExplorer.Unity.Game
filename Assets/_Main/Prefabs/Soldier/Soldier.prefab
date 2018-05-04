@@ -312,6 +312,7 @@ MonoBehaviour:
   footStepAudio: {fileID: 0}
   flickeringDuration: 0
   flickerColor: {r: 1, g: 0.102941155, b: 0.102941155, a: 1}
+  hitEffectName: CFX_Hit_Red
   deadEffectName: ExplodingHitEffectDark
 --- !u!212 &212231277029886954
 SpriteRenderer:

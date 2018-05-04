@@ -76,6 +76,7 @@ public class SimpleEnemyBehaviour : MonoBehaviour
     [Tooltip("Time in seconds during which the enemy flicker after being hit")]
     public float flickeringDuration = 0.1f;
     public Color flickerColor = new Color(1f, 100 / 255f, 100 / 255f, 1f);
+    public string hitEffectName = "HitEffect";
     public string deadEffectName = "DeadEffect";
 
 
@@ -104,6 +105,7 @@ public class SimpleEnemyBehaviour : MonoBehaviour
     protected BulletPool m_BulletPool;
 
     protected int hashDeadEffect;
+    protected int hashHitEffect;
 
     protected bool m_Dead = false;
 
@@ -129,8 +131,14 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         HashDeathPara = Animator.StringToHash(deathTransitionName);
         HashHitPara = Animator.StringToHash(hitTransitionName);
 
-        hashDeadEffect = VFXController.StringToHash(deadEffectName);
-        
+        //if (deadEffectName != null)
+        {
+            hashDeadEffect = VFXController.StringToHash(deadEffectName);
+        }
+        //if (hitEffectName != null)
+        {
+            hashHitEffect = VFXController.StringToHash(hitEffectName);
+        }
         m_CharacterController2D = GetComponent<SimpleCharacterController2D>();
         m_Collider = GetComponent<Collider2D>();
         m_Animator = GetComponent<Animator>();
@@ -597,8 +605,10 @@ public class SimpleEnemyBehaviour : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-        VFXController.Instance.Trigger(hashDeadEffect, transform.position, 0, m_SpriteForward.x > 0 ? false : true, null);
-
+        if (hashDeadEffect != 0)
+        {
+            VFXController.Instance.Trigger(hashDeadEffect, transform.position, 0, m_SpriteForward.x > 0 ? false : true, null);
+        }
         //m_Collider.enabled = false;
 
         //CameraShaker.Shake(0.15f, 0.3f);
@@ -613,6 +623,13 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         {
             m_Animator.SetTrigger(HashHitPara);
         }
+
+        if (hashHitEffect != 0 )
+        {
+            VFXController.Instance.Trigger(hashHitEffect, transform.position, 0, m_SpriteForward.x > 0 ? false : true, null);
+        }
+
+       
 
         //Vector2 throwVector = new Vector2(0, 3.0f);
         //Vector2 damagerToThis = damager.transform.position - transform.position;

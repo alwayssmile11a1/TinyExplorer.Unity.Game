@@ -342,6 +342,8 @@ public class AlessiaController : MonoBehaviour {
         m_Rigidbody2D.AddForce(m_PushBackVector, ForceMode2D.Impulse);
         m_ExternalForceTimer = 0.1f;
 
+        CameraShaker.Shake(0.05f, 0.05f);
+
         ////Slowdown time a little bit
         //TimeManager.SlowdownTime(0.2f, 0.2f);
 
@@ -362,6 +364,13 @@ public class AlessiaController : MonoBehaviour {
         //}
 
 
+    }
+
+
+    public void OnPickUpNewAbility()
+    {
+        //VFXController.Instance.Trigger(VFXController.StringToHash("Implode"), transform.position + Vector3.up *0.6f, 0.1f, false, null);
+        VFXController.Instance.Trigger(VFXController.StringToHash("Yellow_Explosion"), transform.position + Vector3.up * 0.6f, 0, false, null);
     }
 
     public void OnDie(Damager damager, Damageable damageable)

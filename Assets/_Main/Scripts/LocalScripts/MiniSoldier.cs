@@ -122,8 +122,10 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
 
     private void SetHorizontalSpeed(float speed)
     {
-
-        speed += Random.Range(-0.2f, 0.2f);
+        if (speed != 0)
+        {
+            speed += Random.Range(-0.2f, 0.2f);
+        }
 
         m_RigidBody2D.velocity = speed * (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right);
 
