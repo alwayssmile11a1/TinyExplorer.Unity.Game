@@ -277,6 +277,10 @@ public class InnerRangeController : MonoBehaviour {
         hitEffect.Play();
         animator.SetTrigger("hit");
     }
+    public void OnDie()
+    {
+        gameObject.SetActive(false);
+    }
     public void ResetHitTrigger()
     {
         animator.ResetTrigger("hit");
