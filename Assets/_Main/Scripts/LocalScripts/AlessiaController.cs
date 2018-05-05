@@ -72,6 +72,8 @@ public class AlessiaController : MonoBehaviour {
     private Damageable m_Damageable;
 
 
+    private bool m_InBossFight = false;
+
     private void Awake () {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -403,7 +405,44 @@ public class AlessiaController : MonoBehaviour {
 
             m_SpriteRenderer.flipX = m_LastCheckpoint.respawnFacingLeft;
 
+            //if (m_LastCheckpoint.resetGameObjectsOnRespawn)
+            //{
+            //    for (int i = 0; i < m_LastCheckpoint.resetGameObjects.Length; i++)
+            //    {
+            //        IDataResetable resetter = m_LastCheckpoint.resetGameObjects[i].GetComponent<IDataResetable>();
+            //        if (resetter!=null)
+            //            resetter.OnReset();
+            //    }
+            //}
+
+            StartCoroutine(hello());
+
             transform.position = m_LastCheckpoint.transform.position;
+
+
+        }
+
+    }
+    
+    IEnumerator hello()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        if (m_LastCheckpoint.resetGameObjectsOnRespawn)
+        {
+           
+            for (int i = 0; i < m_LastCheckpoint.resetGameObjects.Length; i++)
+            {
+                //m_LastCheckpoint.resetGameObjects[i].SetActive(true);
+                IDataResetable[] resetters = m_LastCheckpoint.resetGameObjects[i].GetComponents<IDataResetable>();
+
+                for (int j = 0; j < resetters.Length; j++)
+                {
+                    if (resetters != null)
+                        resetters[j].OnReset();
+                }
+               
+            }
         }
 
     }
@@ -411,6 +450,12 @@ public class AlessiaController : MonoBehaviour {
     public void SetChekpoint(Checkpoint checkpoint)
     {
         m_LastCheckpoint = checkpoint;
+    }
+
+
+    public void SetInBossFight(bool inBossFight)
+    {
+        m_InBossFight = inBossFight;
     }
 
 
@@ -423,7 +468,6 @@ public class AlessiaController : MonoBehaviour {
     {
         m_CanSlash = canSlash;
     }
-
 
 
     public void PlayFootStepAudioPlayer()

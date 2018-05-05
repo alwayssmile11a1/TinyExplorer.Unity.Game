@@ -132,6 +132,12 @@ namespace Gamekit2D
             OnGainHealth.Invoke(amount, this);
         }
 
+        public void ResetHealth()
+        {
+            m_CurrentHealth = startingHealth;
+            OnHealthSet.Invoke(this);
+        }
+
         public void SetHealth(int amount)
         {
             m_CurrentHealth = amount;

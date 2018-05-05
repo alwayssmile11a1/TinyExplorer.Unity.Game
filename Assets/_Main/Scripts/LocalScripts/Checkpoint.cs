@@ -9,6 +9,11 @@ namespace Gamekit2D
     {
         public bool respawnFacingLeft;
 
+        public bool resetGameObjectsOnRespawn;
+        
+        [Tooltip("The gameobjects have to implement interface IDataResetable")]
+        public GameObject[] resetGameObjects; 
+
         private void Reset()
         {
             GetComponent<BoxCollider2D>().isTrigger = true; 
@@ -24,5 +29,12 @@ namespace Gamekit2D
             }
 
         }
+
+        public void SetResetGameObjectOnRespawn(bool resetGameObjectsOnRespawn)
+        {
+            this.resetGameObjectsOnRespawn = resetGameObjectsOnRespawn;
+        }
+
+
     }
 }

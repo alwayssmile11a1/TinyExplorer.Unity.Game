@@ -4,7 +4,7 @@ using UnityEngine;
 using Gamekit2D;
 using BTAI;
 
-public class PrincessFury : MonoBehaviour, IBTDebugable {
+public class PrincessFury : MonoBehaviour, IBTDebugable, IDataResetable {
 
     public Transform targetToTrack;
 
@@ -33,6 +33,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     //Animation
     private int m_WakeUpPara = Animator.StringToHash("WakeUp");
+    private int m_SleepPara = Animator.StringToHash("Sleep");
     private int m_HashWalkPara = Animator.StringToHash("Walk");
     private int m_HashTopAttackPara = Animator.StringToHash("TopAttack");
     private int m_HashBottomAttackPara = Animator.StringToHash("BottomAttack");
@@ -49,6 +50,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     private Damageable m_Damageable;
     private Flicker m_Flicker;
 
+    private Vector3 m_OriginalPosition;
 
     //Other variables
     private bool m_WokeUp = false;
@@ -56,8 +58,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     private BulletPool m_JumpAttackSpellPool;
     private BulletPool m_DarkMatterPool;
-    private BulletObject m_DarkMatter1;
-    private BulletObject m_DarkMatter2;
+    private List<BulletObject> m_DarkMatters = new List<BulletObject>();
     private float m_DarkMatterTimer;
     private Vector3 m_PrincessFuryPosition;
 
@@ -84,6 +85,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Flicker = gameObject.AddComponent<Flicker>();
 
+        m_OriginalPosition = transform.position;
 
         shortDamager.DisableDamage();
         longDamager.DisableDamage();
@@ -225,10 +227,20 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
         }
 
 
-        if (m_DarkMatter1 !=null && !m_DarkMatter1.inPool)
+        if (m_DarkMatters.Count >0 )
         {
-            m_DarkMatter1.rigidbody2D.position = new Vector2(m_DarkMatter1.rigidbody2D.position.x, m_PrincessFuryPosition.y + Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
-            m_DarkMatter2.rigidbody2D.position = new Vector2(m_DarkMatter2.rigidbody2D.position.x, m_PrincessFuryPosition.y - Mathf.Sin(3 * m_DarkMatterTimer)*1.5f);
+            for (int i = 0; i < m_DarkMatters.Count; i++)
+            {
+                if (!m_DarkMatters[i].inPool)
+                {
+                    m_DarkMatters[i].rigidbody2D.position = new Vector2(m_DarkMatters[i].rigidbody2D.position.x, m_PrincessFuryPosition.y + ((i % 2 == 0) ? -1 : 1) * Mathf.Sin(3 * m_DarkMatterTimer) * 1.5f);
+                }
+                else
+                {
+                    m_DarkMatters.RemoveAt(i);
+                }
+            }
+           
             m_DarkMatterTimer += Time.deltaTime;
         }
 
@@ -331,13 +343,17 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     {
         shortDamager.EnableDamage();
 
-        m_DarkMatter1 = m_DarkMatterPool.Pop(transform.position + (m_SpriteRenderer.flipX ? new Vector3(-0.5f, 0, 0) : new Vector3(0.5f, 0, 0)));
+        BulletObject m_DarkMatter1 = m_DarkMatterPool.Pop(transform.position + (m_SpriteRenderer.flipX ? new Vector3(-0.5f, 0, 0) : new Vector3(0.5f, 0, 0)));
         m_DarkMatter1.rigidbody2D.velocity = (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right) * 2;
 
-        m_DarkMatter2 = m_DarkMatterPool.Pop(transform.position + (m_SpriteRenderer.flipX ? new Vector3(-0.5f, 0, 0) : new Vector3(0.5f, 0, 0)));
+        BulletObject m_DarkMatter2 = m_DarkMatterPool.Pop(transform.position + (m_SpriteRenderer.flipX ? new Vector3(-0.5f, 0, 0) : new Vector3(0.5f, 0, 0)));
         m_DarkMatter2.rigidbody2D.velocity = (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right) * 2;
 
         m_PrincessFuryPosition = transform.position;
+
+
+        m_DarkMatters.Add(m_DarkMatter1);
+        m_DarkMatters.Add(m_DarkMatter2);
 
         m_DarkMatterTimer = 0;
 
@@ -486,6 +502,34 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     {
         gameObject.SetActive(false);
     }
+
+    public void OnReset()
+    {
+        m_WokeUp = false;
+        bodyDamager.DisableDamage();
+        m_SoldierCount = 2;
+        m_RigidBody2D.velocity = Vector2.zero;
+        m_SpriteRenderer.sortingOrder = 5;
+        m_TeleportTimer = 0;
+
+        m_Ai.ResetChildren();
+
+        for (int i = 0; i < m_Soldiers.Count; i++)
+        {
+            m_Soldiers[i].rigidbody2D.velocity = Vector2.zero;
+            m_Soldiers[i].transform.GetComponent<MiniSoldier>().DeActive();
+            m_SoldierPool.Push(m_Soldiers[i]);
+        }
+
+        for (int i = 0; i < m_DarkMatters.Count; i++)
+        {
+            m_DarkMatterPool.Push(m_DarkMatters[i]);
+        }
+
+
+        transform.position = m_OriginalPosition;
+    }
+
 
 
 }

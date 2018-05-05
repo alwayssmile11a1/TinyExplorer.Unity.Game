@@ -616,8 +616,8 @@ public class SimpleEnemyBehaviour : MonoBehaviour
 
     public void Hit(Damager damager, Damageable damageable)
     {
-        if (damageable.CurrentHealth <= 0)
-            return;
+        //if (damageable.CurrentHealth <= 0)
+        //    return;
 
         if (HashHitPara != 0)
         {

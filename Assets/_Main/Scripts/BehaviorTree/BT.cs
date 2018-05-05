@@ -51,6 +51,12 @@ namespace BTAI
     public abstract class BTNode
     {
         public abstract BTState Tick();
+
+        public virtual void ResetState()
+        {
+
+        }
+
     }
 
 
@@ -78,8 +84,11 @@ namespace BTAI
         public virtual void ResetChildren()
         {
             activeChild = 0;
+            ResetState();
             for (var i = 0; i < children.Count; i++)
             {
+                children[i].ResetState();
+
                 Branch b = children[i] as Branch;
                 if (b != null)
                 {
@@ -87,6 +96,7 @@ namespace BTAI
                 }
             }
         }
+
     }
 
     public abstract class Decorator : BTNode
@@ -523,6 +533,11 @@ namespace BTAI
             return BTState.Success;
         }
 
+        public override void ResetState()
+        {
+            currentCount = 0;
+        }
+
         public override string ToString()
         {
             return "Repeat Until : " + currentCount + " / " + count;
@@ -657,6 +672,14 @@ namespace BTAI
             }
         }
 
+        public override void ResetState()
+        {
+            m_ActiveChildPickCount = 0;
+            m_PreviousActiveChild = -1;
+            activeChild = -1;
+
+        }
+
         public override string ToString()
         {
             return "Random Sequence : " + activeChild + "/" + children.Count;
@@ -688,6 +711,11 @@ namespace BTAI
             }
             else
                 return BTState.Continue;
+        }
+
+        public override void ResetState()
+        {
+            future = -1;
         }
 
         public override string ToString()

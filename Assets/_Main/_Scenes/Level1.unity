@@ -228,6 +228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnFacingLeft: 0
+  resetGameObjectsOnRespawn: 0
+  resetGameObjects: []
 --- !u!61 &25596516
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -595,6 +597,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnFacingLeft: 0
+  resetGameObjectsOnRespawn: 1
+  resetGameObjects:
+  - {fileID: 449411117}
+  - {fileID: 1665622290}
+  - {fileID: 802255485}
 --- !u!61 &417047013
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1192,7 +1199,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -544504170
+  randomSeed: 1281979187
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -22306,6 +22313,11 @@ Prefab:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114086172533096464, guid: 0feed38125eda9f4b9d2b02225b5af28,
+        type: 2}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0feed38125eda9f4b9d2b02225b5af28, type: 2}
   m_IsPrefabParent: 0
@@ -22397,15 +22409,15 @@ MonoBehaviour:
   rangeAttackTransitionName: Shooting
   patrollingTransitionName: 
   runTransitionName: 
-  deathTransitionName: Dead
-  hitTransitionName: Hit
+  deathTransitionName: 
+  hitTransitionName: 
   shootingAudio: {fileID: 0}
   meleeAttackAudio: {fileID: 0}
   dieAudio: {fileID: 0}
   footStepAudio: {fileID: 0}
   flickeringDuration: 0
   flickerColor: {r: 1, g: 0, b: 0, a: 1}
-  hitEffectName: HitEffect
+  hitEffectName: CFX_Hit_Red
   deadEffectName: ExplodingHitEffectDark
 --- !u!114 &1291023256
 MonoBehaviour:
@@ -22564,7 +22576,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.033082962, y: -0.007803917}
@@ -22754,19 +22766,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4280894727004844, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 192.29999
+      value: 191.65999
       objectReference: {fileID: 0}
     - target: {fileID: 4699844293663998, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 192.29999
+      value: 191.65999
       objectReference: {fileID: 0}
     - target: {fileID: 4699844293663998, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.13
+      value: -4.2200003
       objectReference: {fileID: 0}
     - target: {fileID: 4280894727004844, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.13
+      value: -4.2200003
       objectReference: {fileID: 0}
     - target: {fileID: 4280894727004844, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.z
@@ -22933,6 +22945,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 449411120}
     m_Modifications:
+    - target: {fileID: 114036160234647162, guid: afd2fd9a5b1a69b4e9c7e586135ed10e,
+        type: 2}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4580360305622204, guid: afd2fd9a5b1a69b4e9c7e586135ed10e, type: 2}
       propertyPath: m_LocalPosition.x
       value: 5.49
@@ -22970,6 +22987,31 @@ Prefab:
       propertyPath: targetToTrack
       value: 
       objectReference: {fileID: 443814165}
+    - target: {fileID: 114036160234647162, guid: afd2fd9a5b1a69b4e9c7e586135ed10e,
+        type: 2}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114036160234647162, guid: afd2fd9a5b1a69b4e9c7e586135ed10e,
+        type: 2}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114036160234647162, guid: afd2fd9a5b1a69b4e9c7e586135ed10e,
+        type: 2}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 417047012}
+    - target: {fileID: 114036160234647162, guid: afd2fd9a5b1a69b4e9c7e586135ed10e,
+        type: 2}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetResetGameObjectOnRespawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 114036160234647162, guid: afd2fd9a5b1a69b4e9c7e586135ed10e,
+        type: 2}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: afd2fd9a5b1a69b4e9c7e586135ed10e, type: 2}
   m_IsPrefabParent: 0
@@ -23290,6 +23332,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnFacingLeft: 0
+  resetGameObjectsOnRespawn: 0
+  resetGameObjects: []
 --- !u!61 &1661046028
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -23325,64 +23369,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4187822835850716, guid: 04e6a1f12a2072c499891ed3a049de04,
     type: 2}
   m_PrefabInternal: {fileID: 1845715062}
---- !u!1001 &1831886241
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400004, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 34.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 6.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_RootOrder
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 19900004, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19900002, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.05
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1832562854
 GameObject:
   m_ObjectHideFlags: 0
@@ -23425,6 +23411,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnFacingLeft: 0
+  resetGameObjectsOnRespawn: 0
+  resetGameObjects: []
 --- !u!61 &1832562857
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -23537,11 +23525,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 191.4
+      value: 190.76
       objectReference: {fileID: 0}
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.76
+      value: -4.85
       objectReference: {fileID: 0}
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
       propertyPath: m_LocalPosition.z
@@ -23572,6 +23560,11 @@ Prefab:
       propertyPath: OnHealthSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 967904393}
+    - target: {fileID: 114758591728174508, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 2}
+      propertyPath: startingHealth
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
   m_IsPrefabParent: 0
@@ -23723,6 +23716,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnFacingLeft: 0
+  resetGameObjectsOnRespawn: 0
+  resetGameObjects: []
 --- !u!61 &1943545394
 BoxCollider2D:
   m_ObjectHideFlags: 0

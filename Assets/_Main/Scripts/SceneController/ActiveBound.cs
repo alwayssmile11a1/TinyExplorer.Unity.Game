@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Gamekit2D
 {
     [RequireComponent(typeof(Collider2D))]
-    public class ActiveBound : MonoBehaviour, IDataPersister
+    public class ActiveBound : MonoBehaviour, IDataPersister,IDataResetable
     {
 
         public LayerMask targetLayers;
@@ -42,7 +42,7 @@ namespace Gamekit2D
 
         public DataSettings dataSettings;
 
-        private int m_Count = 0;
+        private bool m_AlreadyTriggered = false;
         private Cinemachine.CinemachineConfiner m_CinemachineConfiner;
         private Cinemachine.CinemachineVirtualCamera m_CinemachineVirtualCamera;
         private Transform m_CinemachineTransform;
@@ -60,11 +60,14 @@ namespace Gamekit2D
 
         private Coroutine m_CurrentFollowingPointChagingCoroutine;
         private Coroutine m_CurrentOrthoSizeChagingCoroutine;
+        //private Coroutine m_DisableCouroutine;
 
         //Timer
-        private float m_MaxFollowingPointChangingTimer;
-        private float m_MaxOrthoSizeChaingTimer;
+        //private float m_MaxFollowingPointChangingTimer;
+        //private float m_MaxOrthoSizeChangingTimer;
 
+        private bool m_OrthoSizeChanging;
+        private bool m_FollowPointChanging;
 
         private void Awake()
         {
@@ -97,19 +100,21 @@ namespace Gamekit2D
 
         }
 
-        public void ChangeToNewState(float delayTime = 0f)
+        
+
+        public void ChangeToNewState()
         {
-            StartCoroutine(InternalChangeToNewState(delayTime));
+            InternalChangeToNewState();
         }
 
-        public void ChangeBackToOrginalState(float delayTime = 0f)
+        public void ChangeBackToOrginalState()
         {
-            StartCoroutine(InternalChangeBackToOrginalState(delayTime));
+            InternalChangeBackToOrginalState();
         }
 
-        private IEnumerator InternalChangeToNewState(float delayTime)
+        private void InternalChangeToNewState(/*float delayTime*/)
         {
-            yield return new WaitForSeconds(delayTime);
+            //yield return new WaitForSeconds(delayTime);
 
             if (cameraBound != null)
             {                
@@ -151,9 +156,9 @@ namespace Gamekit2D
 
         }
 
-        private IEnumerator InternalChangeBackToOrginalState(float delayTime)
+        private void InternalChangeBackToOrginalState(/*float delayTime*/)
         {
-            yield return new WaitForSeconds(delayTime);
+            //yield return new WaitForSeconds(delayTime);
 
             if (cameraBound != null)
             {
@@ -195,17 +200,32 @@ namespace Gamekit2D
 
         }
 
+        public void SnapToNewState()
+        {
+            m_CinemachineVirtualCamera.Follow = cameraFollowPoint;
+            m_CinemachineVirtualCamera.m_Lens.OrthographicSize = orthographicSize;
+
+        }
+
+        public void SnapToOriginalState()
+        {
+            m_CinemachineVirtualCamera.Follow = m_OriginalCameraFollowPoint;
+            m_CinemachineVirtualCamera.m_Lens.OrthographicSize = m_OriginalOrthographicSize;
+
+        }
 
         private IEnumerator ChangeCameraFollowPoint()
         {
-            m_MaxFollowingPointChangingTimer = (m_VirtualTransform.position - m_DesiredTransform.position).sqrMagnitude / (10f * followPointChangingSmoothSpeed * 10f * followPointChangingSmoothSpeed);
+            m_FollowPointChanging = true;
+
+            //m_MaxFollowingPointChangingTimer = (m_VirtualTransform.position - m_DesiredTransform.position).sqrMagnitude / (10f * followPointChangingSmoothSpeed * 10f * followPointChangingSmoothSpeed);
 
 
             //while((m_VirtualTransform.position - m_DesiredTransform.position).sqrMagnitude > 0.0001f)
-            while ((!Mathf.Approximately(m_CinemachineTransform.position.x, m_DesiredTransform.position.x) || !Mathf.Approximately(m_CinemachineTransform.position.y, m_DesiredTransform.position.y)) && m_MaxFollowingPointChangingTimer > 0)
+            while ((!Mathf.Approximately(m_CinemachineTransform.position.x, m_DesiredTransform.position.x) || !Mathf.Approximately(m_CinemachineTransform.position.y, m_DesiredTransform.position.y)) /*&& m_MaxFollowingPointChangingTimer > 0*/)
             {
                 m_VirtualTransform.position = Vector3.MoveTowards(m_VirtualTransform.position, m_DesiredTransform.position, Time.deltaTime * 10f * followPointChangingSmoothSpeed);
-                m_MaxFollowingPointChangingTimer -= Time.deltaTime;
+                //m_MaxFollowingPointChangingTimer -= Time.deltaTime;
                 yield return null;
             }
 
@@ -215,31 +235,38 @@ namespace Gamekit2D
             m_CinemachineComposer.m_DeadZoneHeight = m_OriginalDeadZoneHeight;
 
             OnFinishChangingFollowPoint.Invoke();
-            m_MaxOrthoSizeChaingTimer = 0;
+            //m_MaxOrthoSizeChangingTimer = 0;
+
+            m_FollowPointChanging = false;
+   
         }
 
         private IEnumerator ChangeOrthoSize()
         {
-            m_MaxOrthoSizeChaingTimer = (m_CinemachineVirtualCamera.m_Lens.OrthographicSize - m_DesiredOrthoSize) / orthoSizeChangingSmoothSpeed;
+            m_OrthoSizeChanging = true;
+
+            //m_MaxOrthoSizeChangingTimer = (m_CinemachineVirtualCamera.m_Lens.OrthographicSize - m_DesiredOrthoSize) / orthoSizeChangingSmoothSpeed;
 
             while (!Mathf.Approximately(m_CinemachineVirtualCamera.m_Lens.OrthographicSize, m_DesiredOrthoSize))
             {
                 m_CinemachineVirtualCamera.m_Lens.OrthographicSize = Mathf.MoveTowards(m_CinemachineVirtualCamera.m_Lens.OrthographicSize, m_DesiredOrthoSize, orthoSizeChangingSmoothSpeed * Time.deltaTime);
-                m_MaxOrthoSizeChaingTimer -= Time.deltaTime;
+                //m_MaxOrthoSizeChangingTimer -= Time.deltaTime;
                 yield return null;
             }
 
             m_CinemachineVirtualCamera.m_Lens.OrthographicSize = m_DesiredOrthoSize;
 
             OnFinishChangingOrthoSize.Invoke();
-            m_MaxOrthoSizeChaingTimer = 0;
+            //m_MaxOrthoSizeChangingTimer = 0;
+
+
+            m_OrthoSizeChanging = false;
         }
 
         private IEnumerator DisableSchedule()
         {
             //Wait for seconds before disable because if we disable this gameobject to soon, the coroutines will be interrupted
-            yield return new WaitForSeconds(m_MaxFollowingPointChangingTimer + m_MaxOrthoSizeChaingTimer + 5f);
-
+            yield return new WaitUntil(()=> (!m_OrthoSizeChanging && !m_FollowPointChanging));
 
             gameObject.SetActive(false);
             PersistentDataManager.SetDirty(this);
@@ -248,7 +275,7 @@ namespace Gamekit2D
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (disableBoundOnExit && m_Count == 1) return;
+            if (disableBoundOnExit && m_AlreadyTriggered) return;
 
             if (targetLayers.Contains(collision.gameObject))
             {
@@ -267,7 +294,7 @@ namespace Gamekit2D
         private void OnTriggerExit2D(Collider2D collision)
         {
            
-            if (disableBoundOnExit && m_Count == 1) return;
+            if (disableBoundOnExit && m_AlreadyTriggered) return;
 
             if (targetLayers.Contains(collision.gameObject))
             {
@@ -280,7 +307,7 @@ namespace Gamekit2D
 
                 OnExitActiveBound.Invoke();
 
-                m_Count++;
+                m_AlreadyTriggered = true;
 
                 if (disableBoundOnExit)
                 {
@@ -320,6 +347,19 @@ namespace Gamekit2D
             dataSettings.dataTag = dataTag;
             dataSettings.persistenceType = persistenceType;
         }
+
+
+        public void OnReset()
+        {
+            StopAllCoroutines();
+
+            gameObject.SetActive(true);
+            SnapToOriginalState();
+            m_AlreadyTriggered = false;
+            PersistentDataManager.SetDirty(this);
+        }
+
+
 
     }
 }
