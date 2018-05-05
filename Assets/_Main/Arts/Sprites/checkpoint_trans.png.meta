@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: 190eb294d2b1f854b997cb2b7c258918
+timeCreated: 1525528884
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: checkpoint_trans_0
+    21300002: checkpoint_trans_1
+    21300004: checkpoint_trans_2
+    21300006: checkpoint_trans_3
+    21300008: checkpoint_trans_4
+    21300010: checkpoint_trans_5
+    21300012: checkpoint_trans_6
+    21300014: checkpoint_trans_7
+    21300016: checkpoint_trans_8
+    21300018: checkpoint_trans_9
+    21300020: checkpoint_trans_10
+    21300022: checkpoint_trans_11
+    21300024: checkpoint_trans_12
+    21300026: checkpoint_trans_13
+    21300028: checkpoint_trans_14
+    21300030: checkpoint_trans_15
+    21300032: checkpoint_trans_16
+    21300034: checkpoint_trans_17
+    21300036: checkpoint_trans_18
+    21300038: checkpoint_trans_19
+    21300040: checkpoint_trans_20
+    21300042: checkpoint_trans_21
+    21300044: checkpoint_trans_22
+    21300046: checkpoint_trans_23
+    21300048: checkpoint_trans_24
+    21300050: checkpoint_trans_25
+    21300052: checkpoint_trans_26
+    21300054: checkpoint_trans_27
+    21300056: checkpoint_trans_28
+    21300058: checkpoint_trans_29
+    21300060: checkpoint_trans_30
+    21300062: checkpoint_trans_31
+    21300064: checkpoint_trans_32
+    21300066: checkpoint_trans_33
+    21300068: checkpoint_trans_34
+    21300070: checkpoint_trans_35
+    21300072: checkpoint_trans_36
+    21300074: checkpoint_trans_37
+    21300076: checkpoint_trans_38
+    21300078: checkpoint_trans_39
+    21300080: checkpoint_trans_40
+    21300082: checkpoint_trans_41
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: checkpoint_trans_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 113
+        width: 18
+        height: 24
+      alignment: 9
+      pivot: {x: 0.3161794, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_1
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 137
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_2
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 137
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_3
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 137
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_4
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 137
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_5
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 137
+        width: 10
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_7
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 137
+        width: 10
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_8
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 137
+        width: 10
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_9
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 137
+        width: 11
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4569189, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_10
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 137
+        width: 18
+        height: 24
+      alignment: 9
+      pivot: {x: 0.3161794, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_11
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 137
+        width: 18
+        height: 24
+      alignment: 9
+      pivot: {x: 0.3161794, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_12
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 113
+        width: 18
+        height: 24
+      alignment: 9
+      pivot: {x: 0.3161794, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_13
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 113
+        width: 19
+        height: 24
+      alignment: 9
+      pivot: {x: 0.3161794, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_14
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 113
+        width: 19
+        height: 24
+      alignment: 9
+      pivot: {x: 0.3161794, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_15
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 113
+        width: 19
+        height: 24
+      alignment: 9
+      pivot: {x: 0.3161794, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_19
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 98
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_24
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 85
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_28
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 72
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_31
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 75
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_32
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 54
+        width: 24
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_33
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 17
+        width: 54
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_34
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 28
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_35
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 17
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_36
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 1
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_37
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 6
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_38
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 8
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_39
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 2
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_40
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 8
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_41
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 8
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: checkpoint_trans_6
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 137
+        width: 15
+        height: 24
+      alignment: 9
+      pivot: {x: 0.3161794, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

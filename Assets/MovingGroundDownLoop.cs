@@ -26,7 +26,7 @@ public class MovingGroundDownLoop : MonoBehaviour {
     {
         if (collision.collider.tag == "Player")
         {
-            Debug.Log("set");
+            //Debug.Log("set");
             collision.collider.transform.SetParent(transform);
         }
     }
@@ -34,18 +34,18 @@ public class MovingGroundDownLoop : MonoBehaviour {
     {
         if (collision.collider.tag == "Player")
         {
-            Debug.Log("unset");
+            //Debug.Log("unset");
             collision.collider.transform.SetParent(null);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("reach edge");
+        //Debug.Log("reach edge");
         if (collision.tag.Equals("Finish"))
         {
             transform.position = pos.position;
-            Debug.Log("this transform " + transform.position);
-            Debug.Log("pos transform " + pos.position);
+            //Debug.Log("this transform " + transform.position);
+            //Debug.Log("pos transform " + pos.position);
         }
     }
 }
