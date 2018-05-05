@@ -33,11 +33,9 @@ public class CharacterInput : MonoBehaviour {
     public MouseInput[] mouseInputs;
 
 
-    public float HorizontalAxis { get { return horizontal; } }
-    public float VerticalAxis { get { return vertical;  } }
+    public float HorizontalAxis { get; private set; }
+    public float VerticalAxis { get; private set; }
 
-    private float horizontal;
-    private float vertical;
     private bool m_Actived = true;
 
     // Use this for initialization
@@ -50,13 +48,13 @@ public class CharacterInput : MonoBehaviour {
 
         if (!m_Actived)
         {
-            horizontal = 0;
-            vertical = 0;
+            HorizontalAxis = 0;
+            VerticalAxis = 0;
             return;
         }
 
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
+        HorizontalAxis = Input.GetAxisRaw("Horizontal");
+        VerticalAxis = Input.GetAxisRaw("Vertical");
 
         //Key input
         for (int i=0;i<inputButtons.Length;i++)

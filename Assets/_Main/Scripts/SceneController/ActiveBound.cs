@@ -15,6 +15,8 @@ namespace Gamekit2D
         [Tooltip("if set, when the target enter this bound, the cinemachine confinder will be changed to this specified bound")]
         public PolygonCollider2D cameraBound;
 
+        public Cinemachine.CinemachineVirtualCamera cinemachineVirtualCamera;
+
         [Header("Camera Follow Point")]
         public bool changeCameraFollowPoint = true;
         [Tooltip("when the target enter the bound, the camera will follow this point")]
@@ -67,7 +69,7 @@ namespace Gamekit2D
         private void Awake()
         {
             m_CinemachineConfiner = FindObjectOfType<Cinemachine.CinemachineConfiner>();
-            m_CinemachineVirtualCamera = FindObjectOfType<Cinemachine.CinemachineVirtualCamera>();
+            m_CinemachineVirtualCamera = cinemachineVirtualCamera;
             m_CinemachineTransform = m_CinemachineVirtualCamera.transform;
             m_CinemachineComposer = m_CinemachineVirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineFramingTransposer>();
             m_OriginalCameraFollowPoint = m_CinemachineVirtualCamera.Follow;
@@ -264,6 +266,7 @@ namespace Gamekit2D
 
         private void OnTriggerExit2D(Collider2D collision)
         {
+           
             if (disableBoundOnExit && m_Count == 1) return;
 
             if (targetLayers.Contains(collision.gameObject))
