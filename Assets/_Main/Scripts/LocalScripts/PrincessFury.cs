@@ -508,6 +508,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable, IDataResetable {
         m_WokeUp = false;
         bodyDamager.DisableDamage();
         m_SoldierCount = 2;
+       
         m_RigidBody2D.velocity = Vector2.zero;
         m_SpriteRenderer.sortingOrder = 5;
         m_TeleportTimer = 0;

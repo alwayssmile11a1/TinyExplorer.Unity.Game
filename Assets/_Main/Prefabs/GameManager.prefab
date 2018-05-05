@@ -82,7 +82,7 @@ MonoBehaviour:
     lifetime: 1
     vfxOverride: []
   - prefab: {fileID: 1566174664965034, guid: 09cb8561d4dd2df4cb32928d5815a1b9, type: 2}
-    lifetime: 2
+    lifetime: 1.9
     vfxOverride: []
   - prefab: {fileID: 100004, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
     lifetime: 0.5

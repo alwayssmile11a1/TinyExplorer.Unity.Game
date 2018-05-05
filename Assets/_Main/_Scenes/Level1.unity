@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d38ee160c47aabd4dbe318959d4ae1fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkPointHitEffect: {fileID: 0}
   respawnFacingLeft: 0
   resetGameObjectsOnRespawn: 0
   resetGameObjects: []
@@ -596,8 +597,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d38ee160c47aabd4dbe318959d4ae1fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkPointHitEffect: {fileID: 0}
   respawnFacingLeft: 0
-  resetGameObjectsOnRespawn: 1
+  resetGameObjectsOnRespawn: 0
   resetGameObjects:
   - {fileID: 449411117}
   - {fileID: 1665622290}
@@ -699,8 +701,8 @@ MonoBehaviour:
   needToBeActiveGameObjects:
   - {fileID: 802255485}
   - {fileID: 373934794}
-  cameraBound: {fileID: 0}
   cinemachineVirtualCamera: {fileID: 259027103}
+  cameraBound: {fileID: 0}
   changeCameraFollowPoint: 1
   cameraFollowPoint: {fileID: 449411120}
   followPointChangingSmoothSpeed: 1
@@ -710,7 +712,18 @@ MonoBehaviour:
   disableBoundOnExit: 1
   OnEnterActiveBound:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 417047012}
+        m_MethodName: SetResetGameObjectOnRespawn
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnExitActiveBound:
@@ -1199,7 +1212,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1281979187
+  randomSeed: -1376197445
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8752,8 +8765,8 @@ MonoBehaviour:
     m_Bits: 256
   needToBeActiveGameObjects:
   - {fileID: 554010672}
-  cameraBound: {fileID: 0}
   cinemachineVirtualCamera: {fileID: 259027103}
+  cameraBound: {fileID: 0}
   changeCameraFollowPoint: 1
   cameraFollowPoint: {fileID: 1171006949}
   followPointChangingSmoothSpeed: 1
@@ -23331,6 +23344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d38ee160c47aabd4dbe318959d4ae1fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkPointHitEffect: {fileID: 0}
   respawnFacingLeft: 0
   resetGameObjectsOnRespawn: 0
   resetGameObjects: []
@@ -23410,6 +23424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d38ee160c47aabd4dbe318959d4ae1fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkPointHitEffect: {fileID: 0}
   respawnFacingLeft: 0
   resetGameObjectsOnRespawn: 0
   resetGameObjects: []
@@ -23715,6 +23730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d38ee160c47aabd4dbe318959d4ae1fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkPointHitEffect: {fileID: 0}
   respawnFacingLeft: 0
   resetGameObjectsOnRespawn: 0
   resetGameObjects: []

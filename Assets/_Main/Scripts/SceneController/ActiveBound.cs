@@ -10,12 +10,13 @@ namespace Gamekit2D
 
         public LayerMask targetLayers;
         public GameObject[] needToBeActiveGameObjects;
+        
+        [Header("Virtual Camera")]
+        public Cinemachine.CinemachineVirtualCamera cinemachineVirtualCamera;
 
         [Header("Camera Bound")]
         [Tooltip("if set, when the target enter this bound, the cinemachine confinder will be changed to this specified bound")]
         public PolygonCollider2D cameraBound;
-
-        public Cinemachine.CinemachineVirtualCamera cinemachineVirtualCamera;
 
         [Header("Camera Follow Point")]
         public bool changeCameraFollowPoint = true;
