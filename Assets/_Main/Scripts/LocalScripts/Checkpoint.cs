@@ -7,6 +7,7 @@ namespace Gamekit2D
     [RequireComponent(typeof(BoxCollider2D))]
     public class Checkpoint : MonoBehaviour
     {
+        public ParticleSystem checkPointHitEffect;
         public bool respawnFacingLeft;
 
         private void Reset()
@@ -22,7 +23,10 @@ namespace Gamekit2D
             {
                 alessia.SetChekpoint(this);
             }
-
+            if(checkPointHitEffect != null)
+            {
+                checkPointHitEffect.Play();
+            }
         }
     }
 }
