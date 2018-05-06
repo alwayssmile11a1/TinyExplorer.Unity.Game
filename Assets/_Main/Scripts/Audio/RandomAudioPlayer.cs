@@ -42,7 +42,7 @@ namespace Gamekit2D
             }
         }
 
-        public void PlayRandomSound(TileBase surface = null)
+        public void PlayRandomSound(TileBase surface)
         {
             AudioClip[] source = clips;
 
@@ -53,6 +53,19 @@ namespace Gamekit2D
             int choice = Random.Range(0, source.Length);
 
             if(randomizePitch)
+                m_Source.pitch = Random.Range(m_OriginalPitch - pitchRange, m_OriginalPitch + pitchRange);
+
+            m_Source.PlayOneShot(source[choice]);
+        }
+
+
+        public void PlayRandomSound()
+        {
+            AudioClip[] source = clips;
+
+            int choice = Random.Range(0, source.Length);
+
+            if (randomizePitch)
                 m_Source.pitch = Random.Range(m_OriginalPitch - pitchRange, m_OriginalPitch + pitchRange);
 
             m_Source.PlayOneShot(source[choice]);

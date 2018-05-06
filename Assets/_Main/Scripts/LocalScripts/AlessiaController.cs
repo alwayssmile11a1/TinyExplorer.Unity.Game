@@ -35,6 +35,7 @@ public class AlessiaController : MonoBehaviour {
     public RandomAudioPlayer landAudioPlayer;
     public RandomAudioPlayer dashAudioPlayer;
     public RandomAudioPlayer hurtAudioPlayer;
+    public RandomAudioPlayer slashHitAudioPlayer;
 
     //private Damager m_Slash;
     private SimpleCharacterController2D m_CharacterController2D;
@@ -43,6 +44,9 @@ public class AlessiaController : MonoBehaviour {
     private Vector2 m_JumpForceVector;
     private Vector2 m_ThrowVector;
     
+    private Collider2D m_LeftSlashCollider;
+    private Collider2D m_RightSlashCollider;
+
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
     private CharacterInput m_CharacterInput;
@@ -97,9 +101,10 @@ public class AlessiaController : MonoBehaviour {
 
         m_HashSlashHitEffect = VFXController.StringToHash(slashHitEffectName);
 
-        leftDamager.gameObject.SetActive(false);
-        rightDamager.gameObject.SetActive(false);
-
+        //leftDamager.gameObject.SetActive(false);
+        //rightDamager.gameObject.SetActive(false);
+        m_LeftSlashCollider = leftDamager.GetComponent<Collider2D>();
+        m_RightSlashCollider = rightDamager.GetComponent<Collider2D>();
     }
 
     private void Update()
@@ -293,13 +298,13 @@ public class AlessiaController : MonoBehaviour {
         {
             leftDamager.EnableDamage();         
             leftSlashEffect.Play();
-            leftDamager.gameObject.SetActive(true);
+            m_LeftSlashCollider.enabled = true;
         }
         else
         {
             rightDamager.EnableDamage();
             rightSlashEffect.Play();
-            rightDamager.gameObject.SetActive(true);
+            m_RightSlashCollider.enabled = true;
         }
     
     }
@@ -309,8 +314,8 @@ public class AlessiaController : MonoBehaviour {
         slashAudioPlayer.Stop();
         leftDamager.DisableDamage();
         rightDamager.DisableDamage();
-        leftDamager.gameObject.SetActive(false);
-        rightDamager.gameObject.SetActive(false);
+        m_LeftSlashCollider.enabled = false;
+        m_RightSlashCollider.enabled = false;
     }
 
     public void GotHit(Damager damager, Damageable damageable)
@@ -339,6 +344,11 @@ public class AlessiaController : MonoBehaviour {
         OnAttackHit(damager);
 
         VFXController.Instance.Trigger(m_HashSlashHitEffect, damageable.transform.position, 0, false, null);
+
+        if (slashHitAudioPlayer)
+        {
+            slashHitAudioPlayer.PlayRandomSound();
+        }
 
         ////Slowdown time a little bit
         //TimeManager.SlowdownTime(0.2f, 0.2f);
@@ -374,6 +384,14 @@ public class AlessiaController : MonoBehaviour {
         //Physics2D.Raycast(transform.position, m_SpriteRenderer.flipX ? Vector2.left : Vector2.right, damager.GetContactFilter(), m_SlashHitResults);
         VFXController.Instance.Trigger(m_HashSlashHitEffect, slashContactTransform.position, 0, false, null);
 
+        if(slashHitAudioPlayer)
+        {
+            UnityEngine.Tilemaps.TileBase surfaceHit = PhysicsHelper.FindTileForOverride(damager.LastHit, slashContactTransform.position, m_SpriteRenderer.flipX ? Vector2.left : Vector2.right);
+
+
+            slashHitAudioPlayer.PlayRandomSound(surfaceHit);
+
+        }
 
     }
 
@@ -382,7 +400,7 @@ public class AlessiaController : MonoBehaviour {
         //push back player a little bit
         Vector2 m_PushBackVector;
 
-        if (!m_SpriteRenderer.flipX)
+        if (m_RightSlashCollider.enabled == true)
         {
             //set position of slash contact effect to be displayed
             slashContactTransform.position = transform.position + m_OffsetFromSlashEffectToAlessia;
