@@ -44900,6 +44900,20 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 228edf468d7393e4d8452f80c542fb85, type: 2}
+    - target: {fileID: 114257118563422072, guid: 0d62daa35b05a584dad42f17548a633a,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114257118563422072, guid: 0d62daa35b05a584dad42f17548a633a,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009638384006160, guid: 0d62daa35b05a584dad42f17548a633a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0d62daa35b05a584dad42f17548a633a, type: 2}
   m_IsPrefabParent: 0
