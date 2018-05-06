@@ -22,10 +22,12 @@ public class AlessiaController : MonoBehaviour {
     public float dashCooldDownTime = 1f;
 
     [Header("Slash")]
+    public Damager leftDamager;
+    public Damager rightDamager;
     public ParticleSystem leftSlashEffect;
     public ParticleSystem rightSlashEffect;
     public Transform slashContactTransform;
-
+    public string slashHitEffectName="ExplodingHitEffect";
 
     [Header("Audio")]
     public RandomAudioPlayer footStepAudioPlayer;
@@ -34,7 +36,7 @@ public class AlessiaController : MonoBehaviour {
     public RandomAudioPlayer dashAudioPlayer;
     public RandomAudioPlayer hurtAudioPlayer;
 
-    private Damager m_Slash;
+    //private Damager m_Slash;
     private SimpleCharacterController2D m_CharacterController2D;
     private Vector2 m_Velocity = new Vector2();
     private Rigidbody2D m_Rigidbody2D;
@@ -54,6 +56,10 @@ public class AlessiaController : MonoBehaviour {
     private int m_HashRunPara = Animator.StringToHash("Run");
     private int m_HashHurtPara = Animator.StringToHash("Hurt");
     private int m_HashDashPara = Animator.StringToHash("Dash");
+
+
+    private int m_HashSlashHitEffect;
+    //private RaycastHit2D[] m_SlashHitResults = new RaycastHit2D[2];
 
     private bool m_BlockNormalAction;
     private float m_DashCoolDownTimer;
@@ -82,11 +88,18 @@ public class AlessiaController : MonoBehaviour {
         m_CharacterController2D = GetComponent<SimpleCharacterController2D>();
         m_CharacterInput = GetComponent<CharacterInput>();
         m_Flicker = m_SpriteRenderer.gameObject.AddComponent<Flicker>();
-        m_Slash = GetComponent<Damager>();
-        m_Slash.DisableDamage();
+        //m_Slash = GetComponent<Damager>();
+        //m_Slash.DisableDamage();
         m_SlashContactEffect = slashContactTransform.GetComponentInChildren<ParticleSystem>();
         m_OffsetFromSlashEffectToAlessia = slashContactTransform.position - transform.position;
         m_Damageable = GetComponent<Damageable>();
+
+
+        m_HashSlashHitEffect = VFXController.StringToHash(slashHitEffectName);
+
+        leftDamager.gameObject.SetActive(false);
+        rightDamager.gameObject.SetActive(false);
+
     }
 
     private void Update()
@@ -270,19 +283,23 @@ public class AlessiaController : MonoBehaviour {
 
         m_AttackTimer = 0.2f;
 
-        //enable attack damage
-        m_Slash.EnableDamage();
+        ////enable attack damage
+        //m_Slash.EnableDamage();
 
         slashAudioPlayer.PlayRandomSound();
 
         //Play attack effect
         if (m_SpriteRenderer.flipX)
         {
+            leftDamager.EnableDamage();         
             leftSlashEffect.Play();
+            leftDamager.gameObject.SetActive(true);
         }
         else
         {
+            rightDamager.EnableDamage();
             rightSlashEffect.Play();
+            rightDamager.gameObject.SetActive(true);
         }
     
     }
@@ -290,7 +307,10 @@ public class AlessiaController : MonoBehaviour {
     public void EndAttacking()
     {
         slashAudioPlayer.Stop();
-        m_Slash.DisableDamage();
+        leftDamager.DisableDamage();
+        rightDamager.DisableDamage();
+        leftDamager.gameObject.SetActive(false);
+        rightDamager.gameObject.SetActive(false);
     }
 
     public void GotHit(Damager damager, Damageable damageable)
@@ -316,35 +336,9 @@ public class AlessiaController : MonoBehaviour {
 
     public void AttackHit(Damager damager, Damageable damageable)
     {
-        //push back player a little bit
-        Vector2 m_PushBackVector;
+        OnAttackHit(damager);
 
-        if (!m_SpriteRenderer.flipX)
-        {
-            //set position of slash contact effect to be displayed
-            slashContactTransform.position = transform.position + m_OffsetFromSlashEffectToAlessia;
-
-            m_PushBackVector = new Vector2(-0.8f, 0);
-        }
-        else
-        {
-            //set position of slash contact effect to be displayed
-            Vector3 m_ReverseOffset = m_OffsetFromSlashEffectToAlessia;
-            m_ReverseOffset.x *= -1;
-            slashContactTransform.position = transform.position + m_ReverseOffset;
-
-            m_PushBackVector = new Vector2(0.8f, 0);
-        }
-
-        //Display slash contact effect
-        slashContactTransform.rotation = Quaternion.Euler(0, 0, Random.Range(-50f, 50f));      
-        m_SlashContactEffect.Play();
-
-        //Push back
-        m_Rigidbody2D.AddForce(m_PushBackVector, ForceMode2D.Impulse);
-        m_ExternalForceTimer = 0.1f;
-
-        CameraShaker.Shake(0.05f, 0.05f);
+        VFXController.Instance.Trigger(m_HashSlashHitEffect, damageable.transform.position, 0, false, null);
 
         ////Slowdown time a little bit
         //TimeManager.SlowdownTime(0.2f, 0.2f);
@@ -368,6 +362,56 @@ public class AlessiaController : MonoBehaviour {
 
     }
 
+    public void AttackHit(Damager damager)
+    {
+        OnAttackHit(damager);
+
+        //for (int i = 0; i < m_SlashHitResults.Length; i++)
+        //{
+        //    m_SlashHitResults[i] = new RaycastHit2D();
+        //}
+
+        //Physics2D.Raycast(transform.position, m_SpriteRenderer.flipX ? Vector2.left : Vector2.right, damager.GetContactFilter(), m_SlashHitResults);
+        VFXController.Instance.Trigger(m_HashSlashHitEffect, slashContactTransform.position, 0, false, null);
+
+
+    }
+
+    private void OnAttackHit(Damager damager)
+    {
+        //push back player a little bit
+        Vector2 m_PushBackVector;
+
+        if (!m_SpriteRenderer.flipX)
+        {
+            //set position of slash contact effect to be displayed
+            slashContactTransform.position = transform.position + m_OffsetFromSlashEffectToAlessia;
+
+            m_PushBackVector = new Vector2(-0.8f, 0);
+        }
+        else
+        {
+            //set position of slash contact effect to be displayed
+            Vector3 m_ReverseOffset = m_OffsetFromSlashEffectToAlessia;
+            m_ReverseOffset.x *= -1;
+            slashContactTransform.position = transform.position + m_ReverseOffset;
+
+            m_PushBackVector = new Vector2(0.8f, 0);
+        }
+
+        //Display slash contact effect
+        slashContactTransform.rotation = Quaternion.Euler(0, 0, Random.Range(-50f, 50f));
+        m_SlashContactEffect.Play();
+
+        //Push back
+        m_Rigidbody2D.AddForce(m_PushBackVector, ForceMode2D.Impulse);
+        m_ExternalForceTimer = 0.1f;
+
+        CameraShaker.Shake(0.05f, 0.05f);
+
+
+        
+    }
 
     public void OnPickUpNewAbility()
     {
@@ -415,7 +459,22 @@ public class AlessiaController : MonoBehaviour {
             //    }
             //}
 
-            StartCoroutine(hello());
+            if (m_LastCheckpoint.resetGameObjectsOnRespawn)
+            {
+
+                for (int i = 0; i < m_LastCheckpoint.resetGameObjects.Length; i++)
+                {
+                    //m_LastCheckpoint.resetGameObjects[i].SetActive(true);
+                    IDataResetable[] resetters = m_LastCheckpoint.resetGameObjects[i].GetComponents<IDataResetable>();
+
+                    for (int j = 0; j < resetters.Length; j++)
+                    {
+                        if (resetters != null)
+                            resetters[j].OnReset();
+                    }
+
+                }
+            }
 
             transform.position = m_LastCheckpoint.transform.position;
 
@@ -423,29 +482,7 @@ public class AlessiaController : MonoBehaviour {
         }
 
     }
-    
-    IEnumerator hello()
-    {
-        yield return new WaitForSeconds(0.2f);
-
-        if (m_LastCheckpoint.resetGameObjectsOnRespawn)
-        {
-           
-            for (int i = 0; i < m_LastCheckpoint.resetGameObjects.Length; i++)
-            {
-                //m_LastCheckpoint.resetGameObjects[i].SetActive(true);
-                IDataResetable[] resetters = m_LastCheckpoint.resetGameObjects[i].GetComponents<IDataResetable>();
-
-                for (int j = 0; j < resetters.Length; j++)
-                {
-                    if (resetters != null)
-                        resetters[j].OnReset();
-                }
-               
-            }
-        }
-
-    }
+   
 
     public void SetChekpoint(Checkpoint checkpoint)
     {

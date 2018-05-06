@@ -102,9 +102,20 @@ namespace Gamekit2D
         }
 
 
-        public List<TObject> GetAll()
+        public virtual List<TObject> GetAll()
         {
             return pool;
+        }
+
+        public virtual void PushAll()
+        {
+            for (int i = 0; i < pool.Count; i++)
+            {
+                if(!pool[i].inPool)
+                {
+                    Push(pool[i]);
+                }
+            }
         }
 
     }

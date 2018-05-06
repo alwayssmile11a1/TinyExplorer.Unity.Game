@@ -78,7 +78,6 @@ GameObject:
   - component: {fileID: 114912825608918662}
   - component: {fileID: 114383869098130898}
   - component: {fileID: 114758591728174508}
-  - component: {fileID: 114820711209626368}
   m_Layer: 8
   m_Name: Alessia
   m_TagString: Player
@@ -298,6 +297,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1814675139209202
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4385669538561682}
+  - component: {fileID: 61689134921215618}
+  - component: {fileID: 114604612312972528}
+  m_Layer: 0
+  m_Name: LeftDamager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1859552434326362
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4824338069257416}
+  - component: {fileID: 61798365653609452}
+  - component: {fileID: 114804960984587804}
+  m_Layer: 0
+  m_Name: RightDamager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1951900537131780
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +358,21 @@ GameObject:
   - component: {fileID: 199425800242794504}
   m_Layer: 0
   m_Name: EffectRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1992605089934336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4431267838808946}
+  m_Layer: 8
+  m_Name: SlashDamagers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -446,6 +494,19 @@ Transform:
   m_Father: {fileID: 4217569688847970}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4385669538561682
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1814675139209202}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4431267838808946}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4403178415309020
 Transform:
   m_ObjectHideFlags: 1
@@ -473,6 +534,21 @@ Transform:
   - {fileID: 4277332912763170}
   m_Father: {fileID: 4618204597790364}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4431267838808946
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1992605089934336}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4385669538561682}
+  - {fileID: 4824338069257416}
+  m_Father: {fileID: 4618204597790364}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4452297887410030
 Transform:
@@ -508,7 +584,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1169920816949876}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 190.76, y: -4.85, z: 0}
+  m_LocalPosition: {x: 190.8, y: -4.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4642313719841942}
@@ -516,6 +592,7 @@ Transform:
   - {fileID: 4405685790826612}
   - {fileID: 4217569688847970}
   - {fileID: 4403178415309020}
+  - {fileID: 4431267838808946}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -599,6 +676,19 @@ Transform:
   m_Father: {fileID: 4527073317380566}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4824338069257416
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859552434326362}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4431267838808946}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4991253145717680
 Transform:
   m_ObjectHideFlags: 1
@@ -646,6 +736,56 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!61 &61689134921215618
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1814675139209202}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.4957466, y: 0.5625377}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.222527, y: 0.5473623}
+  m_EdgeRadius: 0
+--- !u!61 &61798365653609452
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859552434326362}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.4957466, y: 0.5625377}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.222527, y: 0.5473623}
+  m_EdgeRadius: 0
 --- !u!70 &70408796326839590
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -1244,6 +1384,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 212481312070803874}
   positionBasedOnSpriteFacing: 1
+--- !u!114 &114604612312972528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1814675139209202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1506f7b67235554cb42519c257da979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  useTriggerCollider: 1
+  offset: {x: 0, y: 0}
+  size: {x: 2.5, y: 1}
+  offsetBasedOnSpriteFacing: 1
+  spriteRenderer: {fileID: 0}
+  enableDamageOnAwake: 0
+  canHitTriggers: 0
+  disableDamageAfterHit: 0
+  forceRespawn: 0
+  receiveOnHitEventOnInvincibleObject: 1
+  ignoreInvincibility: 0
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 1536
+  OnDamageableHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114970882030280704}
+        m_MethodName: AttackHit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Gamekit2D.Damager+DamagableEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnNonDamageableHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114970882030280704}
+        m_MethodName: AttackHit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: Gamekit2D.Damager+NonDamagableEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114665668851470924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1290,7 +1488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960138f0450083543ad1d17e1352019d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 1
+  startingHealth: 5
   invulnerableAfterDamage: 1
   invulnerabilityDuration: 2
   disableOnDeath: 0
@@ -1384,32 +1582,32 @@ MonoBehaviour:
   dataSettings:
     dataTag: c92ed4f0-529b-4238-b2fe-2359f10e34f3
     persistenceType: 3
---- !u!114 &114820711209626368
+--- !u!114 &114804960984587804
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1169920816949876}
+  m_GameObject: {fileID: 1859552434326362}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1506f7b67235554cb42519c257da979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  useTriggerCollider: 0
-  offset: {x: 0.4957466, y: 0.56253767}
-  size: {x: 1.2225266, y: 0.5473623}
+  useTriggerCollider: 1
+  offset: {x: 0, y: 0}
+  size: {x: 2.5, y: 1}
   offsetBasedOnSpriteFacing: 1
-  spriteRenderer: {fileID: 212481312070803874}
-  enableDamageOnAwake: 1
-  canHitTriggers: 1
-  disableDamageAfterHit: 1
+  spriteRenderer: {fileID: 0}
+  enableDamageOnAwake: 0
+  canHitTriggers: 0
+  disableDamageAfterHit: 0
   forceRespawn: 0
   receiveOnHitEventOnInvincibleObject: 1
-  ignoreInvincibility: 1
+  ignoreInvincibility: 0
   hittableLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1536
   OnDamageableHit:
     m_PersistentCalls:
       m_Calls:
@@ -1428,7 +1626,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   OnNonDamageableHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114970882030280704}
+        m_MethodName: AttackHit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: Gamekit2D.Damager+NonDamagableEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114886766669250918
@@ -1555,9 +1764,12 @@ MonoBehaviour:
   dashSpeed: 10
   dashDuration: 0.3
   dashCooldDownTime: 0.5
+  leftDamager: {fileID: 114604612312972528}
+  rightDamager: {fileID: 114804960984587804}
   leftSlashEffect: {fileID: 198398938703889880}
   rightSlashEffect: {fileID: 198986210527726274}
   slashContactTransform: {fileID: 4712154525596980}
+  slashHitEffectName: ExplodingHitEffect
   footStepAudioPlayer: {fileID: 114706091861805136}
   slashAudioPlayer: {fileID: 114665668851470924}
   landAudioPlayer: {fileID: 114927930920162480}

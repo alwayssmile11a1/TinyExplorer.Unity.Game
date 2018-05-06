@@ -30,6 +30,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable, IDataResetable {
 
     [Header("Death")]
     public string deathEffectName;
+    public string hitEffectName;
 
     //Animation
     private int m_WakeUpPara = Animator.StringToHash("WakeUp");
@@ -73,6 +74,8 @@ public class PrincessFury : MonoBehaviour, IBTDebugable, IDataResetable {
     private Vector3 m_TeleportToPosition;
 
     private int m_VortexGroundEffectHash = VFXController.StringToHash("Vortex_Ground");
+    private int m_DeathEffectHash;
+    private int m_HitEffectHash;
 
     //Behavior Tree
     private Root m_Ai = BT.Root();
@@ -91,6 +94,8 @@ public class PrincessFury : MonoBehaviour, IBTDebugable, IDataResetable {
         longDamager.DisableDamage();
         jumpDamager.DisableDamage();
 
+        m_DeathEffectHash = VFXController.StringToHash(deathEffectName);
+        m_HitEffectHash = VFXController.StringToHash(hitEffectName);
 
         m_JumpAttackSpellPool = BulletPool.GetObjectPool(jumpAttackSpell, 4);
         m_DarkMatterPool = BulletPool.GetObjectPool(darkBallSpell, 2);
@@ -118,7 +123,26 @@ public class PrincessFury : MonoBehaviour, IBTDebugable, IDataResetable {
 
             ),
 
-            BT.If(() => { return m_Damageable.CurrentHealth <= m_Damageable.startingHealth/2 && m_SoldierCount == 3; }).OpenBranch(
+            BT.If(() => { return m_Damageable.CurrentHealth <= m_Damageable.startingHealth*2/3 && m_SoldierCount == 3; }).OpenBranch(
+
+                //Summon
+                BT.Sequence().OpenBranch(
+                    BT.Call(() => TeleportTo(summonTeleportPosition.position)),
+                    BT.Wait(4.5f),
+                    BT.Call(() => m_SpriteRenderer.flipX = true),
+                    BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-0.15f, 1.5f))),
+                    BT.Call(() => m_Animator.SetTrigger(m_HashSummonPara)),
+                    BT.Wait(1f),
+                    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                    BT.WaitUntil(SummonActionEndCheck),
+                    BT.Wait(0.5f),
+                    BT.Call(() => TeleportToRandom()),
+                    BT.Wait(5f)
+                )
+
+            ),
+
+            BT.If(() => { return m_Damageable.CurrentHealth <= m_Damageable.startingHealth / 3 && m_SoldierCount == 4; }).OpenBranch(
 
                 //Summon
                 BT.Sequence().OpenBranch(
@@ -141,6 +165,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable, IDataResetable {
             BT.RandomSequence(new int[] { 3, 2, 2, 2, 2 }, 2).OpenBranch(
                 //Walk
                 BT.Sequence().OpenBranch(
+                    BT.Call(OrientToTarget),
                     BT.Call(() => m_Animator.SetBool(m_HashWalkPara, true)),
                     BT.Call(() => SetHorizontalSpeed(1f)),
                     BT.Wait(2.5f),
@@ -484,16 +509,21 @@ public class PrincessFury : MonoBehaviour, IBTDebugable, IDataResetable {
     public void GotHit(Damager damager, Damageable damageable)
     {
         m_Flicker.StartColorFickering(damageable.invulnerabilityDuration, 0.1f);
+
+        //Hit effect
+        VFXController.Instance.Trigger(m_HitEffectHash, transform.position, 0.1f, false, null);       
+        
     }
 
 
     public void Die(Damager damager, Damageable damageable)
     {
+        m_RigidBody2D.velocity = Vector2.zero;
         bodyDamager.DisableDamage();
         m_Animator.SetTrigger(m_HashDeathPara);
 
         //Death effect
-        VFXController.Instance.Trigger(VFXController.StringToHash(deathEffectName), transform.position, 0.1f, false,null);
+        VFXController.Instance.Trigger(m_DeathEffectHash, transform.position, 0.1f, false,null);
 
 
     }
@@ -515,20 +545,11 @@ public class PrincessFury : MonoBehaviour, IBTDebugable, IDataResetable {
 
         m_Ai.ResetChildren();
 
-        for (int i = 0; i < m_Soldiers.Count; i++)
-        {
-            m_Soldiers[i].rigidbody2D.velocity = Vector2.zero;
-            m_Soldiers[i].transform.GetComponent<MiniSoldier>().DeActive();
-            m_SoldierPool.Push(m_Soldiers[i]);
-        }
+        m_JumpAttackSpellPool.PushAll();
+        m_DarkMatterPool.PushAll();
+        m_SoldierPool.PushAll();
 
-        for (int i = 0; i < m_DarkMatters.Count; i++)
-        {
-            m_DarkMatterPool.Push(m_DarkMatters[i]);
-        }
-
-
-        transform.position = m_OriginalPosition;
+         transform.position = m_OriginalPosition;
     }
 
 

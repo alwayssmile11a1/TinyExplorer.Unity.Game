@@ -74,6 +74,11 @@ namespace Gamekit2D
             m_CanDamage = false;
         }
 
+        public ContactFilter2D GetContactFilter()
+        {
+            return m_AttackContactFilter;
+        }
+
         void FixedUpdate()
         {
             if (!m_CanDamage || useTriggerCollider)
@@ -109,7 +114,7 @@ namespace Gamekit2D
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!useTriggerCollider||!m_AttackContactFilter.layerMask.Contains(collision.gameObject)) return;
+            if (!m_CanDamage || !useTriggerCollider||!m_AttackContactFilter.layerMask.Contains(collision.gameObject)) return;
 
             m_LastHit = collision;
 
@@ -141,6 +146,7 @@ namespace Gamekit2D
             }
             else
             {
+ 
                 OnNonDamageableHit.Invoke(this);
             }
         }

@@ -27,6 +27,10 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
 
     private Vector3 m_TargetPosition;
 
+
+    private int m_HashHitEffect;
+    private int m_HashDieEffect;
+
     //Behavior Tree
     private Root m_Ai = BT.Root();
 
@@ -36,6 +40,9 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
     void Awake() {
 
         m_TargetToTrack = GameObject.FindGameObjectWithTag("Player").transform;
+
+        m_HashHitEffect = VFXController.StringToHash("CFX_Hit_Red");
+        m_HashDieEffect = VFXController.StringToHash("ExplodingHitEffectDark");
 
         m_Animator = GetComponent<Animator>();
         m_RigidBody2D = GetComponent<Rigidbody2D>();
@@ -143,5 +150,14 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
         attackDamager.DisableDamage();
     }
 
+    public void GotHit(Damager damager, Damageable damageable)
+    {
+        VFXController.Instance.Trigger(m_HashHitEffect, transform.position, 0, false, null);
+        //VFXController.Instance.Trigger(VFXController.StringToHash("ExplodingHitEffect"), transform.position, 0, false, null);
+    }
 
+    public void Die(Damager damager, Damageable damageable)
+    {
+        VFXController.Instance.Trigger(m_HashDieEffect, transform.position, 0, false, null);
+    }
 }
