@@ -14,7 +14,7 @@ namespace Gamekit2D
             base.OnEnable();
 
             m_IsPrefab = AssetDatabase.Contains(target);
-            m_IsNotInstance = PrefabUtility.GetPrefabParent(target) == null;
+            m_IsNotInstance = PrefabUtility.GetCorrespondingObjectFromSource(target) == null;
         }
 
         public override void OnInspectorGUI()
@@ -26,7 +26,7 @@ namespace Gamekit2D
                 EditorGUILayout.HelpBox("Modify the prefab and not this instance", MessageType.Warning);
                 if (GUILayout.Button("Select Prefab"))
                 {
-                    Selection.activeObject = PrefabUtility.GetPrefabParent(target);
+                    Selection.activeObject = PrefabUtility.GetCorrespondingObjectFromSource(target);
                 }
             }
         }
