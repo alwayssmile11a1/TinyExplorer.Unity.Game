@@ -12,7 +12,7 @@ public class teleport : MonoBehaviour {
     {
         if (collision.tag.Equals("Player"))
         {
-            activeBound.followPointChangingSmoothSpeed = 5;
+            activeBound.followPointChangingSmoothSpeed = 10;
             Debug.Log(target.position);
             target.position = destination.position;
             Debug.Log(target.position);

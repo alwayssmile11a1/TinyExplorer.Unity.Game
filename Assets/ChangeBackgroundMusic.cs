@@ -10,17 +10,18 @@ public class ChangeBackgroundMusic : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Trigger");
-        backgroundMusicPlayer.Mute();
-        if (clipToChange)
-        {
-            StartCoroutine(PlayBossFightMusic());
-        }
+        
+        //if (clipToChange)
+        //{
+        //    StartCoroutine(PlayBossFightMusic());
+        //}
     }
 
     IEnumerator PlayBossFightMusic()
     {
         Debug.Log("asdasdasd");
         yield return new WaitForSeconds(1f);
-        AudioSource.PlayClipAtPoint(clipToChange, transform.position);
+        //AudioSource.PlayClipAtPoint(clipToChange, transform.position);
+        backgroundMusicPlayer.ChangeMusic(clipToChange);
     }
 }

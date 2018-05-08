@@ -112,7 +112,7 @@ namespace Gamekit2D
         }
 
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerStay2D(Collider2D collision)
         {
             if (!m_CanDamage || !useTriggerCollider||!m_AttackContactFilter.layerMask.Contains(collision.gameObject)) return;
 
@@ -146,8 +146,9 @@ namespace Gamekit2D
             }
             else
             {
- 
+                
                 OnNonDamageableHit.Invoke(this);
+
             }
         }
 

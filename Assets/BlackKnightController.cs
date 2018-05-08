@@ -12,7 +12,7 @@ public class BlackKnightController : MonoBehaviour {
     public float bulletSpeed;
     public ParticleSystem hitEffect;
     public PlayableDirector playableDirector;
-    public TimeManager timeManager;
+    public float TimeToSlow;
     //private int blackKnightHealth;
 
     [Header("Attack1")]
@@ -47,6 +47,7 @@ public class BlackKnightController : MonoBehaviour {
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Damageable damageable;
+    private ActiveBound activeBound;
     private int turn;
 
     BulletPool bulletPool;
@@ -65,6 +66,7 @@ public class BlackKnightController : MonoBehaviour {
         currentAmount = 0;
         turn = 1;
         damageable = GetComponent<Damageable>();
+        activeBound = GetComponentInParent<ActiveBound>();
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -219,16 +221,21 @@ public class BlackKnightController : MonoBehaviour {
             hitEffect.Play();
         if(damageable.CurrentHealth == 1)
         {
-            playableDirector.Play();
-            timeManager.enabled = true;
         }
         if (damageable.CurrentHealth == 0)
         {
+            //playableDirector.Play();
+            TimeManager.SlowdownTime(0.05f, TimeToSlow);
             Debug.Log("Die");
             animator.SetBool("die", true);
+            Invoke("ChangeBackToOrginalState", 1f);
         }
     }
     
+    void ChangeBackToOrginalState()
+    {
+        activeBound.ChangeBackToOrginalState();
+    }
 
     public void BlackKnightDieEffect()
     {
