@@ -7,12 +7,14 @@ using UnityEngine;
 using UnityEngine.Playables;
 
 public class BlackKnightController : MonoBehaviour {
+    [Header("General")]
     public Transform targetToTrack;
     public GameObject bullet;
     public float bulletSpeed;
     public ParticleSystem hitEffect;
     public PlayableDirector playableDirector;
     public float TimeToSlow;
+    public BackgroundMusicPlayer backgroundMusicPlayer;
     //private int blackKnightHealth;
 
     [Header("Attack1")]
@@ -72,29 +74,29 @@ public class BlackKnightController : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         BlackKnightBT.OpenBranch(
-            //BT.If(() => turn <= 2).OpenBranch(
-            //    BT.Sequence().OpenBranch(
-            //    BT.Wait(3f),
-            //    BT.SetBool(animator, "attack1", true),
-            //    BT.WaitForAnimatorState(animator, "attack1"),
-            //    BT.Call(() => attack1Effect.Play()),
-            //    BT.WaitUntil(Attack1),
-            //    BT.Wait(1.5f),
-            //    BT.SetBool(animator, "attack1", false),
-            //    BT.Call(() => attack1Effect.Stop())
-            //    )
-            //),
-            //BT.If(() => turn <= 1).OpenBranch(
-            //    BT.Sequence().OpenBranch(
-            //        BT.Wait(2f),
-            //        BT.SetBool(animator, "attack2", true),
-            //        BT.WaitForAnimatorState(animator, "attack2"),
-            //        BT.Call(ActiveAlicia),
-            //        BT.WaitUntil(() => aliciaDied),
-            //        BT.Call(DeactiveAlicia),
-            //        BT.SetBool(animator, "attack2", false)
-            //    )
-            //),
+            BT.If(() => turn <= 2).OpenBranch(
+                BT.Sequence().OpenBranch(
+                BT.Wait(3f),
+                BT.SetBool(animator, "attack1", true),
+                BT.WaitForAnimatorState(animator, "attack1"),
+                BT.Call(() => attack1Effect.Play()),
+                BT.WaitUntil(Attack1),
+                BT.Wait(1.5f),
+                BT.SetBool(animator, "attack1", false),
+                BT.Call(() => attack1Effect.Stop())
+                )
+            ),
+            BT.If(() => turn <= 1).OpenBranch(
+                BT.Sequence().OpenBranch(
+                    BT.Wait(2f),
+                    BT.SetBool(animator, "attack2", true),
+                    BT.WaitForAnimatorState(animator, "attack2"),
+                    BT.Call(ActiveAlicia),
+                    BT.WaitUntil(() => aliciaDied),
+                    BT.Call(DeactiveAlicia),
+                    BT.SetBool(animator, "attack2", false)
+                )
+            ),
             BT.If(() => turn == 3).OpenBranch(
                 BT.Sequence().OpenBranch(
                     BT.Wait(2f),
@@ -219,12 +221,10 @@ public class BlackKnightController : MonoBehaviour {
     {
         if (hitEffect != null)
             hitEffect.Play();
-        if(damageable.CurrentHealth == 1)
-        {
-        }
+        //if(damageable.CurrentHealth == 1)
+        //    playableDirector.Play();
         if (damageable.CurrentHealth == 0)
         {
-            //playableDirector.Play();
             TimeManager.SlowdownTime(0.05f, TimeToSlow);
             Debug.Log("Die");
             animator.SetBool("die", true);
@@ -236,7 +236,11 @@ public class BlackKnightController : MonoBehaviour {
     {
         activeBound.ChangeBackToOrginalState();
     }
-
+    IEnumerator ChangeBackgroundMusic()
+    {
+        yield return new WaitForSeconds(1f);
+        
+    }
     public void BlackKnightDieEffect()
     {
         foreach (var item in skill3BulletObjects)
