@@ -44,8 +44,8 @@ public class AlessiaController : MonoBehaviour {
     private Vector2 m_JumpForceVector;
     private Vector2 m_ThrowVector;
     
-    private Collider2D m_LeftSlashCollider;
-    private Collider2D m_RightSlashCollider;
+    //private Collider2D m_LeftSlashCollider;
+    //private Collider2D m_RightSlashCollider;
 
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
@@ -101,10 +101,8 @@ public class AlessiaController : MonoBehaviour {
 
         m_HashSlashHitEffect = VFXController.StringToHash(slashHitEffectName);
 
-        //leftDamager.gameObject.SetActive(false);
-        //rightDamager.gameObject.SetActive(false);
-        m_LeftSlashCollider = leftDamager.GetComponent<Collider2D>();
-        m_RightSlashCollider = rightDamager.GetComponent<Collider2D>();
+        //m_LeftSlashCollider = leftDamager.GetComponent<Collider2D>();
+        //m_RightSlashCollider = rightDamager.GetComponent<Collider2D>();
     }
 
     private void Update()
@@ -298,13 +296,13 @@ public class AlessiaController : MonoBehaviour {
         {
             leftDamager.EnableDamage();         
             leftSlashEffect.Play();
-            m_LeftSlashCollider.enabled = true;
+            //m_LeftSlashCollider.enabled = true;
         }
         else
         {
             rightDamager.EnableDamage();
             rightSlashEffect.Play();
-            m_RightSlashCollider.enabled = true;
+            //m_RightSlashCollider.enabled = true;
         }
     
     }
@@ -314,8 +312,8 @@ public class AlessiaController : MonoBehaviour {
         slashAudioPlayer.Stop();
         leftDamager.DisableDamage();
         rightDamager.DisableDamage();
-        m_LeftSlashCollider.enabled = false;
-        m_RightSlashCollider.enabled = false;
+        //m_LeftSlashCollider.enabled = false;
+        //m_RightSlashCollider.enabled = false;
     }
 
     public void GotHit(Damager damager, Damageable damageable)
@@ -400,7 +398,7 @@ public class AlessiaController : MonoBehaviour {
         //push back player a little bit
         Vector2 m_PushBackVector;
 
-        if (m_RightSlashCollider.enabled == true)
+        if (rightDamager.CanDamage() == true)
         {
             //set position of slash contact effect to be displayed
             slashContactTransform.position = transform.position + m_OffsetFromSlashEffectToAlessia;

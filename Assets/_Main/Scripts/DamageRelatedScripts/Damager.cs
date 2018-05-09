@@ -74,6 +74,11 @@ namespace Gamekit2D
             m_CanDamage = false;
         }
 
+        public bool CanDamage()
+        {
+            return m_CanDamage;
+        }
+
         public ContactFilter2D GetContactFilter()
         {
             return m_AttackContactFilter;
@@ -120,7 +125,6 @@ namespace Gamekit2D
 
             RunEvent();
             
-
         }
 
 
@@ -149,6 +153,11 @@ namespace Gamekit2D
                 
                 OnNonDamageableHit.Invoke(this);
 
+                if (disableDamageAfterHit)
+                {
+
+                    DisableDamage();
+                }
             }
         }
 
