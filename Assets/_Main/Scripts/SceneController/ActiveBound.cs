@@ -294,7 +294,7 @@ namespace Gamekit2D
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-           
+            Debug.Log("Exit");
             if (disableBoundOnExit && m_AlreadyTriggered) return;
 
             if (targetLayers.Contains(collision.gameObject))

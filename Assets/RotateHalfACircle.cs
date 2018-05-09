@@ -6,6 +6,8 @@ public class RotateHalfACircle : MonoBehaviour {
     public float speed;
     [SerializeField]
     private bool canRotate = false;
+    private bool reRotate = false;
+    private bool reach = false;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -22,6 +24,7 @@ public class RotateHalfACircle : MonoBehaviour {
             if (transform.rotation.z >= -1 && transform.rotation.z <= Quaternion.Euler(0, 0, -179).z)
             {
                 canRotate = false;
+                reach = true;
             }
             else
             {
@@ -29,8 +32,28 @@ public class RotateHalfACircle : MonoBehaviour {
             }
             //StartCoroutine(RotateObj(0.5f, new Vector3(0, 0, -180)));
         }
+        else if (reRotate)
+        {
+            if (transform.rotation.z <= 1 && transform.rotation.z >= Quaternion.Euler(0, 0, -1).z)
+            {
+                reRotate = false;
+            }
+            else
+            {
+                transform.Rotate(Vector3.forward * speed * Time.deltaTime);
+            }
+        }
+        if (reach)
+        {
+            reach = false;
+            Invoke("ReRotate", 2f);
+        }
 
         //Debug.Log("rotation: " + transform.rotation.z);
+    }
+    void ReRotate()
+    {
+        reRotate = true;
     }
     IEnumerator RotateObj(float timeToRotate, Vector3 direction)
     {
