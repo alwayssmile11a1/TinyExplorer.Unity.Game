@@ -73,12 +73,21 @@ namespace Gamekit2D
         private void Awake()
         {
             m_CinemachineConfiner = FindObjectOfType<Cinemachine.CinemachineConfiner>();
+            if(m_CinemachineConfiner!=null)
+            {
+                m_OriginalCameraBound = m_CinemachineConfiner.m_BoundingShape2D;
+            }
+
             m_CinemachineVirtualCamera = cinemachineVirtualCamera;
-            m_CinemachineTransform = m_CinemachineVirtualCamera.transform;
-            m_CinemachineComposer = m_CinemachineVirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineFramingTransposer>();
-            m_OriginalCameraFollowPoint = m_CinemachineVirtualCamera.Follow;
-            m_OriginalOrthographicSize = m_CinemachineVirtualCamera.m_Lens.OrthographicSize;
-            m_OriginalCameraBound = m_CinemachineConfiner.m_BoundingShape2D;
+            if (m_CinemachineVirtualCamera != null)
+            {
+                m_CinemachineTransform = m_CinemachineVirtualCamera.transform;
+                m_CinemachineComposer = m_CinemachineVirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineFramingTransposer>();
+                m_OriginalCameraFollowPoint = m_CinemachineVirtualCamera.Follow;
+                m_OriginalOrthographicSize = m_CinemachineVirtualCamera.m_Lens.OrthographicSize;
+
+
+            }
 
             if (m_CinemachineComposer != null)
             {
@@ -87,10 +96,7 @@ namespace Gamekit2D
             }
 
             m_VirtualTransform = new GameObject("VirtualTransform").transform;
-
             m_VirtualTransform.parent = gameObject.transform;
-
-
 
             GetComponent<Collider2D>().isTrigger = true;
 
@@ -294,7 +300,6 @@ namespace Gamekit2D
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            Debug.Log("Exit");
             if (disableBoundOnExit && m_AlreadyTriggered) return;
 
             if (targetLayers.Contains(collision.gameObject))

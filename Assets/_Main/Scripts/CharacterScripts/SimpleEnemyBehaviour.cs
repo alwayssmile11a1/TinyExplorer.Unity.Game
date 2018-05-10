@@ -23,8 +23,8 @@ public class SimpleEnemyBehaviour : MonoBehaviour
     public bool deactiveOnDie = true;
 
     [Header("Movement")]
-    public float speed;
-    public float runSpeed;
+    public float speed = 2f;
+    public float runSpeed = 5f;
 
     [Header("References")]
     [Tooltip("If the enemy will be using ranged attack, set a prefab of the projectile it should use")]
@@ -141,8 +141,18 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         }
         m_CharacterController2D = GetComponent<SimpleCharacterController2D>();
         m_Collider = GetComponent<Collider2D>();
+
         m_Animator = GetComponent<Animator>();
+        if(m_Animator==null)
+        {
+            m_Animator = GetComponentInChildren<Animator>();
+        }
+
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        if(m_SpriteRenderer==null)
+        {
+            m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
 
         m_OriginalColor = m_SpriteRenderer.color;
 
@@ -236,12 +246,12 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         if (facing == -1)
         {
             m_SpriteRenderer.flipX = !spriteFaceLeft;
-            m_SpriteForward = spriteFaceLeft ? Vector2.right : Vector2.left;
+            m_SpriteForward = spriteFaceLeft ? Vector2.left : Vector2.right;
         }
         else if (facing == 1)
         {
             m_SpriteRenderer.flipX = spriteFaceLeft;
-            m_SpriteForward = spriteFaceLeft ? Vector2.left : Vector2.right;
+            m_SpriteForward = spriteFaceLeft ? Vector2.right : Vector2.left;
         }
     }
 
@@ -263,6 +273,11 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         {
             SetFacingData(1);
         }
+    }
+
+    public Vector3 GetForwardVector()
+    {
+        return m_SpriteForward;
     }
 
     public void ScanForTarget()
@@ -330,6 +345,27 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         SetHorizontalSpeed(0);
     }
 
+    public void Walk(float forwardDistance)
+    {
+        SetHorizontalSpeed(speed);
+        if (HashPatrollingPara != 0)
+        {
+            m_Animator.SetBool(HashPatrollingPara, true);
+        }
+    }
+
+    public void Run(float forwardDistance)
+    {
+
+        SetHorizontalSpeed(runSpeed);
+
+        if (HashRunPara != 0)
+        {
+            m_Animator.SetBool(HashRunPara, true);
+        }
+
+    }
+
     /// <summary>
     /// Run to target and avoid obstacles
     /// </summary>
@@ -359,7 +395,7 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         }
     }
 
-    public void StopRunningToTarget()
+    public void StopRunning()
     {
         SetHorizontalSpeed(0);
         if (HashRunPara != 0)
@@ -385,7 +421,9 @@ public class SimpleEnemyBehaviour : MonoBehaviour
 
     public void Flip()
     {
-        SetFacingData(Mathf.RoundToInt(-m_SpriteForward.x));
+        m_SpriteRenderer.flipX = !m_SpriteRenderer.flipX;
+        m_SpriteForward.x = -m_SpriteForward.x;
+
     }
 
     public void CheckTargetStillVisible()
@@ -700,7 +738,15 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         Vector3 forward = spriteFaceLeft ? Vector2.left : Vector2.right;
         forward = Quaternion.Euler(0, 0, spriteFaceLeft ? -viewDirection : viewDirection) * forward;
 
-        if (GetComponent<SpriteRenderer>().flipX) forward.x = -forward.x;
+
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if(spriteRenderer==null)
+        {
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+
+        if (spriteRenderer.flipX) forward.x = -forward.x;
 
         //Vector3 endpoint = transform.position + (Quaternion.Euler(0, 0, viewFov * 0.5f) * forward);
         Handles.color = new Color(0, 1.0f, 0, 0.2f);

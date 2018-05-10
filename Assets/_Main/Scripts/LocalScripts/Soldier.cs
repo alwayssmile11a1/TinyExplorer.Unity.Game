@@ -9,7 +9,6 @@ public class Soldier : MonoBehaviour, IBTDebugable {
 
     private SimpleEnemyBehaviour m_EnemyBehaviour;
     private Animator m_Animator;
-    //private CharacterController2D m_CharacterController2D;
 
     private Root m_AI = BT.Root();
 
@@ -20,7 +19,6 @@ public class Soldier : MonoBehaviour, IBTDebugable {
 
     // Use this for initialization
     void Start () {
-        //m_CharacterController2D = GetComponent<CharacterController2D>()l
         m_Animator = GetComponent<Animator>();
         m_EnemyBehaviour = GetComponent<SimpleEnemyBehaviour>();
 
@@ -35,7 +33,7 @@ public class Soldier : MonoBehaviour, IBTDebugable {
                //Attack
                BT.If(() => { return m_EnemyBehaviour.CheckMeleeAttack(); }).OpenBranch(
                    BT.Call(m_EnemyBehaviour.StopPatrolling),
-                   BT.Call(m_EnemyBehaviour.StopRunningToTarget),
+                   BT.Call(m_EnemyBehaviour.StopRunning),
                    BT.Call(m_EnemyBehaviour.PerformMeleeAttack),
                    BT.Wait(0.5f),
                    BT.WaitForAnimatorState(m_Animator, "MiniSoldier_Idle")
