@@ -1,4 +1,5 @@
 ﻿using BTAI;
+using Gamekit2D;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,10 +17,11 @@ public class rmx6BT : MonoBehaviour {
     Vector2 oldVelocity;
 
     public ParticleSystem hitEffect;
-    public ParticleSystem dieEffect;
+    int DieEffectHash;
 
     // Use this for initialization
     void Awake () {
+        DieEffectHash = VFXController.StringToHash("Smoke");
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         rmx6Moving = GetComponent<rmx6Moving>();
@@ -74,29 +76,16 @@ public class rmx6BT : MonoBehaviour {
 
     public void OnDie()
     {
-        //Debug.Log("velocity on die: " + rmx6Moving.velocity);
-        //die = true;
-        //rmx6Moving.velocity = new Vector2(0, 0);
-        //animator.SetBool("walk", false);
-        //animator.SetBool("freeze", true);
-        //rmx6Moving.canWalk = false;
-        //StartCoroutine(DeactiveWalk());
-        Debug.Log("Die");
-        dieEffect.Play();
-        StartCoroutine(WaitToDeactive());
+        //dieEffect.Play();
+        //StartCoroutine(WaitToDeactive());
+        gameObject.SetActive(false);
+        VFXController.Instance.Trigger(DieEffectHash, transform.position, 0, false, null, null);
     }
 
     public void OnHit()
     {
         Debug.Log("Hit");
         hitEffect.Play();
-    }
-    
-
-    private IEnumerator WaitToDeactive()
-    {
-        yield return new WaitForSeconds(0.5f);
-        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
