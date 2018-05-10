@@ -20,7 +20,7 @@ public class RideloidShoot : MonoBehaviour {
     //private float currentExistsTime;
 
     public ParticleSystem robotHitEffect;
-    public ParticleSystem robotDieEffect;
+    int DieEffectHash;
 
     private Vector2 direction;
     private ContactFilter2D contactFilter2D;
@@ -60,6 +60,7 @@ public class RideloidShoot : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         //currentExistsTime = 0;
+        DieEffectHash = VFXController.StringToHash("Smoke");
         direction = Vector2.right;
         shootTime = shootCoolDown;
         //Shooted = false;
@@ -144,14 +145,10 @@ public class RideloidShoot : MonoBehaviour {
 
     public void OnDie()
     {
-        robotDieEffect.Play();
-        StartCoroutine(WaitToDisable());
-    }
-
-    private IEnumerator WaitToDisable()
-    {
-        yield return new WaitForSeconds(0.5f);
+        //robotDieEffect.Play();
+        //StartCoroutine(WaitToDisable());
         gameObject.SetActive(false);
+        VFXController.Instance.Trigger(DieEffectHash, transform.position, 0, false, null, null);
     }
 
     private void CoolDownShoot()

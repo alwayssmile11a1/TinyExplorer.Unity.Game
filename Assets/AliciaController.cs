@@ -102,7 +102,7 @@ public class AliciaController : MonoBehaviour {
                 BT.Call(() => shieldDamager.EnableDamage()),
                 BT.Call(PopVortex),
                 BT.Call(SpawnSoldier),
-                BT.Wait(1.2f),
+                BT.Wait(2f),
                 BT.Call(Attack3),
                 BT.WaitUntil(Attack3Check),
                 BT.SetBool(animator, "attack3", false),
@@ -203,7 +203,7 @@ public class AliciaController : MonoBehaviour {
         for (int i = 0; i < numberOfSoldier; ++i)
         {
             float x = Random.Range(startRandomBombPos.position.x, endRandomBombPos.position.x);
-            attack3BulletObject[i] = bulletPool3.Pop(new Vector2(vortexGrounds[i].instance.transform.position.x, startRandomBombPos.position.y-1));
+            attack3BulletObject[i] = bulletPool3.Pop(new Vector2(vortexGrounds[i].instance.transform.position.x, startRandomBombPos.position.y - 1.9f));
             attack3BulletObject[i].instance.GetComponent<Rigidbody2D>().velocity = Vector2.up;
             //attack3BulletObject[i].instance.GetComponent<MiniSoldier>().Active();
         }

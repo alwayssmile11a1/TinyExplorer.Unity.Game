@@ -25,7 +25,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
     private float currentExistsTime;
 
     public ParticleSystem hitEffect;
-    public ParticleSystem dieEfect;
+    int DieEffectHash;
 
     private Animator animator;
     private BulletPool bulletPool;
@@ -34,6 +34,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
+        DieEffectHash = VFXController.StringToHash("Smoke");
         shootTime = shootCoolDown;
         contactFilter2D.layerMask = hitLayerMask;
         rayCastPosition = transform.position;
@@ -103,13 +104,10 @@ public class RockmanAlikeShoot : MonoBehaviour {
 
     public void OnDie()
     {
-        dieEfect.Play();
-        StartCoroutine(WaitToDisable());
-    }
-    private IEnumerator WaitToDisable()
-    {
-        yield return new WaitForSeconds(0.5f);
+        //dieEfect.Play();
+        //StartCoroutine(WaitToDisable());
         gameObject.SetActive(false);
+        VFXController.Instance.Trigger(DieEffectHash, transform.position, 0, false, null, null);
     }
 
     private IEnumerator ResetBullet()
