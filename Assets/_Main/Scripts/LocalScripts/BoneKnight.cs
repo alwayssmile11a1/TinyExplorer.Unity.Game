@@ -97,7 +97,7 @@ public class BoneKnight : MonoBehaviour, IBTDebugable {
 
         if(!m_EnemyBehaviour.CheckForObstacle(Mathf.Abs(direction.x * 0.8f)))
         {
-            m_RigidBody2D.MovePosition(direction * 0.7f + m_RigidBody2D.position);
+            m_RigidBody2D.MovePosition(direction * 0.8f + m_RigidBody2D.position);
         }
 
     }

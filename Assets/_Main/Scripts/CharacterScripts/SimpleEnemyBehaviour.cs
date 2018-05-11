@@ -246,12 +246,13 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         if (facing == -1)
         {
             m_SpriteRenderer.flipX = !spriteFaceLeft;
-            m_SpriteForward = spriteFaceLeft ? Vector2.left : Vector2.right;
+            m_SpriteForward = Vector2.left;
+
         }
         else if (facing == 1)
         {
             m_SpriteRenderer.flipX = spriteFaceLeft;
-            m_SpriteForward = spriteFaceLeft ? Vector2.right : Vector2.left;
+            m_SpriteForward = Vector2.right;
         }
     }
 
