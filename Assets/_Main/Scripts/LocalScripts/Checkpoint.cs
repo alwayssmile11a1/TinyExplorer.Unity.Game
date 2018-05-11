@@ -5,15 +5,15 @@ using UnityEngine;
 namespace Gamekit2D
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class Checkpoint : MonoBehaviour
+    public class Checkpoint : MonoBehaviour, IDataPersister
     {
         public ParticleSystem checkPointHitEffect;
         public bool respawnFacingLeft;
 
-        public bool resetGameObjectsOnRespawn;
-        
-        [Tooltip("The gameobjects have to implement interface IDataResetable")]
-        public GameObject[] resetGameObjects; 
+        [Tooltip("Useful in boss fight")]
+        public bool forceResetGame;
+        [HideInInspector]
+        public DataSettings dataSettings;
 
         private void Reset()
         {
@@ -34,11 +34,33 @@ namespace Gamekit2D
             }
         }
 
-        public void SetResetGameObjectOnRespawn(bool resetGameObjectsOnRespawn)
+        public void SetForceResetGame(bool forceResetGame)
         {
-            this.resetGameObjectsOnRespawn = resetGameObjectsOnRespawn;
+            this.forceResetGame = forceResetGame;
+            PersistentDataManager.SetDirty(this);
         }
 
+        public DataSettings GetDataSettings()
+        {
+            return dataSettings;
+        }
+
+        public void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
+        {
+            dataSettings.dataTag = dataTag;
+            dataSettings.persistenceType = persistenceType;
+        }
+
+        public Data SaveData()
+        {
+            return new Data<bool>(forceResetGame);
+        }
+
+        public void LoadData(Data data)
+        {
+            Data<bool> directorTriggerData = (Data<bool>)data;
+            forceResetGame = directorTriggerData.value;
+        }
 
     }
 }

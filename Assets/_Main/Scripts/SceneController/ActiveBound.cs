@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Gamekit2D
 {
     [RequireComponent(typeof(Collider2D))]
-    public class ActiveBound : MonoBehaviour, IDataPersister,IDataResetable
+    public class ActiveBound : MonoBehaviour, IDataPersister
     {
 
         public LayerMask targetLayers;
@@ -355,15 +355,15 @@ namespace Gamekit2D
         }
 
 
-        public void OnReset()
-        {
-            StopAllCoroutines();
+        //public void OnReset()
+        //{
+        //    StopAllCoroutines();
 
-            gameObject.SetActive(true);
-            SnapToOriginalState();
-            m_AlreadyTriggered = false;
-            PersistentDataManager.SetDirty(this);
-        }
+        //    gameObject.SetActive(true);
+        //    SnapToOriginalState();
+        //    m_AlreadyTriggered = false;
+        //    PersistentDataManager.SetDirty(this);
+        //}
 
 
 

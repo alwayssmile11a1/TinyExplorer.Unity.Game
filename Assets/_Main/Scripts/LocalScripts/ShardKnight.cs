@@ -38,21 +38,10 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     private LineRenderer m_LineRenderer;
     private TrailRenderer m_trailRenderer;
 
-    private Vector3[] chaserAttacksPositions;
-    private BulletPool m_FireBallPool;
     private BulletPool m_ConcentratingAttackPool;
     private BulletPool m_LaserAttackPool;
 
 
-    //#region Deprecated
-    //private GameObject rangeEnemyToSpawn;
-    //private GameObject meleeEnemyToSpawn;
-    //private List<Transform> spawnRangeEnemyPositions;
-    //private List<Transform> spawnMeleeEnemyPositions;
-    ////store spawned enemies and their spawned positions (in order to not spawn another enemy on top of an already spawned one)
-    //private List<KeyValuePair<Transform,GameObject>> m_SpawnedRangeEnemies = new List<KeyValuePair<Transform, GameObject>>();
-    //private List<KeyValuePair<Transform, GameObject>> m_SpawnedMeleeEnemies = new List<KeyValuePair<Transform, GameObject>>();
-    //#endregion
 
     private int m_HashMeteorShowerAttackPara = Animator.StringToHash("MeteorShowerAttack");
     private int m_HashExplodingAttackPara = Animator.StringToHash("ExplodingAttack");
@@ -68,7 +57,8 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     private Vector3 m_FuturePosition;
     private int m_CurrentMoveIndex;
     private Vector3 m_OffsetFromLaserToShardKnight;
-   
+    private Vector3 m_OriginalPosition;
+
     //Laser
     private bool m_LaserEnabled = false;
     private float m_LaserAttackShotAngle = 0;
@@ -90,6 +80,8 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         m_Flicker = m_Animator.gameObject.AddComponent<Flicker>();
         m_LaserFollowComponent = laserFollower.GetComponent<FollowTarget>();
         m_trailRenderer = GetComponentInChildren<TrailRenderer>();
+
+        m_OriginalPosition = transform.position;
 
         //Pool
         m_ConcentratingAttackPool = BulletPool.GetObjectPool(concentratingAttack, 5);
@@ -239,6 +231,24 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
     }
 
+    //private void OnEnable()
+    //{
+        
+    //}
+
+    //private void OnDisable()
+    //{
+    //    transform.rotation = Quaternion.identity;
+    //    transform.position = m_OriginalPosition;
+    //    m_ConcentratingAttackPool.PushAll();
+    //    m_LaserAttackPool.PushAll();
+    //    m_Ai.ResetChildren();
+    //    m_LineRenderer.enabled = false;
+    //    concentratingStateEffect.Stop();
+    //    m_FormChanged = false;
+    //}
+
+
     public Root GetAIRoot()
     {
         return m_Ai;
@@ -265,91 +275,6 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
        
 
     }
-
-
-    //#region Deprecated
-    //public void SpawnEnemies()
-    //{
-    //    StartCoroutine(InternalSpawnEnemies());
-    //}
-
-    //private IEnumerator InternalSpawnEnemies()
-    //{
-
-       
-    //    yield return new WaitForSeconds(2f);
-
-
-
-    //    //random the number of enemies to spawn
-    //    int numberOfEnemies = Random.Range(1, 3);
-
-
-    //    for (int i = 0; i < numberOfEnemies; i++)
-    //    {
-    //        //random type of enemies to spawn (1 is range, 2 is melee)
-    //        int type = Random.Range(1, 3);
-
-    //        switch (type)
-    //        {
-    //            case 1:
-    //                {
-    //                    if (!SpawnEnemy(rangeEnemyToSpawn, spawnRangeEnemyPositions, m_SpawnedRangeEnemies))
-    //                    {
-    //                        SpawnEnemy(meleeEnemyToSpawn, spawnMeleeEnemyPositions, m_SpawnedMeleeEnemies);
-    //                    }
-
-    //                    break;
-    //                }
-
-    //            case 2:
-    //                {
-    //                    if (!SpawnEnemy(meleeEnemyToSpawn, spawnMeleeEnemyPositions, m_SpawnedMeleeEnemies))
-    //                    {
-    //                        SpawnEnemy(rangeEnemyToSpawn, spawnRangeEnemyPositions, m_SpawnedRangeEnemies);
-    //                    }
-    //                    break;
-    //                }
-    //        }
-    //    }
-
-    //}
-
-    //private bool SpawnEnemy(GameObject enemyToSpawn,List<Transform> positions, List<KeyValuePair<Transform, GameObject>> spawnedEnemies)
-    //{
-
-    //    if (enemyToSpawn == null) return false;
-
-    //    //find and remove null value from m_SpawnedRangeEnemies
-    //    for (int i = 0; i < spawnedEnemies.Count; i++)
-    //    {
-    //        if (spawnedEnemies[i].Value == null)
-    //        {
-    //            positions.Add(spawnedEnemies[i].Key);
-    //            spawnedEnemies.RemoveAt(i);
-    //        }
-    //    }
-
-    //    if (positions.Count == 0) return false;
-
-    //    //get random position to spawn an enemy
-    //    int randomIndex = Random.Range(0, positions.Count);
-    //    Transform spawnPosition = positions[randomIndex];
-    //    positions.RemoveAt(randomIndex);
-
-    //    //spawn enemy
-    //    GameObject cloneEnemy = Instantiate(enemyToSpawn, spawnPosition.position, Quaternion.identity, transform);
-
-    //    //add to list of spawned enemies
-    //    spawnedEnemies.Add(new KeyValuePair<Transform, GameObject>(spawnPosition, cloneEnemy));
-
-
-    //    return true;
-
-    //}
-
-
-    //#endregion
 
 
     private void OrientToTarget()
@@ -666,43 +591,6 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     {
         m_Flicker.StartColorFickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
 
-        ////Push damageable object back just a tiny bit
-        //Rigidbody2D damageableBody = damageable.GetComponent<Rigidbody2D>();
-
-        //if (damageableBody == null) return;
-
-        //Vector2 damagerToDamageable = damager.transform.position - damageableBody.transform.position;
-        //if (damagerToDamageable.x > 0)
-        //{
-        //    damageableBody.MovePosition(damageableBody.position + new Vector2(-0.2f, 0));
-        //}
-        //else
-        //{
-        //    damageableBody.MovePosition(damageableBody.position + new Vector2(0.2f, 0));
-        //}
-
-        ////Teleport
-        //int random1 = Random.Range(0, teleportPositions.Count);
-        //Transform randomTransform1 = teleportPositions[random1];
-        //teleportPositions.RemoveAt(random1);
-
-        //int random2 = Random.Range(0, teleportPositions.Count);
-        //Transform randomTransform2 = teleportPositions[random2];
-        //teleportPositions.RemoveAt(random2);
-
-
-        ////position to spawn
-        //Vector3 teleportPosition = new Vector3(Random.Range(randomTransform1.position.x, randomTransform2.position.x),
-        //                                                Random.Range(randomTransform1.position.y, randomTransform2.position.y), 0);
-
-
-        ////teleport
-        //transform.position = teleportPosition;
-
-
-        ////Add to teleport position again
-        //teleportPositions.Add(randomTransform1);
-        //teleportPositions.Add(randomTransform2);
     }
 
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using Gamekit2D;
 using BTAI;
 
-public class PrincessFury : MonoBehaviour, IBTDebugable, IDataResetable {
+public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     public Transform targetToTrack;
 
@@ -533,24 +533,24 @@ public class PrincessFury : MonoBehaviour, IBTDebugable, IDataResetable {
         gameObject.SetActive(false);
     }
 
-    public void OnReset()
-    {
-        m_WokeUp = false;
-        bodyDamager.DisableDamage();
-        m_SoldierCount = 2;
+    //public void OnReset()
+    //{
+    //    m_WokeUp = false;
+    //    bodyDamager.DisableDamage();
+    //    m_SoldierCount = 2;
        
-        m_RigidBody2D.velocity = Vector2.zero;
-        m_SpriteRenderer.sortingOrder = 5;
-        m_TeleportTimer = 0;
+    //    m_RigidBody2D.velocity = Vector2.zero;
+    //    m_SpriteRenderer.sortingOrder = 5;
+    //    m_TeleportTimer = 0;
 
-        m_Ai.ResetChildren();
+    //    m_Ai.ResetChildren();
 
-        m_JumpAttackSpellPool.PushAll();
-        m_DarkMatterPool.PushAll();
-        m_SoldierPool.PushAll();
+    //    m_JumpAttackSpellPool.PushAll();
+    //    m_DarkMatterPool.PushAll();
+    //    m_SoldierPool.PushAll();
 
-         transform.position = m_OriginalPosition;
-    }
+    //     transform.position = m_OriginalPosition;
+    //}
 
 
 

@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 namespace Gamekit2D
 {
     [RequireComponent(typeof(Collider2D))]
-    public class DirectorTrigger : MonoBehaviour, IDataPersister, IDataResetable
+    public class DirectorTrigger : MonoBehaviour, IDataPersister
     {
         public enum TriggerType
         {
@@ -83,12 +83,12 @@ namespace Gamekit2D
             m_AlreadyTriggered = directorTriggerData.value;
         }
 
-        public void OnReset()
-        {
-            m_AlreadyTriggered = false;
-            PersistentDataManager.SetDirty(this);
+        //public void OnReset()
+        //{
+        //    m_AlreadyTriggered = false;
+        //    PersistentDataManager.SetDirty(this);
             
 
-        }
+        //}
     }
 }

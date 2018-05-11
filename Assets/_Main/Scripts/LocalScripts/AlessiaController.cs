@@ -341,7 +341,7 @@ public class AlessiaController : MonoBehaviour {
     {
         OnAttackHit(damager);
 
-        VFXController.Instance.Trigger(m_HashSlashHitEffect, damageable.transform.position, 0, false, null);
+        //VFXController.Instance.Trigger(m_HashSlashHitEffect, damageable.transform.position, 0, false, null);
 
         if (slashHitAudioPlayer)
         {
@@ -380,7 +380,7 @@ public class AlessiaController : MonoBehaviour {
         //}
 
         //Physics2D.Raycast(transform.position, m_SpriteRenderer.flipX ? Vector2.left : Vector2.right, damager.GetContactFilter(), m_SlashHitResults);
-        VFXController.Instance.Trigger(m_HashSlashHitEffect, slashContactTransform.position, 0, false, null);
+        //VFXController.Instance.Trigger(m_HashSlashHitEffect, slashContactTransform.position, 0, false, null);
 
         if(slashHitAudioPlayer)
         {
@@ -441,61 +441,46 @@ public class AlessiaController : MonoBehaviour {
     }
 
     private IEnumerator DieRespawnCoroutine(bool resetHealth)
-    {       
-        yield return new WaitForSeconds(0.2f); //wait one second before respawing
-        yield return StartCoroutine(ScreenFader.FadeSceneOut());
-        Respawn(resetHealth);
-        yield return new WaitForSeconds(0.3f);
-        yield return StartCoroutine(ScreenFader.FadeSceneIn());
+    {
+        if (m_LastCheckpoint != null)
+        {
+            if (m_LastCheckpoint.forceResetGame)
+            {
+                if (resetHealth)
+                    m_Damageable.SetHealth(m_Damageable.startingHealth);
+                SceneController.RestartZoneAtPosition(m_LastCheckpoint.transform.position);
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.2f); //wait one second before respawing
+                yield return StartCoroutine(ScreenFader.FadeSceneOut());
+                Respawn(resetHealth);
+                yield return new WaitForSeconds(0.3f);
+                yield return StartCoroutine(ScreenFader.FadeSceneIn());
+            }
+        }
+
     }
 
     public void Respawn(bool resetHealth)
     {
-        if (m_LastCheckpoint != null)
-        {
-            m_Rigidbody2D.velocity = Vector2.zero;
 
-            if (resetHealth)
-                m_Damageable.SetHealth(m_Damageable.startingHealth);
+        m_Rigidbody2D.velocity = Vector2.zero;
 
-            //we reset the hurt trigger, as we don't want the player to go back to hurt animation once respawned
-            m_Animator.ResetTrigger(m_HashHurtPara);
+        if (resetHealth)
+            m_Damageable.SetHealth(m_Damageable.startingHealth);
 
-            m_Flicker.StopFlickering();
+        //we reset the hurt trigger, as we don't want the player to go back to hurt animation once respawned
+        m_Animator.ResetTrigger(m_HashHurtPara);
 
-            m_SpriteRenderer.flipX = m_LastCheckpoint.respawnFacingLeft;
+        m_Flicker.StopFlickering();
 
-            //if (m_LastCheckpoint.resetGameObjectsOnRespawn)
-            //{
-            //    for (int i = 0; i < m_LastCheckpoint.resetGameObjects.Length; i++)
-            //    {
-            //        IDataResetable resetter = m_LastCheckpoint.resetGameObjects[i].GetComponent<IDataResetable>();
-            //        if (resetter!=null)
-            //            resetter.OnReset();
-            //    }
-            //}
+        m_SpriteRenderer.flipX = m_LastCheckpoint.respawnFacingLeft;
 
-            if (m_LastCheckpoint.resetGameObjectsOnRespawn)
-            {
-
-                for (int i = 0; i < m_LastCheckpoint.resetGameObjects.Length; i++)
-                {
-                    //m_LastCheckpoint.resetGameObjects[i].SetActive(true);
-                    IDataResetable[] resetters = m_LastCheckpoint.resetGameObjects[i].GetComponents<IDataResetable>();
-
-                    for (int j = 0; j < resetters.Length; j++)
-                    {
-                        if (resetters != null)
-                            resetters[j].OnReset();
-                    }
-
-                }
-            }
-
-            transform.position = m_LastCheckpoint.transform.position;
+        transform.position = m_LastCheckpoint.transform.position;
 
 
-        }
+
 
     }
    

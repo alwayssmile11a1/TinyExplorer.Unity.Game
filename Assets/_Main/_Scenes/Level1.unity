@@ -156,8 +156,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPointHitEffect: {fileID: 0}
   respawnFacingLeft: 0
-  resetGameObjectsOnRespawn: 0
-  resetGameObjects: []
+  forceResetGame: 0
+  dataSettings:
+    dataTag: 8e827ab5-210d-4311-a6ab-0a19fe9c9910
+    persistenceType: 3
 --- !u!61 &25596516
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -188,6 +190,78 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4836392505305640, guid: 432531e10c82e2946802680bb1bf244f,
     type: 2}
   m_PrefabInternal: {fileID: 1177537434}
+--- !u!1 &94937728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 94937731}
+  - component: {fileID: 94937730}
+  - component: {fileID: 94937729}
+  m_Layer: 0
+  m_Name: Checkpoint (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &94937729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 94937728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d38ee160c47aabd4dbe318959d4ae1fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkPointHitEffect: {fileID: 0}
+  respawnFacingLeft: 0
+  forceResetGame: 0
+  dataSettings:
+    dataTag: 8e827ab5-210d-4311-a6ab-0a19fe9c9910
+    persistenceType: 3
+--- !u!61 &94937730
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 94937728}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.06}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.69490147, y: 4.42}
+  m_EdgeRadius: 0
+--- !u!4 &94937731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 94937728}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 210.7, y: 22.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 939899921}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &109122787 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4689531388901432, guid: 0feed38125eda9f4b9d2b02225b5af28,
@@ -420,11 +494,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPointHitEffect: {fileID: 0}
   respawnFacingLeft: 0
-  resetGameObjectsOnRespawn: 0
-  resetGameObjects:
-  - {fileID: 449411117}
-  - {fileID: 1665622290}
-  - {fileID: 802255485}
+  forceResetGame: 0
+  dataSettings:
+    dataTag: 333aabc2-2959-435b-9bfb-120631144a17
+    persistenceType: 3
 --- !u!61 &417047013
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -501,19 +574,19 @@ Prefab:
       objectReference: {fileID: 1676583934}
     - target: {fileID: 4142885780771908, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 218.98999
+      value: 224.79999
       objectReference: {fileID: 0}
     - target: {fileID: 4280894727004844, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 218.98999
+      value: 224.79999
       objectReference: {fileID: 0}
     - target: {fileID: 4142885780771908, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 23.47
+      value: 22.73
       objectReference: {fileID: 0}
     - target: {fileID: 4280894727004844, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 23.47
+      value: 22.73
       objectReference: {fileID: 0}
     - target: {fileID: 4280894727004844, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.z
@@ -579,7 +652,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 417047012}
-        m_MethodName: SetResetGameObjectOnRespawn
+        m_MethodName: SetForceResetGame
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10547,8 +10620,8 @@ PolygonCollider2D:
     - - {x: 9.869598, y: 10.951021}
       - {x: -36.019547, y: 10.716257}
       - {x: -35.762085, y: -12.668613}
-      - {x: -13.73819, y: -13.239363}
-      - {x: -13.659943, y: -17.891354}
+      - {x: -8.420105, y: -12.588632}
+      - {x: -8.321991, y: -17.885937}
       - {x: 9.97229, y: -17.983273}
 --- !u!1 &845581355
 GameObject:
@@ -10762,6 +10835,9 @@ Transform:
   - {fileID: 1832562855}
   - {fileID: 417047011}
   - {fileID: 25596514}
+  - {fileID: 944231816}
+  - {fileID: 969754882}
+  - {fileID: 94937731}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10870,6 +10946,78 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c57d57c8e54fb4a4a98954eccf3a1a08, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &944231815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 944231816}
+  - component: {fileID: 944231818}
+  - component: {fileID: 944231817}
+  m_Layer: 0
+  m_Name: Checkpoint (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &944231816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 944231815}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 116.34, y: 4.54, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 939899921}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &944231817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 944231815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d38ee160c47aabd4dbe318959d4ae1fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkPointHitEffect: {fileID: 0}
+  respawnFacingLeft: 0
+  forceResetGame: 0
+  dataSettings:
+    dataTag: 8e827ab5-210d-4311-a6ab-0a19fe9c9910
+    persistenceType: 3
+--- !u!61 &944231818
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 944231815}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.06}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.69490147, y: 4.42}
+  m_EdgeRadius: 0
 --- !u!1001 &946278947
 Prefab:
   m_ObjectHideFlags: 0
@@ -10918,6 +11066,10 @@ Prefab:
       propertyPath: m_Name
       value: BoneKnight (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1334930025105386, guid: 4e4a3ec7f839d754c81a949f57ec470a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e4a3ec7f839d754c81a949f57ec470a, type: 2}
   m_IsPrefabAsset: 0
@@ -10937,6 +11089,78 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 942228270}
   m_Script: {fileID: 11500000, guid: ec3bfa91d3a05ee4a9dc02d72e4f2891, type: 3}
+--- !u!1 &969754881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 969754882}
+  - component: {fileID: 969754884}
+  - component: {fileID: 969754883}
+  m_Layer: 0
+  m_Name: Checkpoint (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &969754882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 969754881}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 192.7, y: 4.15, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 939899921}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &969754883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 969754881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d38ee160c47aabd4dbe318959d4ae1fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkPointHitEffect: {fileID: 0}
+  respawnFacingLeft: 0
+  forceResetGame: 0
+  dataSettings:
+    dataTag: 8e827ab5-210d-4311-a6ab-0a19fe9c9910
+    persistenceType: 3
+--- !u!61 &969754884
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 969754881}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.06}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.69490147, y: 4.42}
+  m_EdgeRadius: 0
 --- !u!1001 &975449960
 Prefab:
   m_ObjectHideFlags: 0
@@ -11614,7 +11838,18 @@ MonoBehaviour:
   disableBoundOnExit: 1
   OnEnterActiveBound:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 94937729}
+        m_MethodName: SetForceResetGame
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnExitActiveBound:
@@ -12366,7 +12601,7 @@ Prefab:
     - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
       propertyPath: m_Tiles.Array.data[0].second.m_TileSpriteIndex
-      value: 19
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
@@ -12387,8 +12622,7 @@ Prefab:
         type: 2}
       propertyPath: m_TileSpriteArray.Array.data[6].m_Data
       value: 
-      objectReference: {fileID: 21300142, guid: 5bdebc31617e5475f9757dbb57389d3b,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
       propertyPath: m_TileSpriteArray.Array.data[19].m_RefCount
@@ -12398,7 +12632,7 @@ Prefab:
         type: 2}
       propertyPath: m_TileSpriteArray.Array.data[19].m_Data
       value: 
-      objectReference: {fileID: 21300006, guid: 8ce8d8df6612b4f4e898cf7f3a7ade7c,
+      objectReference: {fileID: 21300140, guid: 5bdebc31617e5475f9757dbb57389d3b,
         type: 3}
     - target: {fileID: 8195094282201040272, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
@@ -29768,7 +30002,7 @@ Prefab:
     - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
       propertyPath: m_TileSpriteArray.Array.data[23].m_RefCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
@@ -32553,7 +32787,7 @@ Prefab:
     - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
       propertyPath: m_TileSpriteArray.Array.data[22].m_RefCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 66713939591298166, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
@@ -33739,12 +33973,14 @@ Prefab:
         type: 2}
       propertyPath: m_TileSpriteArray.Array.data[22].m_Data
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300036, guid: 8ce8d8df6612b4f4e898cf7f3a7ade7c,
+        type: 3}
     - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
       propertyPath: m_TileSpriteArray.Array.data[23].m_Data
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300006, guid: 8ce8d8df6612b4f4e898cf7f3a7ade7c,
+        type: 3}
     - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
       propertyPath: m_Tiles.Array.data[33].second.m_TileSpriteIndex
@@ -37068,7 +37304,7 @@ Prefab:
     - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
       propertyPath: m_Tiles.Array.data[197].second.m_TileSpriteIndex
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
         type: 2}
@@ -65101,6 +65337,37 @@ Prefab:
       propertyPath: m_Tiles.Array.data[1781].second.m_ColliderType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
+        type: 2}
+      propertyPath: m_Tiles.Array.data[1].second.m_TileSpriteIndex
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
+        type: 2}
+      propertyPath: m_Tiles.Array.data[2].second.m_TileSpriteIndex
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
+        type: 2}
+      propertyPath: m_TileSpriteArray.Array.data[6].m_RefCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
+        type: 2}
+      propertyPath: m_TileSpriteArray.Array.data[7].m_RefCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
+        type: 2}
+      propertyPath: m_TileSpriteArray.Array.data[7].m_Data
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195094281685608168, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8,
+        type: 2}
+      propertyPath: m_TileSpriteArray.Array.data[10].m_Data
+      value: 
+      objectReference: {fileID: 21300142, guid: 5bdebc31617e5475f9757dbb57389d3b,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21a2ec2fdc2f4af4e9abbe982d2d4be8, type: 2}
   m_IsPrefabAsset: 0
@@ -65676,7 +65943,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 8.1, y: -1.1}
+  m_Offset: {x: -3.7644196, y: -1.0999999}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -65687,7 +65954,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 94.2, y: 12.37}
+  m_Size: {x: 70.47116, y: 12.37}
   m_EdgeRadius: 0
 --- !u!1 &1417747834 stripped
 GameObject:
@@ -65885,22 +66152,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114838149703133080, guid: afb933bd6c4341044950e7372df4078e,
+    - target: {fileID: 114515920500706292, guid: afb933bd6c4341044950e7372df4078e,
         type: 2}
-      propertyPath: target
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 443814165}
-    - target: {fileID: 114349668594998606, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 443814165}
-    - target: {fileID: 114552598907463120, guid: afb933bd6c4341044950e7372df4078e,
-        type: 2}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 443814165}
-    - target: {fileID: 114853500793041974, guid: afb933bd6c4341044950e7372df4078e,
+      objectReference: {fileID: 94937729}
+    - target: {fileID: 114784611302210184, guid: afb933bd6c4341044950e7372df4078e,
         type: 2}
       propertyPath: target
       value: 
@@ -65910,7 +66167,22 @@ Prefab:
       propertyPath: targetToTrack
       value: 
       objectReference: {fileID: 443814165}
-    - target: {fileID: 114784611302210184, guid: afb933bd6c4341044950e7372df4078e,
+    - target: {fileID: 114853500793041974, guid: afb933bd6c4341044950e7372df4078e,
+        type: 2}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 443814165}
+    - target: {fileID: 114552598907463120, guid: afb933bd6c4341044950e7372df4078e,
+        type: 2}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 443814165}
+    - target: {fileID: 114349668594998606, guid: afb933bd6c4341044950e7372df4078e,
+        type: 2}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 443814165}
+    - target: {fileID: 114838149703133080, guid: afb933bd6c4341044950e7372df4078e,
         type: 2}
       propertyPath: target
       value: 
@@ -66025,6 +66297,11 @@ Prefab:
       propertyPath: targetToTrack
       value: 
       objectReference: {fileID: 443814165}
+    - target: {fileID: 114036160234647162, guid: afd2fd9a5b1a69b4e9c7e586135ed10e,
+        type: 2}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetForceResetGame
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afd2fd9a5b1a69b4e9c7e586135ed10e, type: 2}
   m_IsPrefabAsset: 0
@@ -66211,8 +66488,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPointHitEffect: {fileID: 0}
   respawnFacingLeft: 0
-  resetGameObjectsOnRespawn: 0
-  resetGameObjects: []
+  forceResetGame: 0
+  dataSettings:
+    dataTag: e95b6f96-6c05-45f5-a844-301af569135b
+    persistenceType: 3
 --- !u!61 &1661046028
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -66312,11 +66591,6 @@ PlayableDirector:
     - ae636ac892c8e79429b7377635bd637a: {fileID: 900101345}
     - de9775f7457ef2640bec12e49aa480ff: {fileID: 295059439}
     - d095f6781a4321248bcfb883ea0e56e3: {fileID: 295059439}
---- !u!1 &1665622290 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1359147281036316, guid: afd2fd9a5b1a69b4e9c7e586135ed10e,
-    type: 2}
-  m_PrefabInternal: {fileID: 1532578520}
 --- !u!114 &1667574969 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114343545874050072, guid: 0d62daa35b05a584dad42f17548a633a,
@@ -66443,8 +66717,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPointHitEffect: {fileID: 0}
   respawnFacingLeft: 0
-  resetGameObjectsOnRespawn: 0
-  resetGameObjects: []
+  forceResetGame: 0
+  dataSettings:
+    dataTag: 09ae8e98-b1ba-4151-8f01-c949281d5331
+    persistenceType: 3
 --- !u!61 &1832562857
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -66800,8 +67076,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPointHitEffect: {fileID: 0}
   respawnFacingLeft: 0
-  resetGameObjectsOnRespawn: 0
-  resetGameObjects: []
+  forceResetGame: 0
+  dataSettings:
+    dataTag: 6e2316d1-6611-4d7c-9510-110670a9114a
+    persistenceType: 3
 --- !u!61 &1943545394
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -66852,11 +67130,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 218.09
+      value: 223.9
       objectReference: {fileID: 0}
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 22.84
+      value: 22.1
       objectReference: {fileID: 0}
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
       propertyPath: m_LocalPosition.z
@@ -66887,6 +67165,11 @@ Prefab:
       propertyPath: OnHealthSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 967904393}
+    - target: {fileID: 114758591728174508, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 2}
+      propertyPath: startingHealth
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
   m_IsPrefabAsset: 0

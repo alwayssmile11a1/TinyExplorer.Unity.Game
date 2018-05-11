@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Gamekit2D
 {
     [RequireComponent(typeof(Collider2D))]
-    public class PickupItem : MonoBehaviour, IDataPersister, IDataResetable
+    public class PickupItem : MonoBehaviour, IDataPersister
     {
 
         public LayerMask layers;
@@ -84,10 +84,10 @@ namespace Gamekit2D
             gameObject.SetActive(savedData.value);
         }
 
-        public void OnReset()
-        {
-            gameObject.SetActive(true);
-            Save();
-        }
+        //public void OnReset()
+        //{
+        //    gameObject.SetActive(true);
+        //    Save();
+        //}
     }
 }
