@@ -574,19 +574,19 @@ Prefab:
       objectReference: {fileID: 1676583934}
     - target: {fileID: 4142885780771908, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 224.79999
+      value: 203.65
       objectReference: {fileID: 0}
     - target: {fileID: 4280894727004844, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 224.79999
+      value: 203.65
       objectReference: {fileID: 0}
     - target: {fileID: 4142885780771908, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 22.73
+      value: 5.33
       objectReference: {fileID: 0}
     - target: {fileID: 4280894727004844, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 22.73
+      value: 5.33
       objectReference: {fileID: 0}
     - target: {fileID: 4280894727004844, guid: 7b7bb3b55d5951247a7abd83f4a7effb, type: 2}
       propertyPath: m_LocalPosition.z
@@ -66800,6 +66800,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1104529229354898, guid: 53a0b331aa4a5204c9037e529e6a2891, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53a0b331aa4a5204c9037e529e6a2891, type: 2}
   m_IsPrefabAsset: 0
@@ -67130,11 +67134,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 223.9
+      value: 202.75
       objectReference: {fileID: 0}
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 22.1
+      value: 4.7
       objectReference: {fileID: 0}
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
       propertyPath: m_LocalPosition.z

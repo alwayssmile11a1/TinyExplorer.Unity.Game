@@ -53,8 +53,8 @@ public class CharacterInput : MonoBehaviour {
             return;
         }
 
-        HorizontalAxis = Input.GetAxisRaw("Horizontal");
-        VerticalAxis = Input.GetAxisRaw("Vertical");
+        HorizontalAxis = Input.GetAxis("Horizontal");
+        VerticalAxis = Input.GetAxis("Vertical");
 
         //Key input
         for (int i=0;i<inputButtons.Length;i++)
