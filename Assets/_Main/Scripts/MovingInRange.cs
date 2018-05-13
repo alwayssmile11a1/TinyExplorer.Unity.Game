@@ -36,6 +36,7 @@ public class MovingInRange : MonoBehaviour {
         if (canMove && !animator.GetBool("attack"))
         {
             MoveRideloidg();
+         
         }
     }
 
@@ -85,5 +86,11 @@ public class MovingInRange : MonoBehaviour {
     {
         yield return new WaitForSeconds(time);
         canMove = !canMove;
+    }
+    private void OnDisable()
+    {
+        walkingState = 0;
+        normalState = 0;
+        canMove = false;
     }
 }

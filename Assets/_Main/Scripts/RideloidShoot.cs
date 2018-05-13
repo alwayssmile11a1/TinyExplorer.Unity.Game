@@ -147,6 +147,7 @@ public class RideloidShoot : MonoBehaviour {
     {
         //robotDieEffect.Play();
         //StartCoroutine(WaitToDisable());
+        //GetComponent<MovingInRange>().CanMove = false;
         gameObject.SetActive(false);
         VFXController.Instance.Trigger(DieEffectHash, transform.position, 0, false, null, null);
     }
