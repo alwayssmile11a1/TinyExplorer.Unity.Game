@@ -9,6 +9,7 @@ TagManager:
   - ParticleSystem
   - RideloidRange
   - FxTemporaire
+  - ladder
   layers:
   - Default
   - TransparentFX
