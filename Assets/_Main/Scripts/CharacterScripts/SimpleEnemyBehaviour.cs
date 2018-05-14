@@ -287,7 +287,7 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         ////If the player don't have control, they can't react, so do not pursue them
         //if (!PlayerInput.Instance.HaveControl)
         //    return;
-        
+
         if (targetToTrack == null) return;
 
         Vector3 dir = targetToTrack.transform.position - transform.position;
@@ -298,9 +298,7 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         }
 
         Vector3 testForward = Quaternion.Euler(0, 0, spriteFaceLeft ? Mathf.Sign(m_SpriteForward.x) * -viewDirection : Mathf.Sign(m_SpriteForward.x) * viewDirection) * m_SpriteForward;
-
-  
-
+        
         float angle = Vector3.Angle(testForward, dir);
 
         if (angle > viewFov * 0.5f)

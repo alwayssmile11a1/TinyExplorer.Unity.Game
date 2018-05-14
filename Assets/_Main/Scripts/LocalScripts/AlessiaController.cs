@@ -10,7 +10,6 @@ public class AlessiaController : MonoBehaviour {
     public float speed = 5f;
     public float jumpForce = 400f;
     public float timeBetweenFlickering = 0;
-    public ParticleSystem shield;
 
     [Tooltip("Throw speed when get hit")]
     public Vector2 throwSpeed = new Vector2(3, 3);
@@ -71,6 +70,7 @@ public class AlessiaController : MonoBehaviour {
     private float m_OriginalGravity;
     private bool m_CanDash = true;
     private bool m_CanSlash = true;
+    private bool m_CanClimb = false;
     //Allow dash in air only one time
     private bool m_DashedInAir = false;
 
@@ -161,6 +161,7 @@ public class AlessiaController : MonoBehaviour {
         if (m_BlockNormalAction) return;
 
         Move();
+        //Climb();
         Face();
         Animate();
     }
@@ -175,11 +176,11 @@ public class AlessiaController : MonoBehaviour {
         }
     }
 
-    public void SpawnShield()
-    {
-        Debug.Log("spawn shield");
-        shield.Play();
-    }
+    //public void SpawnShield()
+    //{
+    //    Debug.Log("spawn shield");
+    //    shield.Play();
+    //}
 
     private void Move()
     {
@@ -193,7 +194,17 @@ public class AlessiaController : MonoBehaviour {
         }
 
     }
-    
+    private void Climb()
+    {
+        if (m_ExternalForceTimer <= 0 && m_CanClimb)
+        {
+            //set velocity 
+            m_Velocity.Set(m_Rigidbody2D.velocity.x, m_CharacterInput.VerticalAxis * speed);
+
+            //Move rigidbody
+            m_Rigidbody2D.velocity = m_Velocity;
+        }
+    }
     private void Face()
     {
         if(!m_SpriteRenderer.flipX && m_CharacterInput.HorizontalAxis < 0)
@@ -533,6 +544,18 @@ public class AlessiaController : MonoBehaviour {
         hurtAudioPlayer.PlayRandomSound();
     }
 
-
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag.Equals("ladder"))
+        {
+            m_CanClimb = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag.Equals("ladder"))
+        {
+            m_CanClimb = false;
+        }
+    }
 }
