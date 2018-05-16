@@ -13,6 +13,20 @@ public class MovingGround : MonoBehaviour {
     private float distance;
     private Vector3 m_des;
     public GameObject Effect;
+
+    public bool CanMove
+    {
+        get
+        {
+            return canMove;
+        }
+
+        set
+        {
+            canMove = value;
+        }
+    }
+
     private void Awake()
     {
         platformRigidbody = GetComponent<Rigidbody2D>();
@@ -20,7 +34,7 @@ public class MovingGround : MonoBehaviour {
     }
     // Update is called once per frame
     void Update () {
-        if(canMove)
+        if(CanMove)
         {
             Vector3 movement = velocity * Time.deltaTime;
             MovePlatform(movement);
@@ -30,9 +44,10 @@ public class MovingGround : MonoBehaviour {
     void MovePlatform(Vector3 movement)
     {
         float dist = Vector3.Distance(m_des, transform.position);
-        Debug.Log("Distance to other: " + dist);
-        Debug.Log("m_des: " + m_des);
-        Debug.Log("m_transform: " + transform.position);
+        //Debug.Log("Distance to other: " + dist);
+        //Debug.Log("m_des: " + m_des);
+        //Debug.Log("m_transform: " + transform.position);
+        //if (dist > distance)
         if (dist > distance)
         {
             //Debug.Log(destination);
@@ -41,7 +56,9 @@ public class MovingGround : MonoBehaviour {
             platformRigidbody.transform.position += movement;
         }
         else
-            canMove = false;
+        {
+            CanMove = false;
+        }
 
     }
     void MovePlatform_1() { 
@@ -67,7 +84,7 @@ public class MovingGround : MonoBehaviour {
     {
         if (collision.tag.Equals("Player"))
         {
-            canMove = true;
+            CanMove = true;
             var children = Effect.GetComponentsInChildren<ParticleSystem>();
             foreach(var child in children)
             {

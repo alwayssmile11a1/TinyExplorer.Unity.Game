@@ -59,6 +59,7 @@ public class AlessiaController : MonoBehaviour {
     private int m_HashRunPara = Animator.StringToHash("Run");
     private int m_HashHurtPara = Animator.StringToHash("Hurt");
     private int m_HashDashPara = Animator.StringToHash("Dash");
+    private int m_HashOnLadderPara = Animator.StringToHash("isOnLadder");
 
 
     private int m_HashSlashHitEffect;
@@ -161,7 +162,6 @@ public class AlessiaController : MonoBehaviour {
         if (m_BlockNormalAction) return;
 
         Move();
-        //Climb();
         Face();
         Animate();
     }
@@ -171,7 +171,7 @@ public class AlessiaController : MonoBehaviour {
         if (m_CharacterController2D.IsGrounded && m_ExternalForceTimer <=0)
         {
             m_JumpForceVector.y = jumpForce;
-            m_Rigidbody2D.AddForce(m_JumpForceVector, ForceMode2D.Impulse);
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, jumpForce);
             m_JumpForceVector = Vector2.zero;
         }
     }
@@ -193,17 +193,6 @@ public class AlessiaController : MonoBehaviour {
             m_Rigidbody2D.velocity = m_Velocity;
         }
 
-    }
-    private void Climb()
-    {
-        if (m_ExternalForceTimer <= 0 && m_CanClimb)
-        {
-            //set velocity 
-            m_Velocity.Set(m_Rigidbody2D.velocity.x, m_CharacterInput.VerticalAxis * speed);
-
-            //Move rigidbody
-            m_Rigidbody2D.velocity = m_Velocity;
-        }
     }
     private void Face()
     {

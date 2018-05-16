@@ -9,7 +9,7 @@ public class ChangeTrampolineSprite : MonoBehaviour {
     public float jumpCoolDown;
 
     private float currentCooldown;
-    private bool isJumped = false;
+    private bool canJumped = false;
 
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D targetRigidbody2D;
@@ -28,11 +28,11 @@ public class ChangeTrampolineSprite : MonoBehaviour {
     }
     private void FixedUpdate()
     {
-        if(isJumped)
+        if(canJumped)
         {
             Debug.Log("Rigidbody: " + targetRigidbody2D.tag);
             targetRigidbody2D.AddForce(Vector2.up * thrust, ForceMode2D.Impulse);
-            isJumped = false;
+            canJumped = false;
         }
     }
 
@@ -40,12 +40,12 @@ public class ChangeTrampolineSprite : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(!isJumped && currentCooldown <= 0)
+        if(!canJumped && currentCooldown <= 0)
         {
             Debug.Log("Oncollisionenter");
             spriteRenderer.sprite = jumpedTranpoline;
             targetRigidbody2D = collision.rigidbody;
-            isJumped = true;
+            canJumped = true;
             currentCooldown = jumpCoolDown;
             StartCoroutine(SetTramPolineImage());
         }
