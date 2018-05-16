@@ -24,9 +24,9 @@ TagManager:
   - Enemy
   - MovingPlatform
   - EnemyRange
-  - HitableLayer
   - BreakableWall
   - EnemySpell
+  - 
   - 
   - 
   - 
