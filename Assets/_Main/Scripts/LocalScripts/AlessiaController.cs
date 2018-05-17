@@ -8,11 +8,15 @@ using Gamekit2D;
 public class AlessiaController : MonoBehaviour {
 
     public float speed = 5f;
-    public float jumpForce = 400f;
-    public float timeBetweenFlickering = 0;
+    public float jumpSpeed = 8.5f;
+    public float jumpAbortSpeedReduction = 20f;
+    public float gravity = 15f;
 
     [Tooltip("Throw speed when get hit")]
     public Vector2 throwSpeed = new Vector2(3, 3);
+
+    [Tooltip("push back speed when hit something")]
+    public float pushBackSpeed = 1f;
 
     [Header("Dash")]
     public GameObject dashEffect;
@@ -36,15 +40,14 @@ public class AlessiaController : MonoBehaviour {
     public RandomAudioPlayer hurtAudioPlayer;
     public RandomAudioPlayer slashHitAudioPlayer;
 
-    //private Damager m_Slash;
-    private SimpleCharacterController2D m_CharacterController2D;
+
+    [Header("Misc")]
+    public float timeBetweenFlickering = 0;
+
+    private CharacterController2D m_CharacterController2D;
     private Vector2 m_Velocity = new Vector2();
-    private Rigidbody2D m_Rigidbody2D;
-    private Vector2 m_JumpForceVector;
     private Vector2 m_ThrowVector;
     
-    //private Collider2D m_LeftSlashCollider;
-    //private Collider2D m_RightSlashCollider;
 
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
@@ -62,13 +65,12 @@ public class AlessiaController : MonoBehaviour {
     private int m_HashOnLadderPara = Animator.StringToHash("isOnLadder");
 
 
+    private Vector2 m_MoveVector;
+    private bool m_IsJumpHolding;
     private int m_HashSlashHitEffect;
-    //private RaycastHit2D[] m_SlashHitResults = new RaycastHit2D[2];
-
     private bool m_BlockNormalAction;
     private float m_DashCoolDownTimer;
     private float m_DashTimer;
-    private float m_OriginalGravity;
     private bool m_CanDash = true;
     private bool m_CanSlash = true;
     private bool m_CanClimb = false;
@@ -83,18 +85,16 @@ public class AlessiaController : MonoBehaviour {
     private Damageable m_Damageable;
 
 
-    private bool m_InBossFight = false;
+    private const float k_GroundedStickingVelocityMultiplier = 3f;    // This is to help the character stick to vertically moving platforms.
 
     private void Awake () {
-        m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        //m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_AlessiaGraphics = m_SpriteRenderer.gameObject.transform;
         m_Animator = GetComponent<Animator>();
-        m_CharacterController2D = GetComponent<SimpleCharacterController2D>();
+        m_CharacterController2D = GetComponent<CharacterController2D>();
         m_CharacterInput = GetComponent<CharacterInput>();
         m_Flicker = m_SpriteRenderer.gameObject.AddComponent<Flicker>();
-        //m_Slash = GetComponent<Damager>();
-        //m_Slash.DisableDamage();
         m_SlashContactEffect = slashContactTransform.GetComponentInChildren<ParticleSystem>();
         m_OffsetFromSlashEffectToAlessia = slashContactTransform.position - transform.position;
         m_Damageable = GetComponent<Damageable>();
@@ -102,8 +102,6 @@ public class AlessiaController : MonoBehaviour {
 
         m_HashSlashHitEffect = VFXController.StringToHash(slashHitEffectName);
 
-        //m_LeftSlashCollider = leftDamager.GetComponent<Collider2D>();
-        //m_RightSlashCollider = rightDamager.GetComponent<Collider2D>();
     }
 
     private void Update()
@@ -159,7 +157,6 @@ public class AlessiaController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (m_BlockNormalAction) return;
 
         Move();
         Face();
@@ -170,10 +167,18 @@ public class AlessiaController : MonoBehaviour {
     {
         if (m_CharacterController2D.IsGrounded && m_ExternalForceTimer <=0)
         {
-            m_JumpForceVector.y = jumpForce;
-            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, jumpForce);
-            m_JumpForceVector = Vector2.zero;
+            SetVerticalMovement(jumpSpeed);
         }
+    }
+
+    public void JumpHeld()
+    {
+        m_IsJumpHolding = true;
+    }
+
+    public void JumpRelease()
+    {
+        m_IsJumpHolding = false;
     }
 
     //public void SpawnShield()
@@ -184,14 +189,26 @@ public class AlessiaController : MonoBehaviour {
 
     private void Move()
     {
-        if (m_ExternalForceTimer <= 0)
+        if (!m_BlockNormalAction)
         {
-            //set velocity 
-            m_Velocity.Set(m_CharacterInput.HorizontalAxis * speed, m_Rigidbody2D.velocity.y);
+            UpdateJump();
 
-            //Move rigidbody
-            m_Rigidbody2D.velocity = m_Velocity;
+            if (!m_CharacterController2D.IsGrounded)
+            {
+                AirborneVerticalMovement();
+            }
+            else
+            {
+                GroundedVerticalMovement();
+            }
+
+            if (m_ExternalForceTimer <= 0)
+            {
+                SetHorizontalMovement(m_CharacterInput.HorizontalAxis * speed);
+            }
         }
+        
+        m_CharacterController2D.Move(m_MoveVector * Time.fixedDeltaTime);
 
     }
     private void Face()
@@ -215,6 +232,65 @@ public class AlessiaController : MonoBehaviour {
         m_Animator.SetFloat(m_HashRunPara, Mathf.Abs(m_CharacterInput.HorizontalAxis));
     }
 
+    
+    public void SetMoveVector(Vector2 newMoveVector)
+    {
+        m_MoveVector = newMoveVector;
+    }
+
+    public void SetHorizontalMovement(float newHorizontalMovement)
+    {
+        m_MoveVector.x = newHorizontalMovement;
+    }
+
+    public void SetVerticalMovement(float newVerticalMovement)
+    {
+        m_MoveVector.y = newVerticalMovement;
+    }
+
+    public void IncrementMovement(Vector2 additionalMovement)
+    {
+        m_MoveVector += additionalMovement;
+    }
+
+    public void IncrementHorizontalMovement(float additionalHorizontalMovement)
+    {
+        m_MoveVector.x += additionalHorizontalMovement;
+    }
+
+    public void IncrementVerticalMovement(float additionalVerticalMovement)
+    {
+        m_MoveVector.y += additionalVerticalMovement;
+    }
+
+    public void UpdateJump()
+    {
+        if (!m_IsJumpHolding && m_MoveVector.y > 0.0f)
+        {
+            m_MoveVector.y -= jumpAbortSpeedReduction * Time.deltaTime;
+        }
+    }
+
+    public void GroundedVerticalMovement()
+    {
+        m_MoveVector.y -= gravity * Time.deltaTime;
+
+        if (m_MoveVector.y < -gravity * Time.deltaTime * k_GroundedStickingVelocityMultiplier)
+        {
+            m_MoveVector.y = -gravity * Time.deltaTime * k_GroundedStickingVelocityMultiplier;
+        }
+    }
+
+    public void AirborneVerticalMovement()
+    {
+        if (Mathf.Approximately(m_MoveVector.y, 0f) || m_CharacterController2D.IsCeilinged && m_MoveVector.y > 0f)
+        {
+            m_MoveVector.y = 0f;
+        }
+        m_MoveVector.y -= gravity * Time.deltaTime;
+    }
+
+
 
     public void StartDashing()
     {
@@ -236,8 +312,6 @@ public class AlessiaController : MonoBehaviour {
         m_DashTimer = dashDuration;
 
         //enable dash effect
-        m_OriginalGravity = m_Rigidbody2D.gravityScale;
-        m_Rigidbody2D.gravityScale = 0;
         dashEffect.SetActive(true);
         m_BlockNormalAction = true;
         m_CanDash = false;
@@ -258,8 +332,8 @@ public class AlessiaController : MonoBehaviour {
         //}
 
         //dash
-        m_Rigidbody2D.velocity = direction * dashSpeed;
-
+        //m_Rigidbody2D.velocity = direction * dashSpeed;
+        SetMoveVector(direction * dashSpeed);
 
         dashAudioPlayer.PlayRandomSound();
 
@@ -269,7 +343,6 @@ public class AlessiaController : MonoBehaviour {
     public void EndDashing()
     {
         //disable dash effect 
-        m_Rigidbody2D.gravityScale = m_OriginalGravity;
         dashEffect.SetActive(false);
         m_BlockNormalAction = false;
         m_DashCoolDownTimer = dashCooldDownTime;
@@ -286,8 +359,6 @@ public class AlessiaController : MonoBehaviour {
 
         m_AttackTimer = 0.2f;
 
-        ////enable attack damage
-        //m_Slash.EnableDamage();
 
         slashAudioPlayer.PlayRandomSound();
 
@@ -296,13 +367,11 @@ public class AlessiaController : MonoBehaviour {
         {
             leftDamager.EnableDamage();         
             leftSlashEffect.Play();
-            //m_LeftSlashCollider.enabled = true;
         }
         else
         {
             rightDamager.EnableDamage();
             rightSlashEffect.Play();
-            //m_RightSlashCollider.enabled = true;
         }
     
     }
@@ -312,8 +381,6 @@ public class AlessiaController : MonoBehaviour {
         slashAudioPlayer.Stop();
         leftDamager.DisableDamage();
         rightDamager.DisableDamage();
-        //m_LeftSlashCollider.enabled = false;
-        //m_RightSlashCollider.enabled = false;
     }
 
     public void GotHit(Damager damager, Damageable damageable)
@@ -322,8 +389,7 @@ public class AlessiaController : MonoBehaviour {
         m_ThrowVector = new Vector2(0, throwSpeed.y);
         Vector2 damagerToThis = damager.transform.position - transform.position;
         m_ThrowVector.x = Mathf.Sign(damagerToThis.x) * -throwSpeed.x;
-        m_Rigidbody2D.velocity = Vector2.zero;
-        m_Rigidbody2D.AddForce(m_ThrowVector, ForceMode2D.Impulse);
+        SetMoveVector(m_ThrowVector);
         m_ExternalForceTimer = 0.5f;
 
         //Set animation
@@ -396,14 +462,14 @@ public class AlessiaController : MonoBehaviour {
     private void OnAttackHit(Damager damager)
     {
         //push back player a little bit
-        Vector2 m_PushBackVector;
+        float pushSpeed;
 
         if (rightDamager.CanDamage() == true)
         {
             //set position of slash contact effect to be displayed
             slashContactTransform.position = transform.position + m_OffsetFromSlashEffectToAlessia;
 
-            m_PushBackVector = new Vector2(-0.8f, 0);
+            pushSpeed = -pushBackSpeed;
         }
         else
         {
@@ -412,7 +478,7 @@ public class AlessiaController : MonoBehaviour {
             m_ReverseOffset.x *= -1;
             slashContactTransform.position = transform.position + m_ReverseOffset;
 
-            m_PushBackVector = new Vector2(0.8f, 0);
+            pushSpeed = pushBackSpeed;
         }
 
         //Display slash contact effect
@@ -420,7 +486,10 @@ public class AlessiaController : MonoBehaviour {
         m_SlashContactEffect.Play();
 
         //Push back
-        m_Rigidbody2D.AddForce(m_PushBackVector, ForceMode2D.Impulse);
+        //m_Rigidbody2D.AddForce(m_PushBackVector, ForceMode2D.Impulse);
+
+        SetHorizontalMovement(pushSpeed);
+
         m_ExternalForceTimer = 0.1f;
 
         CameraShaker.Shake(0.05f, 0.05f);
@@ -465,7 +534,7 @@ public class AlessiaController : MonoBehaviour {
     public void Respawn(bool resetHealth)
     {
 
-        m_Rigidbody2D.velocity = Vector2.zero;
+        SetMoveVector(Vector2.zero);
 
         if (resetHealth)
             m_Damageable.SetHealth(m_Damageable.startingHealth);
@@ -479,23 +548,13 @@ public class AlessiaController : MonoBehaviour {
 
         transform.position = m_LastCheckpoint.transform.position;
 
-
-
-
     }
-   
+    
 
     public void SetChekpoint(Checkpoint checkpoint)
     {
         m_LastCheckpoint = checkpoint;
     }
-
-
-    public void SetInBossFight(bool inBossFight)
-    {
-        m_InBossFight = inBossFight;
-    }
-
 
     public void CanDash(bool canDash)
     {
