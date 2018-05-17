@@ -16,12 +16,14 @@ public class OpenGateToInnerRage : MonoBehaviour {
     private BoxCollider2D boxCollider2D;
     private SpriteRenderer spriteRenderer;
     private PlayableDirector playableDirector;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         playableDirector = GetComponent<PlayableDirector>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void OnHit()
@@ -38,5 +40,8 @@ public class OpenGateToInnerRage : MonoBehaviour {
         yield return new WaitForSeconds(timeLine);
         innerRageDoor.CanMove = true;
         CameraShaker.Shake(shakeAmount, timeCameraShake);
+        audioSource.Play();
+        yield return new WaitForSeconds(timeCameraShake + 0.5f);
+        audioSource.Stop();
     }
 }

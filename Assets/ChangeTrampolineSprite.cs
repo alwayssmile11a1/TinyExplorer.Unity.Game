@@ -10,14 +10,19 @@ public class ChangeTrampolineSprite : MonoBehaviour {
 
     private float currentCooldown;
     private bool canJumped = false;
+    private Vector2 offset = new Vector2(0, -0.04f);
+    private Vector2 sizeBeforeJump = new Vector2(0.44f, 0.25f);
+    private Vector2 sizeAfterJump = new Vector2(0.44f, 0.32f);
 
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D targetRigidbody2D;
+    private BoxCollider2D boxCollider2D;
 
 
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
     }
     private void Update()
     {
@@ -46,6 +51,8 @@ public class ChangeTrampolineSprite : MonoBehaviour {
             spriteRenderer.sprite = jumpedTranpoline;
             targetRigidbody2D = collision.rigidbody;
             canJumped = true;
+            boxCollider2D.offset = Vector2.zero;
+            boxCollider2D.size = sizeAfterJump;
             currentCooldown = jumpCoolDown;
             StartCoroutine(SetTramPolineImage());
         }
@@ -56,5 +63,7 @@ public class ChangeTrampolineSprite : MonoBehaviour {
     {
         yield return new WaitForSeconds(jumpCoolDown);
         spriteRenderer.sprite = nonJumpedTranpoline;
+        boxCollider2D.offset = offset;
+        boxCollider2D.size = sizeBeforeJump;
     }
 }

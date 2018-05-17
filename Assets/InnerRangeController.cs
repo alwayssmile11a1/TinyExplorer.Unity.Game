@@ -94,6 +94,10 @@ public class InnerRangeController : MonoBehaviour {
         );
     }
 
+    public Root GetAIRoot()
+    {
+        return innerRangeBT;
+    }
     // Update is called once per frame
     void Update()
     {
