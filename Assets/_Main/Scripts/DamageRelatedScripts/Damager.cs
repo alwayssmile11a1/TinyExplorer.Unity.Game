@@ -99,7 +99,7 @@ namespace Gamekit2D
 
             //Calculate the actual size of this damager
             Vector2 scaledSize = Vector2.Scale(size, scale);
-
+            
             //Calculate the bottom left position and the top right position 
             Vector2 pointA = (Vector2)m_DamagerTransform.position + facingOffset - scaledSize * 0.5f;
             Vector2 pointB = pointA + scaledSize;
