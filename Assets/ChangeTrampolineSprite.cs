@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Gamekit2D;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,24 +34,25 @@ public class ChangeTrampolineSprite : MonoBehaviour {
     }
     private void FixedUpdate()
     {
-        if(canJumped)
-        {
-            Debug.Log("Rigidbody: " + targetRigidbody2D.tag);
-            targetRigidbody2D.AddForce(Vector2.up * thrust, ForceMode2D.Impulse);
-            canJumped = false;
-        }
+        //if (canJumped)
+        //{
+        //    Debug.Log("Rigidbody: " + targetRigidbody2D.tag);
+        //    targetRigidbody2D.AddForce(Vector2.up * thrust, ForceMode2D.Impulse);
+        //    canJumped = false;
+        //}
     }
 
     //private
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(!canJumped && currentCooldown <= 0)
+        if (!canJumped && currentCooldown <= 0)
         {
             Debug.Log("Oncollisionenter");
             spriteRenderer.sprite = jumpedTranpoline;
-            targetRigidbody2D = collision.rigidbody;
-            canJumped = true;
+            //targetRigidbody2D = collision.rigidbody;
+            collision.gameObject.GetComponent<CharacterController2D>().Move(Vector2.up * thrust * Time.deltaTime);
+            //canJumped = true;
             boxCollider2D.offset = Vector2.zero;
             boxCollider2D.size = sizeAfterJump;
             currentCooldown = jumpCoolDown;

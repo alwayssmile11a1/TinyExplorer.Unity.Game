@@ -517,7 +517,7 @@ public class AlessiaController : MonoBehaviour {
             {
                 if (resetHealth)
                     m_Damageable.SetHealth(m_Damageable.startingHealth);
-                SceneController.RestartZoneAtPosition(m_LastCheckpoint.transform.position);
+                SceneController.RestartZoneAtPosition(new Vector3(m_LastCheckpoint.transform.position.x, m_LastCheckpoint.transform.position.y, transform.position.z));
             }
             else
             {

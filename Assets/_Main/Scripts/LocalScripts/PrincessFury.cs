@@ -162,7 +162,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
             ),
 
 
-            BT.RandomSequence(new int[] { 3, 2, 2, 2, 2 }, 2).OpenBranch(
+            BT.RandomSequence(new int[] { 3, 2, 2, 2 }, 1).OpenBranch(
                 //Walk
                 BT.Sequence().OpenBranch(
                     BT.Call(OrientToTarget),
@@ -186,21 +186,21 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
                     BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
                     BT.Wait(1f)
                 ),
-                    //Combo Attack
-                    BT.If(() => { return (targetToTrack.position - transform.position).sqrMagnitude < 4f; }).OpenBranch(
-                        BT.Sequence().OpenBranch(
-                        BT.Call(() => m_Animator.SetTrigger(m_HashTopAttackPara)),
-                        BT.Wait(0.5f),
-                        BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                        BT.Call(OrientToTarget),
-                        BT.Call(() => m_Animator.SetTrigger(m_HashBottomAttackPara)),
-                        BT.Wait(0.5f),
-                        BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                        BT.Call(OrientToTarget),
-                        BT.Call(() => m_Animator.SetTrigger(m_HashTopAttackPara)),
-                        BT.Wait(0.5f),
-                        BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
-                        BT.Wait(1f)
+                //Combo Attack
+                BT.If(() => { return (targetToTrack.position - transform.position).sqrMagnitude < 4f; }).OpenBranch(
+                    BT.Sequence().OpenBranch(
+                    BT.Call(() => m_Animator.SetTrigger(m_HashTopAttackPara)),
+                    BT.Wait(0.5f),
+                    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                    BT.Call(OrientToTarget),
+                    BT.Call(() => m_Animator.SetTrigger(m_HashBottomAttackPara)),
+                    BT.Wait(0.5f),
+                    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                    BT.Call(OrientToTarget),
+                    BT.Call(() => m_Animator.SetTrigger(m_HashTopAttackPara)),
+                    BT.Wait(0.5f),
+                    BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
+                    BT.Wait(1f)
                     )
                 ),
                 //JumpAttack

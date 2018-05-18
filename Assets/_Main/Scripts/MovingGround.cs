@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Gamekit2D;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -63,22 +64,22 @@ public class MovingGround : MonoBehaviour {
     }
     void MovePlatform_1() { 
 }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.collider.tag == "Player")
         {
             Debug.Log("set in ground");
-            collision.collider.transform.SetParent(transform);
+            collision.gameObject.GetComponent<CharacterController2D>().Move(velocity*Time.deltaTime);
         }
     }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.tag == "Player")
-        {
-            Debug.Log("unset in ground");
-            collision.collider.transform.SetParent(null);
-        }
-    }
+    //private void OnCollisionExit2D(Collision2D collision)
+    //{
+    //    if (collision.collider.tag == "Player")
+    //    {
+    //        Debug.Log("unset in ground");
+    //        collision.collider.transform.SetParent(null);
+    //    }
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
