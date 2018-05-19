@@ -17,10 +17,12 @@ public class ParallaxBackground : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        float newPositionX = transform.position.x + (Camera.main.transform.position.x - m_PreviousCameraPosition.x) * 20 / (transform.position.z - Camera.main.transform.position.z);
+        float parallaxMultiplier = 20 / (transform.position.z - Camera.main.transform.position.z);
 
+        float newPositionX = transform.position.x + (Camera.main.transform.position.x - m_PreviousCameraPosition.x) * parallaxMultiplier;
+        float newPositionY = transform.position.y + (Camera.main.transform.position.y - m_PreviousCameraPosition.y) * parallaxMultiplier;
 
-        transform.position = Vector3.Lerp(transform.position, new Vector3(newPositionX, transform.position.y, transform.position.z), Time.deltaTime * smoothSpeed);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(newPositionX, newPositionY, transform.position.z), Time.deltaTime * smoothSpeed);
 
         m_PreviousCameraPosition = Camera.main.transform.position;
 	}
