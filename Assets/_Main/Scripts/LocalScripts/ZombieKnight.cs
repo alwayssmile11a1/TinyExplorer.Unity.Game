@@ -120,7 +120,7 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
 
         //Behaviour tree
         m_Ai.OpenBranch(
-            BT.RandomSequence(new int[] { 1, 2, 3, 2, 3 }, 2).OpenBranch(
+            BT.RandomSequence(new int[] { 1, 2, 3, 2, 3 }, 1).OpenBranch(
                 //Walk
                 BT.If(() => { return !MoveOutOfBoundCheck(); }).OpenBranch(
                     BT.Sequence().OpenBranch(
@@ -171,7 +171,7 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
                     BT.Call(() => m_Animator.SetTrigger(m_HashSkill2Para)),
                     BT.Wait(0.5f),
                     BT.Call(StartDarkVoidAttacking),
-                    BT.Wait(5f)
+                    BT.Wait(3f)
                 ),
                 //Portal
                 BT.If(() => { return m_Damageable.CurrentHealth <m_Damageable.startingHealth/1.5f && m_PortalObjects.Count <= 0; }).OpenBranch(
@@ -192,9 +192,9 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
 
             ),
 
-            BT.Call(OrientToTarget),
+            BT.Call(OrientToTarget)
 
-            BT.Wait(0.5f)
+            //BT.Wait(0.5f)
 
         );
 

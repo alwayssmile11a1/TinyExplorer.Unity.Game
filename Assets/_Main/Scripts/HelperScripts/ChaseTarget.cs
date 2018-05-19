@@ -38,7 +38,7 @@ public class ChaseTarget : MonoBehaviour {
     {
         if(findTargetByTag)
         {
-            target = GameObject.FindGameObjectWithTag(tag).transform;
+            target = GameObject.FindGameObjectWithTag(targetTag).transform;
         }
 
         if (target != null)
