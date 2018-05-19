@@ -165,7 +165,7 @@ public class AlessiaController : MonoBehaviour {
 
     public void Jump()
     {
-        if (m_CharacterController2D.IsGrounded && m_ExternalForceTimer <=0)
+        if (m_CharacterController2D.IsGrounded && !m_BlockNormalAction && m_ExternalForceTimer <=0)
         {
             SetVerticalMovement(jumpSpeed);
         }
@@ -334,6 +334,7 @@ public class AlessiaController : MonoBehaviour {
         //dash
         //m_Rigidbody2D.velocity = direction * dashSpeed;
         SetMoveVector(direction * dashSpeed);
+        
 
         dashAudioPlayer.PlayRandomSound();
 
