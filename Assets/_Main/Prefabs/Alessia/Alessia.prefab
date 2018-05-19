@@ -615,7 +615,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1169920816949876}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 218.02, y: 22.29, z: 0}
+  m_LocalPosition: {x: 67, y: 0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4642313719841942}
@@ -1936,9 +1936,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  jumpSpeed: 8.5
+  jumpSpeed: 9
   jumpAbortSpeedReduction: 20
-  gravity: 15
+  gravity: 16
   throwSpeed: {x: 3, y: 5}
   pushBackSpeed: 1
   dashEffect: {fileID: 1463684890870104}

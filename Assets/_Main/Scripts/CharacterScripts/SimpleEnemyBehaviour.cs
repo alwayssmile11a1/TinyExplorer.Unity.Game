@@ -172,6 +172,13 @@ public class SimpleEnemyBehaviour : MonoBehaviour
             EndAttack();
 
         m_Dead = false;
+
+        if (m_FlickeringCoroutine != null)
+        {
+            StopCoroutine(m_FlickeringCoroutine);
+        }
+        m_SpriteRenderer.color = m_OriginalColor;
+
         //m_Collider.enabled = true;
     }
 

@@ -29,7 +29,7 @@ public class CameraFollowPointController : MonoBehaviour {
             if (!Mathf.Approximately(transform.localPosition.y, m_OriginalYLocalPosition))
             {
                 Vector3 desiredPosition = new Vector3(transform.localPosition.x, m_OriginalYLocalPosition, transform.localPosition.z);
-                transform.localPosition = Vector3.Slerp(transform.localPosition, desiredPosition, moveToOriginSpeed * Time.deltaTime);
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, desiredPosition, moveToOriginSpeed * Time.deltaTime);
             }
         }
 

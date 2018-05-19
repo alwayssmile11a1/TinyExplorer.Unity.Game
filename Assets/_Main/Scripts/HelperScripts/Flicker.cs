@@ -22,7 +22,12 @@ public class Flicker : MonoBehaviour {
 
     }
 
-    
+    private void OnEnable()
+    {
+        StopFlickering();
+    }
+
+
     public void StartFlickering()
     {
         InternalFlickering(duration, timeBetweenFlickering);
@@ -54,9 +59,10 @@ public class Flicker : MonoBehaviour {
 
     public void StopFlickering()
     {
+        m_SpriteRenderer.color = m_OriginalColor;
+
         if (m_Coroutine != null)
         {
-            m_SpriteRenderer.color = m_OriginalColor;
             StopCoroutine(m_Coroutine);
         }
     }
