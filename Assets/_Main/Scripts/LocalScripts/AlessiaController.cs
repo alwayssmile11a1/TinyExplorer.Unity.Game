@@ -8,6 +8,7 @@ using Gamekit2D;
 public class AlessiaController : MonoBehaviour, IDataSaveable {
 
     public float speed = 5f;
+    public float climbSpeed;
     public float jumpSpeed = 8.5f;
     public float jumpAbortSpeedReduction = 20f;
     public float gravity = 15f;
@@ -62,6 +63,7 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
     private int m_HashRunPara = Animator.StringToHash("Run");
     private int m_HashHurtPara = Animator.StringToHash("Hurt");
     private int m_HashDashPara = Animator.StringToHash("Dash");
+    private int m_HashUsePara = Animator.StringToHash("use");
     private int m_HashOnLadderPara = Animator.StringToHash("isOnLadder");
 
 
@@ -162,6 +164,14 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
         if (m_ExternalForceTimer > 0)
         {
             m_ExternalForceTimer -= Time.deltaTime;
+        }
+
+        if (m_CanClimb)
+        {
+            if (m_CharacterInput.VerticalAxis != 0)
+            {
+                //StartClimbing();
+            }
         }
     }
 
@@ -393,6 +403,33 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
         rightDamager.DisableDamage();
     }
 
+    private void StartClimbing()
+    {
+        m_BlockNormalAction = true;
+        if (!m_Animator.GetBool(m_HashUsePara))
+        {
+            Debug.Log(m_Animator.GetBool(m_HashUsePara));
+            m_Animator.SetTrigger(m_HashUsePara);
+        }
+        m_Animator.SetBool(m_HashOnLadderPara, true);
+        if (m_ExternalForceTimer <= 0)
+        {
+            SetVerticalMovement(m_CharacterInput.VerticalAxis * climbSpeed);
+        }
+        if (m_CharacterInput.VerticalAxis == 0)
+        {
+
+        }
+    }
+
+    private void EndClimbing()
+    {
+        m_Animator.ResetTrigger(m_HashUsePara);
+        m_Animator.SetBool(m_HashOnLadderPara, false);
+        m_CanClimb = false;
+        m_BlockNormalAction = false;
+    }
+
     public void GotHit(Damager damager, Damageable damageable)
     {
         //throw player away a little bit
@@ -613,7 +650,7 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
     {
         if (collision.tag.Equals("ladder"))
         {
-            m_CanClimb = false;
+            EndClimbing();
         }
     }
 
