@@ -6,13 +6,14 @@ using Gamekit2D;
 public class QuickSavedData : MonoBehaviour, IDataSaveable {
 
     public bool saveActiveState = true;
+    public bool savePosition = false;
 
     [Tooltip("This is the unique id of this gameObject, so you shouldn't touch this")]
     public string savedDataTag = System.Guid.NewGuid().ToString();
 
     private void Awake()
     {
-        SavedDataManager.Register(this);
+        SavedDataManager.Instance.Register(this);
     }
 
 
@@ -22,6 +23,11 @@ public class QuickSavedData : MonoBehaviour, IDataSaveable {
         {
             gameObject.SetActive(SavedDataManager.GetBool(savedDataTag));
         }
+
+        if(savePosition)
+        {
+            transform.position = SavedDataManager.GetVector3(savedDataTag);
+        }
     }
 
     public void SaveData()
@@ -30,5 +36,11 @@ public class QuickSavedData : MonoBehaviour, IDataSaveable {
         {
             SavedDataManager.Set(savedDataTag, gameObject.activeSelf);
         }
+
+        if(savePosition)
+        {
+            SavedDataManager.Set(savedDataTag, transform.position);
+        }
+
     }
 }
