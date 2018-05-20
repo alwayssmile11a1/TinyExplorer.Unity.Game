@@ -89,11 +89,7 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
 
     private void Awake () {
 
-        if(SavedDataManager.LoadAllData())
-        {
-
-        }
-
+        SavedDataManager.Instance.Register(this);
 
         //m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -109,6 +105,11 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
 
         m_HashSlashHitEffect = VFXController.StringToHash(slashHitEffectName);
 
+    }
+
+    private void Start()
+    {
+        SavedDataManager.Instance.LoadAllData("PlayerState");   
     }
 
     private void Update()
@@ -164,7 +165,10 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
         }
 
 
-
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            SavedDataManager.Instance.SaveAllData("PlayerState");
+        }
 
     }
 
@@ -623,11 +627,18 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
 
     public void SaveData()
     {
-            
+        SavedDataManager.Set("PlayerHealth", m_Damageable.CurrentHealth);
+        SavedDataManager.Set("CanDash", m_CanDash);
+        SavedDataManager.Set("CanSlash", m_CanSlash);
+        SavedDataManager.Set("PlayerPosition", transform.position);
+
     }
 
     public void LoadData()
     {
-        
+        m_Damageable.SetHealth(SavedDataManager.GetInt("PlayerHealth"));
+        m_CanDash = SavedDataManager.GetBool("CanDash");
+        m_CanSlash = SavedDataManager.GetBool("CanSlash");
+        transform.position = SavedDataManager.GetVector3("PlayerPosition");
     }
 }

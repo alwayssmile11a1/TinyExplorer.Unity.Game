@@ -12,7 +12,7 @@ public class QuickSavedData : MonoBehaviour, IDataSaveable {
 
     private void Awake()
     {
-        SavedDataManager.Register(this);
+        SavedDataManager.Instance.Register(this);
     }
 
 

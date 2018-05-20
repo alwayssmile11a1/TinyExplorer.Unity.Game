@@ -18,6 +18,15 @@ public class SavedData {
     public List<bool> boolData;
 
     public List<string> vectorKeys;
-    public List<Vector3> vectorData;
+    public List<SerializableVector3> vectorData;
+
+}
+
+[System.Serializable]
+public class SerializableVector3
+{
+    public float x;
+    public float y;
+    public float z;
 
 }
