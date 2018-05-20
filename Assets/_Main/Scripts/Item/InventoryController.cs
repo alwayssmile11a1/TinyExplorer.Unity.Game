@@ -112,18 +112,18 @@ namespace Gamekit2D
             return dataSettings;
         }
 
-        public void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
+        public void SetPersistenceDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
         {
             dataSettings.dataTag = dataTag;
             dataSettings.persistenceType = persistenceType;
         }
 
-        public Data SaveData()
+        public Data SavePersistenceData()
         {
             return new Data<HashSet<string>>(m_InventoryItems);
         }
 
-        public void LoadData(Data data)
+        public void LoadPersistenceData(Data data)
         {
             Data<HashSet<string>> inventoryData = (Data<HashSet<string>>)data;
             foreach (var i in inventoryData.value)

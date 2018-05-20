@@ -150,18 +150,18 @@ namespace Gamekit2D
             return dataSettings;
         }
 
-        public void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
+        public void SetPersistenceDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
         {
             dataSettings.dataTag = dataTag;
             dataSettings.persistenceType = persistenceType;
         }
 
-        public Data SaveData()
+        public Data SavePersistenceData()
         {
             return new Data<int, bool>(CurrentHealth, m_ResetHealthOnSceneReload);
         }
 
-        public void LoadData(Data data)
+        public void LoadPersistenceData(Data data)
         {
             Data<int, bool> healthData = (Data<int, bool>)data;
             m_CurrentHealth = healthData.value1 ? startingHealth : healthData.value0;

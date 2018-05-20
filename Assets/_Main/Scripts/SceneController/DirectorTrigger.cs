@@ -66,18 +66,18 @@ namespace Gamekit2D
             return dataSettings;
         }
 
-        public void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
+        public void SetPersistenceDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
         {
             dataSettings.dataTag = dataTag;
             dataSettings.persistenceType = persistenceType;
         }
 
-        public Data SaveData()
+        public Data SavePersistenceData()
         {
             return new Data<bool>(m_AlreadyTriggered);
         }
 
-        public void LoadData(Data data)
+        public void LoadPersistenceData(Data data)
         {
             Data<bool> directorTriggerData = (Data<bool>)data;
             m_AlreadyTriggered = directorTriggerData.value;

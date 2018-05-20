@@ -5,7 +5,7 @@ using Gamekit2D;
 
 [RequireComponent(typeof(CharacterInput))]
 [RequireComponent(typeof(CharacterController2D))]
-public class AlessiaController : MonoBehaviour {
+public class AlessiaController : MonoBehaviour, IDataSaveable {
 
     public float speed = 5f;
     public float jumpSpeed = 8.5f;
@@ -88,6 +88,13 @@ public class AlessiaController : MonoBehaviour {
     private const float k_GroundedStickingVelocityMultiplier = 3f;    // This is to help the character stick to vertically moving platforms.
 
     private void Awake () {
+
+        if(SavedDataManager.LoadAllData())
+        {
+
+        }
+
+
         //m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_AlessiaGraphics = m_SpriteRenderer.gameObject.transform;
@@ -612,5 +619,15 @@ public class AlessiaController : MonoBehaviour {
         {
             m_CanClimb = false;
         }
+    }
+
+    public void SaveData()
+    {
+            
+    }
+
+    public void LoadData()
+    {
+        
     }
 }

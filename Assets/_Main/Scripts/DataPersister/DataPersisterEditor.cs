@@ -28,7 +28,7 @@ namespace Gamekit2D
             DataSettings.PersistenceType persistenceType = (DataSettings.PersistenceType)EditorGUILayout.EnumPopup ("Persistence Type", dataSettings.persistenceType);
             string dataTag = EditorGUILayout.TextField ("Data Tag", dataSettings.dataTag);
 
-            dataPersister.SetDataSettings (dataTag, persistenceType);
+            dataPersister.SetPersistenceDataSettings (dataTag, persistenceType);
         }
     }
 }

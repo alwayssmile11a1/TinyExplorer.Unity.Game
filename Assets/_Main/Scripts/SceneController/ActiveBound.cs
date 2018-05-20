@@ -337,18 +337,18 @@ namespace Gamekit2D
             return dataSettings;
         }
 
-        public void LoadData(Data data)
+        public void LoadPersistenceData(Data data)
         {
             Data<bool> savedData = (Data<bool>)data;
             gameObject.SetActive(savedData.value);
         }
 
-        public Data SaveData()
+        public Data SavePersistenceData()
         {
             return new Data<bool>(gameObject.activeSelf);
         }
 
-        public void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
+        public void SetPersistenceDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
         {
             dataSettings.dataTag = dataTag;
             dataSettings.persistenceType = persistenceType;

@@ -121,7 +121,7 @@ namespace Gamekit2D
                 return;
             if (!string.IsNullOrEmpty(dataSettings.dataTag))
             {
-                m_Store[dataSettings.dataTag] = dp.SaveData();
+                m_Store[dataSettings.dataTag] = dp.SavePersistenceData();
             }
         }
 
@@ -138,7 +138,7 @@ namespace Gamekit2D
                     {
                         if (m_Store.ContainsKey(dataSettings.dataTag))
                         {
-                            dp.LoadData(m_Store[dataSettings.dataTag]);
+                            dp.LoadPersistenceData(m_Store[dataSettings.dataTag]);
                         }
                     }
                 }

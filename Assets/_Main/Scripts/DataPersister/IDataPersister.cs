@@ -10,11 +10,11 @@ namespace Gamekit2D
     {
         DataSettings GetDataSettings();
 
-        void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType);
+        void SetPersistenceDataSettings(string dataTag, DataSettings.PersistenceType persistenceType);
 
-        Data SaveData();
+        Data SavePersistenceData();
 
-        void LoadData(Data data);
+        void LoadPersistenceData(Data data);
     }
 
     [Serializable]
