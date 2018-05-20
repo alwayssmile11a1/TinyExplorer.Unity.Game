@@ -165,7 +165,6 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
 
 
 
-
     }
 
     private void FixedUpdate()
@@ -244,7 +243,6 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
         m_Animator.SetBool(m_HashGroundedPara, m_CharacterController2D.IsGrounded);
         m_Animator.SetFloat(m_HashRunPara, Mathf.Abs(m_CharacterInput.HorizontalAxis));
     }
-
     
     public void SetMoveVector(Vector2 newMoveVector)
     {
