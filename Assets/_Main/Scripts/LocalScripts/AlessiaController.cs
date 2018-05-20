@@ -106,6 +106,12 @@ public class AlessiaController : MonoBehaviour {
 
     private void Update()
     {
+
+        if(m_CharacterController2D.IsGrounded)
+        {
+            m_DashedInAir = false;
+        }
+
         if(m_DashCoolDownTimer>0)
         {
             m_DashCoolDownTimer -= Time.deltaTime;
@@ -113,7 +119,7 @@ public class AlessiaController : MonoBehaviour {
             if (m_DashCoolDownTimer <= 0)
             {
                 //if we haven't grounded yet, can not dash more (allow dash only 1 time in air)
-                if (m_DashedInAir && !m_CharacterController2D.IsGrounded)
+                if (m_DashedInAir)
                 {
                     m_DashCoolDownTimer += Time.deltaTime;
                 }
