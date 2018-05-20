@@ -109,7 +109,7 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
 
     private void Start()
     {
-        SavedDataManager.Instance.LoadAllData("PlayerState");   
+        SavedDataManager.Instance.LoadCustomData("PlayerState");   
     }
 
     private void Update()
@@ -162,12 +162,6 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
         if (m_ExternalForceTimer > 0)
         {
             m_ExternalForceTimer -= Time.deltaTime;
-        }
-
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            SavedDataManager.Instance.SaveAllData("PlayerState");
         }
 
     }
