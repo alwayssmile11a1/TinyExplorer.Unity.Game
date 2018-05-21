@@ -76,6 +76,7 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
     private bool m_CanDash = true;
     private bool m_CanSlash = true;
     private bool m_CanClimb = false;
+    private bool m_IsOnLadder = false;
     //Allow dash in air only one time
     private bool m_DashedInAir = false;
 
@@ -111,11 +112,16 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
 
     private void Start()
     {
-        SavedDataManager.Instance.LoadCustomData("PlayerState");   
+        SavedDataManager.Instance.LoadSceneData();   
     }
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+            {
+            SavedDataManager.Instance.SaveSceneData();
+        }
+
 
         if(m_CharacterController2D.IsGrounded)
         {
@@ -170,7 +176,7 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
         {
             if (m_CharacterInput.VerticalAxis != 0)
             {
-                //StartClimbing();
+                StartClimbing();
             }
         }
     }
@@ -406,20 +412,25 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
     private void StartClimbing()
     {
         m_BlockNormalAction = true;
-        if (!m_Animator.GetBool(m_HashUsePara))
+        if (!m_IsOnLadder)
         {
-            Debug.Log(m_Animator.GetBool(m_HashUsePara));
             m_Animator.SetTrigger(m_HashUsePara);
+
+            m_IsOnLadder = true;
         }
         m_Animator.SetBool(m_HashOnLadderPara, true);
-        if (m_ExternalForceTimer <= 0)
+        m_Animator.SetFloat("VelocityY", m_CharacterInput.VerticalAxis);
+            
+        if (m_ExternalForceTimer <= 0 && m_CharacterInput.VerticalAxis > 0)
         {
             SetVerticalMovement(m_CharacterInput.VerticalAxis * climbSpeed);
         }
-        if (m_CharacterInput.VerticalAxis == 0)
+        else
         {
-
+            SetVerticalMovement(0);
         }
+
+
     }
 
     private void EndClimbing()
@@ -428,6 +439,7 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
         m_Animator.SetBool(m_HashOnLadderPara, false);
         m_CanClimb = false;
         m_BlockNormalAction = false;
+        m_IsOnLadder = false;
     }
 
     public void GotHit(Damager damager, Damageable damageable)

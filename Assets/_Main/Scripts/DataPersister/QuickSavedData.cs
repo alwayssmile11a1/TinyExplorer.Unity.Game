@@ -19,7 +19,7 @@ public class QuickSavedData : MonoBehaviour, IDataSaveable {
 
     public void LoadData()
     {
-        if(saveActiveState)
+        if (saveActiveState)
         {
             gameObject.SetActive(SavedDataManager.GetBool(savedDataTag));
         }
@@ -32,7 +32,8 @@ public class QuickSavedData : MonoBehaviour, IDataSaveable {
 
     public void SaveData()
     {
-        if(saveActiveState)
+
+        if (saveActiveState)
         {
             SavedDataManager.Set(savedDataTag, gameObject.activeSelf);
         }
