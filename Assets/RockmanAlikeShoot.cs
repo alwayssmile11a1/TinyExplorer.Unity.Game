@@ -9,6 +9,8 @@ public class RockmanAlikeShoot : MonoBehaviour {
     public float castDistance;
     private Vector2 rayCastPosition;
     public Vector2 castDirection = Vector2.left;
+    [Range(1,3)]
+    public int numberOfBullet;
 
     public float shootCoolDown;
     public Transform shootOrigin;
@@ -29,6 +31,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
 
     private Animator animator;
     private BulletPool bulletPool;
+    private BulletObject[] bulletObjects;
     private StartShooting shootScript;
     private SpriteRenderer spriteRenderer;
 
@@ -73,23 +76,32 @@ public class RockmanAlikeShoot : MonoBehaviour {
     {
         animator.SetBool("attack", false);
         //pop instantiate at first call
-        BulletObject bullet;
+        bulletObjects = new BulletObject[numberOfBullet];
         if (spriteRenderer.flipX)
         {
             angleToTarget += 240;
-            bullet = bulletPool.Pop(shootOriginRight.position);
+            StartCoroutine(PopBullet(shootOriginRight.position));
         }
         else
         {
-            bullet = bulletPool.Pop(shootOrigin.position);
+            StartCoroutine(PopBullet(shootOrigin.position));
         }
 
         //if (bullet == null)
         //    return;
         Debug.Log("angle to target: " + angleToTarget);
-        bullet.instance.GetComponent<StartShooting>().direction = (Quaternion.Euler(0, 0, angleToTarget) * Vector2.left).normalized;
+        //bullet.instance.GetComponent<StartShooting>().direction = (Quaternion.Euler(0, 0, angleToTarget) * Vector2.left).normalized;
         Debug.Log(animator.GetBool("attack"));
         StartCoroutine(ResetBullet());
+    }
+    private IEnumerator PopBullet(Vector3 pos)
+    {
+        for (int i = 0; i < bulletObjects.Length; ++i)
+        {
+            bulletObjects[i] = bulletPool.Pop(pos);
+            bulletObjects[i].instance.GetComponent<StartShooting>().direction = (Quaternion.Euler(0, 0, angleToTarget) * Vector2.left).normalized;
+            yield return new WaitForSeconds(0.1f);
+        }
     }
     public void CoolDownShoot()
     {

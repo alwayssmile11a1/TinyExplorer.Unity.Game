@@ -66,7 +66,7 @@ public class MovingGround : MonoBehaviour {
 }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Player" && velocity.y == 0)
+        if (collision.collider.tag == "Player" && velocity.y == 0 && canMove)
         {
             Debug.Log("set in ground");
             collision.gameObject.GetComponent<CharacterController2D>().Move(velocity*Time.deltaTime);
