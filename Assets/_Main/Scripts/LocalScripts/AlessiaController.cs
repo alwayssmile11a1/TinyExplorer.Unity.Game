@@ -5,7 +5,7 @@ using Gamekit2D;
 
 [RequireComponent(typeof(CharacterInput))]
 [RequireComponent(typeof(CharacterController2D))]
-public class AlessiaController : MonoBehaviour, IDataSaveable {
+public class AlessiaController : MonoBehaviour {
 
     public float speed = 5f;
     public float climbSpeed;
@@ -92,8 +92,6 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
 
     private void Awake () {
 
-        SavedDataManager.Instance.Register(this);
-
         //m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_AlessiaGraphics = m_SpriteRenderer.gameObject.transform;
@@ -112,14 +110,14 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
 
     private void Start()
     {
-        SavedDataManager.Instance.LoadSceneData();   
+        LoadData();
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-            {
-            SavedDataManager.Instance.SaveSceneData();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SaveData();
         }
 
 
@@ -668,18 +666,25 @@ public class AlessiaController : MonoBehaviour, IDataSaveable {
 
     public void SaveData()
     {
-        SavedDataManager.Set("PlayerHealth", m_Damageable.CurrentHealth);
-        SavedDataManager.Set("CanDash", m_CanDash);
-        SavedDataManager.Set("CanSlash", m_CanSlash);
-        SavedDataManager.Set("PlayerPosition", transform.position);
+        SavedData savedData = new SavedData();
+        savedData.Set("PlayerHealth", m_Damageable.CurrentHealth);
+        savedData.Set("CanDash", m_CanDash);
+        savedData.Set("CanSlash", m_CanSlash);
+        savedData.Set("PlayerPosition", transform.position);
 
+        savedData.Save("PlayerState");
+       
     }
 
     public void LoadData()
     {
-        m_Damageable.SetHealth(SavedDataManager.GetInt("PlayerHealth"));
-        m_CanDash = SavedDataManager.GetBool("CanDash");
-        m_CanSlash = SavedDataManager.GetBool("CanSlash");
-        transform.position = SavedDataManager.GetVector3("PlayerPosition");
+        SavedData savedData = new SavedData();
+        if (savedData.Load("PlayerState"))
+        {
+            m_Damageable.SetHealth(savedData.GetInt("PlayerHealth"));
+            m_CanDash = savedData.GetBool("CanDash");
+            m_CanSlash = savedData.GetBool("CanSlash");
+            transform.position = savedData.GetVector3("PlayerPosition");
+        }
     }
 }
