@@ -90,13 +90,14 @@ GameObject:
   - component: {fileID: 114884266551093312}
   - component: {fileID: 114873937003692500}
   - component: {fileID: 114474430064837670}
+  - component: {fileID: 114499087621941138}
   m_Layer: 10
   m_Name: rideloid (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1474231593704916
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +220,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1156354121137394}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.14, y: -1.0831918, z: 0.19140625}
+  m_LocalPosition: {x: 25.85, y: 10.7, z: 0.19140625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4714630699946320}
@@ -260,7 +261,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1684104201580742}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.21, y: 0, z: 0}
+  m_LocalPosition: {x: 2.68, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4515991633495442}
@@ -288,7 +289,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1178309776956336}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.34, y: 0, z: 0}
+  m_LocalPosition: {x: -0.31, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4515991633495442}
@@ -631,6 +632,17 @@ MonoBehaviour:
   dataSettings:
     dataTag: 8d1e782c-1e4f-4a18-97a0-495d63b789a0
     persistenceType: 3
+--- !u!114 &114499087621941138
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1404855367391116}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac970257937684c49b4e063df1860963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114678200072118442
 MonoBehaviour:
   m_ObjectHideFlags: 1

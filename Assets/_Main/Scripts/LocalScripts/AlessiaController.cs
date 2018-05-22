@@ -91,7 +91,6 @@ public class AlessiaController : MonoBehaviour {
     private const float k_GroundedStickingVelocityMultiplier = 3f;    // This is to help the character stick to vertically moving platforms.
 
     private void Awake () {
-
         //m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         m_AlessiaGraphics = m_SpriteRenderer.gameObject.transform;
@@ -215,15 +214,18 @@ public class AlessiaController : MonoBehaviour {
     {
         if (!m_BlockNormalAction)
         {
-            UpdateJump();
+            if (!m_IsOnLadder)
+            {
+                UpdateJump();
 
-            if (!m_CharacterController2D.IsGrounded)
-            {
-                AirborneVerticalMovement();
-            }
-            else
-            {
-                GroundedVerticalMovement();
+                if (!m_CharacterController2D.IsGrounded)
+                {
+                    AirborneVerticalMovement();
+                }
+                else
+                {
+                    GroundedVerticalMovement();
+                }
             }
 
             if (m_ExternalForceTimer <= 0)
@@ -317,7 +319,8 @@ public class AlessiaController : MonoBehaviour {
 
     public void StartDashing()
     {
-        if (!m_CanDash) return;
+        if (!m_CanDash || m_IsOnLadder) return;
+
 
         if (!m_CharacterController2D.IsGrounded)
         {
@@ -377,6 +380,7 @@ public class AlessiaController : MonoBehaviour {
     public void StartAttacking()
     {
         if (!m_CanSlash) return;
+        if (m_IsOnLadder) return;
 
         //still attacking
         if (m_AttackTimer > 0) return;
@@ -409,24 +413,24 @@ public class AlessiaController : MonoBehaviour {
 
     private void StartClimbing()
     {
-        m_BlockNormalAction = true;
+        //m_BlockNormalAction = true;
         if (!m_IsOnLadder)
         {
             m_Animator.SetTrigger(m_HashUsePara);
 
             m_IsOnLadder = true;
+            m_Animator.SetBool(m_HashOnLadderPara, true);
         }
-        m_Animator.SetBool(m_HashOnLadderPara, true);
         m_Animator.SetFloat("VelocityY", m_CharacterInput.VerticalAxis);
             
-        if (m_ExternalForceTimer <= 0 && m_CharacterInput.VerticalAxis > 0)
+        if (m_ExternalForceTimer <= 0)
         {
             SetVerticalMovement(m_CharacterInput.VerticalAxis * climbSpeed);
         }
-        else
-        {
-            SetVerticalMovement(0);
-        }
+        //else
+        //{
+        //    SetVerticalMovement(0);
+        //}
 
 
     }
@@ -436,7 +440,7 @@ public class AlessiaController : MonoBehaviour {
         m_Animator.ResetTrigger(m_HashUsePara);
         m_Animator.SetBool(m_HashOnLadderPara, false);
         m_CanClimb = false;
-        m_BlockNormalAction = false;
+        //m_BlockNormalAction = false;
         m_IsOnLadder = false;
     }
 
@@ -654,6 +658,10 @@ public class AlessiaController : MonoBehaviour {
         if (collision.tag.Equals("ladder"))
         {
             m_CanClimb = true;
+        }
+        if (collision.tag.Equals("endLadder"))
+        {
+            EndClimbing();
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

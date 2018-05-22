@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Gamekit2D;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,6 +29,7 @@ public class MovingInRange : MonoBehaviour {
         animator = GetComponent<Animator>();
         animator.SetBool("isInNormalState", true);
         rideloidShoot = GetComponent<RideloidShoot>();
+        
     }
 
     // Update is called once per frame
@@ -50,11 +52,16 @@ public class MovingInRange : MonoBehaviour {
     {
         if (collision.collider.tag.Equals("RideloidRange"))
         {
-            velocity *= -1;
-            spriteRenderer.flipX = !spriteRenderer.flipX;
-            rideloidShoot.Direction *= -1;
-            rideloidShoot.Offset *= -1;
+            FlipRideloid();
         }
+    }
+
+    public void FlipRideloid()
+    {
+        velocity *= -1;
+        spriteRenderer.flipX = !spriteRenderer.flipX;
+        rideloidShoot.Direction *= -1;
+        rideloidShoot.Offset *= -1;
     }
 
     public void countNormalState()
