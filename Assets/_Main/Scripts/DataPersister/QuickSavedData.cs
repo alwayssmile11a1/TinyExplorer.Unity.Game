@@ -21,12 +21,12 @@ public class QuickSavedData : MonoBehaviour, IDataSaveable {
     {
         if (saveActiveState)
         {
-            gameObject.SetActive(SavedDataManager.GetBool(savedDataTag));
+            gameObject.SetActive(SavedDataManager.Instance.GetBool(savedDataTag));
         }
 
         if(savePosition)
         {
-            transform.position = SavedDataManager.GetVector3(savedDataTag);
+            transform.position = SavedDataManager.Instance.GetVector3(savedDataTag);
         }
     }
 
@@ -35,12 +35,12 @@ public class QuickSavedData : MonoBehaviour, IDataSaveable {
 
         if (saveActiveState)
         {
-            SavedDataManager.Set(savedDataTag, gameObject.activeSelf);
+            SavedDataManager.Instance.Set(savedDataTag, gameObject.activeSelf);
         }
 
         if(savePosition)
         {
-            SavedDataManager.Set(savedDataTag, transform.position);
+            SavedDataManager.Instance.Set(savedDataTag, transform.position);
         }
 
     }

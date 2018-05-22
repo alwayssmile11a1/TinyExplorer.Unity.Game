@@ -432,7 +432,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1602734612114092}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4618204597790364}
@@ -615,7 +615,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1169920816949876}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.32, y: 11.71, z: 0}
+  m_LocalPosition: {x: 120.4, y: 3.84, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4642313719841942}
@@ -1528,7 +1528,7 @@ MonoBehaviour:
   offsetBasedOnSpriteFacing: 1
   spriteRenderer: {fileID: 0}
   enableDamageOnAwake: 0
-  canHitTriggers: 0
+  canHitTriggers: 1
   disableDamageAfterHit: 1
   forceRespawn: 0
   receiveOnHitEventOnInvincibleObject: 1
@@ -1742,7 +1742,7 @@ MonoBehaviour:
   offsetBasedOnSpriteFacing: 1
   spriteRenderer: {fileID: 0}
   enableDamageOnAwake: 0
-  canHitTriggers: 0
+  canHitTriggers: 1
   disableDamageAfterHit: 1
   forceRespawn: 0
   receiveOnHitEventOnInvincibleObject: 1
