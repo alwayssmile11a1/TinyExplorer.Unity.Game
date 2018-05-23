@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 114985473557734962}
   - component: {fileID: 95593474834753214}
   m_Layer: 0
-  m_Name: LaserBeam
+  m_Name: LaserBeamVertical
   m_TagString: Untagged
   m_Icon: {fileID: 6926474624037801865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -55,8 +55,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1033762264175512}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.70710677}
-  m_LocalPosition: {x: 5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 10}
+  m_LocalPosition: {x: 50, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 100}
   m_Children: []
   m_Father: {fileID: 4926239485421636}
   m_RootOrder: 0
@@ -166,45 +166,12 @@ MonoBehaviour:
     m_Bits: 256
   OnDamageableHit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114985473557734962}
-        m_MethodName: OnHitDamageable
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: Gamekit2D.Damager+DamagableEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   OnNonDamageableHit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114985473557734962}
-        m_MethodName: OnHitNonDamageable
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 114985473557734962}
-        m_MethodName: ReturnToPool
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: Gamekit2D.Damager+NonDamagableEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114985473557734962
@@ -1502,7 +1469,7 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 0.9811321, g: 0.745105, b: 0.9051694, a: 0}
         key1: {r: 0.9622642, g: 0.7126202, b: 0.920045, a: 0.039215688}
-        key2: {r: 0.8396226, g: 0.019802418, b: 0.053380553, a: 1}
+        key2: {r: 1, g: 0.39132667, b: 0, a: 1}
         key3: {r: 0.41509432, g: 0.08810966, b: 0.38457578, a: 0}
         key4: {r: 0.41509432, g: 0.08810966, b: 0.38457578, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -4878,4 +4845,4 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2

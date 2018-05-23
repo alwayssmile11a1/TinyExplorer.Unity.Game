@@ -53,7 +53,7 @@ public class ShootingBase : MonoBehaviour {
 
     public void Shoot()
     {
-        BulletObject bulletObject = m_BulletPool.Pop(transform.position + transform.up * 0.8f);
+        BulletObject bulletObject = m_BulletPool.Pop(transform.position);
         bulletObject.transform.RotateToDirection(transform.up);
         bulletObject.rigidbody2D.velocity = bulletSpeed * transform.up;
     }
