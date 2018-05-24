@@ -462,6 +462,11 @@ public class AlessiaController : MonoBehaviour {
         //Shake camera a little
         CameraShaker.Shake(0.15f, 0.3f);
 
+        if(damager.forceRespawn)
+        {
+            damageable.SetHealth(0);
+            StartCoroutine(DieRespawnCoroutine(true));
+        }
     }
 
     public void AttackHit(Damager damager, Damageable damageable)
@@ -589,6 +594,7 @@ public class AlessiaController : MonoBehaviour {
                 yield return StartCoroutine(ScreenFader.FadeSceneIn());
             }
         }
+        
 
     }
 
