@@ -111,6 +111,7 @@ public class AlessiaController : MonoBehaviour {
 
     private void Start()
     {
+        //test
         SavedDataManager.Instance.DeleteData("PlayerState");
         LoadData();
     }

@@ -6,7 +6,7 @@ using Gamekit2D;
 [RequireComponent(typeof(Collider2D))]
 public class SavePole : MonoBehaviour
 {
-    public string saveSuccessfullyEffect = "SavedEffect";
+    public string saveEffect = "SavedEffect";
 
     private Animator m_Animator;
 
@@ -18,7 +18,7 @@ public class SavePole : MonoBehaviour
     private void Awake()
     {
         m_Animator = GetComponent<Animator>();
-        m_HashSavedEffect = VFXController.StringToHash(saveSuccessfullyEffect);
+        m_HashSavedEffect = VFXController.StringToHash(saveEffect);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

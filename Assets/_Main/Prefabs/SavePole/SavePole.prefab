@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b94517346007314ba6affa00cdebe8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveSuccessfullyEffect: Blue_Explosion
+  saveEffect: Blue_Explosion
 --- !u!114 &114340974345380356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -463,6 +463,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.579, y: 1.049}
+  m_AnchoredPosition: {x: 0.749, y: 1.283}
   m_SizeDelta: {x: 1.5, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
