@@ -317,6 +317,17 @@ namespace Gamekit2D
             }
         }
 
+        public bool HasData(string additionalPath)
+        {
+            string path = Path.Combine(Application.persistentDataPath, additionalPath + "TinyExplorer.dat");
+            if (File.Exists(path))
+            {
+                return true;
+
+            }
+            return false;
+        }
+
         public void Register(IDataSaveable iDataSaveable)
         {
             m_DataSaveables.Add(iDataSaveable);

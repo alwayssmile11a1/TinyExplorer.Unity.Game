@@ -73,6 +73,7 @@ public class AlessiaController : MonoBehaviour {
     private bool m_BlockNormalAction;
     private float m_DashCoolDownTimer;
     private float m_DashTimer;
+    private float m_HoldAttackKeyTimer;
     private bool m_CanDash = true;
     private bool m_CanSlash = true;
     private bool m_CanClimb = false;
@@ -85,6 +86,7 @@ public class AlessiaController : MonoBehaviour {
 
 
     private Checkpoint m_LastCheckpoint = null;
+    private SavePole m_CurrentSavePole = null;
     private Damageable m_Damageable;
 
 
@@ -109,17 +111,12 @@ public class AlessiaController : MonoBehaviour {
 
     private void Start()
     {
+        SavedDataManager.Instance.DeleteData("PlayerState");
         LoadData();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SaveData();
-        }
-
-
         if(m_CharacterController2D.IsGrounded)
         {
             m_DashedInAir = false;
@@ -199,9 +196,27 @@ public class AlessiaController : MonoBehaviour {
         m_IsJumpHolding = true;
     }
 
-    public void JumpRelease()
+    public void JumpReleased()
     {
         m_IsJumpHolding = false;
+    }
+
+    public void AttackHeld()
+    {
+        m_HoldAttackKeyTimer += Time.deltaTime;
+
+        if(m_HoldAttackKeyTimer>=1.5f && m_CurrentSavePole !=null)
+        {
+            SaveData();
+            m_CurrentSavePole.TriggerSavedEffect();
+            m_CurrentSavePole = null;
+        }
+
+    }
+
+    public void AttackReleased()
+    {
+        m_HoldAttackKeyTimer = 0;
     }
 
     //public void SpawnShield()
@@ -623,6 +638,11 @@ public class AlessiaController : MonoBehaviour {
         m_LastCheckpoint = checkpoint;
     }
 
+    public void SetSavePole(SavePole savePole)
+    {
+        m_CurrentSavePole = savePole;
+    }
+
     public void CanDash(bool canDash)
     {
         m_CanDash = canDash;
@@ -685,6 +705,7 @@ public class AlessiaController : MonoBehaviour {
         savedData.Set("CanDash", m_CanDash);
         savedData.Set("CanSlash", m_CanSlash);
         savedData.Set("PlayerPosition", transform.position);
+        savedData.Set("SceneName", UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 
         savedData.Save("PlayerState");
        

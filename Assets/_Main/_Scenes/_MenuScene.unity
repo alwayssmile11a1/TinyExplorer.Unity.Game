@@ -9021,6 +9021,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &561041606
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4341287611090398, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341287611090398, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341287611090398, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341287611090398, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341287611090398, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341287611090398, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341287611090398, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4341287611090398, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074154146409150, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
+      propertyPath: m_Name
+      value: TransitionStart (ContinueButton)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
+  m_IsPrefabAsset: 0
+--- !u!114 &561041607 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114736322075970624, guid: d5cab62b8805d3e48bf92706e36db4f4,
+    type: 2}
+  m_PrefabInternal: {fileID: 561041606}
+  m_Script: {fileID: 11500000, guid: ae93dbb94ae194c4a8b8cf9bb8e4e95b, type: 3}
 --- !u!1001 &716944921
 Prefab:
   m_ObjectHideFlags: 0
@@ -9107,6 +9159,10 @@ Prefab:
     - target: {fileID: 4341287611090398, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
       propertyPath: m_RootOrder
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1074154146409150, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
+      propertyPath: m_Name
+      value: TransitionStart (StartButton)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
@@ -9217,7 +9273,7 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 1778686269}
+      objectReference: {fileID: 561041607}
     - target: {fileID: 114228312234119320, guid: 97c80ec995f35c14cb2318615af18c5e,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9278,9 +9334,28 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114431811594679080, guid: 97c80ec995f35c14cb2318615af18c5e,
+        type: 2}
+      propertyPath: continueButton
+      value: 
+      objectReference: {fileID: 1107802196}
+    - target: {fileID: 114431811594679080, guid: 97c80ec995f35c14cb2318615af18c5e,
+        type: 2}
+      propertyPath: continueTransitionPoint
+      value: 
+      objectReference: {fileID: 561041607}
+    - target: {fileID: 1879915787160296, guid: 97c80ec995f35c14cb2318615af18c5e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97c80ec995f35c14cb2318615af18c5e, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &1107802196 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1879915787160296, guid: 97c80ec995f35c14cb2318615af18c5e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1107802195}
 --- !u!1001 &1305056934
 Prefab:
   m_ObjectHideFlags: 0
