@@ -428,7 +428,7 @@ public class AlessiaController : MonoBehaviour {
         leftDamager.DisableDamage();
         rightDamager.DisableDamage();
     }
-
+    private bool SetRotationOffset = false;
     private void StartClimbing()
     {
         //m_BlockNormalAction = true;
@@ -438,14 +438,14 @@ public class AlessiaController : MonoBehaviour {
 
             m_IsOnLadder = true;
             m_Animator.SetBool(m_HashOnLadderPara, true);
-            if (m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>())
-            {
-                m_platformEffector2D.rotationalOffset = 180;
-            }
-            else
-            {
-                m_platformEffector2D.rotationalOffset = 0;
-            }
+            //if (m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>())
+            //{
+            //    m_platformEffector2D.rotationalOffset = 180;
+            //}
+            //else
+            //{
+            //    m_platformEffector2D.rotationalOffset = 0;
+            //}
         }
         m_Animator.SetFloat("VelocityY", m_CharacterInput.VerticalAxis);
             
@@ -453,14 +453,17 @@ public class AlessiaController : MonoBehaviour {
         {
             SetVerticalMovement(m_CharacterInput.VerticalAxis * climbSpeed);
         }
-        if(m_CharacterInput.VerticalAxis < 0)
+        if (!SetRotationOffset)
         {
-            
-            //m_platformEffector2D.rotationalOffset = 180;
-        }
-        else
-        {
-            //m_platformEffector2D.rotationalOffset = 0;
+            if (m_CharacterInput.VerticalAxis < 0)
+            {
+                m_platformEffector2D.rotationalOffset = 180;
+            }
+            else
+            {
+                m_platformEffector2D.rotationalOffset = 0;
+            }
+            SetRotationOffset = true;
         }
 
 
@@ -471,6 +474,7 @@ public class AlessiaController : MonoBehaviour {
         m_Animator.ResetTrigger(m_HashUsePara);
         m_Animator.SetBool(m_HashOnLadderPara, false);
         m_CanClimb = false;
+        SetRotationOffset = false;
         //m_BlockNormalAction = false;
         m_IsOnLadder = false;
     }
