@@ -15,10 +15,10 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
     [Header("Slash")]
     public GameObject slash;
 
-    [Header("FireBalls")]
-    public Transform fireBallSpawnPosition1;
-    public Transform fireBallSpawnPosition2;
-    public GameObject fireBall;
+    //[Header("FireBalls")]
+    //public Transform fireBallSpawnPosition1;
+    //public Transform fireBallSpawnPosition2;
+    //public GameObject fireBall;
 
 
     [Header("Portal")]
@@ -60,12 +60,12 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
 
     //Pools
     private BulletPool m_SlashPool;
-    private BulletPool m_FireBallPool;
+    //private BulletPool m_FireBallPool;
     private BulletPool m_ChaserPool;
     private BulletPool m_PortalPool;
     private BulletPool m_DarkVoidPool;
 
-    private int m_FireBallCount = 10;
+    //private int m_FireBallCount = 10;
 
     //Portal
     private List<BulletObject> m_PortalObjects;
@@ -107,7 +107,7 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
 
         //Pools
         m_SlashPool = BulletPool.GetObjectPool(slash, 3);
-        m_FireBallPool = BulletPool.GetObjectPool(fireBall, 10);
+        //m_FireBallPool = BulletPool.GetObjectPool(fireBall, 10);
         m_ChaserPool = BulletPool.GetObjectPool(chaser, 5);
         m_PortalPool = BulletPool.GetObjectPool(portal, 3);
         m_DarkVoidPool = BulletPool.GetObjectPool(darkVoid, 1);
@@ -358,7 +358,7 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
         portal2.AddListener(Portalling);
         portal2.CanPortal(false);
 
-        m_PortalLiveTimer = 20f;
+        m_PortalLiveTimer = 15f;
 
         m_PortalDelayTimer = 1f;
 
@@ -455,38 +455,38 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
     }
 
 
-    public void SpawnFireballs()
-    {
-        StartCoroutine(InternalSpawnFireballs());
+    //public void SpawnFireballs()
+    //{
+    //    StartCoroutine(InternalSpawnFireballs());
 
-    }
+    //}
 
-    private IEnumerator InternalSpawnFireballs()
-    {
-        CameraShaker.Shake(0.03f, 2f * m_FireBallCount, false);
+    //private IEnumerator InternalSpawnFireballs()
+    //{
+    //    CameraShaker.Shake(0.03f, 2f * m_FireBallCount, false);
 
-        for (int i = 0; i < m_FireBallCount; i++)
-        {
-            //position to spawn
-            Vector3 spawnPosition = new Vector3(Random.Range(fireBallSpawnPosition1.position.x, fireBallSpawnPosition2.position.x), fireBallSpawnPosition1.position.y, 0);
+    //    for (int i = 0; i < m_FireBallCount; i++)
+    //    {
+    //        //position to spawn
+    //        Vector3 spawnPosition = new Vector3(Random.Range(fireBallSpawnPosition1.position.x, fireBallSpawnPosition2.position.x), fireBallSpawnPosition1.position.y, 0);
 
-            BulletObject fireBall = m_FireBallPool.Pop(spawnPosition);
+    //        BulletObject fireBall = m_FireBallPool.Pop(spawnPosition);
 
-            //direction from player to the fireball
-            Vector3 direction = (targetToTrack.position - fireBall.transform.position).normalized;
+    //        //direction from player to the fireball
+    //        Vector3 direction = (targetToTrack.position - fireBall.transform.position).normalized;
 
-            fireBall.rigidbody2D.velocity = direction * 10f;
+    //        fireBall.rigidbody2D.velocity = direction * 10f;
 
-            //rotate to player
-            float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            fireBall.transform.rotation = Quaternion.Euler(0, 0, rotationZ);
+    //        //rotate to player
+    //        float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    //        fireBall.transform.rotation = Quaternion.Euler(0, 0, rotationZ);
 
-            yield return new WaitForSeconds(1f);
+    //        yield return new WaitForSeconds(1f);
 
 
-        }
+    //    }
 
-    }
+    //}
 
 
     public void GotHit(Damager damager, Damageable damageable)
