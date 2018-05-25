@@ -89,6 +89,7 @@ public class AlessiaController : MonoBehaviour {
     private SavePole m_CurrentSavePole = null;
     private Damageable m_Damageable;
 
+    private PlatformEffector2D m_platformEffector2D;
 
     private const float k_GroundedStickingVelocityMultiplier = 3f;    // This is to help the character stick to vertically moving platforms.
 
@@ -104,6 +105,7 @@ public class AlessiaController : MonoBehaviour {
         m_OffsetFromSlashEffectToAlessia = slashContactTransform.position - transform.position;
         m_Damageable = GetComponent<Damageable>();
 
+        m_platformEffector2D = FindObjectOfType<PlatformEffector2D>();
 
         m_HashSlashHitEffect = VFXController.StringToHash(slashHitEffectName);
 
@@ -436,6 +438,14 @@ public class AlessiaController : MonoBehaviour {
 
             m_IsOnLadder = true;
             m_Animator.SetBool(m_HashOnLadderPara, true);
+            if (m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>())
+            {
+                m_platformEffector2D.rotationalOffset = 180;
+            }
+            else
+            {
+                m_platformEffector2D.rotationalOffset = 0;
+            }
         }
         m_Animator.SetFloat("VelocityY", m_CharacterInput.VerticalAxis);
             
@@ -443,10 +453,15 @@ public class AlessiaController : MonoBehaviour {
         {
             SetVerticalMovement(m_CharacterInput.VerticalAxis * climbSpeed);
         }
-        //else
-        //{
-        //    SetVerticalMovement(0);
-        //}
+        if(m_CharacterInput.VerticalAxis < 0)
+        {
+            
+            //m_platformEffector2D.rotationalOffset = 180;
+        }
+        else
+        {
+            //m_platformEffector2D.rotationalOffset = 0;
+        }
 
 
     }
