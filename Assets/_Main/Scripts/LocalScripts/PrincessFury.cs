@@ -32,6 +32,12 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     public string deathEffectName;
     public string hitEffectName;
 
+    [Header("Audio")]
+    public RandomAudioPlayer jumpAttackAudio;
+    public RandomAudioPlayer darkvoidAttackAudio;
+    public RandomAudioPlayer normalAttackAudio;
+    public RandomAudioPlayer concentratingAudio;
+
     //Animation
     private int m_WakeUpPara = Animator.StringToHash("WakeUp");
     private int m_SleepPara = Animator.StringToHash("Sleep");
@@ -533,24 +539,35 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
         gameObject.SetActive(false);
     }
 
-    //public void OnReset()
-    //{
-    //    m_WokeUp = false;
-    //    bodyDamager.DisableDamage();
-    //    m_SoldierCount = 2;
-       
-    //    m_RigidBody2D.velocity = Vector2.zero;
-    //    m_SpriteRenderer.sortingOrder = 5;
-    //    m_TeleportTimer = 0;
+    public void PlayJumpAttackAudio()
+    {
+        jumpAttackAudio.PlayRandomSound();
 
-    //    m_Ai.ResetChildren();
+    }
 
-    //    m_JumpAttackSpellPool.PushAll();
-    //    m_DarkMatterPool.PushAll();
-    //    m_SoldierPool.PushAll();
+    public void PlayDarkVoidAttackAudio()
+    {
+        darkvoidAttackAudio.PlayRandomSound();
 
-    //     transform.position = m_OriginalPosition;
-    //}
+    }
+
+    public void PlayNormalAttackAudio()
+    {
+        normalAttackAudio.PlayRandomSound();
+    }
+
+
+
+    public void PlayConcentratingAudio()
+    {
+        concentratingAudio.PlayRandomSound();
+    }
+
+    public void EndConcentratingAudio()
+    {
+        concentratingAudio.Stop();
+    }
+
 
 
 

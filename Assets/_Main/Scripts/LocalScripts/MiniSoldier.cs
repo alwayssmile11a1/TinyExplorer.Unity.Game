@@ -4,11 +4,13 @@ using UnityEngine;
 using Gamekit2D;
 using BTAI;
 
-public class MiniSoldier : MonoBehaviour,IBTDebugable {
+public class MiniSoldier : MonoBehaviour, IBTDebugable
+{
 
     public Damager bodyDamager;
     public Damager attackDamager;
 
+    public RandomAudioPlayer footStep;
 
     //References
     private Transform m_TargetToTrack;
@@ -37,7 +39,8 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
 
 
     // Use this for initialization
-    void Awake() {
+    void Awake()
+    {
 
         m_TargetToTrack = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -48,7 +51,7 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
         m_RigidBody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         //m_Damageable = GetComponent<Damageable>();
-        
+
         m_TargetPosition = m_TargetToTrack.transform.position;
 
         //Behaviour tree
@@ -71,7 +74,8 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
         if (actived)
         {
@@ -160,4 +164,11 @@ public class MiniSoldier : MonoBehaviour,IBTDebugable {
     {
         VFXController.Instance.Trigger(m_HashDieEffect, transform.position, 0, false, null);
     }
+
+    public void PlayFootStep()
+    {
+        if (footStep != null)
+            footStep.PlayRandomSound();
+    }
+
 }

@@ -334,6 +334,7 @@ public class SimpleEnemyBehaviour : MonoBehaviour
             {
                 m_Animator.SetBool(HashPatrollingPara, true);
             }
+
         }
         else
         {
@@ -733,6 +734,24 @@ public class SimpleEnemyBehaviour : MonoBehaviour
     {
         if (footStepAudio != null)
             footStepAudio.PlayRandomSound();
+    }
+
+    public void PlayMeleeAttackAudio()
+    {
+        if (meleeAttackAudio != null)
+            meleeAttackAudio.PlayRandomSound();
+    }
+
+    public void PlayDieAudio()
+    {
+        if (dieAudio != null)
+            dieAudio.PlayRandomSound();
+    }
+
+    public void PlayShootingAudio()
+    {
+        if (shootingAudio != null)
+            shootingAudio.PlayRandomSound();
     }
 
 

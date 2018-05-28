@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Gamekit2D;
 using BTAI;
-public class ExoticPlant : MonoBehaviour {
+public class ExoticPlant : MonoBehaviour
+{
 
 
     public GameObject bullet;
@@ -12,16 +13,31 @@ public class ExoticPlant : MonoBehaviour {
     public float startDelay = 0.5f;
     public float bulletSpeed = 5f;
 
+    [Header("Misc")]
+    public RandomAudioPlayer shootAudioPlayer;
+    public string hitEffect = "Hit";
+    public string deadEffect = "Dead";
+
     private Animator m_Animator;
     private float m_ShootingTimer;
     private BulletPool m_BulletPool;
 
     private int m_HashAttackPara = Animator.StringToHash("Attack");
 
+    private int m_HashHitEffect;
+    private int m_HashDeadEffect;
+
     private Root m_AI = BT.Root();
 
-	// Use this for initialization
-	void Awake () {
+
+
+
+    // Use this for initialization
+    void Awake()
+    {
+
+        m_HashHitEffect = VFXController.StringToHash(hitEffect);
+        m_HashDeadEffect = VFXController.StringToHash(deadEffect);
 
         m_Animator = GetComponent<Animator>();
 
@@ -39,10 +55,11 @@ public class ExoticPlant : MonoBehaviour {
 
 
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
         if (startDelay > 0)
         {
@@ -54,23 +71,35 @@ public class ExoticPlant : MonoBehaviour {
         }
 
 
-        if(m_ShootingTimer>0)
+        if (m_ShootingTimer > 0)
         {
             m_ShootingTimer -= Time.deltaTime;
 
         }
-        
-       
 
-	}
+
+
+    }
 
     public void Shoot()
     {
         BulletObject bulletObject = m_BulletPool.Pop(transform.position + transform.up * 0.8f);
         bulletObject.transform.RotateToDirection(transform.up);
         bulletObject.rigidbody2D.velocity = bulletSpeed * transform.up;
+        if (shootAudioPlayer != null)
+            shootAudioPlayer.PlayRandomSound();
     }
 
+    public void GotHit()
+    {
+        VFXController.Instance.Trigger(m_HashHitEffect, transform.position, 0, false, null);
 
+    }
+
+    public void Die()
+    {
+        VFXController.Instance.Trigger(m_HashDeadEffect, transform.position, 0, false, null);
+        gameObject.SetActive(false);
+    }
 
 }

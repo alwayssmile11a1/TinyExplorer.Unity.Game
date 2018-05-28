@@ -81,6 +81,8 @@ public class AlessiaController : MonoBehaviour {
     //Allow dash in air only one time
     private bool m_DashedInAir = false;
 
+    private bool m_IsLeftAttacking;
+
     private float m_AttackTimer;
     private float m_ExternalForceTimer;
 
@@ -413,11 +415,13 @@ public class AlessiaController : MonoBehaviour {
         {
             leftDamager.EnableDamage();         
             leftSlashEffect.Play();
+            m_IsLeftAttacking = true;
         }
         else
         {
             rightDamager.EnableDamage();
             rightSlashEffect.Play();
+            m_IsLeftAttacking = false;
         }
     
     }
@@ -565,7 +569,7 @@ public class AlessiaController : MonoBehaviour {
         //push back player a little bit
         float pushSpeed;
 
-        if (rightDamager.CanDamage() == true)
+        if (m_IsLeftAttacking == false)
         {
             //set position of slash contact effect to be displayed
             slashContactTransform.position = transform.position + m_OffsetFromSlashEffectToAlessia;
