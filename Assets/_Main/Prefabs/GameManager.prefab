@@ -98,6 +98,9 @@ MonoBehaviour:
   - prefab: {fileID: 1675665522844806, guid: 562ed2084e444a4449fab44b24655bd4, type: 2}
     lifetime: 1
     vfxOverride: []
+  - prefab: {fileID: 1978620952496694, guid: 43ef99d35dc80124ca5835b5744a67d1, type: 2}
+    lifetime: 1
+    vfxOverride: []
 --- !u!114 &114755206480212802
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -37,6 +37,8 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     public RandomAudioPlayer darkvoidAttackAudio;
     public RandomAudioPlayer normalAttackAudio;
     public RandomAudioPlayer concentratingAudio;
+    public RandomAudioPlayer explosionAudio;
+
 
     //Animation
     private int m_WakeUpPara = Animator.StringToHash("WakeUp");
@@ -528,15 +530,50 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
         bodyDamager.DisableDamage();
         m_Animator.SetTrigger(m_HashDeathPara);
 
-        //Death effect
-        VFXController.Instance.Trigger(m_DeathEffectHash, transform.position, 0.1f, false,null);
+        targetToTrack.GetComponent<CharacterInput>().SetInputActive(false);
+
+        StartCoroutine(DieEffectCoroutine());
+
+
 
 
     }
 
+    private IEnumerator DieEffectCoroutine()
+    {
+
+        for (int i = 0; i < 50; i++)
+        {
+
+            //Death effect
+            VFXController.Instance.Trigger(m_DeathEffectHash, transform.position + (Vector3)(Random.insideUnitCircle), 0.1f, false, null);
+
+            explosionAudio.PlayRandomSound();
+
+            yield return new WaitForSeconds(Mathf.Clamp(0.35f / (i + 1), 0.1f, 1f));
+
+            ////Death effect
+            //VFXController.Instance.Trigger(m_DeathEffectHash, transform.position + (Vector3)(Random.insideUnitCircle * 0.3f), 0.1f, false, null);
+
+            //yield return new WaitForSeconds(0.1f);
+        }
+
+
+        VFXController.Instance.Trigger("SplashShieldHitRed", transform.position, 0.1f, false, null);
+
+        transform.parent.gameObject.SetActive(false);
+
+        targetToTrack.GetComponent<CharacterInput>().SetInputActive(true);
+
+        yield return new WaitForSeconds(0.2f);
+        explosionAudio.PlayRandomSound();
+    }
+    
+
+
     public void Disable()
     {
-        gameObject.SetActive(false);
+        //transform.parent.gameObject.SetActive(false);
     }
 
     public void PlayJumpAttackAudio()
