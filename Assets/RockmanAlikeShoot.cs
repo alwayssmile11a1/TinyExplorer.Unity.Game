@@ -34,6 +34,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
     private BulletObject[] bulletObjects;
     private StartShooting shootScript;
     private SpriteRenderer spriteRenderer;
+    private UpdateHealthBar updateHealthBar;
 
     // Use this for initialization
     void Awake () {
@@ -45,6 +46,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
         animator = GetComponent<Animator>();
         shootScript = Bullet.GetComponent<StartShooting>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        updateHealthBar = GetComponentInChildren<UpdateHealthBar>();
     }
 	
 	// Update is called once per frame

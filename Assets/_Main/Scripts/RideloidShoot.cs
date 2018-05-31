@@ -179,4 +179,5 @@ public class RideloidShoot : MonoBehaviour {
     {
         RobotHand.SetActive(false);
     }
+    
 }
