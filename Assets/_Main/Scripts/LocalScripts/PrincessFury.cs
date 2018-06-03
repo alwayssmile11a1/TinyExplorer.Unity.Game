@@ -191,6 +191,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
                     BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-1.3f, 1f))),
                     BT.Call(() => m_Animator.SetTrigger(m_HashTopToDowmAttackPara)),
                     BT.Wait(0.5f),
+                    BT.Call(OrientToTarget),
                     BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
                     BT.Wait(1f)
                 ),
@@ -215,6 +216,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
                 BT.Sequence().OpenBranch(
                     BT.Call(() => SetConcetratingEffectLocalPosition(new Vector2(-0.85f, -0.75f))),
                     BT.Call(() => m_Animator.SetTrigger(m_HashJumpAttackPara)),
+                    BT.Call(OrientToTarget),
                     BT.WaitForAnimatorState(m_Animator, "PrincessFury_Idle"),
                     BT.Wait(1f)
                 )
@@ -464,7 +466,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     public void SummonMiniSoldier()
     {
         m_Soldiers.Clear();
-
+        m_SoldierAppearingTimer = 0;
         for (int i = 0; i < m_SoldierCount; i++)
         {
             float xPosition = Random.Range(summonPosition1.position.x, summonPosition2.position.x);

@@ -115,9 +115,10 @@ public class AlessiaController : MonoBehaviour {
 
     private void Start()
     {
-        //test
-        SavedDataManager.Instance.DeleteData("PlayerState");
-        LoadData();
+        
+        //SavedDataManager.Instance.DeleteData("PlayerState");
+        //Load Data
+        //LoadData();
     }
 
     private void Update()
@@ -514,10 +515,10 @@ public class AlessiaController : MonoBehaviour {
 
         //VFXController.Instance.Trigger(m_HashSlashHitEffect, damageable.transform.position, 0, false, null);
 
-        if (slashHitAudioPlayer)
-        {
-            slashHitAudioPlayer.PlayRandomSound();
-        }
+        //if (slashHitAudioPlayer)
+        //{
+        //    slashHitAudioPlayer.PlayRandomSound();
+        //}
 
         ////Slowdown time a little bit
         //TimeManager.SlowdownTime(0.2f, 0.2f);
@@ -541,6 +542,7 @@ public class AlessiaController : MonoBehaviour {
 
     }
 
+    //
     public void AttackHit(Damager damager)
     {
         OnAttackHit(damager);
@@ -556,7 +558,6 @@ public class AlessiaController : MonoBehaviour {
         if(slashHitAudioPlayer)
         {
             UnityEngine.Tilemaps.TileBase surfaceHit = PhysicsHelper.FindTileForOverride(damager.LastHit, slashContactTransform.position, m_SpriteRenderer.flipX ? Vector2.left : Vector2.right);
-
 
             slashHitAudioPlayer.PlayRandomSound(surfaceHit);
 

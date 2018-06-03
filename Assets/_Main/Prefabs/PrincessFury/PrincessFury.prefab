@@ -255,7 +255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1859980475452844
 GameObject:
   m_ObjectHideFlags: 1
@@ -1035,7 +1035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960138f0450083543ad1d17e1352019d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 70
   invulnerableAfterDamage: 1
   invulnerabilityDuration: 0.1
   disableOnDeath: 0
@@ -1275,7 +1275,7 @@ MonoBehaviour:
   summonTeleportPosition: {fileID: 4546575186428840}
   miniSoldier: {fileID: 1929987268802862, guid: 78d771e8ab1f2a2408d881179a2de1e3,
     type: 2}
-  deathEffectName: CFX_ExplosionSmoke
+  deathEffectName: CFX_ExplosionPurple
   hitEffectName: SplashHitDamageRed
   jumpAttackAudio: {fileID: 114631369693440668}
   darkvoidAttackAudio: {fileID: 114343083447662814}

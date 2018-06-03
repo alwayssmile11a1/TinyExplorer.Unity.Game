@@ -39,7 +39,7 @@ public class BoneKnight : MonoBehaviour, IBTDebugable {
                //BT.If(() => { return m_EnemyBehaviour.CheckMeleeAttack(); }).OpenBranch(
                    BT.Call(m_EnemyBehaviour.OrientToTarget),
                    BT.Call(m_EnemyBehaviour.StopPatrolling),
-                   BT.Call(m_EnemyBehaviour.PerformMeleeAttack),
+                   BT.Call(() => m_Animator.SetTrigger(m_EnemyBehaviour.HashMeleeAttackPara)),
                    BT.Wait(0.5f),
                    BT.WaitForAnimatorState(m_Animator, "BoneKnight_Idle"),
                    BT.Wait(1f),
@@ -99,7 +99,7 @@ public class BoneKnight : MonoBehaviour, IBTDebugable {
         {
             m_RigidBody2D.MovePosition(direction * 0.8f + m_RigidBody2D.position);
         }
-
+        PlaySlashAudio();
     }
 
     public void EndAttack()
@@ -111,6 +111,11 @@ public class BoneKnight : MonoBehaviour, IBTDebugable {
     public void PlayFootStep()
     {
         m_EnemyBehaviour.PlayFootStep();
+    }
+
+    public void PlaySlashAudio()
+    {
+        m_EnemyBehaviour.PlayMeleeAttackAudio();
     }
 
 }

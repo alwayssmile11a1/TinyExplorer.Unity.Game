@@ -70,6 +70,7 @@ public class SimpleEnemyBehaviour : MonoBehaviour
     public RandomAudioPlayer shootingAudio;
     public RandomAudioPlayer meleeAttackAudio;
     public RandomAudioPlayer dieAudio;
+    public RandomAudioPlayer hitAudio;
     public RandomAudioPlayer footStepAudio;
 
     [Header("Misc")]
@@ -674,7 +675,7 @@ public class SimpleEnemyBehaviour : MonoBehaviour
             VFXController.Instance.Trigger(hashHitEffect, transform.position, 0, m_SpriteForward.x > 0 ? false : true, null);
         }
 
-       
+        PlayHitAudio();
 
         //Vector2 throwVector = new Vector2(0, 3.0f);
         //Vector2 damagerToThis = damager.transform.position - transform.position;
@@ -746,6 +747,12 @@ public class SimpleEnemyBehaviour : MonoBehaviour
     {
         if (dieAudio != null)
             dieAudio.PlayRandomSound();
+    }
+
+    public void PlayHitAudio()
+    {
+        if (hitAudio != null)
+            hitAudio.PlayRandomSound();
     }
 
     public void PlayShootingAudio()

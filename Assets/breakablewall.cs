@@ -7,6 +7,8 @@ public class breakablewall : MonoBehaviour {
 
     public string effectName = "CFX2_RockHit";
 
+    public RandomAudioPlayer breakAudio;
+
     int Hash;
 
     private void Awake()
@@ -18,5 +20,9 @@ public class breakablewall : MonoBehaviour {
     {
         VFXController.Instance.Trigger(Hash, transform.position, 0, false, null, null);
         gameObject.SetActive(false);
+        if (breakAudio != null)
+        {
+            breakAudio.PlayRandomSound();
+        }
     }
 }
