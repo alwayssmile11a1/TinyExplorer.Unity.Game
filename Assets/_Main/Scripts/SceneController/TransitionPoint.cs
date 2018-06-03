@@ -33,12 +33,7 @@ namespace Gamekit2D
         public TransitionWhen transitionWhen;
         [Tooltip("The player will lose control when the transition happens but should the axis and button values reset to the default when control is lost.")]
         public bool resetInputValuesOnTransition = true;
-        [Tooltip("Is this transition only possible with specific items in the inventory?")]
-        public bool requiresInventoryCheck;
-        [Tooltip("The inventory to be checked.")]
-        public InventoryController inventoryController;
-        [Tooltip("The required items.")]
-        public InventoryController.InventoryChecker inventoryCheck;
+
     
         bool m_TransitioningGameObjectPresent;
 
@@ -89,11 +84,11 @@ namespace Gamekit2D
 
         protected void TransitionInternal ()
         {
-            if (requiresInventoryCheck)
-            {
-                if(!inventoryCheck.CheckInventory (inventoryController))
-                    return;
-            }
+            //if (requiresInventoryCheck)
+            //{
+            //    if(!inventoryCheck.CheckInventory (inventoryController))
+            //        return;
+            //}
         
             if (transitionType == TransitionType.SameScene)
             {

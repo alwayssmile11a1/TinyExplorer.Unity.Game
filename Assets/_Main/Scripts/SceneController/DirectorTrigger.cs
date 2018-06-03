@@ -43,7 +43,7 @@ namespace Gamekit2D
 
             if (triggerType == TriggerType.Once && m_AlreadyTriggered)
                 return;
-            
+
             director.Play();
             m_AlreadyTriggered = true;
             PersistentDataManager.SetDirty(this);
@@ -59,6 +59,8 @@ namespace Gamekit2D
         public void OverrideAlreadyTriggered(bool alreadyTriggered)
         {
             m_AlreadyTriggered = alreadyTriggered;
+            PersistentDataManager.SetDirty(this);
+
         }
 
         public DataSettings GetDataSettings()
