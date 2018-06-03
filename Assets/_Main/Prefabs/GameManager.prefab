@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4475958737641862}
   - component: {fileID: 114755206480212802}
-  - component: {fileID: 114648551697320220}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -34,73 +33,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1598938823740364}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114648551697320220
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1598938823740364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe5db4cfb6b7b964190ab9234d340af1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vfxConfig:
-  - prefab: {fileID: 1760665693740324, guid: e756e7311813e0c458ac04009e70c98b, type: 2}
-    lifetime: 0.2
-    vfxOverride: []
-  - prefab: {fileID: 1723085916869360, guid: 746215013c897164d8924eb0da40edb5, type: 2}
-    lifetime: 0.2
-    vfxOverride: []
-  - prefab: {fileID: 1040608886635896, guid: a97415c6b57076f41a6621a7b51d63a3, type: 2}
-    lifetime: 0.2
-    vfxOverride: []
-  - prefab: {fileID: 1048962653569548, guid: 20d7b9c2c63614a4496606f1486fb310, type: 2}
-    lifetime: 4
-    vfxOverride: []
-  - prefab: {fileID: 1499421069178104, guid: 82663063525a545419b93adc3a3bbf71, type: 2}
-    lifetime: 6
-    vfxOverride: []
-  - prefab: {fileID: 1504344020526494, guid: b563a19efbd844c4f8a31443cb631540, type: 2}
-    lifetime: 0.2
-    vfxOverride: []
-  - prefab: {fileID: 1342027947474214, guid: 3777da077e9c6fc4bb1c7ae2b549a47a, type: 2}
-    lifetime: 0.2
-    vfxOverride: []
-  - prefab: {fileID: 1951638912879258, guid: 010194723134943488cdf19154b38964, type: 2}
-    lifetime: 0.2
-    vfxOverride: []
-  - prefab: {fileID: 1003818323142742, guid: 6f3bd3f8e345fd949bcc07e7c2314cbf, type: 2}
-    lifetime: 1
-    vfxOverride: []
-  - prefab: {fileID: 1566174664965034, guid: 09cb8561d4dd2df4cb32928d5815a1b9, type: 2}
-    lifetime: 1.9
-    vfxOverride: []
-  - prefab: {fileID: 100004, guid: 6bcfff12f64c2d841a40bbc1b3eb6ccb, type: 2}
-    lifetime: 0.5
-    vfxOverride: []
-  - prefab: {fileID: 1920253365427152, guid: 79803d093c5bda24a9e8137f7511a81a, type: 2}
-    lifetime: 1.5
-    vfxOverride: []
-  - prefab: {fileID: 1479292973137246, guid: 4069ab2be8cc4bc4b83c5e9985e7e3f1, type: 2}
-    lifetime: 1.5
-    vfxOverride: []
-  - prefab: {fileID: 1535832431633078, guid: 8f0ab6b7fa1dc1f4f928339e0a5a7a19, type: 2}
-    lifetime: 1
-    vfxOverride: []
-  - prefab: {fileID: 1675665522844806, guid: 562ed2084e444a4449fab44b24655bd4, type: 2}
-    lifetime: 1
-    vfxOverride: []
-  - prefab: {fileID: 1978620952496694, guid: 43ef99d35dc80124ca5835b5744a67d1, type: 2}
-    lifetime: 1
-    vfxOverride: []
 --- !u!114 &114755206480212802
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -80,10 +80,10 @@ namespace Gamekit2D
 
             if (transitionWhen == TransitionWhen.InteractPressed)
             {
-                if (PlayerInput.Instance.Interact.Down)
-                {
-                    TransitionInternal ();
-                }
+                //if (PlayerInput.Instance.Interact.Down)
+                //{
+                //    TransitionInternal ();
+                //}
             }
         }
 

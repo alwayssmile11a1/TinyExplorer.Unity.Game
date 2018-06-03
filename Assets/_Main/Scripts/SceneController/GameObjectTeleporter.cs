@@ -35,7 +35,6 @@ namespace Gamekit2D
 
         protected static GameObjectTeleporter instance;
 
-        protected PlayerInput m_PlayerInput;
         protected bool m_Transitioning;
 
         void Awake ()
@@ -48,7 +47,6 @@ namespace Gamekit2D
 
             DontDestroyOnLoad(gameObject);
 
-            m_PlayerInput = FindObjectOfType<PlayerInput>();
         }
 
         public static void Teleport (TransitionPoint transitionPoint)
@@ -71,15 +69,15 @@ namespace Gamekit2D
         {
             m_Transitioning = true;
 
-            if (releaseControl)
-            {
-                if (m_PlayerInput == null)
-                    m_PlayerInput = FindObjectOfType<PlayerInput> ();
-                if (m_PlayerInput != null)
-                {
-                    m_PlayerInput.ReleaseControl(resetInputValues);
-                }
-            }
+            //if (releaseControl)
+            //{
+            //    if (m_PlayerInput == null)
+            //        m_PlayerInput = FindObjectOfType<PlayerInput> ();
+            //    if (m_PlayerInput != null)
+            //    {
+            //        m_PlayerInput.ReleaseControl(resetInputValues);
+            //    }
+            //}
 
             if(fade)
                 yield return StartCoroutine (ScreenFader.FadeSceneOut ());
@@ -89,10 +87,10 @@ namespace Gamekit2D
             if(fade)
                 yield return StartCoroutine (ScreenFader.FadeSceneIn ());
 
-            if (releaseControl)
-            {
-                m_PlayerInput.GainControl ();
-            }
+            //if (releaseControl)
+            //{
+            //    m_PlayerInput.GainControl ();
+            //}
 
             m_Transitioning = false;
         }

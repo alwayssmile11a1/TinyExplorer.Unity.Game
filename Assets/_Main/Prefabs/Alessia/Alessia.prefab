@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 114758591728174508}
   - component: {fileID: 114049498748350652}
   - component: {fileID: 114970882030280704}
+  - component: {fileID: 81923538135870360}
   m_Layer: 8
   m_Name: Alessia
   m_TagString: Player
@@ -615,7 +616,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1169920816949876}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 195.16, y: -5.09, z: 0}
+  m_LocalPosition: {x: 106.68, y: 48.06413, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4642313719841942}
@@ -832,6 +833,13 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.44}
   m_Size: {x: 0.38, y: 0.9}
   m_Direction: 0
+--- !u!81 &81923538135870360
+AudioListener:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1169920816949876}
+  m_Enabled: 1
 --- !u!82 &82098236084344318
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1974,7 +1982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  climbSpeed: 4
+  climbSpeed: 2
   jumpSpeed: 9
   jumpAbortSpeedReduction: 20
   gravity: 16

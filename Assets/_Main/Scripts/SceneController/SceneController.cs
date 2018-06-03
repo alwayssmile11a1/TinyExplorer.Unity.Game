@@ -48,7 +48,6 @@ namespace Gamekit2D
 
         protected Scene m_CurrentZoneScene;
         protected SceneTransitionDestination.DestinationTag m_ZoneRestartDestinationTag;
-        protected PlayerInput m_PlayerInput;
         protected bool m_Transitioning;
 
         void Awake()
@@ -61,7 +60,6 @@ namespace Gamekit2D
 
             DontDestroyOnLoad(gameObject);
 
-            m_PlayerInput = FindObjectOfType<PlayerInput>();
 
             if (initialSceneTransitionDestination != null)
             {
@@ -85,10 +83,10 @@ namespace Gamekit2D
 
         public static void RestartZone(bool resetHealth = true)
         {
-            if(resetHealth && PlayerCharacter.PlayerInstance != null)
-            {
-                PlayerCharacter.PlayerInstance.damageable.SetHealth(PlayerCharacter.PlayerInstance.damageable.startingHealth);
-            }
+            //if(resetHealth && PlayerCharacter.PlayerInstance != null)
+            //{
+            //    PlayerCharacter.PlayerInstance.damageable.SetHealth(PlayerCharacter.PlayerInstance.damageable.startingHealth);
+            //}
 
             Instance.StartCoroutine(Instance.Transition(Instance.m_CurrentZoneScene.name, true, Instance.m_ZoneRestartDestinationTag,null, TransitionPoint.TransitionType.DifferentZone));
         }
@@ -113,24 +111,24 @@ namespace Gamekit2D
             m_Transitioning = true;
             PersistentDataManager.SaveAllData();
 
-            if (m_PlayerInput == null)
-            {
-                m_PlayerInput = FindObjectOfType<PlayerInput>();
-            }
-            if (m_PlayerInput!=null)
-            {
-                m_PlayerInput.ReleaseControl(resetInputValues);
-            }
+            //if (m_PlayerInput == null)
+            //{
+            //    m_PlayerInput = FindObjectOfType<PlayerInput>();
+            //}
+            //if (m_PlayerInput!=null)
+            //{
+            //    m_PlayerInput.ReleaseControl(resetInputValues);
+            //}
 
             yield return StartCoroutine(ScreenFader.FadeSceneOut(ScreenFader.FadeType.Loading));
             PersistentDataManager.ClearPersisters();
             yield return SceneManager.LoadSceneAsync(newSceneName);
 
-            m_PlayerInput = FindObjectOfType<PlayerInput>();
-            if (m_PlayerInput != null)
-            {
-                m_PlayerInput.ReleaseControl(resetInputValues);
-            }
+            //m_PlayerInput = FindObjectOfType<PlayerInput>();
+            //if (m_PlayerInput != null)
+            //{
+            //    m_PlayerInput.ReleaseControl(resetInputValues);
+            //}
 
             PersistentDataManager.LoadAllData();
             SceneTransitionDestination entrance = GetDestination(destinationTag);
@@ -147,10 +145,10 @@ namespace Gamekit2D
             if (entrance != null)
                 entrance.OnReachDestination.Invoke();
             yield return StartCoroutine(ScreenFader.FadeSceneIn());
-            if (m_PlayerInput != null)
-            {
-                m_PlayerInput.GainControl();
-            }
+            //if (m_PlayerInput != null)
+            //{
+            //    m_PlayerInput.GainControl();
+            //}
 
             m_Transitioning = false;
         }
