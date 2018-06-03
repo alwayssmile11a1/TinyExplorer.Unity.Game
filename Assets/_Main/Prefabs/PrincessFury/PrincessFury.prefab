@@ -1035,7 +1035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960138f0450083543ad1d17e1352019d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 70
+  startingHealth: 65
   invulnerableAfterDamage: 1
   invulnerabilityDuration: 0.1
   disableOnDeath: 0

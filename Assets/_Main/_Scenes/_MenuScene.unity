@@ -9164,6 +9164,11 @@ Prefab:
       propertyPath: m_Name
       value: TransitionStart (StartButton)
       objectReference: {fileID: 0}
+    - target: {fileID: 114736322075970624, guid: d5cab62b8805d3e48bf92706e36db4f4,
+        type: 2}
+      propertyPath: newSceneName
+      value: TheSkyLand
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5cab62b8805d3e48bf92706e36db4f4, type: 2}
   m_IsPrefabAsset: 0

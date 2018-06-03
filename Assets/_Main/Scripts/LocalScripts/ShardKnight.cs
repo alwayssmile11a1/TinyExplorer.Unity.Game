@@ -26,6 +26,15 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     [Header("Move Positions")]
     public List<Transform> movePositions;
 
+
+    [Header("Effect")]
+    public string deathEffectName;
+    public string hitEffectName;
+
+    [Header("Audio")]
+    public RandomAudioPlayer hitAudio;
+    public RandomAudioPlayer concentratingAudio;
+
     [Header("Others")]
     public float timeBetweenFlickering = 0.1f;
     public ParticleSystem concentratingStateEffect;
@@ -51,6 +60,9 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     private Flicker m_Flicker;
     private Damageable m_Damageable;
 
+    private int m_DeathEffectHash;
+    private int m_HitEffectHash;
+
     //others
     private Damager m_CurrentConcentratingAttack;
     private bool m_FormChanged = false;
@@ -58,6 +70,7 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     private int m_CurrentMoveIndex;
     private Vector3 m_OffsetFromLaserToShardKnight;
     private Vector3 m_OriginalPosition;
+    private bool m_StartAction = false;
 
     //Laser
     private bool m_LaserEnabled = false;
@@ -82,6 +95,9 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
         m_trailRenderer = GetComponentInChildren<TrailRenderer>();
 
         m_OriginalPosition = transform.position;
+
+        m_DeathEffectHash = VFXController.StringToHash(deathEffectName);
+        m_HitEffectHash = VFXController.StringToHash(hitEffectName);
 
         //Pool
         m_ConcentratingAttackPool = BulletPool.GetObjectPool(concentratingAttack, 5);
@@ -231,35 +247,25 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
 
     }
 
-    //private void OnEnable()
-    //{
-        
-    //}
-
-    //private void OnDisable()
-    //{
-    //    transform.rotation = Quaternion.identity;
-    //    transform.position = m_OriginalPosition;
-    //    m_ConcentratingAttackPool.PushAll();
-    //    m_LaserAttackPool.PushAll();
-    //    m_Ai.ResetChildren();
-    //    m_LineRenderer.enabled = false;
-    //    concentratingStateEffect.Stop();
-    //    m_FormChanged = false;
-    //}
-
 
     public Root GetAIRoot()
     {
         return m_Ai;
+    }
+
+    public void StartAction()
+    {
+        m_StartAction = true;
     }
  
 
     // Update is called once per frame
     void Update () {
 
-
-        m_Ai.Tick();
+        if (m_StartAction)
+        {
+            m_Ai.Tick();
+        }
 
         if(m_LaserEnabled)
         {
@@ -590,7 +596,15 @@ public class ShardKnight : MonoBehaviour, IBTDebugable {
     public void GotHit(Damager damager, Damageable damageable)
     {
         m_Flicker.StartColorFickering(damageable.invulnerabilityDuration, timeBetweenFlickering);
+        VFXController.Instance.Trigger(m_HitEffectHash, transform.position, 0, false, null);
+        if (hitAudio != null)
+            hitAudio.PlayRandomSound();
+    }
 
+
+    public void Die(Damager damager, Damageable damageable)
+    {
+        VFXController.Instance.Trigger(m_DeathEffectHash, transform.position, 0, false, null);
     }
 
 }

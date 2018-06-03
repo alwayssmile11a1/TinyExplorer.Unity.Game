@@ -89,6 +89,7 @@ public class AlessiaController : MonoBehaviour {
 
     private Checkpoint m_LastCheckpoint = null;
     private SavePole m_CurrentSavePole = null;
+    private Door m_CurrentDoor = null;
     private Damageable m_Damageable;
 
     private PlatformEffector2D m_platformEffector2D;
@@ -211,13 +212,18 @@ public class AlessiaController : MonoBehaviour {
     {
         m_HoldAttackKeyTimer += Time.deltaTime;
 
-        if(m_HoldAttackKeyTimer>=1.5f && m_CurrentSavePole !=null)
+        if(m_HoldAttackKeyTimer>=1f && m_CurrentSavePole !=null)
         {
             SaveData();
             m_CurrentSavePole.TriggerSavedEffect();
             m_CurrentSavePole = null;
         }
 
+        if (m_HoldAttackKeyTimer >= 1f && m_CurrentDoor != null)
+        {
+            m_CurrentDoor.Transition();
+            m_CurrentDoor = null;
+        }
     }
 
     public void AttackReleased()
@@ -666,6 +672,11 @@ public class AlessiaController : MonoBehaviour {
     public void SetSavePole(SavePole savePole)
     {
         m_CurrentSavePole = savePole;
+    }
+
+    public void SetDoor(Door door)
+    {
+        m_CurrentDoor = door;
     }
 
     public void CanDash(bool canDash)

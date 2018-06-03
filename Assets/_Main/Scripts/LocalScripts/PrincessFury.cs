@@ -28,7 +28,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
     public GameObject miniSoldier;
 
 
-    [Header("Death")]
+    [Header("Effect")]
     public string deathEffectName;
     public string hitEffectName;
 
@@ -87,6 +87,8 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
 
     //Behavior Tree
     private Root m_Ai = BT.Root();
+
+
 
     private void Awake()
     {
@@ -472,6 +474,7 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
             float xPosition = Random.Range(summonPosition1.position.x, summonPosition2.position.x);
             VFXController.Instance.Trigger(m_VortexGroundEffectHash, new Vector3(xPosition, summonPosition1.position.y, 0), 0, false, null);
             BulletObject soldier = m_SoldierPool.Pop(new Vector3(xPosition, summonPosition1.position.y - 1.5f));
+            soldier.bullet.GetComponent<MiniSoldier>().DeActive();
             m_Soldiers.Add(soldier);
             soldier.rigidbody2D.velocity = Vector2.up * 0.5f;
 
@@ -532,17 +535,14 @@ public class PrincessFury : MonoBehaviour, IBTDebugable {
         bodyDamager.DisableDamage();
         m_Animator.SetTrigger(m_HashDeathPara);
 
-        targetToTrack.GetComponent<CharacterInput>().SetInputActive(false);
-
         StartCoroutine(DieEffectCoroutine());
-
-
 
 
     }
 
     private IEnumerator DieEffectCoroutine()
     {
+        targetToTrack.GetComponent<CharacterInput>().SetInputActive(false);
 
         for (int i = 0; i < 50; i++)
         {
