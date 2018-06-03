@@ -187,10 +187,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1209501022906890, guid: ce37345a5a95f9443b9dc4f8ec097af6, type: 2}
-  timeBetweenShooting: 1.5
+  timeBetweenShooting: 1.9
   fireTime: 1.2
   startDelay: 0
   bulletSpeed: 5
+  shootAudioPlayer: {fileID: 0}
+  hitEffect: Hit
+  deadEffect: Dead
 --- !u!114 &114997116069124750
 MonoBehaviour:
   m_ObjectHideFlags: 1

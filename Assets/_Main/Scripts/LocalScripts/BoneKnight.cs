@@ -107,4 +107,10 @@ public class BoneKnight : MonoBehaviour, IBTDebugable {
         damager.DisableDamage();
     }
 
+
+    public void PlayFootStep()
+    {
+        m_EnemyBehaviour.PlayFootStep();
+    }
+
 }
