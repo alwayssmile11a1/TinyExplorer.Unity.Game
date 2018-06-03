@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9321af983235ec54cb2907fbc1e936ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectName: CFX2_CrateHit
 --- !u!212 &212728976414678890
 SpriteRenderer:
   m_ObjectHideFlags: 1

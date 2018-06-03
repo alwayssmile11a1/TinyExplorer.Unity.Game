@@ -103,3 +103,6 @@ MonoBehaviour:
   - prefab: {fileID: 1718792303902108, guid: aa5571f341934c84f994b6b3e8c538ba, type: 2}
     lifetime: 0.5
     vfxOverride: []
+  - prefab: {fileID: 1889908350220844, guid: a52bf5a6c49ee6d4fa1c1fb56cee6612, type: 2}
+    lifetime: 1
+    vfxOverride: []
