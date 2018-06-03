@@ -17,7 +17,7 @@ public class UpdateHealthBar : MonoBehaviour {
 
     public void ChangeWidth()
     {
-        Debug.Log(rectTransform.sizeDelta.x);
+        //Debug.Log(rectTransform.sizeDelta.x);
         rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x - lostHealthAmount, rectTransform.sizeDelta.y);
     }
 }

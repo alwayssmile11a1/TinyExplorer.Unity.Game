@@ -38,6 +38,7 @@ public class InnerRangeController : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private new Rigidbody2D rigidbody2D;
+    private Damageable damageable;
 
     Root innerRangeBT = BT.Root();
     // Use this for initialization
@@ -46,6 +47,7 @@ public class InnerRangeController : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rigidbody2D = GetComponent<Rigidbody2D>();
+        damageable = GetComponent<Damageable>();
 
         sphereBulletPool = BulletPool.GetObjectPool(Sphere, 5);
         thornLoadBulletPool = BulletPool.GetObjectPool(LoadThorn, 4);
@@ -179,7 +181,7 @@ public class InnerRangeController : MonoBehaviour {
     private void ShootThorns()
     {
         int angle = 0;
-        Debug.Log("load thorn position: " + loadThornPos.Length);
+        //Debug.Log("load thorn position: " + loadThornPos.Length);
         for (int i = 0; i < loadThornPos.Length; ++i)
         {
             for (int j = 0; j < 6; ++j)
@@ -188,7 +190,7 @@ public class InnerRangeController : MonoBehaviour {
                 bulletObject.instance.GetComponent<StartShooting>().direction = (Quaternion.Euler(0, 0, angle) * Vector2.right).normalized;
                 bulletObject.instance.GetComponent<Transform>().rotation = Quaternion.Euler(0, 0, angle);
                 angle = angle - 60 == -360 ? 0 : angle - 60;
-                Debug.Log("thorn " + i + " :" + bulletObject.instance.GetComponent<Transform>().rotation.z);
+                //Debug.Log("thorn " + i + " :" + bulletObject.instance.GetComponent<Transform>().rotation.z);
             }
         }
     }
@@ -200,7 +202,7 @@ public class InnerRangeController : MonoBehaviour {
     #region Animation Event
     public void ActiveDamagerAndAttack2Par()
     {
-        Debug.Log("Active damager");
+        //Debug.Log("Active damager");
         for (int i = 0; i < edgeColliders.Length; i++)
         {
             edgeColliders[i].enabled=true;
@@ -214,7 +216,7 @@ public class InnerRangeController : MonoBehaviour {
     }
     public void DeactiveDamagers()
     {
-        Debug.Log("Deactive damager");
+        //Debug.Log("Deactive damager");
         foreach (var item in edgeColliders)
         {
             if (spriteRenderer.flipX)
@@ -280,11 +282,30 @@ public class InnerRangeController : MonoBehaviour {
     {
         hitEffect.Play();
         animator.SetTrigger("hit");
+        if(damageable.CurrentHealth == 0)
+        {
+            TimeManager.SlowdownTime(0.05f, 5f);
+            Debug.Log("Die " + Time.timeSinceLevelLoad);
+            animator.SetTrigger("die");
+            Invoke("ChangeBackToOrginalState", 1f);
+        }
     }
     public void OnDie()
     {
         gameObject.SetActive(false);
+        Debug.Log("Deactive " + Time.timeSinceLevelLoad);
+        EdgeCollider2D[] temp = GetComponentsInParent<EdgeCollider2D>();
+        foreach (var item in temp)
+        {
+            item.enabled = false;
+        }
     }
+
+    void ChangeBackToOrginalState()
+    {
+        //activeBound.ChangeBackToOrginalState();
+    }
+    
     public void ResetHitTrigger()
     {
         animator.ResetTrigger("hit");

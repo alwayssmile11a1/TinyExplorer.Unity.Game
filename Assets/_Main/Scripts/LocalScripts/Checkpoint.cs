@@ -6,13 +6,22 @@ using Gamekit2D;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Checkpoint : MonoBehaviour, IDataPersister
 {
-    public ParticleSystem checkPointHitEffect;
+    public string checkPointHitEffectName;
     public bool respawnFacingLeft;
 
     [Tooltip("Useful in boss fight")]
     public bool forceResetGame;
     [HideInInspector]
     public DataSettings dataSettings;
+
+    private int m_CheckPointEffectHash1;
+    private int m_CheckPointEffectHash2;
+
+    private void Awake()
+    {
+        m_CheckPointEffectHash1 = VFXController.StringToHash(checkPointHitEffectName);
+        m_CheckPointEffectHash2 = VFXController.StringToHash("CFX_ExplosionCyan");
+    }
 
     private void Reset()
     {
@@ -27,10 +36,8 @@ public class Checkpoint : MonoBehaviour, IDataPersister
         {
             alessia.SetChekpoint(this);
         }
-        if (checkPointHitEffect != null)
-        {
-            checkPointHitEffect.Play();
-        }
+        VFXController.Instance.Trigger(m_CheckPointEffectHash1, transform.position, 0, false, null, null);
+        VFXController.Instance.Trigger(m_CheckPointEffectHash2, transform.position, 0, false, null, null);
     }
 
     public void SetForceResetGame(bool forceResetGame)

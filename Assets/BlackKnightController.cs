@@ -257,5 +257,10 @@ public class BlackKnightController : MonoBehaviour {
     {
         gameObject.SetActive(false);
         teleport.SetActive(true);
+        EdgeCollider2D[] temp = GetComponentsInParent<EdgeCollider2D>();
+        foreach (var item in temp)
+        {
+            item.enabled = false;
+        }
     }
 }

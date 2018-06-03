@@ -10,12 +10,11 @@ public class SpawnBoss : MonoBehaviour {
     public GameObject AppearEffect;
     //public BackgroundMusicPlayer backgroundMusicPlayer;
     public UnityEvent OnSpawnBoss;
-    public UnityEvent CloseDoor;
     public ParticleSystem Effect;
-    public PlayableDirector playable;
     [Range(1, 10)]
     public float waitAmountToSpawnBoss;
     private BoxCollider2D boxCollider2D;
+    private EdgeCollider2D [] edge;
     private void Awake()
     {
         boxCollider2D = GetComponent<BoxCollider2D>();
@@ -27,8 +26,12 @@ public class SpawnBoss : MonoBehaviour {
         {
             Effect.Stop();
             StartCoroutine(Spawn());
-            CloseDoor.Invoke();
             Destroy(boxCollider2D);
+            edge = GetComponents<EdgeCollider2D>();
+            foreach (var item in edge)
+            {
+                item.enabled = true;
+            }
         }
     }
 
@@ -40,24 +43,5 @@ public class SpawnBoss : MonoBehaviour {
         yield return new WaitForSeconds(0.25f);
         if (!boss.activeSelf)
             boss.SetActive(true);
-    }
-
-    public void Play(MovingGround movingGround)
-    {
-        if (playable)
-        {
-            Debug.Log(playable.duration);
-            StartCoroutine(WaitToCloseDoor(movingGround));
-            
-        }
-    }
-
-    private IEnumerator WaitToCloseDoor(MovingGround movingGround)
-    {
-        playable.Play();
-        yield return new WaitForSeconds(1f);
-        CameraShaker.Shake(0.05f, 4.2f);
-        yield return new WaitForSeconds(0.5f);
-        movingGround.CanMove = true;
     }
 }
