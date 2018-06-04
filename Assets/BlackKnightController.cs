@@ -52,6 +52,10 @@ public class BlackKnightController : MonoBehaviour {
     private ActiveBound activeBound;
     private int turn;
 
+    [Header("Audio")]
+    public AudioSource Casting;
+    public AudioSource Shooting;
+    
     BulletPool bulletPool;
     BulletPool skill3BulletPool;
     BulletObject[] skill3BulletObjects;
@@ -80,10 +84,12 @@ public class BlackKnightController : MonoBehaviour {
                 BT.SetBool(animator, "attack1", true),
                 BT.WaitForAnimatorState(animator, "attack1"),
                 BT.Call(() => attack1Effect.Play()),
+                BT.Call(() => Casting.Play()),
                 BT.WaitUntil(Attack1),
                 BT.Wait(1.5f),
                 BT.SetBool(animator, "attack1", false),
-                BT.Call(() => attack1Effect.Stop())
+                BT.Call(() => attack1Effect.Stop()),
+                BT.Call(() => Casting.Stop())
                 )
             ),
             BT.If(() => turn <= 1).OpenBranch(
@@ -189,9 +195,8 @@ public class BlackKnightController : MonoBehaviour {
 
     private IEnumerator WaitToShoot()
     {
-        Debug.Log("before wait");
         yield return new WaitForSeconds(1f);
-        Debug.Log("after wait");
+        Shooting.Play();
         for (int i = 0; i < bulletObjects.Length; i++)
         {
             StartShooting startShooting = bulletObjects[i].instance.GetComponent<StartShooting>();

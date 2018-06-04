@@ -21,9 +21,9 @@ public class SpawnBoss : MonoBehaviour {
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        OnSpawnBoss.Invoke();
         if (collision.tag.Equals("Player"))
         {
+            OnSpawnBoss.Invoke();
             Effect.Stop();
             StartCoroutine(Spawn());
             Destroy(boxCollider2D);

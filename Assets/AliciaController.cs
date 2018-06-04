@@ -29,6 +29,10 @@ public class AliciaController : MonoBehaviour {
     [Range(1, 7)]
     public int numberOfSoldier;
 
+    [Header("Audio")]
+    public AudioSource Shooting;
+    public AudioSource Slash;
+
     private int explodingHash;
 
     private Animator animator;
@@ -121,12 +125,10 @@ public class AliciaController : MonoBehaviour {
 
     private void Attack1()
     {
-        Debug.Log("Attack1");
         if(spriteRenderer.flipX)
         {
             foreach (var item in shootRight)
             {
-                Debug.Log("Pop bullet");
                 BulletObject bullet = bulletPool1.Pop(item.position);
                 bullet.instance.GetComponent<StartShooting>().direction = Vector2.right;
             }
@@ -139,10 +141,10 @@ public class AliciaController : MonoBehaviour {
                 bullet.instance.GetComponent<StartShooting>().direction = Vector2.left;
             }
         }
+        Shooting.Play();
     }
     private void MoveToTarget()
     {
-        Debug.Log("Move");
         Vector2 direction = (targetToTrack.position - transform.position).normalized;
 
         rigidbody2D.velocity = new Vector2(direction.x, 0) * dashSpeed;
@@ -251,6 +253,11 @@ public class AliciaController : MonoBehaviour {
         Debug.Log("Attack2");
     }
 
+    public void PlaySlashSound()
+    {
+        Slash.Play();
+    }
+
     public void EnableDamager()
     {
         attack2Damager.EnableDamage();
@@ -262,11 +269,7 @@ public class AliciaController : MonoBehaviour {
         attack2Damager.DisableDamage();
         Debug.Log("Disabled");
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("OnTriggerEnter: " + collision.tag);
-    }
+    
     public void OnDie()
     {
         BlackKnightController.aliciaDied = true;

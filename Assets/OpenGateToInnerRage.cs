@@ -29,6 +29,7 @@ public class OpenGateToInnerRage : MonoBehaviour {
     public void OnHit()
     {
         Debug.Log("hit");
+        GetComponentInChildren<RectTransform>().gameObject.SetActive(false);
         Destroy(boxCollider2D);
         spriteRenderer.sprite = changeImage;
         playableDirector.Play();

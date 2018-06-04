@@ -39,6 +39,7 @@ public class InnerRangeController : MonoBehaviour {
     private Animator animator;
     private new Rigidbody2D rigidbody2D;
     private Damageable damageable;
+    private ActiveBound activeBound;
 
     Root innerRangeBT = BT.Root();
     // Use this for initialization
@@ -48,6 +49,7 @@ public class InnerRangeController : MonoBehaviour {
         animator = GetComponent<Animator>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         damageable = GetComponent<Damageable>();
+        activeBound = GetComponentInParent<ActiveBound>();
 
         sphereBulletPool = BulletPool.GetObjectPool(Sphere, 5);
         thornLoadBulletPool = BulletPool.GetObjectPool(LoadThorn, 4);
@@ -303,7 +305,7 @@ public class InnerRangeController : MonoBehaviour {
 
     void ChangeBackToOrginalState()
     {
-        //activeBound.ChangeBackToOrginalState();
+        activeBound.ChangeBackToOrginalState();
     }
     
     public void ResetHitTrigger()
