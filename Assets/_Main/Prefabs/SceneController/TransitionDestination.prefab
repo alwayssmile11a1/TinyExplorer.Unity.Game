@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d38ee160c47aabd4dbe318959d4ae1fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkPointHitEffect: {fileID: 0}
+  checkPointHitEffectName: 
   respawnFacingLeft: 0
   forceResetGame: 0
   dataSettings:

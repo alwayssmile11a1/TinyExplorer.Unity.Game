@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 95984027875429994}
   - component: {fileID: 61073649186027224}
   - component: {fileID: 114212267426747026}
+  - component: {fileID: 114255761440433114}
   m_Layer: 0
   m_Name: SavePole
   m_TagString: Untagged
@@ -89,7 +90,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1898509957185704}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 228.65, y: -4.02, z: 0}
+  m_LocalPosition: {x: 221.58, y: -4.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224538685487475944}
@@ -287,6 +288,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveEffect: Blue_Explosion
+--- !u!114 &114255761440433114
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1898509957185704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d38ee160c47aabd4dbe318959d4ae1fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkPointHitEffectName: 
+  respawnFacingLeft: 0
+  forceResetGame: 0
+  dataSettings:
+    dataTag: df1ffc0c-4601-464a-9bfc-119fc05b9738
+    persistenceType: 3
 --- !u!114 &114340974345380356
 MonoBehaviour:
   m_ObjectHideFlags: 1

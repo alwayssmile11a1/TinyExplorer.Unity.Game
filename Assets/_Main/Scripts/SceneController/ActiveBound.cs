@@ -272,11 +272,13 @@ namespace Gamekit2D
 
         private IEnumerator DisableSchedule()
         {
+
+            PersistentDataManager.SetDirty(this);
+
             //Wait for seconds before disable because if we disable this gameobject to soon, the coroutines will be interrupted
             yield return new WaitUntil(()=> (!m_OrthoSizeChanging && !m_FollowPointChanging));
 
             gameObject.SetActive(false);
-            PersistentDataManager.SetDirty(this);
 
         }
 
@@ -340,12 +342,12 @@ namespace Gamekit2D
         public void LoadPersistenceData(Data data)
         {
             Data<bool> savedData = (Data<bool>)data;
-            gameObject.SetActive(savedData.value);
+            m_AlreadyTriggered = savedData.value;
         }
 
         public Data SavePersistenceData()
         {
-            return new Data<bool>(gameObject.activeSelf);
+            return new Data<bool>(m_AlreadyTriggered);
         }
 
         public void SetPersistenceDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
@@ -353,19 +355,6 @@ namespace Gamekit2D
             dataSettings.dataTag = dataTag;
             dataSettings.persistenceType = persistenceType;
         }
-
-
-        //public void OnReset()
-        //{
-        //    StopAllCoroutines();
-
-        //    gameObject.SetActive(true);
-        //    SnapToOriginalState();
-        //    m_AlreadyTriggered = false;
-        //    PersistentDataManager.SetDirty(this);
-        //}
-
-
 
     }
 }
