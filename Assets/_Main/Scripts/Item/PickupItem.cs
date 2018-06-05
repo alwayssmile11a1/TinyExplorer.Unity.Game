@@ -10,15 +10,22 @@ namespace Gamekit2D
 
         public LayerMask layers;
         public bool disableOnEnter = false;
+        public string pickupEffect = "";
+        public AudioClip clip;
+        public UnityEngine.Events.UnityEvent onTriggerEnter;
+
+        public DataSettings dataSettings;
+
 
         [HideInInspector]
         new public Collider2D collider;
 
-        public AudioClip clip;
-        public DataSettings dataSettings;
+        private int m_HashPickupEffect;
 
-
-        public UnityEngine.Events.UnityEvent onTriggerEnter;
+        private void Awake()
+        {
+            m_HashPickupEffect = VFXController.StringToHash(pickupEffect);
+        }
 
         void OnEnable()
         {
@@ -54,6 +61,7 @@ namespace Gamekit2D
 
                 if (clip) AudioSource.PlayClipAtPoint(clip, transform.position);
 
+                VFXController.Instance.Trigger(m_HashPickupEffect, transform.position, 0, false, null);
             }
         }
 
