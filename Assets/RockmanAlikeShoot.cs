@@ -35,7 +35,8 @@ public class RockmanAlikeShoot : MonoBehaviour {
     private StartShooting shootScript;
     private SpriteRenderer spriteRenderer;
     private UpdateHealthBar updateHealthBar;
-
+    public RectTransform rectTransformHealth;
+    float startingHealthWidth;
     // Use this for initialization
     void Awake () {
         DieEffectHash = VFXController.StringToHash("Smoke");
@@ -47,6 +48,7 @@ public class RockmanAlikeShoot : MonoBehaviour {
         shootScript = Bullet.GetComponent<StartShooting>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         updateHealthBar = GetComponentInChildren<UpdateHealthBar>();
+        startingHealthWidth = rectTransformHealth.sizeDelta.x;
     }
 	
 	// Update is called once per frame
@@ -123,7 +125,10 @@ public class RockmanAlikeShoot : MonoBehaviour {
         gameObject.SetActive(false);
         VFXController.Instance.Trigger(DieEffectHash, transform.position, 0, false, null, null);
     }
-
+    private void OnDisable()
+    {
+        rectTransformHealth.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, startingHealthWidth);
+    }
     private IEnumerator ResetBullet()
     {
         yield return new WaitForSeconds(0.3f);
