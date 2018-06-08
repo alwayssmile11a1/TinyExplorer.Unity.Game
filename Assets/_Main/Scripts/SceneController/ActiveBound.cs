@@ -61,14 +61,11 @@ namespace Gamekit2D
 
         private Coroutine m_CurrentFollowingPointChagingCoroutine;
         private Coroutine m_CurrentOrthoSizeChagingCoroutine;
-        //private Coroutine m_DisableCouroutine;
-
-        //Timer
-        //private float m_MaxFollowingPointChangingTimer;
-        //private float m_MaxOrthoSizeChangingTimer;
 
         private bool m_OrthoSizeChanging;
         private bool m_FollowPointChanging;
+
+
 
         private void Awake()
         {
@@ -228,7 +225,7 @@ namespace Gamekit2D
             //m_MaxFollowingPointChangingTimer = (m_VirtualTransform.position - m_DesiredTransform.position).sqrMagnitude / (10f * followPointChangingSmoothSpeed * 10f * followPointChangingSmoothSpeed);
 
 
-            //while((m_VirtualTransform.position - m_DesiredTransform.position).sqrMagnitude > 0.0001f)
+            //while((m_VirtualTransform.position - m_DesiredTransform.position).sqrMagnitude > m_MinDistance)
             while ((!Mathf.Approximately(m_CinemachineTransform.position.x, m_DesiredTransform.position.x) || !Mathf.Approximately(m_CinemachineTransform.position.y, m_DesiredTransform.position.y)) /*&& m_MaxFollowingPointChangingTimer > 0*/)
             {
                 m_VirtualTransform.position = Vector3.MoveTowards(m_VirtualTransform.position, m_DesiredTransform.position, Time.deltaTime * 10f * followPointChangingSmoothSpeed);

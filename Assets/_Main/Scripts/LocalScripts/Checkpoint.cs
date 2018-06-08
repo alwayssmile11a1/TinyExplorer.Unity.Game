@@ -15,6 +15,7 @@ public class Checkpoint : MonoBehaviour, IDataPersister
     public DataSettings dataSettings;
 
     private int m_CheckPointEffectHash;
+    private int m_Health;
 
     private void Awake()
     {
@@ -33,12 +34,20 @@ public class Checkpoint : MonoBehaviour, IDataPersister
 
         if (alessia != null)
         {
+            m_Health = alessia.GetComponent<Damageable>().CurrentHealth;
+
             alessia.SetChekpoint(this);
+
             if (m_CheckPointEffectHash != 0)
             {
                 VFXController.Instance.Trigger(m_CheckPointEffectHash, transform.position, 0, false, null, null);
             }
         }
+    }
+
+    public int GetHealth()
+    {
+        return m_Health;
     }
 
     public void SetForceResetGame(bool forceResetGame)

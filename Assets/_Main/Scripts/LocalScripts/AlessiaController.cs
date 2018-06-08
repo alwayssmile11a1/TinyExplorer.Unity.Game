@@ -216,6 +216,8 @@ public class AlessiaController : MonoBehaviour {
         {
             SaveData();
             m_CurrentSavePole.TriggerSavedEffect();
+            //Reset health
+            m_Damageable.SetHealth(m_Damageable.startingHealth);
             m_CurrentSavePole = null;
         }
 
@@ -519,6 +521,18 @@ public class AlessiaController : MonoBehaviour {
     {
         OnAttackHit(damager);
 
+
+        if(damageable.CurrentHealth - damager.damage <=0 && LayerMask.LayerToName(damageable.gameObject.layer) == "Enemy")
+        {
+            int count = Random.Range(4, 8);  
+
+            for (int i = 0; i < count; i++)
+            {
+                VFXController.Instance.Trigger("MiniCollectableHealth", damageable.transform.position + Vector3.up * 0.2f + (Vector3)Random.insideUnitCircle * 0.2f, 0, false, null);
+            }
+            
+        }
+
         //VFXController.Instance.Trigger(m_HashSlashHitEffect, damageable.transform.position, 0, false, null);
 
         //if (slashHitAudioPlayer)
@@ -618,7 +632,7 @@ public class AlessiaController : MonoBehaviour {
 
     public void OnDie(Damager damager, Damageable damageable)
     {
-        StartCoroutine(DieRespawnCoroutine(true));
+        StartCoroutine(DieRespawnCoroutine(false));
     }
 
     private IEnumerator DieRespawnCoroutine(bool resetHealth)
@@ -650,7 +664,13 @@ public class AlessiaController : MonoBehaviour {
         SetMoveVector(Vector2.zero);
 
         if (resetHealth)
+        {
             m_Damageable.SetHealth(m_Damageable.startingHealth);
+        }
+        else
+        {
+            m_Damageable.SetHealth(m_LastCheckpoint.GetHealth());
+        }
 
         //we reset the hurt trigger, as we don't want the player to go back to hurt animation once respawned
         m_Animator.ResetTrigger(m_HashHurtPara);

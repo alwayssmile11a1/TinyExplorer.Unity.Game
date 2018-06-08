@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 4151962508692116}
   - component: {fileID: 58439685345967744}
   - component: {fileID: 114154443167200926}
+  - component: {fileID: 114563480495437106}
   m_Layer: 0
   m_Name: PickupHeart
   m_TagString: Untagged
@@ -53,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1494389615231536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 77.34, y: 1.689, z: 0}
+  m_LocalPosition: {x: 29.52, y: 7.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4932328671800714}
@@ -145,18 +146,29 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   disableOnEnter: 1
-  pickupEffect: Red_Explosion
+  pickupEffect: CFX2_PickupHeart
   clip: {fileID: 8300000, guid: 6c0a7f2df0b510e4e908ebb340192dec, type: 3}
   onTriggerEnter:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: GainHealth
+        m_MethodName: GainStartingHealth
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: ResetHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -180,3 +192,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   rotateDirection: {x: 0, y: 0, z: 1}
+--- !u!114 &114563480495437106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1494389615231536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfeaa80dbab989f4b85b3eb830c84c51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveActiveState: 1
+  savePosition: 0
+  savedDataTag: 89cfb1b9-dd38-4085-bbe3-cd60bede7900

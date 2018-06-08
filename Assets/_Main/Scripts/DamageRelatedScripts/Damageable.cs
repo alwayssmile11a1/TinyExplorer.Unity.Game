@@ -29,6 +29,7 @@ namespace Gamekit2D
         public DamageEvent OnTakeDamage;
         public DamageEvent OnDie;
         public HealEvent OnGainHealth;
+        public HealEvent OnGainStartingHealth;
         [HideInInspector]
         public DataSettings dataSettings;
 
@@ -130,6 +131,13 @@ namespace Gamekit2D
             OnHealthSet.Invoke(this);
 
             OnGainHealth.Invoke(amount, this);
+        }
+
+        public void GainStartingHealth(int amount)
+        {
+            startingHealth += amount;
+
+            OnGainStartingHealth.Invoke(amount, this);
         }
 
         public void ResetHealth()
