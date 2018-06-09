@@ -6,7 +6,6 @@ using UnityEngine;
 public class MovingInRange : MonoBehaviour {
     public Transform[] Range;
     public Vector2 velocity;
-    public RectTransform rectTransformHealth;
     private Rigidbody2D rideloidgRigidbody;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -18,7 +17,6 @@ public class MovingInRange : MonoBehaviour {
     private float timeWaitForAnimation;
     private RideloidShoot rideloidShoot;
     private Damageable damageable;
-    float startingHealthWidth;
     // Use this for initialization
     void Awake()
     {
@@ -32,7 +30,6 @@ public class MovingInRange : MonoBehaviour {
         animator.SetBool("isInNormalState", true);
         rideloidShoot = GetComponent<RideloidShoot>();
         damageable = GetComponent<Damageable>();
-        startingHealthWidth = rectTransformHealth.sizeDelta.x;
     }
 
     // Update is called once per frame
@@ -102,7 +99,6 @@ public class MovingInRange : MonoBehaviour {
         walkingState = 0;
         normalState = 0;
         canMove = false;
-        damageable.SetHealth(damageable.startingHealth);
-        rectTransformHealth.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, startingHealthWidth);
+        //damageable.SetHealth(damageable.startingHealth);
     }
 }

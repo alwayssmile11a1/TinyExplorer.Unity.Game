@@ -46,15 +46,17 @@ public class BlackKnightController : MonoBehaviour {
     [Header("Teleport")]
     public GameObject teleport;
 
+    [Header("Audio")]
+    public AudioSource Casting;
+    public AudioSource Shooting;
+
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Damageable damageable;
     private ActiveBound activeBound;
     private int turn;
+    private CapsuleCollider2D capsuleCollider2D;
 
-    [Header("Audio")]
-    public AudioSource Casting;
-    public AudioSource Shooting;
     
     BulletPool bulletPool;
     BulletPool skill3BulletPool;
@@ -73,6 +75,7 @@ public class BlackKnightController : MonoBehaviour {
         turn = 1;
         damageable = GetComponent<Damageable>();
         activeBound = GetComponentInParent<ActiveBound>();
+        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -230,6 +233,7 @@ public class BlackKnightController : MonoBehaviour {
         //    playableDirector.Play();
         if (damageable.CurrentHealth == 0)
         {
+            capsuleCollider2D.enabled = false;
             TimeManager.SlowdownTime(0.05f, TimeToSlow);
             Debug.Log("Die");
             animator.SetBool("die", true);
@@ -248,6 +252,7 @@ public class BlackKnightController : MonoBehaviour {
     }
     public void BlackKnightDieEffect()
     {
+        
         foreach (var item in skill3BulletObjects)
         {
             if (item != null && !item.inPool)

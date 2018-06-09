@@ -7,6 +7,7 @@ using UnityEngine.Playables;
 
 public class SpawnBoss : MonoBehaviour {
     public GameObject boss;
+    public GameObject bossHealth;
     public GameObject AppearEffect;
     //public BackgroundMusicPlayer backgroundMusicPlayer;
     public UnityEvent OnSpawnBoss;
@@ -40,6 +41,10 @@ public class SpawnBoss : MonoBehaviour {
         yield return new WaitForSeconds(waitAmountToSpawnBoss);
         if (AppearEffect != null && !AppearEffect.activeSelf)
             AppearEffect.SetActive(true);
+        if (bossHealth)
+        {
+            bossHealth.SetActive(true);
+        }
         yield return new WaitForSeconds(0.25f);
         if (!boss.activeSelf)
             boss.SetActive(true);

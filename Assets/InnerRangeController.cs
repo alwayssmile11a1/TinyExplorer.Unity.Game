@@ -40,6 +40,7 @@ public class InnerRangeController : MonoBehaviour {
     private new Rigidbody2D rigidbody2D;
     private Damageable damageable;
     private ActiveBound activeBound;
+    private BoxCollider2D boxCollider2D;
 
     Root innerRangeBT = BT.Root();
     // Use this for initialization
@@ -50,6 +51,7 @@ public class InnerRangeController : MonoBehaviour {
         rigidbody2D = GetComponent<Rigidbody2D>();
         damageable = GetComponent<Damageable>();
         activeBound = GetComponentInParent<ActiveBound>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
 
         sphereBulletPool = BulletPool.GetObjectPool(Sphere, 5);
         thornLoadBulletPool = BulletPool.GetObjectPool(LoadThorn, 4);
@@ -286,6 +288,8 @@ public class InnerRangeController : MonoBehaviour {
         animator.SetTrigger("hit");
         if(damageable.CurrentHealth == 0)
         {
+            boxCollider2D.enabled = false;
+            Debug.Log(boxCollider2D.enabled);
             TimeManager.SlowdownTime(0.05f, 5f);
             Debug.Log("Die " + Time.timeSinceLevelLoad);
             animator.SetTrigger("die");

@@ -11,7 +11,6 @@ public class MovingGround : MonoBehaviour {
         Infinite
     }
     public Transform destination;
-    public Transform destination2;
     [SerializeField]
     private MoveType moveType = MoveType.OneWay;
     public Vector3 velocity;
@@ -40,7 +39,12 @@ public class MovingGround : MonoBehaviour {
     {
         platformRigidbody = GetComponent<Rigidbody2D>();
         m_des = destination.position;
-        m_des2 = destination2.position;
+        m_des2 = transform.position;
+        if(m_des.x == 221)
+        {
+            Vector3 temp = (m_des - transform.position).normalized;
+            Debug.Log(m_des + " " + temp);
+        }
     }
     // Update is called once per frame
     void Update () {
@@ -54,7 +58,7 @@ public class MovingGround : MonoBehaviour {
     void MovePlatform(Vector3 movement)
     {
         float dist = Vector3.Distance(m_des, transform.position);
-        Debug.Log("Distance to other: " + moveType + " " + dist);
+        //Debug.Log("Distance to other: " + moveType + " " + dist);
         //Debug.Log("m_des: " + m_des);
         //Debug.Log("m_transform: " + transform.position);
         //if (dist > distance)

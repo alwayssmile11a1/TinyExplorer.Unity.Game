@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UpdateHealthBar : MonoBehaviour {
-    private Damageable damageable;
+    public Damageable damageable;
     private float lostHealthAmount;
 
     private RectTransform rectTransform;
 	// Use this for initialization
 	void Start () {
-        damageable = GetComponentInParent<Damageable>();
         rectTransform = GetComponent<RectTransform>();
         lostHealthAmount = rectTransform.sizeDelta.x / damageable.startingHealth;
 	}
