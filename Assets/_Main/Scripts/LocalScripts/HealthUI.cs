@@ -17,9 +17,11 @@ public class HealthUI : MonoBehaviour
     protected readonly int m_HashActivePara = Animator.StringToHash("Active");
     protected readonly int m_HashInactiveState = Animator.StringToHash("Inactive");
     protected readonly int m_HashAppearingState = Animator.StringToHash("Appearing");
+    protected readonly int m_HashFillingState = Animator.StringToHash("Filling");
 
 
-    
+
+
 
     IEnumerator Start()
     {
@@ -92,12 +94,13 @@ public class HealthUI : MonoBehaviour
         Image healthIconImage = m_HealthIconAnimators[representedDamageable.CurrentHealth].GetComponentsInChildren<Image>()[2];
 
         healthIconImage.fillAmount += fillAmount;
+        m_HealthIconAnimators[representedDamageable.CurrentHealth].SetTrigger(m_HashFillingState);
 
-        if(healthIconImage.fillAmount >=1)
+
+        if (healthIconImage.fillAmount >=1)
         {
             representedDamageable.GainHealth(1);
         }
-
 
     }
 

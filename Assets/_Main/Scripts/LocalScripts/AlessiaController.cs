@@ -528,7 +528,7 @@ public class AlessiaController : MonoBehaviour {
 
             for (int i = 0; i < count; i++)
             {
-                VFXController.Instance.Trigger("MiniCollectableHealth", damageable.transform.position + Vector3.up * 0.2f + (Vector3)Random.insideUnitCircle * 0.2f, 0, false, null);
+                VFXController.Instance.Trigger("MiniCollectableHealth", damageable.transform.position + (Vector3)Random.insideUnitCircle * 1f, 0, false, null);
             }
             
         }

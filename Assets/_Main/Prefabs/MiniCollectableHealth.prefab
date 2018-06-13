@@ -24,13 +24,14 @@ GameObject:
   - component: {fileID: 199023664390604524}
   - component: {fileID: 114956209010471084}
   - component: {fileID: 50914650101397788}
+  - component: {fileID: 114127322174791316}
   m_Layer: 0
   m_Name: MiniCollectableHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4312502108026436
 Transform:
   m_ObjectHideFlags: 1
@@ -51,7 +52,7 @@ Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1690170506510042}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -73,7 +74,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -89,6 +90,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 0.15}
   m_EdgeRadius: 0
+--- !u!114 &114127322174791316
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1690170506510042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a744dbb3cc08ef47b9610f437d3c54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  findTargetByTag: 1
+  targetTag: Player
+  offsetFromTarget: {x: 0, y: 0.5, z: 0}
+  offsetBasedOnTargetSpriteFacing: 1
+  chaseOnAwake: 1
+  chaseSpeed: 3
+  orientToTarget: 1
+  rotationZComparedToHorizontal: 0
+  rotationSpeed: 500
 --- !u!114 &114956209010471084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -100,7 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a425aceb903bfce46b085739b8ba688f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollectedEffectName: Yellow_RayOut
+  fillAmount: 0.05
+  CollectedEffectName: Red_RayOut
 --- !u!198 &198889538282659190
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -286,8 +309,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.6683116, b: 0.14509803, a: 1}
-      maxColor: {r: 1, g: 0.9573372, b: 0.23113209, a: 1}
+      minColor: {r: 1, g: 0.20392159, b: 0.20392159, a: 1}
+      maxColor: {r: 1, g: 0.5058824, b: 0.5058824, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0, b: 0, a: 1}
@@ -1333,8 +1356,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.95292735, g: 1, b: 0, a: 1}
-        key1: {r: 0.9785461, g: 1, b: 0.5019608, a: 0}
+        key0: {r: 1, g: 0.16841722, b: 0, a: 1}
+        key1: {r: 1, g: 0.6662153, b: 0.5019608, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}

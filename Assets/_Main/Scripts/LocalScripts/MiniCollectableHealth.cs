@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MiniCollectableHealth : MonoBehaviour {
 
+    public float fillAmount = 0.05f;
+
     public string CollectedEffectName = "Yellow_Explosion";
 
 
@@ -22,15 +24,15 @@ public class MiniCollectableHealth : MonoBehaviour {
         m_RigidBody2D = GetComponent<Rigidbody2D>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (m_HealthUI == null) return;
 
-        AlessiaController alessia = collision.gameObject.GetComponent<AlessiaController>();
+        AlessiaController alessia = collision.GetComponent<AlessiaController>();
 
         if(alessia !=null )
         {
-            m_HealthUI.FillHitPointUI(0.05f);
+            m_HealthUI.FillHitPointUI(fillAmount);
             gameObject.SetActive(false);
             VFXController.Instance.Trigger(EffectHash, transform.position, 0, false, null, null);
         }
@@ -39,9 +41,9 @@ public class MiniCollectableHealth : MonoBehaviour {
     }
 
 
-    private void OnEnable()
-    {
-        m_RigidBody2D.AddForce(new Vector2(Random.Range(-3.0f,3.0f), Random.Range(2.0f, 3.0f)), ForceMode2D.Impulse);
-    }
+    ////private void OnEnable()
+    ////{
+    ////    m_RigidBody2D.AddForce(new Vector2(Random.Range(-3.0f,3.0f), Random.Range(2.0f, 3.0f)), ForceMode2D.Impulse);
+    ////}
 
 }

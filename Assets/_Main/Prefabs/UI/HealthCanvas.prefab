@@ -8,15 +8,15 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
+  m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1803918859759394}
-  m_IsPrefabParent: 1
+  m_IsPrefabAsset: 1
 --- !u!1 &1803918859759394
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 224499739188732726}
   - component: {fileID: 223245194131806004}
@@ -33,7 +33,7 @@ GameObject:
 --- !u!114 &114163202337681242
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1803918859759394}
   m_Enabled: 1
@@ -54,7 +54,7 @@ MonoBehaviour:
 --- !u!114 &114289095015794812
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1803918859759394}
   m_Enabled: 1
@@ -66,11 +66,11 @@ MonoBehaviour:
   healthIconPrefab: {fileID: 1229086687197132, guid: 0369173336f038e418bf2653e2a2827e,
     type: 2}
   anchoredPosition: {x: 0, y: 0}
-  distanceBetweenIcon: 0.035
+  distanceBetweenIcon: 0.04
 --- !u!114 &114856238819394804
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1803918859759394}
   m_Enabled: 1
@@ -86,7 +86,7 @@ MonoBehaviour:
 --- !u!223 &223245194131806004
 Canvas:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1803918859759394}
   m_Enabled: 1
@@ -106,7 +106,7 @@ Canvas:
 --- !u!224 &224499739188732726
 RectTransform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1803918859759394}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
