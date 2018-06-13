@@ -131,4 +131,10 @@ public class MovingGround : MonoBehaviour {
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(m_des2, 0.1f);
     }
+
+
+    public void SetCanMove(bool canMove)
+    {
+        this.canMove = canMove;
+    }
 }
