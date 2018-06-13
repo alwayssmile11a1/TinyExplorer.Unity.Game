@@ -108,12 +108,15 @@ public class MovingGround : MonoBehaviour {
         if (collision.tag.Equals("Player"))
         {
             CanMove = true;
-            var children = Effect.GetComponentsInChildren<ParticleSystem>();
-            foreach(var child in children)
+            if (Effect)
             {
-                if (child.tag == "ParticleSystem")
+                var children = Effect.GetComponentsInChildren<ParticleSystem>();
+                foreach (var child in children)
                 {
-                    child.Stop();
+                    if (child.tag == "ParticleSystem")
+                    {
+                        child.Stop();
+                    }
                 }
             }
             //triggerEffect.Stop();

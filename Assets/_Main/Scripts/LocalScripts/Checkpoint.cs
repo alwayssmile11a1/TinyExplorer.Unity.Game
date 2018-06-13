@@ -41,6 +41,7 @@ public class Checkpoint : MonoBehaviour, IDataPersister
             if (m_CheckPointEffectHash != 0)
             {
                 VFXController.Instance.Trigger(m_CheckPointEffectHash, transform.position, 0, false, null, null);
+                m_CheckPointEffectHash = 0;
             }
         }
     }
