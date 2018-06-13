@@ -62,7 +62,7 @@ public class BlackKnightController : MonoBehaviour {
     BulletPool skill3BulletPool;
     BulletObject[] skill3BulletObjects;
     int skill3PollIndex = -1;
-    int skill3NumberOfButllet = 1;
+    int skill3NumberOfButllet = 0;
     Root BlackKnightBT = BT.Root();
     // Use this for initialization
     void Start() {
@@ -124,9 +124,21 @@ public class BlackKnightController : MonoBehaviour {
                     BT.Call(PopBlackKnightBullet),
                     BT.Wait(3f),
                     BT.Call(BulletFollowTarget),
-                    BT.Wait(4f)
+                    BT.Call(() => Debug.Log(skill3NumberOfButllet))
                 )
-            )
+            ),
+            BT.If(() => skill3NumberOfButllet <= 3).OpenBranch(
+                BT.Sequence().OpenBranch(
+                            BT.Wait(4f),
+                            BT.Call(() => Debug.Log("wait 4: " + skill3NumberOfButllet))
+                        )
+            ),
+            BT.If(() => skill3NumberOfButllet > 3).OpenBranch(
+                        BT.Sequence().OpenBranch(
+                            BT.Wait(6f),
+                            BT.Call(() => Debug.Log("wait 6: " + skill3NumberOfButllet))
+                        )
+                    )
         );
     }
     // Update is called once per frame
@@ -178,7 +190,21 @@ public class BlackKnightController : MonoBehaviour {
 
     private void PopBlackKnightBullet()
     {
-        //skill3BulletObjects[(skill3PollIndex + 1) % 4] = skill3BulletPool.Pop(skill3Pos.position);
+        skill3NumberOfButllet++;
+        skill3PollIndex = 0;
+        if (skill3NumberOfButllet == 1)
+            skill3BulletObjects[(skill3PollIndex) % 4] = skill3BulletPool.Pop(skill3Pos[0].position);
+        if(skill3NumberOfButllet == 2)
+        {
+            skill3BulletObjects[(skill3PollIndex++) % 4] = skill3BulletPool.Pop(skill3Pos[1].position);
+            skill3BulletObjects[(skill3PollIndex) % 4] = skill3BulletPool.Pop(skill3Pos[2].position);
+        }
+        if (skill3NumberOfButllet >= 3)
+        {
+            skill3BulletObjects[(skill3PollIndex++) % 4] = skill3BulletPool.Pop(skill3Pos[0].position);
+            skill3BulletObjects[(skill3PollIndex++) % 4] = skill3BulletPool.Pop(skill3Pos[1].position);
+            skill3BulletObjects[(skill3PollIndex) % 4] = skill3BulletPool.Pop(skill3Pos[2].position);
+        }
     }
    
     private void BulletFollowTarget()
