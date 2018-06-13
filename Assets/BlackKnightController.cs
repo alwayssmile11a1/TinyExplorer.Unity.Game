@@ -37,7 +37,7 @@ public class BlackKnightController : MonoBehaviour {
 
     [Header("Attack3")]
     public GameObject skill3Bullet;
-    public Transform skill3Pos;
+    public Transform []skill3Pos;
     public Transform movePos;
     public Rigidbody2D parentRigidbody;
     public float moveSpeed;
@@ -62,7 +62,7 @@ public class BlackKnightController : MonoBehaviour {
     BulletPool skill3BulletPool;
     BulletObject[] skill3BulletObjects;
     int skill3PollIndex = -1;
-
+    int skill3NumberOfButllet = 1;
     Root BlackKnightBT = BT.Root();
     // Use this for initialization
     void Start() {
@@ -178,7 +178,7 @@ public class BlackKnightController : MonoBehaviour {
 
     private void PopBlackKnightBullet()
     {
-        skill3BulletObjects[(skill3PollIndex + 1) % 4] = skill3BulletPool.Pop(skill3Pos.position);
+        //skill3BulletObjects[(skill3PollIndex + 1) % 4] = skill3BulletPool.Pop(skill3Pos.position);
     }
    
     private void BulletFollowTarget()
