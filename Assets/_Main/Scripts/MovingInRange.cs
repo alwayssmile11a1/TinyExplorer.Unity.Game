@@ -101,4 +101,8 @@ public class MovingInRange : MonoBehaviour {
         canMove = false;
         //damageable.SetHealth(damageable.startingHealth);
     }
+    private void OnEnable()
+    {
+        animator.SetBool("isInNormalState", true);
+    }
 }

@@ -136,7 +136,7 @@ public class RideloidShoot : MonoBehaviour {
         shootTime -= shootCoolDown;
         animator.SetBool("attack", false);
         //Shooted = true;
-        //Debug.Log(Time.deltaTime);
+        Debug.Log(GetComponent<Animator>().GetBool("attack"));
     }
 
     public void OnHit()
