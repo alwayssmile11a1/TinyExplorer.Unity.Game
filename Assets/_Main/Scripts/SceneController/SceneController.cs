@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace Gamekit2D
@@ -45,6 +46,9 @@ namespace Gamekit2D
         }
 
         public SceneTransitionDestination initialSceneTransitionDestination;
+
+        //public UnityEvent OnStartLoadScene;
+        //public UnityEvent OnFinishLoadScene;
 
         protected Scene m_CurrentZoneScene;
         protected SceneTransitionDestination.DestinationTag m_ZoneRestartDestinationTag;
@@ -129,6 +133,8 @@ namespace Gamekit2D
             //{
             //    m_PlayerInput.ReleaseControl(resetInputValues);
             //}
+
+            //OnFinishLoadScene.Invoke();
 
             PersistentDataManager.LoadAllData();
             SceneTransitionDestination entrance = GetDestination(destinationTag);

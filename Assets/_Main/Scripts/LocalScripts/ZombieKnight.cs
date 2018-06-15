@@ -358,7 +358,7 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
         portal2.AddListener(Portalling);
         portal2.CanPortal(false);
 
-        m_PortalLiveTimer = 15f;
+        m_PortalLiveTimer = 12f;
 
         m_PortalDelayTimer = 1f;
 
@@ -494,6 +494,44 @@ public class ZombieKnight : MonoBehaviour, IBTDebugable{
         StartFlickering();
     }
 
+    public void Die(Damager damager, Damageable damageable)
+    {
+        m_RigidBody2D.velocity = Vector2.zero;
+        GetComponentInParent<Damager>().DisableDamage();
+        m_Animator.SetTrigger(m_HashDeathPara);
+
+        StartCoroutine(DieEffectCoroutine());
+
+
+    }
+
+    private IEnumerator DieEffectCoroutine()
+    {
+        targetToTrack.GetComponent<CharacterInput>().SetInputActive(false);
+
+        for (int i = 0; i < 50; i++)
+        {
+
+            //Death effect
+            VFXController.Instance.Trigger("CFX_ExplosionPurple", transform.position + (Vector3)(Random.insideUnitCircle), 0.1f, false, null);
+
+
+            yield return new WaitForSeconds(Mathf.Clamp(0.35f / (i + 1), 0.1f, 1f));
+
+            ////Death effect
+            //VFXController.Instance.Trigger(m_DeathEffectHash, transform.position + (Vector3)(Random.insideUnitCircle * 0.3f), 0.1f, false, null);
+
+            //yield return new WaitForSeconds(0.1f);
+        }
+
+
+        VFXController.Instance.Trigger("SplashShieldHitRed", transform.position, 0.1f, false, null);
+
+        transform.parent.gameObject.SetActive(false);
+
+        targetToTrack.GetComponent<CharacterInput>().SetInputActive(true);
+
+    }
 
     public void StartFlickering()
     {

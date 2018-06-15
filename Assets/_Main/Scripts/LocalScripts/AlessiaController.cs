@@ -662,8 +662,18 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
         {
             if (m_LastCheckpoint.forceResetGame)
             {
+                yield return StartCoroutine(ScreenFader.FadeSceneOut(ScreenFader.FadeType.Loading));
                 if (resetHealth)
+                {
                     m_Damageable.SetHealth(m_Damageable.startingHealth);
+                }
+                else
+                {
+                    Debug.Log(m_LastCheckpoint.GetHealth());
+                    m_Damageable.SetHealth(m_LastCheckpoint.GetHealth());
+                }
+
+               
                 SceneController.RestartZoneAtPosition(new Vector3(m_LastCheckpoint.transform.position.x, m_LastCheckpoint.transform.position.y, transform.position.z));
             }
             else
@@ -679,7 +689,7 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
 
     }
 
-    public void Respawn(bool resetHealth)
+    public void Respawn(bool resetHealth = false)
     {
 
         SetMoveVector(Vector2.zero);
@@ -703,6 +713,7 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
         transform.position = m_LastCheckpoint.transform.position;
 
     }
+    
     
 
     public void SetChekpoint(Checkpoint checkpoint)
