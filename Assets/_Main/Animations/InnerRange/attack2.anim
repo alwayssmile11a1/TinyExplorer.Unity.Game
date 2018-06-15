@@ -3,7 +3,7 @@
 --- !u!74 &7400000
 AnimationClip:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: attack2
   serializedVersion: 6
@@ -158,13 +158,6 @@ AnimationClip:
   m_Events:
   - time: 1.6
     functionName: ActiveDamagerAndAttack2Par
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 1.75
-    functionName: ActiveAttack2FireParticle
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

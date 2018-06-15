@@ -22,8 +22,8 @@ public class InnerRangeController : MonoBehaviour {
     private BulletObject[] sphereBulletObjects;
 
     [Header("Attack2")]
-    public ParticleSystem attack2FireParticle1;
-    public ParticleSystem attack2FireParticle2;
+    //public ParticleSystem attack2FireParticle1;
+    //public ParticleSystem attack2FireParticle2; 
     public ParticleSystem[] attack2PurpleExplodeParticles;
     public EdgeCollider2D[] edgeColliders;
     public float moveToApproPosSpeed;
@@ -231,12 +231,12 @@ public class InnerRangeController : MonoBehaviour {
             item.enabled = false;
         }
     }
-    public void ActiveAttack2FireParticle()
-    {
-        attack2FireParticle1.Play();
-        attack2FireParticle2.Play();
-        StartCoroutine(WaitToStopAttack2FireParticle());
-    }
+    //public void ActiveAttack2FireParticle()
+    //{
+    //    attack2FireParticle1.Play();
+    //    attack2FireParticle2.Play();
+    //    StartCoroutine(WaitToStopAttack2FireParticle());
+    //}
     
     public void ActiveAttack1_1st_Damager()
     {
@@ -355,11 +355,11 @@ public class InnerRangeController : MonoBehaviour {
     //    innerRangeDamager.offset = new Vector2(Offset.x + 0.2f, Offset.y + 1.5f);
     //}
 
-    private IEnumerator WaitToStopAttack2FireParticle()
-    {
-        yield return new WaitForSeconds(2f);
-        attack2FireParticle1.Stop();
-        attack2FireParticle2.Stop();
-    }
+    //private IEnumerator WaitToStopAttack2FireParticle()
+    //{
+    //    yield return new WaitForSeconds(2f);
+    //    attack2FireParticle1.Stop();
+    //    attack2FireParticle2.Stop();
+    //}
     #endregion
 }

@@ -87,7 +87,7 @@ public class RideloidShoot : MonoBehaviour {
     public void ReverseHand()
     {
         RobotHandShootingScript.ReverseVelocity();
-        robotHandSpriteRenderer.flipX = !robotHandSpriteRenderer.flipX;
+        //robotHandSpriteRenderer.flipX = !robotHandSpriteRenderer.flipX;
     }
 
     bool ScanForPlayer()
@@ -126,10 +126,12 @@ public class RideloidShoot : MonoBehaviour {
         if (!robotSpriteRenderer.flipX)
         {
             RoBotHandPostion.position = shootOriginRight.position;
+            robotHandSpriteRenderer.flipX = false;
         }
         else
         {
             RoBotHandPostion.position = shootOriginLeft.position;
+            robotHandSpriteRenderer.flipX = true;
         }
         shootTime -= shootCoolDown;
         animator.SetBool("attack", false);
