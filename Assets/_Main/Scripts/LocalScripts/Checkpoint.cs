@@ -23,6 +23,17 @@ public class Checkpoint : MonoBehaviour, IDataPersister
       
     }
 
+    void OnEnable()
+    {
+        PersistentDataManager.RegisterPersister(this);
+    }
+
+    void OnDisable()
+    {
+        PersistentDataManager.UnregisterPersister(this);
+    }
+
+
     private void Reset()
     {
         GetComponent<BoxCollider2D>().isTrigger = true;

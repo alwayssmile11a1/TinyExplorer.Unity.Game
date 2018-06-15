@@ -25,6 +25,8 @@ GameObject:
   - component: {fileID: 114956209010471084}
   - component: {fileID: 50914650101397788}
   - component: {fileID: 114127322174791316}
+  - component: {fileID: 114264529448222556}
+  - component: {fileID: 114280023328511172}
   m_Layer: 0
   m_Name: MiniCollectableHealth
   m_TagString: Untagged
@@ -105,12 +107,64 @@ MonoBehaviour:
   findTargetByTag: 1
   targetTag: Player
   offsetFromTarget: {x: 0, y: 0.5, z: 0}
-  offsetBasedOnTargetSpriteFacing: 1
+  offsetBasedOnTargetSpriteFacing: 0
   chaseOnAwake: 1
   chaseSpeed: 3
   orientToTarget: 1
   rotationZComparedToHorizontal: 0
   rotationSpeed: 500
+--- !u!114 &114264529448222556
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1690170506510042}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1506f7b67235554cb42519c257da979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  useTriggerCollider: 0
+  offset: {x: 0, y: 0}
+  size: {x: 2.5, y: 1}
+  offsetBasedOnSpriteFacing: 1
+  spriteRenderer: {fileID: 0}
+  enableDamageOnAwake: 1
+  canHitTriggers: 0
+  disableDamageAfterHit: 0
+  forceRespawn: 0
+  receiveOnHitEventOnInvincibleObject: 1
+  ignoreInvincibility: 0
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  OnDamageableHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Gamekit2D.Damager+DamagableEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnNonDamageableHit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Gamekit2D.Damager+NonDamagableEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114280023328511172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1690170506510042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ea98018d1796f4fa92b4f42b8fad6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyWhenOutOfView: 1
+  spriteOriginallyFacesLeft: 0
+  timeBeforeAutodestruct: 5
+  vfxName: 
+  mainCamera: {fileID: 0}
 --- !u!114 &114956209010471084
 MonoBehaviour:
   m_ObjectHideFlags: 1

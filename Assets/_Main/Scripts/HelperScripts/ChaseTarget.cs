@@ -20,7 +20,7 @@ public class ChaseTarget : MonoBehaviour {
     public float chaseSpeed = 5f;
 
     [Header("---------------------------------------------")]
-    [Tooltip("If set, the gameObject this component is attached to will be rotate so the right vector points at target's current position")]
+    [Tooltip("If set, the gameObject this component is attached to will be rotated so the right vector points at target's current position")]
     public bool orientToTarget = true;
     [Tooltip("0 means the gameObject that this component is attached to aligns horizontally")]
     public float rotationZComparedToHorizontal = 0f;
@@ -51,6 +51,7 @@ public class ChaseTarget : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if (target == null) return;
 
         Orient();
         Chase();

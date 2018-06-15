@@ -5,7 +5,7 @@ using Gamekit2D;
 
 [RequireComponent(typeof(CharacterInput))]
 [RequireComponent(typeof(CharacterController2D))]
-public class AlessiaController : MonoBehaviour {
+public class AlessiaController : MonoBehaviour, IDataPersister {
 
     public float speed = 5f;
     public float climbSpeed;
@@ -44,6 +44,13 @@ public class AlessiaController : MonoBehaviour {
 
     [Header("Misc")]
     public float timeBetweenFlickering = 0;
+    public GameObject miniCollectableHealthPrefab;
+
+    [Header("Hack Mode")]
+    public bool canDash = true;
+    public bool canSlash = true;
+
+    public DataSettings dataSettings;
 
     private CharacterController2D m_CharacterController2D;
     private Vector2 m_Velocity = new Vector2();
@@ -66,6 +73,7 @@ public class AlessiaController : MonoBehaviour {
     private int m_HashUsePara = Animator.StringToHash("use");
     private int m_HashOnLadderPara = Animator.StringToHash("isOnLadder");
 
+    private BulletPool m_MiniCollectableHealthPool;
 
     private Vector2 m_MoveVector;
     private bool m_IsJumpHolding;
@@ -74,8 +82,6 @@ public class AlessiaController : MonoBehaviour {
     private float m_DashCoolDownTimer;
     private float m_DashTimer;
     private float m_HoldAttackKeyTimer;
-    private bool m_CanDash = true;
-    private bool m_CanSlash = true;
     private bool m_CanClimb = false;
     private bool m_IsOnLadder = false;
     //Allow dash in air only one time
@@ -112,6 +118,17 @@ public class AlessiaController : MonoBehaviour {
 
         m_HashSlashHitEffect = VFXController.StringToHash(slashHitEffectName);
 
+        m_MiniCollectableHealthPool = BulletPool.GetObjectPool(miniCollectableHealthPrefab, 5);
+    }
+
+    void OnEnable()
+    {
+        PersistentDataManager.RegisterPersister(this);
+    }
+
+    void OnDisable()
+    {
+        PersistentDataManager.UnregisterPersister(this);
     }
 
     private void Start()
@@ -143,7 +160,7 @@ public class AlessiaController : MonoBehaviour {
                 else
                 {
                     m_DashedInAir = false;
-                    m_CanDash = true;
+                    canDash = true;
                 }
             }
         }
@@ -348,7 +365,7 @@ public class AlessiaController : MonoBehaviour {
 
     public void StartDashing()
     {
-        if (!m_CanDash || m_IsOnLadder) return;
+        if (!canDash || m_IsOnLadder) return;
 
 
         if (!m_CharacterController2D.IsGrounded)
@@ -369,7 +386,7 @@ public class AlessiaController : MonoBehaviour {
         //enable dash effect
         dashEffect.SetActive(true);
         m_BlockNormalAction = true;
-        m_CanDash = false;
+        canDash = false;
         m_Animator.SetBool(m_HashDashPara, true);
 
 
@@ -408,7 +425,7 @@ public class AlessiaController : MonoBehaviour {
 
     public void StartAttacking()
     {
-        if (!m_CanSlash) return;
+        if (!canSlash) return;
         if (m_IsOnLadder) return;
 
         //still attacking
@@ -528,7 +545,11 @@ public class AlessiaController : MonoBehaviour {
 
             for (int i = 0; i < count; i++)
             {
-                VFXController.Instance.Trigger("MiniCollectableHealth", damageable.transform.position + (Vector3)Random.insideUnitCircle * 1f, 0, false, null);
+                //VFXController.Instance.Trigger("MiniCollectableHealth", damageable.transform.position + (Vector3)Random.insideUnitCircle * 1f, 0, false, null);
+
+                BulletObject miniCollectableHealth = m_MiniCollectableHealthPool.Pop(damageable.transform.position + (Vector3)Random.insideUnitCircle * 1f);
+
+
             }
             
         }
@@ -701,12 +722,12 @@ public class AlessiaController : MonoBehaviour {
 
     public void CanDash(bool canDash)
     {
-        m_CanDash = canDash;
+        this.canDash = canDash;
     }
 
     public void CanSlash(bool canSlash)
     {
-        m_CanSlash = canSlash;
+        this.canSlash = canSlash;
     }
 
 
@@ -758,8 +779,8 @@ public class AlessiaController : MonoBehaviour {
     {
         SavedData savedData = new SavedData();
         savedData.Set("PlayerHealth", m_Damageable.CurrentHealth);
-        savedData.Set("CanDash", m_CanDash);
-        savedData.Set("CanSlash", m_CanSlash);
+        savedData.Set("CanDash", canDash);
+        savedData.Set("CanSlash", canSlash);
         savedData.Set("PlayerPosition", transform.position);
         savedData.Set("SceneName", UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 
@@ -773,9 +794,35 @@ public class AlessiaController : MonoBehaviour {
         if (savedData.Load("PlayerState"))
         {
             m_Damageable.SetHealth(savedData.GetInt("PlayerHealth"));
-            m_CanDash = savedData.GetBool("CanDash");
-            m_CanSlash = savedData.GetBool("CanSlash");
+            canDash = savedData.GetBool("CanDash");
+            canSlash = savedData.GetBool("CanSlash");
             transform.position = savedData.GetVector3("PlayerPosition");
         }
     }
+
+    public DataSettings GetDataSettings()
+    {
+        return dataSettings;
+    }
+
+    public void SetPersistenceDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
+    {
+        dataSettings.dataTag = dataTag;
+        dataSettings.persistenceType = persistenceType;
+    }
+
+    public Data SavePersistenceData()
+    {
+        return new Data<int, bool, bool>(m_Damageable.startingHealth,canSlash,canDash);
+    }
+
+    public void LoadPersistenceData(Data data)
+    {
+        Data<int,bool, bool> playerData = (Data<int, bool, bool>)data;
+        m_Damageable.startingHealth = playerData.value0;
+        canSlash = playerData.value1;
+        canDash = playerData.value2;
+
+    }
+
 }
