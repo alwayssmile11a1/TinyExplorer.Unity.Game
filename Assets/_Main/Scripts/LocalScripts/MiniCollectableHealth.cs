@@ -31,7 +31,7 @@ public class MiniCollectableHealth : MonoBehaviour {
         AlessiaController alessia = collision.GetComponent<AlessiaController>();
 
         if(alessia !=null )
-        {
+        {         
             m_HealthUI.FillHitPointUI(fillAmount);
             gameObject.SetActive(false);
             VFXController.Instance.Trigger(EffectHash, transform.position, 0, false, null, null);

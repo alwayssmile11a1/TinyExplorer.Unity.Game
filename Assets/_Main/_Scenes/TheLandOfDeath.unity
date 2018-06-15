@@ -23565,6 +23565,16 @@ Prefab:
       propertyPath: OnHealthSet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1758135216}
+    - target: {fileID: 114758591728174508, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 2}
+      propertyPath: OnGainStartingHealth.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1758135216}
+    - target: {fileID: 114758591728174508, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 2}
+      propertyPath: OnGainStartingHealth.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GainHitPointUI
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04e6a1f12a2072c499891ed3a049de04, type: 2}
   m_IsPrefabAsset: 0
