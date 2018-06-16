@@ -4,7 +4,7 @@ using UnityEngine;
 using BTAI;
 using Gamekit2D;
 
-public class BoneKnight : MonoBehaviour, IBTDebugable {
+public class BoneKnight : MonoBehaviour {
 
     public Damager damager;
 

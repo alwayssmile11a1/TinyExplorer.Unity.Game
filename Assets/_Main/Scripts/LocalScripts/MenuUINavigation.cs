@@ -28,6 +28,21 @@ public class MenuUINavigation : MonoBehaviour
     }
 
 
+    public void Continue()
+    {
+        SavedData savedData = new SavedData();
+        savedData.Set("Continue", true);
+        savedData.Save("Continue");
+    }
+
+    public void NewGame()
+    {
+        SavedData savedData = new SavedData();
+        savedData.Set("Continue", false);
+        savedData.Save("Continue");
+    }
+
+
     public void Quit()
     {
 #if UNITY_EDITOR

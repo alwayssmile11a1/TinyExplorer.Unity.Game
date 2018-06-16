@@ -23,7 +23,7 @@ namespace Gamekit2D
         public GameObject transitioningGameObject;
         [Tooltip("Whether the transition will be within this scene, to a different zone or a non-gameplay scene.")]
         public TransitionType transitionType;
-        [SceneName]
+        //[SceneName]
         public string newSceneName;
         [Tooltip("The tag of the SceneTransitionDestination script in the scene being transitioned to.")]
         public SceneTransitionDestination.DestinationTag transitionDestinationTag;

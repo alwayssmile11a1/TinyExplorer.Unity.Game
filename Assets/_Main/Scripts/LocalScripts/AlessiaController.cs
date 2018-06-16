@@ -133,10 +133,13 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
 
     private void Start()
     {
-        
         //SavedDataManager.Instance.DeleteData("PlayerState");
-        //Load Data
-        //LoadData();
+        SavedData savedData = new SavedData();
+        if (savedData.Load("Continue") && savedData.GetBool("Continue") == true)
+        {
+            //Load Data
+            LoadData();
+        }
     }
 
     private void Update()
@@ -793,6 +796,7 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
         savedData.Set("CanDash", canDash);
         savedData.Set("CanSlash", canSlash);
         savedData.Set("PlayerPosition", transform.position);
+        savedData.Set("StartingHealth", m_Damageable.startingHealth);
         savedData.Set("SceneName", UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
 
         savedData.Save("PlayerState");
@@ -808,7 +812,9 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
             canDash = savedData.GetBool("CanDash");
             canSlash = savedData.GetBool("CanSlash");
             transform.position = savedData.GetVector3("PlayerPosition");
+            m_Damageable.startingHealth = savedData.GetInt("StartingHealth");
         }
+
     }
 
     public DataSettings GetDataSettings()

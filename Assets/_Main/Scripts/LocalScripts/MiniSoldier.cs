@@ -4,7 +4,7 @@ using UnityEngine;
 using Gamekit2D;
 using BTAI;
 
-public class MiniSoldier : MonoBehaviour, IBTDebugable
+public class MiniSoldier : MonoBehaviour
 {
 
     public Damager bodyDamager;

@@ -4,7 +4,7 @@ using UnityEngine;
 using Gamekit2D;
 using BTAI;
 
-public class ShardKnight : MonoBehaviour, IBTDebugable {
+public class ShardKnight : MonoBehaviour {
 
     public Transform targetToTrack;
 

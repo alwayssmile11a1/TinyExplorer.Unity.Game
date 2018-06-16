@@ -4,7 +4,7 @@ using UnityEngine;
 using Gamekit2D;
 using BTAI;
 
-public class PrincessFury : MonoBehaviour, IBTDebugable {
+public class PrincessFury : MonoBehaviour {
 
     public Transform targetToTrack;
 

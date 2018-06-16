@@ -4,7 +4,7 @@ using UnityEngine;
 using Gamekit2D;
 using BTAI;
 
-public class Soldier : MonoBehaviour, IBTDebugable {
+public class Soldier : MonoBehaviour {
 
 
     private SimpleEnemyBehaviour m_EnemyBehaviour;
