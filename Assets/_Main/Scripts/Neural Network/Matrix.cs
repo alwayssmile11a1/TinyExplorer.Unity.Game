@@ -150,7 +150,7 @@ public class Matrix
                 for (int j = 0; j < m.columnNb; j++)
                 {
                     float sum = 0;
-                    for (int k = 0; k < m.rowNb; k++)
+                    for (int k = 0; k < m2.rowNb; k++)
                     {
                         sum += m1[i][k] * m2[k][j]; // c(i,j) = a(i,k)b(k,j); and M = matrix of c(i,j)
                     }
