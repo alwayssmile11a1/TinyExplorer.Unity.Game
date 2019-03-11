@@ -12,10 +12,11 @@ public class teleport : MonoBehaviour {
     {
         if (collision.tag.Equals("Player"))
         {
-            activeBound.followPointChangingSmoothSpeed = 10;
-            Debug.Log(target.position);
-            target.position = destination.position;
-            Debug.Log(target.position);
+            if(!(activeBound is null))
+            {
+                activeBound.followPointChangingSmoothSpeed = 10;
+            }
+            collision.transform.position = destination.position;
         }
     }
 

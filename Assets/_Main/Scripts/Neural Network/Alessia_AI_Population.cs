@@ -51,6 +51,7 @@ public class Alessia_AI_Population : MonoBehaviour {
                 alessiaAIs[i].GetComponent<Alessia_AI_DNA>().InitDNA(inputNodes, hiddenNodes, outputNodes);
                 alessiaAIs[i].name = $"AlessiaAI {i + 1}";
             }
+            ReadBestCarTrainedData("Assets/Training_Result/bestAlessiaAI.txt", ref alessiaAIs[0].GetComponent<Alessia_AI_DNA>().neuralNetwork);
         }
         else
         {
