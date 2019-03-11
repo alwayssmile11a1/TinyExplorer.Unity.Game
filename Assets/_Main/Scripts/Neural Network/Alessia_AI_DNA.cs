@@ -28,7 +28,7 @@ public class Alessia_AI_DNA : MonoBehaviour {
     {
         //score = Mathf.Pow(10, alessiaAIBehaviour.point);
         //fitness = score / Mathf.Pow(carBehaviour.driveTime, 2);
-        fitness = Mathf.Pow(score, 2);
+        fitness = Mathf.Pow(score, 3);
     }
 
     // Crossover

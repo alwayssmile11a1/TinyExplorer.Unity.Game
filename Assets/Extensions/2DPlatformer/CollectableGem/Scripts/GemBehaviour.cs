@@ -37,4 +37,12 @@ public class GemBehaviour : MonoBehaviour
 	{
 		gameObject.SetActive (false);
 	}
+
+    public void ReActive()
+    {
+        gemCollider2D.enabled = true;
+        gemVisuals.SetActive(true);
+        collectedParticleSystem.SetActive(false);
+        gameObject.SetActive(true);
+    }
 }

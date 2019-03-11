@@ -21,6 +21,9 @@ public class NeuralController : MonoBehaviour
     [Header("Timescale")]
     public float timeScale;
 
+    [Header("Collectable Gems")]
+    public GameObject gems;
+
     [Header("UI")]
     public TextMeshProUGUI textMeshPro;
 
@@ -50,6 +53,8 @@ public class NeuralController : MonoBehaviour
         {
             if (alessia_AI_Population.AllOff() && trainingMode)
             {
+                ReActiveGems();
+
                 alessia_AI_Population.CalculateFitness();
 
                 alessia_AI_Population.NaturalSelection();
@@ -61,9 +66,17 @@ public class NeuralController : MonoBehaviour
             else
             {
                 alessia_AI_Population.RunAlessiaAIs();
-                alessia_AI_Population.UpdateDriveTime();
+                alessia_AI_Population.UpdateLiveTime();
                 alessia_AI_Population.ShutDownAlessiaAIs();
             }
+        }
+    }
+
+    private void ReActiveGems()
+    {
+        foreach (Transform gem in gems.transform)
+        {
+            gem.GetComponent<GemBehaviour>().ReActive();
         }
     }
 }

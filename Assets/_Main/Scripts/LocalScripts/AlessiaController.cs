@@ -50,6 +50,9 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
     public bool canDash = true;
     public bool canSlash = true;
 
+    [Header("AI")]
+    public bool alessiaAI = false;
+
     public DataSettings dataSettings;
 
     private CharacterController2D m_CharacterController2D;
@@ -277,12 +280,12 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
                 }
             }
 
-            if (m_ExternalForceTimer <= 0)
+            if (m_ExternalForceTimer <= 0 && !alessiaAI)
             {
                 SetHorizontalMovement(m_CharacterInput.HorizontalAxis * speed);
             }
         }
-        
+
         m_CharacterController2D.Move(m_MoveVector * Time.fixedDeltaTime);
 
     }
@@ -842,4 +845,8 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
 
     }
 
+    public void AlessiaAIMoveRight(float direction)
+    {
+        SetHorizontalMovement(direction * speed);
+    }
 }

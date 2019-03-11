@@ -12,12 +12,14 @@ public class Alessia_AI_Behaviour : MonoBehaviour {
     public float moveForce;
     public ForceMode forceMode;
     public float raycastDistance;
+    public LayerMask layerMask;
     [Tooltip("add a little distance to front ray")]
     public float additional;
     public bool off;
 
     private Rigidbody rigidbody;
     private Alessia_AI_DNA alessia_AI_DNA;
+    private AlessiaController alessiaController;
     private float oldFitness;
     private float newFitness;
     private bool moveThroughPitch;
@@ -30,14 +32,15 @@ public class Alessia_AI_Behaviour : MonoBehaviour {
     {
         rigidbody = GetComponent<Rigidbody>();
         alessia_AI_DNA = GetComponent<Alessia_AI_DNA>();
+        alessiaController = GetComponent<AlessiaController>();
 
         //TEST
         //carDNA.InitCar(5, 5, 2);
     }
 
-    public float[] GetOutput()
+    public float[] GetOutput(int inputNodes)
     {
-        float[] input = new float[7];
+        float[] input = new float[inputNodes];
         RaycastHit hitInfo;
         float startAngle = -45;
         float amount = 15;
@@ -47,56 +50,38 @@ public class Alessia_AI_Behaviour : MonoBehaviour {
             float angle = i * amount + startAngle;
             if (angle == 0)
             {
-                Debug.DrawRay(raycastPoint, (Quaternion.Euler(0, 0, angle) * Vector3.right).normalized * (raycastDistance + additional), Color.green);
-                if (Physics.Raycast(raycastPoint, (Quaternion.Euler(0, 0, angle) * Vector3.right).normalized, out hitInfo, (raycastDistance + additional), LayerMask.GetMask("Wall")))
+                if (Physics2D.Raycast(raycastPoint, (Quaternion.Euler(0, 0, angle) * Vector3.right).normalized, (raycastDistance + additional), layerMask) is var hit)
                 {
-                    input[i] = hitInfo.distance;
-                    Debug.DrawRay(raycastPoint, (Quaternion.Euler(0, i * startAngle, 0) * transform.right).normalized * (raycastDistance + additional), Color.red);
-                }
-                else
-                {
-                    input[i] = raycastDistance + additional;
+                    input[i] = hit.distance == 0 ? raycastDistance + additional : hit.distance;
+                    Debug.DrawRay(raycastPoint, (Quaternion.Euler(0, 0, angle) * transform.right).normalized * (hit.distance == 0 ? raycastDistance + additional : hit.distance), hit.distance == 0 ? Color.green : Color.red);
                 }
             }
             else
             {
-                Debug.DrawRay(raycastPoint, (Quaternion.Euler(0, 0, angle) * Vector3.right).normalized * (raycastDistance), Color.green);
-                if (Physics.Raycast(raycastPoint, (Quaternion.Euler(0, 0, angle) * Vector3.right).normalized, out hitInfo, (raycastDistance), LayerMask.GetMask("Wall")))
+                if (Physics2D.Raycast(raycastPoint, (Quaternion.Euler(0, 0, angle) * Vector3.right).normalized, (raycastDistance), layerMask) is var hit)
                 {
-                    input[i] = hitInfo.distance;
-                    Debug.DrawRay(raycastPoint, (Quaternion.Euler(0, 0, angle) * Vector3.right).normalized * (raycastDistance), Color.red);
-                }
-                else
-                {
-                    input[i] = raycastDistance;
+                    input[i] = hit.distance == 0 ? raycastDistance : hit.distance;
+                    Debug.DrawRay(raycastPoint, (Quaternion.Euler(0, 0, angle) * Vector3.right).normalized * (hit.distance == 0 ? raycastDistance : hit.distance), hit.distance == 0 ? Color.green : Color.red);
                 }
             }
         }
         return alessia_AI_DNA.neuralNetwork.FeedForward(input);
     }
 
-    public float[] GetAxisFromOutput(float[] output)
+    public float[] GetActionFromOutput(float[] output)
     {
         float vertical;
         float horizontal;
-        if (output[1] <= 0.25f)
-        {
-            horizontal = -1;
-        }
-        else if (output[0] >= 0.65f)
+        if (output[0] >= 0.5f)
         {
             horizontal = 1;
         }
         else
         {
-            horizontal = 0;
+            horizontal = -1;
         }
 
-        if (output[1] <= 0.25)
-        {
-            vertical = -1;
-        }
-        else if (output[0] >= 0.65)
+        if (output[1] >= 0.5)
         {
             vertical = 1;
         }
@@ -107,15 +92,21 @@ public class Alessia_AI_Behaviour : MonoBehaviour {
 
         // If the output is just standing still, then move the car forward
         if (vertical == 0 && horizontal == 0)
-            vertical = 1;
+        {
+            //vertical = 1;
+        }
         //Debug.Log($"{output[0]} {output[1]} {vertical} {horizontal}");
         return new float[] { horizontal, vertical };
     }
 
-    public void RunAlessiaAI(float[] axis)
+    public void RunAlessiaAI(float[] action)
     {
-        rigidbody.angularVelocity = transform.up * axis[0] * 3;
-        rigidbody.velocity = (transform.forward * axis[1] * 4);
+        // Move AI in horizontal
+        alessiaController.AlessiaAIMoveRight(action[0]);
+        if (action[1] == 1) 
+        {
+            alessiaController.Jump();
+        }
     }
 
     public void RestartAlessiaAI(Vector3 spawnPos, Quaternion spawnRotation)
@@ -133,7 +124,7 @@ public class Alessia_AI_Behaviour : MonoBehaviour {
 
     public void ShutDownAlessiaAI()
     {
-        if ((liveTime > 4 && !moveThroughPitch) || liveTime > 60 * 3.5f)
+        if ((liveTime > 4 && !moveThroughPitch) || liveTime > 10 /*60 * 3.5f*/)
         {
             off = true;
             gameObject.SetActive(false);
@@ -145,24 +136,24 @@ public class Alessia_AI_Behaviour : MonoBehaviour {
         liveTime += Time.fixedDeltaTime;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         //if (collision.gameObject.tag.Equals("Wall"))
         //{
         //    off = true;
         //    gameObject.SetActive(false);
         //}
-        if (collision.gameObject.tag.Equals("CollectableGem"))
-        {
-            alessia_AI_DNA.score++;
-        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag.Equals("Pitch"))
         {
             moveThroughPitch = true;
+        }
+        else if (other.gameObject.tag.Equals("CollectableGem"))
+        {
+            alessia_AI_DNA.score++;
         }
         //else if (other.gameObject.tag.Equals("Goal"))
         //{
@@ -170,10 +161,6 @@ public class Alessia_AI_Behaviour : MonoBehaviour {
         //    //finish = true;
         //    off = true;
         //    gameObject.SetActive(false);
-        //    hitHackingPoint++;
-        //}
-        //else if (other.gameObject.tag.Equals("HackingPoint"))
-        //{
         //    hitHackingPoint++;
         //}
     }

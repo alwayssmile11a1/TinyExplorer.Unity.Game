@@ -12,6 +12,7 @@ TagManager:
   - ladder
   - endLadder
   - CollectableGem
+  - Pitch
   layers:
   - Default
   - TransparentFX

@@ -31,6 +31,9 @@ MonoBehaviour:
   moveForce: 0
   forceMode: 0
   raycastDistance: 2
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 512
   additional: 2
   off: 0
   liveTime: 0
@@ -49,11 +52,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.9
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 3}
       propertyPath: m_LocalPosition.z
@@ -90,6 +93,16 @@ PrefabInstance:
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114970882030280704, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 3}
+      propertyPath: m_BlockNormalAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114970882030280704, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 3}
+      propertyPath: alessiaAI
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 81923538135870360, guid: 04e6a1f12a2072c499891ed3a049de04, type: 3}

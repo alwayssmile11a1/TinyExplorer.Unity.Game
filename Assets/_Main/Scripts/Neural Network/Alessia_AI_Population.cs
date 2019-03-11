@@ -187,14 +187,14 @@ public class Alessia_AI_Population : MonoBehaviour {
     public void RunAlessiaAIs()
     {
         float[] output = new float[outputNodes];
-        float[] axis;
+        float[] action;
         foreach (var ai in alessiaAIs)
         {
             if (!ai.GetComponent<Alessia_AI_Behaviour>().off /*&& car.GetComponent<Rigidbody>().velocity.sqrMagnitude <= Mathf.Pow(carMaxSpeed, 2)*/)
             {
-                output = ai.GetComponent<Alessia_AI_Behaviour>().GetOutput();
-                //axis = ai.GetComponent<Alessia_AI_Behaviour>().GetAxisFromOutput(output);
-                //ai.GetComponent<Alessia_AI_Behaviour>().RunAlessiaAI(axis);
+                output = ai.GetComponent<Alessia_AI_Behaviour>().GetOutput(inputNodes);
+                action = ai.GetComponent<Alessia_AI_Behaviour>().GetActionFromOutput(output);
+                ai.GetComponent<Alessia_AI_Behaviour>().RunAlessiaAI(action);
             }
         }
 
@@ -208,7 +208,7 @@ public class Alessia_AI_Population : MonoBehaviour {
         }
     }
 
-    public void UpdateDriveTime()
+    public void UpdateLiveTime()
     {
         foreach (var car in alessiaAIs)
         {
