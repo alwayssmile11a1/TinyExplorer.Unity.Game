@@ -230,6 +230,11 @@ public class Alessia_AI_Population : MonoBehaviour {
         return from2 + (fitness - from1) * (to2 - from2) / (to1 - from1);
     }
 
+    public void UpdateCamera()
+    {
+        Camera.main.transform.position = Vector3.Lerp(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -10), alessiaAIs[bestAlessiaAI].transform.position, Time.fixedDeltaTime);
+    }
+
     private Alessia_AI_DNA PickOne(List<GameObject> cars)
     {
         int index = 0;

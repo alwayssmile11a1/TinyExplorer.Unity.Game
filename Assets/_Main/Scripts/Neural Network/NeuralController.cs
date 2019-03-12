@@ -62,6 +62,8 @@ public class NeuralController : MonoBehaviour
                 textMeshPro.text = $"Generation: {alessia_AI_Population.Evaluate()}";
 
                 alessia_AI_Population.Generate();
+
+                alessia_AI_Population.UpdateCamera();
             }
             else
             {
@@ -69,6 +71,8 @@ public class NeuralController : MonoBehaviour
                 alessia_AI_Population.UpdateLiveTime();
                 alessia_AI_Population.ShutDownAlessiaAIs();
             }
+            
+            alessia_AI_Population.UpdateCamera();
         }
     }
 
