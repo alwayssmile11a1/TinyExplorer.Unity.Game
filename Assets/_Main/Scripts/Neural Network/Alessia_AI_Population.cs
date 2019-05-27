@@ -198,15 +198,6 @@ public class Alessia_AI_Population : MonoBehaviour {
                 ai.GetComponent<Alessia_AI_Behaviour>().RunAlessiaAI(action);
             }
         }
-
-        if (!trainingMode)
-        {
-            Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, alessiaAIs[0].transform.GetChild(1).position, ref SmoothPosVelocity, 0.7f); // Smoothly set the position
-
-            Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation,
-                                                             Quaternion.LookRotation(alessiaAIs[0].transform.position - Camera.main.transform.position),
-                                                             0.1f); // Smoothly set the rotation
-        }
     }
 
     public void UpdateLiveTime()
@@ -232,7 +223,8 @@ public class Alessia_AI_Population : MonoBehaviour {
 
     public void UpdateCamera()
     {
-        Camera.main.transform.position = Vector3.Lerp(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -10), trainingMode ? alessiaAIs[bestAlessiaAI].transform.position : alessiaAIs[0].transform.position, Time.fixedDeltaTime);
+        Vector3 destination = trainingMode ? new Vector3(alessiaAIs[bestAlessiaAI].transform.position.x, alessiaAIs[bestAlessiaAI].transform.position.y, -10) : new Vector3(alessiaAIs[0].transform.position.x, alessiaAIs[0].transform.position.y, -10);
+        Camera.main.transform.position = Vector3.Lerp(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -10), destination, Time.fixedDeltaTime);
     }
 
     private Alessia_AI_DNA PickOne(List<GameObject> cars)
