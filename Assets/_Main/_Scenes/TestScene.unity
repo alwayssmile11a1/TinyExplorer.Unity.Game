@@ -13145,7 +13145,8 @@ MonoBehaviour:
   alessiaAIParent: {fileID: 1628326895}
   alessiaPrefab: {fileID: 2003669573333205158, guid: 54f4e0f0cbd831443ae9e42bf2ccea4c,
     type: 3}
-  bestAlessiaPrefab: {fileID: 0}
+  bestAlessiaPrefab: {fileID: 2003669573333205158, guid: 54f4e0f0cbd831443ae9e42bf2ccea4c,
+    type: 3}
   AI_Amount: 20
   carMaxSpeed: 0
   mutationRate: 0
