@@ -4,16 +4,17 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Windows;
 
-public class Alessia_AI_Population : MonoBehaviour {
+public class ZombieKnight_AI_Population : MonoBehaviour
+{
 
-    public Transform alessiaAIParent;
-    public GameObject alessiaPrefab;
-    public GameObject bestAlessiaPrefab;
+    public Transform aiParent;
+    public GameObject aiPrefab;
+    public GameObject bestAIPrefab;
     public int AI_Amount;
     //public float carMaxSpeed;
 
     [HideInInspector] public float mutationRate;                          // Mutation rate
-    [HideInInspector] public List<GameObject> alessiaAIs;                // Array to hold the current population
+    [HideInInspector] public List<GameObject> aiList;                // Array to hold the current population
     //[HideInInspector] public string target;                               // Target phrase
     [HideInInspector] public int generations;                             // Number of generations
     [HideInInspector] public bool finished;                               // Are we finished evolving?
@@ -44,27 +45,27 @@ public class Alessia_AI_Population : MonoBehaviour {
             this.hiddenNodes = hiddenNodes;
             this.outputNodes = outputNodes;
 
-            alessiaAIs = new List<GameObject>();
+            aiList = new List<GameObject>();
             for (int i = 0; i < AI_Amount; i++)
             {
-                alessiaAIs.Add(Instantiate(alessiaPrefab, spawnPosition, alessiaPrefab.transform.rotation, alessiaAIParent));
-                alessiaAIs[i].GetComponent<Alessia_AI_DNA>().InitDNA(inputNodes, hiddenNodes, outputNodes);
-                alessiaAIs[i].name = $"AlessiaAI {i + 1}";
+                aiList.Add(Instantiate(aiPrefab, spawnPosition, aiPrefab.transform.rotation, aiParent));
+                aiList[i].GetComponent<ZombieKnight_AI_DNA>().InitDNA(inputNodes, hiddenNodes, outputNodes);
+                aiList[i].name = $"AI {i + 1}";
             }
-            ReadBestCarTrainedData("Assets/Training_Result/bestAlessiaAI.txt", ref alessiaAIs[0].GetComponent<Alessia_AI_DNA>().neuralNetwork);
+            ReadBestTrainedData("Assets/Training_Result/bestAI.txt", ref aiList[0].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork);
         }
         else
         {
-            alessiaAIs.Add(Instantiate(bestAlessiaPrefab, bestAlessiaPrefab.transform.position, bestAlessiaPrefab.transform.rotation));
-            alessiaAIs[0].GetComponent<Alessia_AI_DNA>().InitDNA(inputNodes, hiddenNodes, outputNodes);
+            aiList.Add(Instantiate(bestAIPrefab, bestAIPrefab.transform.position, bestAIPrefab.transform.rotation));
+            aiList[0].GetComponent<ZombieKnight_AI_DNA>().InitDNA(inputNodes, hiddenNodes, outputNodes);
         }
     }
 
     public void CalculateFitness()
     {
-        for (int i = 0; i < alessiaAIs.Count; i++)
+        for (int i = 0; i < aiList.Count; i++)
         {
-            alessiaAIs[i].GetComponent<Alessia_AI_DNA>().CalculateFitness();
+            aiList[i].GetComponent<ZombieKnight_AI_DNA>().CalculateFitness();
 
         }
     }
@@ -73,66 +74,66 @@ public class Alessia_AI_Population : MonoBehaviour {
     public void NaturalSelection()
     {
         float totalFitness = 0;
-        for (int i = 0; i < alessiaAIs.Count; i++)
+        for (int i = 0; i < aiList.Count; i++)
         {
-            totalFitness += alessiaAIs[i].GetComponent<Alessia_AI_DNA>().fitness;
+            totalFitness += aiList[i].GetComponent<ZombieKnight_AI_DNA>().fitness;
         }
-        for (int i = 0; i < alessiaAIs.Count; i++)
+        for (int i = 0; i < aiList.Count; i++)
         {
-            alessiaAIs[i].GetComponent<Alessia_AI_DNA>().probability = (double)alessiaAIs[i].GetComponent<Alessia_AI_DNA>().fitness / (double)totalFitness;
+            aiList[i].GetComponent<ZombieKnight_AI_DNA>().probability = (double)aiList[i].GetComponent<ZombieKnight_AI_DNA>().fitness / (double)totalFitness;
         }
     }
 
     // Create a new generation
     public void Generate()
     {
-        NeuralNetwork[] temp = new NeuralNetwork[alessiaAIs.Count];
+        NeuralNetwork[] temp = new NeuralNetwork[aiList.Count];
         // Refill the population with children from the mating pool
-        for (int i = 0; i < alessiaAIs.Count - 1; i++)
+        for (int i = 0; i < aiList.Count - 1; i++)
         {
             if (i == bestAlessiaAI)
             {
-                temp[i] = alessiaAIs[i].GetComponent<Alessia_AI_DNA>().neuralNetwork;
+                temp[i] = aiList[i].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork;
             }
             else
             {
-                Alessia_AI_DNA partnerA = PickOne(alessiaAIs);
-                Alessia_AI_DNA partnerB = PickOne(alessiaAIs);
+                ZombieKnight_AI_DNA partnerA = PickOne(aiList);
+                ZombieKnight_AI_DNA partnerB = PickOne(aiList);
                 NeuralNetwork child = partnerA.CrossOver(partnerB);
                 Mutate(ref child, mutationRate);
                 temp[i] = child;
             }
         }
-        for (int i = 0; i < alessiaAIs.Count - 1; i++)
+        for (int i = 0; i < aiList.Count - 1; i++)
         {
-            alessiaAIs[i].GetComponent<Alessia_AI_DNA>().neuralNetwork = temp[i];
+            aiList[i].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork = temp[i];
         }
-        alessiaAIs[alessiaAIs.Count - 1].GetComponent<Alessia_AI_DNA>().neuralNetwork = new NeuralNetwork(inputNodes, hiddenNodes, outputNodes);
+        aiList[aiList.Count - 1].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork = new NeuralNetwork(inputNodes, hiddenNodes, outputNodes);
         //if (matingPool.Count != 0)
         {
             generations++;
         }
-        RestartAlessiaAIs(spawnPosition);
+        RestartAIs(spawnPosition);
     }
 
     // Compute the current "most fit" member of the population
     public string Evaluate()
     {
         float worldrecord = 0.0f;
-        for (int i = 0; i < alessiaAIs.Count; i++)
+        for (int i = 0; i < aiList.Count; i++)
         {
             //Console.WriteLine(dnas[i].fitness);
-            if (alessiaAIs[i].GetComponent<Alessia_AI_DNA>().fitness > worldrecord)
+            if (aiList[i].GetComponent<ZombieKnight_AI_DNA>().fitness > worldrecord)
             {
-                worldrecord = alessiaAIs[i].GetComponent<Alessia_AI_DNA>().fitness;
+                worldrecord = aiList[i].GetComponent<ZombieKnight_AI_DNA>().fitness;
                 bestAlessiaAI = i;
             }
-            if (alessiaAIs[i].GetComponent<Alessia_AI_Behaviour>().finish)
+            if (aiList[i].GetComponent<ZombieKnight_AI_Behaviour>().finish)
             {
                 finished = true;
             }
         }
-        File.WriteAllBytes("Assets/Training_Result/bestAlessiaAI.txt", alessiaAIs[bestAlessiaAI].GetComponent<Alessia_AI_DNA>().neuralNetwork.ToByteArray());
+        File.WriteAllBytes("Assets/Training_Result/bestAlessiaAI.txt", aiList[bestAlessiaAI].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork.ToByteArray());
         //if (worldrecord == perfectScore) finished = true;
         return $"{generations}";
     }
@@ -167,9 +168,9 @@ public class Alessia_AI_Population : MonoBehaviour {
 
     public bool AllOff()
     {
-        foreach (var car in alessiaAIs)
+        foreach (var ai in aiList)
         {
-            if (!car.GetComponent<Alessia_AI_Behaviour>().off)
+            if (!ai.GetComponent<ZombieKnight_AI_Behaviour>().off)
             {
                 return false;
             }
@@ -177,51 +178,51 @@ public class Alessia_AI_Population : MonoBehaviour {
         return true;
     }
 
-    public void RestartAlessiaAIs(Vector3 spawnPos)
+    public void RestartAIs(Vector3 spawnPos)
     {
-        foreach (var car in alessiaAIs)
+        foreach (var ai in aiList)
         {
-            car.GetComponent<Alessia_AI_Behaviour>().RestartAlessiaAI(spawnPos, alessiaPrefab.transform.rotation);
+            ai.GetComponent<ZombieKnight_AI_Behaviour>().RestartAI(spawnPos, aiPrefab.transform.rotation);
         }
     }
 
-    public void RunAlessiaAIs()
+    public void RunAIs()
     {
         float[] output = new float[outputNodes];
         float[] action;
-        foreach (var ai in alessiaAIs)
+        foreach (var ai in aiList)
         {
-            if (!ai.GetComponent<Alessia_AI_Behaviour>().off /*&& car.GetComponent<Rigidbody>().velocity.sqrMagnitude <= Mathf.Pow(carMaxSpeed, 2)*/)
+            if (!ai.GetComponent<ZombieKnight_AI_Behaviour>().off /*&& car.GetComponent<Rigidbody>().velocity.sqrMagnitude <= Mathf.Pow(carMaxSpeed, 2)*/)
             {
-                output = ai.GetComponent<Alessia_AI_Behaviour>().GetOutput(inputNodes);
-                action = ai.GetComponent<Alessia_AI_Behaviour>().GetActionFromOutput(output);
-                ai.GetComponent<Alessia_AI_Behaviour>().RunAlessiaAI(action);
+                output = ai.GetComponent<ZombieKnight_AI_Behaviour>().GetOutput(inputNodes);
+                action = ai.GetComponent<ZombieKnight_AI_Behaviour>().GetActionFromOutput(output);
+                ai.GetComponent<ZombieKnight_AI_Behaviour>().RunAI(action);
             }
         }
 
         if (!trainingMode)
         {
-            Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, alessiaAIs[0].transform.GetChild(1).position, ref SmoothPosVelocity, 0.7f); // Smoothly set the position
+            Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, aiList[0].transform.GetChild(1).position, ref SmoothPosVelocity, 0.7f); // Smoothly set the position
 
             Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation,
-                                                             Quaternion.LookRotation(alessiaAIs[0].transform.position - Camera.main.transform.position),
+                                                             Quaternion.LookRotation(aiList[0].transform.position - Camera.main.transform.position),
                                                              0.1f); // Smoothly set the rotation
         }
     }
 
     public void UpdateLiveTime()
     {
-        foreach (var car in alessiaAIs)
+        foreach (var ai in aiList)
         {
-            car.GetComponent<Alessia_AI_Behaviour>().UpdateLiveTime();
+            ai.GetComponent<ZombieKnight_AI_Behaviour>().UpdateLiveTime();
         }
     }
 
-    public void ShutDownAlessiaAIs()
+    public void ShutDownAIs()
     {
-        foreach (var car in alessiaAIs)
+        foreach (var ai in aiList)
         {
-            car.GetComponent<Alessia_AI_Behaviour>().ShutDownAlessiaAI();
+            ai.GetComponent<ZombieKnight_AI_Behaviour>().ShutDownAI();
         }
     }
 
@@ -232,25 +233,25 @@ public class Alessia_AI_Population : MonoBehaviour {
 
     public void UpdateCamera()
     {
-        Camera.main.transform.position = Vector3.Lerp(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -10), alessiaAIs[bestAlessiaAI].transform.position, Time.fixedDeltaTime);
+        Camera.main.transform.position = Vector3.Lerp(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -10), aiList[bestAlessiaAI].transform.position, Time.fixedDeltaTime);
     }
 
-    private Alessia_AI_DNA PickOne(List<GameObject> cars)
+    private ZombieKnight_AI_DNA PickOne(List<GameObject> ais)
     {
         int index = 0;
         double r = Random.Range(0f, 1f);
 
         while (r > 0)
         {
-            r -= cars[index].GetComponent<Alessia_AI_DNA>().probability;
+            r -= ais[index].GetComponent<ZombieKnight_AI_DNA>().probability;
             index++;
         }
         index--;
 
-        return cars[index].GetComponent<Alessia_AI_DNA>();
+        return ais[index].GetComponent<ZombieKnight_AI_DNA>();
     }
 
-    private void ReadBestCarTrainedData(string filePath, ref NeuralNetwork neuralNetwork)
+    private void ReadBestTrainedData(string filePath, ref NeuralNetwork neuralNetwork)
     {
         byte[] bytes = File.ReadAllBytes(filePath);
         string str = Encoding.ASCII.GetString(bytes);

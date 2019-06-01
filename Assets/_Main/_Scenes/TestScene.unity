@@ -13147,7 +13147,6 @@ MonoBehaviour:
     type: 3}
   bestAlessiaPrefab: {fileID: 0}
   AI_Amount: 20
-  carMaxSpeed: 0
   mutationRate: 0
   alessiaAIs: []
   generations: 0

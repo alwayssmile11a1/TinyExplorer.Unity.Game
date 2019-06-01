@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 
-public class NeuralController : MonoBehaviour
+public class ZombieKnightNeuralController : MonoBehaviour
 {
     public Transform spawnPosition;
 
@@ -27,12 +27,12 @@ public class NeuralController : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI textMeshPro;
 
-    private Alessia_AI_Population m_AI_Population;
+    private ZombieKnight_AI_Population m_AI_Population;
 
     // Start is called before the first frame update
     void Awake()
     {
-        m_AI_Population = GetComponent<Alessia_AI_Population>();
+        m_AI_Population = GetComponent<ZombieKnight_AI_Population>();
 
         m_AI_Population.InitPopulation(mutationRate, inputNodes, hiddenNodes, outputNodes, spawnPosition.position, trainingMode);
 
@@ -53,7 +53,7 @@ public class NeuralController : MonoBehaviour
         {
             if (m_AI_Population.AllOff() && trainingMode)
             {
-                ReActiveGems();
+                //ReActiveGems();
 
                 m_AI_Population.CalculateFitness();
 
@@ -63,16 +63,16 @@ public class NeuralController : MonoBehaviour
 
                 m_AI_Population.Generate();
 
-                m_AI_Population.UpdateCamera();
+                //m_AI_Population.UpdateCamera();
             }
             else
             {
-                m_AI_Population.RunAlessiaAIs();
+                m_AI_Population.RunAIs();
                 m_AI_Population.UpdateLiveTime();
-                m_AI_Population.ShutDownAlessiaAIs();
+                m_AI_Population.ShutDownAIs();
             }
-            
-            m_AI_Population.UpdateCamera();
+
+            //m_AI_Population.UpdateCamera();
         }
     }
 
