@@ -64,6 +64,7 @@ public class NeuralController : MonoBehaviour
                 m_AI_Population.Generate();
 
                 m_AI_Population.UpdateCamera();
+
             }
             else
             {

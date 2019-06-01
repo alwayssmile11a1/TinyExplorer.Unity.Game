@@ -16,7 +16,7 @@ public class Alessia_AI_Behaviour : MonoBehaviour {
     [Tooltip("add a little distance to front ray")]
     public float additional;
     public bool off;
-    public float maxLiveTime;
+    [Tooltip("in second")] public float maxLiveTime;
 
     private Rigidbody rigidbody;
     private Alessia_AI_DNA alessia_AI_DNA;
@@ -127,9 +127,14 @@ public class Alessia_AI_Behaviour : MonoBehaviour {
     {
         if ((liveTime > 4 && !moveThroughPitch) || liveTime > maxLiveTime /*60 * 3.5f*/)
         {
-            off = true;
-            gameObject.SetActive(false);
+            DeactiveAlessia();
         }
+    }
+
+    public void DeactiveAlessia()
+    {
+        off = true;
+        gameObject.SetActive(false);
     }
 
     public void UpdateLiveTime()

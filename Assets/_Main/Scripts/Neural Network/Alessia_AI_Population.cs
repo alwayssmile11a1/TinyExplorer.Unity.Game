@@ -31,20 +31,19 @@ public class Alessia_AI_Population : MonoBehaviour {
     public void InitPopulation(float mutation, int inputNodes, int hiddenNodes, int outputNodes, Vector3 spawnPos, bool trainingMode)
     {
         this.trainingMode = trainingMode;
+        //spawnPosition = carPrefab.transform.position;
+        spawnPosition = spawnPos;
+        //this.target = target;
+        mutationRate = mutation;
+        finished = false;
+        generations = 1;
+        perfectScore = 1;
+        this.inputNodes = inputNodes;
+        this.hiddenNodes = hiddenNodes;
+        this.outputNodes = outputNodes;
+        alessiaAIs = new List<GameObject>();
         if (trainingMode)
         {
-            //spawnPosition = carPrefab.transform.position;
-            spawnPosition = spawnPos;
-            //this.target = target;
-            mutationRate = mutation;
-            finished = false;
-            generations = 1;
-            perfectScore = 1;
-            this.inputNodes = inputNodes;
-            this.hiddenNodes = hiddenNodes;
-            this.outputNodes = outputNodes;
-
-            alessiaAIs = new List<GameObject>();
             for (int i = 0; i < AI_Amount; i++)
             {
                 alessiaAIs.Add(Instantiate(alessiaPrefab, spawnPosition, alessiaPrefab.transform.rotation, alessiaAIParent));
@@ -55,8 +54,9 @@ public class Alessia_AI_Population : MonoBehaviour {
         }
         else
         {
-            alessiaAIs.Add(Instantiate(bestAlessiaPrefab, bestAlessiaPrefab.transform.position, bestAlessiaPrefab.transform.rotation));
+            alessiaAIs.Add(Instantiate(bestAlessiaPrefab, bestAlessiaPrefab.transform.position, bestAlessiaPrefab.transform.rotation, alessiaAIParent));
             alessiaAIs[0].GetComponent<Alessia_AI_DNA>().InitDNA(inputNodes, hiddenNodes, outputNodes);
+            ReadBestCarTrainedData("Assets/Training_Result/bestAlessiaAI.txt", ref alessiaAIs[0].GetComponent<Alessia_AI_DNA>().neuralNetwork);
         }
     }
 
@@ -187,7 +187,7 @@ public class Alessia_AI_Population : MonoBehaviour {
 
     public void RunAlessiaAIs()
     {
-        float[] output = new float[outputNodes];
+        float[] output = new float[this.outputNodes];
         float[] action;
         foreach (var ai in alessiaAIs)
         {
@@ -197,15 +197,6 @@ public class Alessia_AI_Population : MonoBehaviour {
                 action = ai.GetComponent<Alessia_AI_Behaviour>().GetActionFromOutput(output);
                 ai.GetComponent<Alessia_AI_Behaviour>().RunAlessiaAI(action);
             }
-        }
-
-        if (!trainingMode)
-        {
-            Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, alessiaAIs[0].transform.GetChild(1).position, ref SmoothPosVelocity, 0.7f); // Smoothly set the position
-
-            Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation,
-                                                             Quaternion.LookRotation(alessiaAIs[0].transform.position - Camera.main.transform.position),
-                                                             0.1f); // Smoothly set the rotation
         }
     }
 
@@ -232,7 +223,8 @@ public class Alessia_AI_Population : MonoBehaviour {
 
     public void UpdateCamera()
     {
-        Camera.main.transform.position = Vector3.Lerp(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -10), alessiaAIs[bestAlessiaAI].transform.position, Time.fixedDeltaTime);
+        Vector3 destination = trainingMode ? new Vector3(alessiaAIs[bestAlessiaAI].transform.position.x, alessiaAIs[bestAlessiaAI].transform.position.y, -10) : new Vector3(alessiaAIs[0].transform.position.x, alessiaAIs[0].transform.position.y, -10);
+        Camera.main.transform.position = Vector3.Lerp(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -10), destination, Time.fixedDeltaTime);
     }
 
     private Alessia_AI_DNA PickOne(List<GameObject> cars)

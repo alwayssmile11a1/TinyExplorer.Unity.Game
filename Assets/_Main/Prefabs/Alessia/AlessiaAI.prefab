@@ -36,7 +36,7 @@ MonoBehaviour:
     m_Bits: 512
   additional: 1
   off: 0
-  maxLiveTime: 25
+  maxLiveTime: 35
   liveTime: 0
   finish: 0
   hitHackingPoint: 0
@@ -104,6 +104,41 @@ PrefabInstance:
         type: 3}
       propertyPath: alessiaAI
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758591728174508, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 3}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758591728174508, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 3}
+      propertyPath: startingHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758591728174508, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 3}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758591728174508, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 3}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758591728174508, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 3}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 9207977139212750744}
+    - target: {fileID: 114758591728174508, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 3}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: DeactiveAlessia
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758591728174508, guid: 04e6a1f12a2072c499891ed3a049de04,
+        type: 3}
+      propertyPath: OnDie.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 81923538135870360, guid: 04e6a1f12a2072c499891ed3a049de04, type: 3}
