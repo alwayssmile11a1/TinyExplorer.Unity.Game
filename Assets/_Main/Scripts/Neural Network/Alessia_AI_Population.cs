@@ -132,7 +132,7 @@ public class Alessia_AI_Population : MonoBehaviour {
                 finished = true;
             }
         }
-        File.WriteAllBytes("Assets/Training_Result/bestAlessiaAI.txt", alessiaAIs[bestAlessiaAI].GetComponent<Alessia_AI_DNA>().neuralNetwork.ToByteArray());
+        File.WriteAllBytes("Assets/Training_Result/bestZombieKnightAI.txt", alessiaAIs[bestAlessiaAI].GetComponent<Alessia_AI_DNA>().neuralNetwork.ToByteArray());
         //if (worldrecord == perfectScore) finished = true;
         return $"{generations}";
     }
