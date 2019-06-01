@@ -1233,7 +1233,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.33442974}
@@ -22403,7 +22403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1169920816949876, guid: 04e6a1f12a2072c499891ed3a049de04, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4618204597790364, guid: 04e6a1f12a2072c499891ed3a049de04, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23932,6 +23932,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieKnightAI
       objectReference: {fileID: 0}
+    - target: {fileID: 8058461710979175959, guid: 1260654eb1fd38c4e8e331a7ddb04588,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8058461710979175958, guid: 1260654eb1fd38c4e8e331a7ddb04588,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23940,7 +23945,7 @@ PrefabInstance:
     - target: {fileID: 8058461710979175958, guid: 1260654eb1fd38c4e8e331a7ddb04588,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.899
+      value: 2.84
       objectReference: {fileID: 0}
     - target: {fileID: 8058461710979175958, guid: 1260654eb1fd38c4e8e331a7ddb04588,
         type: 3}
