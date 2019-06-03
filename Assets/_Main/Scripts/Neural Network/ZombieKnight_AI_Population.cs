@@ -11,6 +11,8 @@ public class ZombieKnight_AI_Population : MonoBehaviour
     public GameObject aiPrefab;
     public GameObject bestAIPrefab;
     public int AI_Amount;
+    public bool readFromFile;
+    public bool writeToFile;
     //public float carMaxSpeed;
 
     [HideInInspector] public float mutationRate;                          // Mutation rate
@@ -52,7 +54,10 @@ public class ZombieKnight_AI_Population : MonoBehaviour
                 aiList[i].GetComponent<ZombieKnight_AI_DNA>().InitDNA(inputNodes, hiddenNodes, outputNodes);
                 aiList[i].name = $"AI {i + 1}";
             }
-            ReadBestTrainedData("Assets/Training_Result/data2.txt", ref aiList[0].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork);
+            if (readFromFile)
+            {
+                ReadBestTrainedData("Assets/Training_Result/bestZombieKnightAI.txt", ref aiList[0].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork);
+            }
         }
         else
         {
@@ -133,7 +138,10 @@ public class ZombieKnight_AI_Population : MonoBehaviour
                 finished = true;
             }
         }
-        File.WriteAllBytes("Assets/Training_Result/bestAlessiaAI.txt", aiList[bestAlessiaAI].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork.ToByteArray());
+        if (writeToFile)
+        {
+            File.WriteAllBytes("Assets/Training_Result/bestZombieKnightAI.txt", aiList[bestAlessiaAI].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork.ToByteArray());
+        }
         //if (worldrecord == perfectScore) finished = true;
         return $"{generations}";
     }

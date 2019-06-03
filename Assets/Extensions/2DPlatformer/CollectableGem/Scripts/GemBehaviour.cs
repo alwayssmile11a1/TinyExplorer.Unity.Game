@@ -19,8 +19,8 @@ public class GemBehaviour : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D theCollider)
 	{
-			GemCollected ();
 		if (theCollider.CompareTag ("Player")) {
+			GemCollected ();
 		}
 	}
 

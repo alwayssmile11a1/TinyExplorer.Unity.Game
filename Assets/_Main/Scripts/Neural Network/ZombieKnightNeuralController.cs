@@ -36,7 +36,7 @@ public class ZombieKnightNeuralController : MonoBehaviour
 
         m_AI_Population.InitPopulation(mutationRate, inputNodes, hiddenNodes, outputNodes, spawnPosition.position, trainingMode);
 
-
+        Application.runInBackground = true;
     }
 
     private void Update()
