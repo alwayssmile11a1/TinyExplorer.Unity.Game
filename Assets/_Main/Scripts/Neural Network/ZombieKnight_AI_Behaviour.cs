@@ -148,13 +148,18 @@ public class ZombieKnight_AI_Behaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag.Equals("Pitch"))
+        if (other.gameObject.CompareTag("Pitch"))
         {
             moveThroughPitch = true;
         }
-        else if (other.gameObject.tag.Equals("CollectableGem"))
+        else if (other.gameObject.CompareTag("CollectableGem"))
         {
             ai_DNA.score++;
+        }
+        else if (other.gameObject.CompareTag("DeadLine"))
+        {
+            off = true;
+            gameObject.SetActive(false);
         }
         //else if (other.gameObject.tag.Equals("Goal"))
         //{

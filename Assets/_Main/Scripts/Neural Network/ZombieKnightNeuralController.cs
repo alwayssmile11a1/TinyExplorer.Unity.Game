@@ -53,7 +53,7 @@ public class ZombieKnightNeuralController : MonoBehaviour
         {
             if (m_AI_Population.AllOff() && trainingMode)
             {
-                //ReActiveGems();
+                ReActiveGems();
 
                 m_AI_Population.CalculateFitness();
 

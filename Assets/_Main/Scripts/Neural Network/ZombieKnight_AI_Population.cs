@@ -52,7 +52,7 @@ public class ZombieKnight_AI_Population : MonoBehaviour
                 aiList[i].GetComponent<ZombieKnight_AI_DNA>().InitDNA(inputNodes, hiddenNodes, outputNodes);
                 aiList[i].name = $"AI {i + 1}";
             }
-            ReadBestTrainedData("Assets/Training_Result/bestAI.txt", ref aiList[0].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork);
+            ReadBestTrainedData("Assets/Training_Result/data2.txt", ref aiList[0].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork);
         }
         else
         {

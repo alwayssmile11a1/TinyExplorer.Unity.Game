@@ -13,6 +13,7 @@ TagManager:
   - endLadder
   - CollectableGem
   - Pitch
+  - DeadLine
   layers:
   - Default
   - TransparentFX
