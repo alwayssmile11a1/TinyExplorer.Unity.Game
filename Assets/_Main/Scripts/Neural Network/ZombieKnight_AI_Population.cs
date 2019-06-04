@@ -34,20 +34,19 @@ public class ZombieKnight_AI_Population : MonoBehaviour
     public void InitPopulation(float mutation, int inputNodes, int hiddenNodes, int outputNodes, Vector3 spawnPos, bool trainingMode)
     {
         this.trainingMode = trainingMode;
+        //spawnPosition = carPrefab.transform.position;
+        spawnPosition = spawnPos;
+        //this.target = target;
+        mutationRate = mutation;
+        finished = false;
+        generations = 1;
+        perfectScore = 1;
+        this.inputNodes = inputNodes;
+        this.hiddenNodes = hiddenNodes;
+        this.outputNodes = outputNodes;
+        aiList = new List<GameObject>();
         if (trainingMode)
         {
-            //spawnPosition = carPrefab.transform.position;
-            spawnPosition = spawnPos;
-            //this.target = target;
-            mutationRate = mutation;
-            finished = false;
-            generations = 1;
-            perfectScore = 1;
-            this.inputNodes = inputNodes;
-            this.hiddenNodes = hiddenNodes;
-            this.outputNodes = outputNodes;
-
-            aiList = new List<GameObject>();
             for (int i = 0; i < AI_Amount; i++)
             {
                 aiList.Add(Instantiate(aiPrefab, spawnPosition, aiPrefab.transform.rotation, aiParent));
@@ -61,8 +60,12 @@ public class ZombieKnight_AI_Population : MonoBehaviour
         }
         else
         {
-            aiList.Add(Instantiate(bestAIPrefab, bestAIPrefab.transform.position, bestAIPrefab.transform.rotation));
+            //aiList.Add(Instantiate(bestAIPrefab, bestAIPrefab.transform.position, bestAIPrefab.transform.rotation, aiParent));
+            bestAIPrefab.SetActive(true);
+            aiList.Add(bestAIPrefab);
             aiList[0].GetComponent<ZombieKnight_AI_DNA>().InitDNA(inputNodes, hiddenNodes, outputNodes);
+            aiList[0].GetComponent<ZombieKnight_AI_Behaviour>().isTraining = trainingMode;
+            ReadBestTrainedData("Assets/Training_Result/bestZombieKnightAI.txt", ref aiList[0].GetComponent<ZombieKnight_AI_DNA>().neuralNetwork);
         }
     }
 
@@ -196,25 +199,16 @@ public class ZombieKnight_AI_Population : MonoBehaviour
 
     public void RunAIs()
     {
-        float[] output = new float[outputNodes];
+        float[] output = new float[this.outputNodes];
         float[] action;
         foreach (var ai in aiList)
         {
-            if (!ai.GetComponent<ZombieKnight_AI_Behaviour>().off /*&& car.GetComponent<Rigidbody>().velocity.sqrMagnitude <= Mathf.Pow(carMaxSpeed, 2)*/)
+            if (!ai.GetComponent<ZombieKnight_AI_Behaviour>().off && !ai.GetComponent<ZombieKnight_AI_Behaviour>().stop)
             {
-                output = ai.GetComponent<ZombieKnight_AI_Behaviour>().GetOutput(inputNodes);
+                output = ai.GetComponent<ZombieKnight_AI_Behaviour>().GetOutput(this.inputNodes);
                 action = ai.GetComponent<ZombieKnight_AI_Behaviour>().GetActionFromOutput(output);
                 ai.GetComponent<ZombieKnight_AI_Behaviour>().RunAI(action);
             }
-        }
-
-        if (!trainingMode)
-        {
-            Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, aiList[0].transform.GetChild(1).position, ref SmoothPosVelocity, 0.7f); // Smoothly set the position
-
-            Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation,
-                                                             Quaternion.LookRotation(aiList[0].transform.position - Camera.main.transform.position),
-                                                             0.1f); // Smoothly set the rotation
         }
     }
 
@@ -241,7 +235,10 @@ public class ZombieKnight_AI_Population : MonoBehaviour
 
     public void UpdateCamera()
     {
-        Camera.main.transform.position = Vector3.Lerp(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -10), aiList[bestAlessiaAI].transform.position, Time.fixedDeltaTime);
+        //Camera.main.transform.position = Vector3.Lerp(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -10), aiList[bestAlessiaAI].transform.position, Time.fixedDeltaTime);
+
+        Vector3 destination = trainingMode ? new Vector3(aiList[bestAlessiaAI].transform.position.x, aiList[bestAlessiaAI].transform.position.y, -10) : new Vector3(aiList[0].transform.position.x, aiList[0].transform.position.y, -10);
+        Camera.main.transform.position = Vector3.Lerp(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, -10), destination, Time.fixedDeltaTime);
     }
 
     private ZombieKnight_AI_DNA PickOne(List<GameObject> ais)

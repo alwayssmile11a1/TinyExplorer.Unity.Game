@@ -375,10 +375,13 @@ MonoBehaviour:
     m_Bits: 512
   additional: 1
   off: 0
+  stop: 0
   maxLiveTime: 30
   liveTime: 0
   finish: 0
   hitHackingPoint: 0
+  isFlip: 0
+  isTraining: 0
 --- !u!114 &8058461710979175956
 MonoBehaviour:
   m_ObjectHideFlags: 0

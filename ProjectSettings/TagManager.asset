@@ -15,6 +15,7 @@ TagManager:
   - Pitch
   - DeadLine
   - ZombieAI
+  - RunZombieAI
   layers:
   - Default
   - TransparentFX

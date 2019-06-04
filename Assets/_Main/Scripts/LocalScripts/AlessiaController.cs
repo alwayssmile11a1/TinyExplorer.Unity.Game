@@ -52,6 +52,7 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
 
     [Header("AI")]
     public bool alessiaAI = false;
+    public ZombieKnight_AI_Behaviour zombieKnight_AI_Behaviour;
 
     public DataSettings dataSettings;
 
@@ -779,9 +780,13 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
         {
             m_CanClimb = true;
         }
-        if (collision.tag.Equals("endLadder"))
+        else if (collision.tag.Equals("endLadder"))
         {
             EndClimbing();
+        }
+        else if (collision.gameObject.CompareTag("RunZombieAI"))
+        {
+            zombieKnight_AI_Behaviour.stop = false; 
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

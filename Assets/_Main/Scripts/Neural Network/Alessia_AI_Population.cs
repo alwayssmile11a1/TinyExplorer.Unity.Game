@@ -107,7 +107,7 @@ public class Alessia_AI_Population : MonoBehaviour {
         {
             alessiaAIs[i].GetComponent<Alessia_AI_DNA>().neuralNetwork = temp[i];
         }
-        alessiaAIs[alessiaAIs.Count - 1].GetComponent<Alessia_AI_DNA>().neuralNetwork = new NeuralNetwork(inputNodes, hiddenNodes, outputNodes);
+        alessiaAIs[alessiaAIs.Count - 1].GetComponent<Alessia_AI_DNA>().neuralNetwork = new NeuralNetwork(this.inputNodes, this.hiddenNodes, this.outputNodes);
         //if (matingPool.Count != 0)
         {
             generations++;
@@ -193,7 +193,7 @@ public class Alessia_AI_Population : MonoBehaviour {
         {
             if (!ai.GetComponent<Alessia_AI_Behaviour>().off /*&& car.GetComponent<Rigidbody>().velocity.sqrMagnitude <= Mathf.Pow(carMaxSpeed, 2)*/)
             {
-                output = ai.GetComponent<Alessia_AI_Behaviour>().GetOutput(inputNodes);
+                output = ai.GetComponent<Alessia_AI_Behaviour>().GetOutput(this.inputNodes);
                 action = ai.GetComponent<Alessia_AI_Behaviour>().GetActionFromOutput(output);
                 ai.GetComponent<Alessia_AI_Behaviour>().RunAlessiaAI(action);
             }

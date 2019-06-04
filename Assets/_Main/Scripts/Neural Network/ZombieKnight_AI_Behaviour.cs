@@ -15,6 +15,7 @@ public class ZombieKnight_AI_Behaviour : MonoBehaviour
     [Tooltip("add a little distance to front ray")]
     public float additional;
     public bool off;
+    public bool stop;
     public float maxLiveTime;
 
     private Rigidbody aiRigidbody;
@@ -26,6 +27,8 @@ public class ZombieKnight_AI_Behaviour : MonoBehaviour
     [HideInInspector] public float liveTime;
     [HideInInspector] public bool finish;
     [HideInInspector] public int hitHackingPoint;
+    [HideInInspector] public bool isFlip;
+    [HideInInspector] public bool isTraining;
 
     // Start is called before the first frame update
     void Start()
@@ -50,7 +53,7 @@ public class ZombieKnight_AI_Behaviour : MonoBehaviour
             float angle = i * amount + startAngle;
             if (angle == 0)
             {
-                if (Physics2D.Raycast(raycastPoint, (Quaternion.Euler(0, 0, angle) * Vector3.right).normalized, (raycastDistance + additional), layerMask) is var hit)
+                if (Physics2D.Raycast(raycastPoint, (Quaternion.Euler(0, 0, angle) * transform.right).normalized, (raycastDistance + additional), layerMask) is var hit)
                 {
                     input[i] = hit.distance == 0 ? raycastDistance + additional : hit.distance;
                     Debug.DrawRay(raycastPoint, (Quaternion.Euler(0, 0, angle) * transform.right).normalized * (hit.distance == 0 ? raycastDistance + additional : hit.distance), hit.distance == 0 ? Color.green : Color.red);
@@ -58,10 +61,10 @@ public class ZombieKnight_AI_Behaviour : MonoBehaviour
             }
             else
             {
-                if (Physics2D.Raycast(raycastPoint, (Quaternion.Euler(0, 0, angle) * Vector3.right).normalized, (raycastDistance), layerMask) is var hit)
+                if (Physics2D.Raycast(raycastPoint, (Quaternion.Euler(0, 0, angle) * transform.right).normalized, (raycastDistance), layerMask) is var hit)
                 {
                     input[i] = hit.distance == 0 ? raycastDistance : hit.distance;
-                    Debug.DrawRay(raycastPoint, (Quaternion.Euler(0, 0, angle) * Vector3.right).normalized * (hit.distance == 0 ? raycastDistance : hit.distance), hit.distance == 0 ? Color.green : Color.red);
+                    Debug.DrawRay(raycastPoint, (Quaternion.Euler(0, 0, angle) * transform.right).normalized * (hit.distance == 0 ? raycastDistance : hit.distance), hit.distance == 0 ? Color.green : Color.red);
                 }
             }
         }
@@ -102,7 +105,7 @@ public class ZombieKnight_AI_Behaviour : MonoBehaviour
     public void RunAI(float[] action)
     {
         // Move AI in horizontal
-        aiController.MoveRight(action[0]);
+        aiController.MoveRight(isFlip ? action[0] * -1 : action[0]);
         if (action[1] == 1)
         {
             aiController.Jump();
@@ -125,6 +128,8 @@ public class ZombieKnight_AI_Behaviour : MonoBehaviour
 
     public void ShutDownAI()
     {
+        if (!isTraining) return;
+
         if ((liveTime > 4 && !moveThroughPitch) || liveTime > maxLiveTime /*60 * 3.5f*/)
         {
             off = true;
