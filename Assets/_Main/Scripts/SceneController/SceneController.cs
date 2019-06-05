@@ -150,11 +150,9 @@ namespace Gamekit2D
             SetupNewScene(transitionType, entrance);
             if (entrance != null)
                 entrance.OnReachDestination.Invoke();
+
             yield return StartCoroutine(ScreenFader.FadeSceneIn());
-            //if (m_PlayerInput != null)
-            //{
-            //    m_PlayerInput.GainControl();
-            //}
+
 
             m_Transitioning = false;
         }

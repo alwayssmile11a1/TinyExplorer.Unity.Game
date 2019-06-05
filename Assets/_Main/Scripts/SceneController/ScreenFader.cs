@@ -64,15 +64,18 @@ namespace Gamekit2D
 
         protected IEnumerator Fade(float finalAlpha, CanvasGroup canvasGroup)
         {
+            canvasGroup.alpha = 1;
             m_IsFading = true;
             canvasGroup.blocksRaycasts = true;
             float fadeSpeed = Mathf.Abs(canvasGroup.alpha - finalAlpha) / fadeDuration;
+
             while (!Mathf.Approximately(canvasGroup.alpha, finalAlpha))
             {
                 canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, finalAlpha,
                     fadeSpeed * Time.deltaTime);
                 yield return null;
             }
+
             canvasGroup.alpha = finalAlpha;
             m_IsFading = false;
             canvasGroup.blocksRaycasts = false;
@@ -96,17 +99,21 @@ namespace Gamekit2D
 
         public static IEnumerator FadeSceneIn ()
         {
-            CanvasGroup canvasGroup;
-            if (Instance.faderCanvasGroup.alpha > 0.1f)
-                canvasGroup = Instance.faderCanvasGroup;
-            else if (Instance.gameOverCanvasGroup.alpha > 0.1f)
-                canvasGroup = Instance.gameOverCanvasGroup;
-            else
-                canvasGroup = Instance.loadingCanvasGroup;
-            
-            yield return Instance.StartCoroutine(Instance.Fade(0f, canvasGroup));
+            //CanvasGroup canvasGroup;
+            //if (Instance.faderCanvasGroup.alpha > 0.1f)
+            //    canvasGroup = Instance.faderCanvasGroup;
+            //else if (Instance.gameOverCanvasGroup.alpha > 0.1f)
+            //    canvasGroup = Instance.gameOverCanvasGroup;
+            //else
+            //    canvasGroup = Instance.loadingCanvasGroup;
 
-            canvasGroup.gameObject.SetActive (false);
+            Instance.StartCoroutine(Instance.Fade(0f, Instance.faderCanvasGroup));
+            Instance.StartCoroutine(Instance.Fade(0f, Instance.gameOverCanvasGroup));
+            Instance.StartCoroutine(Instance.Fade(0f, Instance.loadingCanvasGroup));
+            yield return new WaitForSeconds(1f);
+            Instance.faderCanvasGroup.gameObject.SetActive (false);
+            Instance.gameOverCanvasGroup.gameObject.SetActive(false);
+            Instance.loadingCanvasGroup.gameObject.SetActive(false);
         }
 
         public static IEnumerator FadeSceneOut (FadeType fadeType = FadeType.Black)

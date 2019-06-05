@@ -10034,7 +10034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundedLayerMask:
     serializedVersion: 2
-    m_Bits: 10752
+    m_Bits: 512
   groundedRaycastDistance: 0.1
 --- !u!114 &114970882030280704
 MonoBehaviour:
@@ -10077,6 +10077,7 @@ MonoBehaviour:
   canDash: 1
   canSlash: 1
   alessiaAI: 0
+  zombieKnight_AI_Behaviour: {fileID: 0}
   dataSettings:
     dataTag: a290c22a-4a2e-45d9-9563-1ecf5bda80c9
     persistenceType: 3

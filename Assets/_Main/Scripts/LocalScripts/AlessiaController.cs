@@ -696,6 +696,15 @@ public class AlessiaController : MonoBehaviour, IDataPersister {
 
     }
 
+    public void ForceDieResetGame()
+    {
+        canDash = true;
+        canSlash = true;
+        m_Damageable.SetHealth(m_Damageable.startingHealth);
+
+        SceneController.RestartZone();
+    }
+
     public void Respawn(bool resetHealth = false)
     {
 
